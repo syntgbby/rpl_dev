@@ -1,34 +1,17 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Aplikan;
 
-class RegisterUsersController extends BaseController
+use App\Controllers\BaseController;
+
+class FormPendaftaran extends BaseController
 {
     public function index(): string
     {
-        return $this->render('RegisterUsers/form_regist');
+        return $this->render('Aplikan/FormPendaftaran/form_regist');
     }
 
-    public function indexAdd()
-    {
-        return $this->render('MasterUser/add_user');
-    }
-
-    public function getById($rowid)
-    {
-        $db = \Config\Database::connect();
-        // Gunakan query builder atau parameterized query untuk menghindari SQL Injection
-        $query = $db->query("SELECT * FROM master_user WHERE rowid = :rowid:", ['rowid' => $rowid]);
-        $get = $query->getResultArray();
-
-        if ($get) {
-            return $this->response->setJSON($get);
-        } else {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'User not found']);
-        }
-    }
-
-    public function add()
+    public function store()
     {
         $data = $this->request->getVar();
 

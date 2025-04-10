@@ -16,7 +16,7 @@
                 </div>
                 <div class="card-title">
                     <div class="d-flex align-items-center position-relative my-1">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMasterGroupUserModal" id="addMasterGroupUser"><i class="fa-solid fa-plus"></i> Add</button>
+                        <button type="button" class="btn btn-primary" id="addMasterGroupUser"><i class="fa-solid fa-plus"></i> Add</button>
                     </div>
                 </div>
                 <!--begin::Card title-->
@@ -69,9 +69,9 @@
 $(document).ready(function() {
     $('#kt_table_master_users').DataTable();
 
-    $('#addMasterUser').click(function() {
+    $('#addMasterGroupUser').click(function() {
         $('#modaltitle').html('Master Group User Entry');
-        $('#modalbody').load("<?= base_url('view-add-master-group-user') ?>");
+        $('#modalbody').load("<?= base_url('admin/view-add-master-group-user') ?>");
         $('#modal').data('rowid', 0);
         $('#modal').modal('show');
     });
@@ -79,7 +79,7 @@ $(document).ready(function() {
 
 function editMasterUser(rowid) {
     $('#modaltitle').html('Master Group User Edit');
-    $('#modalbody').load("<?= base_url('view-add-master-group-user') ?>");
+    $('#modalbody').load("<?= base_url('admin/view-add-master-group-user') ?>");
     $('#modal').data('rowid', rowid);
     $('#modal').modal('show');
 }
@@ -98,7 +98,7 @@ function deleteMasterUser(rowid) {
                 rowid: rowid
             };
                 
-            var actionUrl = '<?= base_url('delete-master-group-user') ?>'; 
+            var actionUrl = '<?= base_url('admin/delete-master-group-user') ?>'; 
 
             $.ajax({
                 url: actionUrl,

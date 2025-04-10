@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
-class MasterMatkulController extends BaseController
+use App\Controllers\BaseController;
+
+class MasterMatkul extends BaseController
 {
     public function index(): string
     {
@@ -13,12 +15,12 @@ class MasterMatkulController extends BaseController
             'data' => $query
         ];
 
-        return $this->render('MasterMatkul/master_matkul', $data);
+        return $this->render('Admin/MasterMatkul/master_matkul', $data);
     }
 
     public function indexAdd()
     {
-        return $this->render('MasterMatkul/add_matkul');
+        return $this->render('Admin/MasterMatkul/add_matkul');
     }
 
     public function getById($rowid)
@@ -87,7 +89,7 @@ class MasterMatkulController extends BaseController
             }
         }
 
-        return redirect()->to('/master-matkul');
+        return redirect()->to('/admin/master-matkul');
     }
 
     public function delete()
@@ -113,7 +115,7 @@ class MasterMatkulController extends BaseController
             return $this->response->setJSON($response);
         }
 
-        return redirect()->to('/master-matkul');
+        return redirect()->to('/admin/master-matkul');
     }
 
 }

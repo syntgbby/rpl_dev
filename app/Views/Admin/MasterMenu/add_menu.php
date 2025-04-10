@@ -138,7 +138,7 @@
             status: status
         };
 
-        var actionUrl = '<?= base_url('add-master-menu') ?>'; // Ganti dengan URL yang sesuai
+        var actionUrl = '<?= base_url('admin/add-master-menu') ?>'; // Ganti dengan URL yang sesuai
 
         // Kirim request AJAX
         $.ajax({
@@ -181,7 +181,7 @@
         } else {
             // Jika rowid ada, request data untuk mengedit
             $.ajax({
-                url: '<?= base_url('get-master-menu/') ?>' + rowid,
+                url: '<?= base_url('admin/get-master-menu/') ?>' + rowid,
                 type: 'GET',
                 success: function(response) {
                     if (response.status === 'error') {

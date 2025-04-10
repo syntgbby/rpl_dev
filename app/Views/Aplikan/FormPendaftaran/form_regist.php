@@ -7,7 +7,7 @@
     <!--begin::Content-->
     <div id="kt_app_content" class="app-content">
         <!--begin::Stepper-->
-        <div class="stepper stepper-pills d-flex flex-column" id="kt_stepper">
+        <div class="stepper stepper-pills d-flex flex-column" id="kt_stepper" style="overflow-x: auto;">
             <!--begin::Nav-->
             <div class="stepper-nav justify-content-center py-5">
                 <!--begin::Step 1-->
@@ -107,16 +107,16 @@
 
             <!--begin::Form-->
             <form id="kt_ecommerce_settings_general_form" class="form" action="#" method="POST">
-                <!--begin::Step 1 (KEPT AS IT IS)-->
-                <?= $this->include('RegisterUsers/Steps/step-1') ?>
+                <!--begin::Step 1 - Identitas Diri-->
+                <?= $this->include('Aplikan/FormPendaftaran/Steps/step-1') ?>
                 <!--end::Step 1-->
 
-                <!--begin::Step 2-->
-                <?= $this->include('RegisterUsers/Steps/step-2') ?>
+                <!--begin::Step 2 - Pelatihan Kerja-->
+                <?= $this->include('Aplikan/FormPendaftaran/Steps/step-2') ?>
                 <!--end::Step 2-->
 
                 <!--begin::Step 3 - Pengalaman Kerja-->
-                <?= $this->include('RegisterUsers/Steps/step-3') ?>
+                <?= $this->include('Aplikan/FormPendaftaran/Steps/step-3') ?>
                 <!--end::Step 3-->
             </form>
             <!--end::Form-->

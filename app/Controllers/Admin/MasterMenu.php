@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
-class MasterMenuController extends BaseController
+use App\Controllers\BaseController;
+
+class MasterMenu extends BaseController
 {
     public function index(): string
     {
@@ -13,12 +15,12 @@ class MasterMenuController extends BaseController
             'data' => $query
         ];
 
-        return $this->render('MasterMenu/master_menu', $data);
+        return $this->render('Admin/MasterMenu/master_menu', $data);
     }
 
     public function indexAdd()
     {
-        return $this->render('MasterMenu/add_menu');
+        return $this->render('Admin/MasterMenu/add_menu');
     }
 
     public function getById($rowid)
@@ -95,7 +97,7 @@ class MasterMenuController extends BaseController
             }
         }
 
-        return redirect()->to('/master-menu');
+        return redirect()->to('/admin/master-menu');
     }
 
     public function delete()
@@ -121,7 +123,7 @@ class MasterMenuController extends BaseController
             return $this->response->setJSON($response);
         }
 
-        return redirect()->to('/master-menu');
+        return redirect()->to('/admin/master-menu');
     }
 
 }

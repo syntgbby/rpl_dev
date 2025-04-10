@@ -1,13 +1,13 @@
-<form id="frmmastermatkul" class="p-3">
+<form id="frmmastergroupuser" class="p-3">
     <div class="row">
         <div class="col-md-12">
             <div class="form-group mb-5">
                 <div class="row align-items-center">
                     <div class="col-md-5">
-                        <label for="matkul_cd" class="form-label">Matkul CD</label>
+                        <label for="group_cd" class="form-label">Group CD</label>
                     </div>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" id="matkul_cd" name="matkul_cd" placeholder="Enter Matkul CD">
+                        <input type="text" class="form-control" id="group_cd" name="group_cd" placeholder="Enter Group CD">
                     </div>
                 </div>
             </div>
@@ -16,10 +16,10 @@
             <div class="form-group mb-5">
                 <div class="row align-items-center">
                     <div class="col-md-5">
-                        <label for="matkul_descs" class="form-label">Matkul Descs</label>
+                        <label for="descs" class="form-label">Description</label>
                     </div>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" id="matkul_descs" name="matkul_descs" placeholder="Enter Matkul Descs">
+                        <input type="text" class="form-control" id="descs" name="descs" placeholder="Enter Description">
                     </div>
                 </div>
             </div>
@@ -32,12 +32,12 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="status" id="status_master-matkul_Y" value="Y" checked>
-                            <label class="form-check-label" for="status_master-matkul_Y">Active</label>
+                            <input class="form-check-input" type="radio" name="status" id="status_master-user_Y" value="Y" checked>
+                            <label class="form-check-label" for="status_master-user_Y">Active</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="status" id="status_master-matkul_N" value="N">
-                            <label class="form-check-label" for="status_master-matkul_N">Inactive</label>
+                            <input class="form-check-input" type="radio" name="status" id="status_master-user_N" value="N">
+                            <label class="form-check-label" for="status_master-user_N">Inactive</label>
                         </div>
                     </div>
                 </div>
@@ -58,12 +58,12 @@
     $('#savefrm').on('click', function(e) {
         e.preventDefault();
         var rowid = $('#modal').data('rowid');
-        var matkul_cd = $('#matkul_cd').val();
-        var matkul_descs = $('#matkul_descs').val();
+        var group_cd = $('#group_cd').val();
+        var descs = $('#descs').val();
         var status = $('input[name="status"]:checked').val();
 
         // Cek apakah semua field sudah diisi
-        if (matkul_cd == "" || matkul_descs == "" || status == "") {
+        if (group_cd == "" || descs == "" || status == "") {
             toastr.error('All fields must be filled!');
             return;  // Jangan lanjutkan eksekusi
         }
@@ -77,12 +77,12 @@
 
         var formData = {
             rowid: rowid,
-            matkul_cd: matkul_cd,
-            matkul_descs: matkul_descs,
+            group_cd: group_cd,
+            descs: descs,
             status: status
         };
 
-        var actionUrl = '<?= base_url('add-master-matkul') ?>'; // Ganti dengan URL yang sesuai
+        var actionUrl = '<?= base_url('admin/add-master-group-user') ?>'; // Ganti dengan URL yang sesuai
 
         // Kirim request AJAX
         $.ajax({
@@ -115,26 +115,25 @@
 
         if (rowid === 0) {
             // Jika rowid adalah 0, reset form untuk tambah data
-            $('#matkul_cd').val('');
-            $('#matkul_descs').val('');
-            $('#status_master-matkul_Y').prop('checked', true);  // Default status Active
+            $('#group_cd').val('');
+            $('#descs').val('');
+            $('#status_master-user_Y').prop('checked', true);  // Default status Active
         } else {
             // Jika rowid ada, request data untuk mengedit
             $.ajax({
-                url: '<?= base_url('get-master-matkul/') ?>' + rowid,
+                url: '<?= base_url('admin/get-master-group-user/') ?>' + rowid,
                 type: 'GET',
                 success: function(response) {
                     if (response.status === 'error') {
                         toastr.error(response.message);
                         return;
                     }
-
-                    $('#matkul_cd').val(response[0].matkul_cd);
-                    $('#matkul_descs').val(response[0].matkul_descs);
+                    $('#group_cd').val(response[0].group_cd);
+                    $('#descs').val(response[0].descs);
                     if (response[0].status == 'Y') {
-                        $('#status_master-matkul_Y').prop('checked', true);
+                        $('#status_master-user_Y').prop('checked', true);
                     } else {
-                        $('#status_master-matkul_N').prop('checked', true);
+                        $('#status_master-user_N').prop('checked', true);
                     }
                 }
             });

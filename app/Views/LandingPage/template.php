@@ -98,9 +98,6 @@
 				<!--end::Curve top-->
 				<!--begin::Wrapper-->
 				<div class="landing-dark-bg pt-20">
-					<!--begin::Separator-->
-					<div class="landing-dark-separator"></div>
-					<!--end::Separator-->
 					<!--begin::Container-->
 					<div class="container">
 						<!--begin::Wrapper-->
@@ -159,7 +156,6 @@
 		<script src="assets/js/custom/pages/pricing/general.js"></script>
 		<!--end::Custom Javascript-->
 		<!--end::Javascript-->
-
 	</body>
 	<!--end::Body-->
 </html>

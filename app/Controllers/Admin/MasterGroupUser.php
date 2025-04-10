@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
-class MasterGroupUserController extends BaseController
+use App\Controllers\BaseController;
+
+class MasterGroupUser extends BaseController
 {
     public function index(): string
     {
@@ -11,12 +13,12 @@ class MasterGroupUserController extends BaseController
         $data = [
             'data' => $query
         ];
-        return $this->render('MasterGroupUser/master_group_user', $data);
+        return $this->render('Admin/MasterGroupUser/master_group_user', $data);
     }
 
     public function indexAdd()
     {
-        return $this->render('MasterGroupUser/add_group_user');
+        return $this->render('Admin/MasterGroupUser/add_group_user');
     }
 
     public function getById($rowid)
@@ -86,7 +88,7 @@ class MasterGroupUserController extends BaseController
             }
         }
 
-        return redirect()->to('/master-group-user');
+        return redirect()->to('/admin/master-group-user');
     }
 
     public function delete()
@@ -112,7 +114,7 @@ class MasterGroupUserController extends BaseController
             return $this->response->setJSON($response);
         }
 
-        return redirect()->to('/master-group-user');
+        return redirect()->to('/admin/master-group-user');
     }
 
 }

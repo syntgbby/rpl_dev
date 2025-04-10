@@ -9,9 +9,9 @@
                 <!--begin::Logo-->
                 <div class="d-flex align-items-center flex-equal">
                     <!--begin::Mobile menu toggle-->
-                    <button class="btn btn-icon btn-active-color-primary me-3 d-flex d-lg-none" id="kt_landing_menu_toggle">
+                    <!-- <button class="btn btn-icon btn-active-color-primary me-3 d-flex d-lg-none" id="kt_landing_menu_toggle">
                         <i class="ki-outline ki-abstract-14 fs-2hx"></i>
-                    </button>
+                    </button> -->
                     <!--end::Mobile menu toggle-->
                     <!--begin::Logo image-->
                     <span href="landing.html">

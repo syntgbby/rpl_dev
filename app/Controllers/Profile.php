@@ -4,17 +4,6 @@ namespace App\Controllers;
 
 class Profile extends BaseController
 {
-    public function index($email)
-    {
-        $session = \config\Services::session();
-        $email = $session->get('email');
-
-        $db = \config\Database::connect();
-        $query = $db->query("SELECT * FROM users WHERE email = '$email'");
-        $get = $query->getRowArray();
-
-        return $this->render('Aplikan/editprofile', ['get' => $get]);
-    }
     public function indexEdit($hashEmail)
     {
         $email = base64_decode($hashEmail);
@@ -22,21 +11,6 @@ class Profile extends BaseController
         $query = $db->query("SELECT * FROM users WHERE email = '$email'")->getResultArray();
 
         return $this->render('Aplikan/editprofile', ['get' => $query]);
-    }
-    
-    public function getById($email)
-    {
-        $db = \Config\Database::connect();
-        $query = $db->query("SELECT * FROM users");
-        // Gunakan query builder atau parameterized query untuk menghindari SQL Injection
-        $query = $db->query("SELECT * FROM users WHERE email = :email:", ['email' => $email]);
-        $get = $query->getResultArray();
-
-        if ($get) {
-            return $this->response->setJSON($get);
-        } else {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'Menu not found']);
-        }
     }
 
     public function updateProfile()

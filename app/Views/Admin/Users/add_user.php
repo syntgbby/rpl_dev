@@ -24,18 +24,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="col-md-12">
-            <div class="fv-row mb-8">
-                <div class="row align-items-center">
-                    <div class="col-md-5">
-                        <label for="picture" class="form-label">Picture</label>
-                    </div>
-                    <div class="col-md-7">
-                        <input type="file" class="form-control" id="picture" name="picture" placeholder="Enter Picture">
-                    </div>
-                </div>
-            </div>
-        </div> -->
         <div class="col-md-12">
             <div class="fv-row mb-8">
                 <div class="row align-items-center">
@@ -116,7 +104,7 @@
         formData.append('group_cd', group_cd);
         formData.append('status', status);
 
-        var actionUrl = '<?= base_url('add-users') ?>'; // Ganti dengan URL yang sesuai
+        var actionUrl = '<?= base_url('admin/add-users') ?>'; // Ganti dengan URL yang sesuai
 
         // Kirim request AJAX
         $.ajax({
@@ -159,7 +147,7 @@
         } else {
             // Jika rowid ada, request data untuk mengedit
             $.ajax({
-                url: '<?= base_url('get-users/') ?>' + rowid,
+                url: '<?= base_url('admin/get-users/') ?>' + rowid,
                 type: 'GET',
                 success: function(response) {
                     if (response.status === 'error') {

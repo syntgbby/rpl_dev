@@ -3,7 +3,7 @@
 namespace App\Controllers;
 use CodeIgniter\Controller;
 
-class LandingPageController extends Controller
+class LandingPage extends Controller
 {
     public function index()
     {

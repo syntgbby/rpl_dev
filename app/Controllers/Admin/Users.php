@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
-class UsersController extends BaseController
+use App\Controllers\BaseController;
+
+class Users extends BaseController
 {
     public function index(): string
     {
@@ -11,7 +13,7 @@ class UsersController extends BaseController
         $data = [
             'data' => $query
         ];
-        return $this->render('Users/master_users', $data);
+        return $this->render('Admin/Users/master_users', $data);
     }
 
     public function indexAdd()
@@ -21,7 +23,7 @@ class UsersController extends BaseController
         $data = [
             'group' => $query
         ];
-        return $this->render('Users/add_user', $data);
+        return $this->render('Admin/Users/add_user', $data);
     }
 
     public function getById($rowid)
@@ -99,6 +101,8 @@ class UsersController extends BaseController
                 ];
             }
         }
+
+        return redirect()->to('/admin/users');
     }
 
     public function delete()
@@ -124,7 +128,7 @@ class UsersController extends BaseController
             return $this->response->setJSON($response);
         }
 
-        return redirect()->to('/users');
+        return redirect()->to('/admin/users');
     }
 
 }
