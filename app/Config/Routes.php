@@ -8,8 +8,9 @@ use CodeIgniter\Router\RouteCollection;
 
 // Auth
 $routes->get('/', 'LandingPage::index');
+
 $routes->get('/login', 'LoginController::index');
-$routes->post('login/authenticate', 'LoginController::authenticate');
+$routes->post('/login/authenticate', 'LoginController::authenticate');
 $routes->get('/logout', 'LoginController::logout');
 
 // Register
@@ -62,5 +63,6 @@ $routes->post('/edit-password', 'Profile::updatePassword');
 $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan'], function($routes) {
     // Form Pendaftaran
     $routes->get('form-pendaftaran', 'FormPendaftaran::index');
+    $routes->get('view-add-pk', 'FormPendaftaran::addPK');
     // $routes->get('/view-add-pelatihan', 'FormPendaftaran::indexAdd');
 });

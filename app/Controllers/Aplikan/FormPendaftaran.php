@@ -11,6 +11,11 @@ class FormPendaftaran extends BaseController
         return $this->render('Aplikan/FormPendaftaran/form_regist');
     }
 
+    public function addPK()
+    {
+        return $this->render('Aplikan/FormPendaftaran/Steps/add-pk');
+    }
+
     public function store()
     {
         $data = $this->request->getVar();

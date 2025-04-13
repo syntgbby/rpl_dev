@@ -16,7 +16,7 @@
                 </div>
                 <div class="card-title">
                     <div class="d-flex align-items-center position-relative my-1">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal" id="addUser"><i class="fa-solid fa-plus"></i> Add</button>
+                        <button type="button" class="btn btn-primary" id="addUser"><i class="fa-solid fa-plus"></i> Add</button>
                     </div>
                 </div>
                 <!--begin::Card title-->
