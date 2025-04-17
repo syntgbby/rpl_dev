@@ -57,6 +57,12 @@
 
     $('#savefrm').on('click', function(e) {
         e.preventDefault();
+        const submitBtn = $(this);
+        const spinner = submitBtn.find('.spinner-border');
+
+        spinner.show();
+        submitBtn.prop('disabled', true);
+
         var rowid = $('#modal').data('rowid');
         var group_cd = $('#group_cd').val();
         var descs = $('#descs').val();
@@ -67,10 +73,6 @@
             toastr.error('All fields must be filled!');
             return;  // Jangan lanjutkan eksekusi
         }
-
-        // Menyembunyikan indikator dan menampilkan spinner
-        $('.indicator-label').hide();
-        $('.indicator-progress').show();
 
         // Menonaktifkan tombol Save untuk mencegah klik ganda
         $('#savefrm').prop('disabled', true);
@@ -103,8 +105,8 @@
             complete: function() {
                 // Mengembalikan status tombol setelah selesai
                 $('#savefrm').prop('disabled', false);
-                $('.indicator-label').show();
-                $('.indicator-progress').hide();
+                spinner.hide();
+                submitBtn.prop('disabled', false);
             }
         });
     });

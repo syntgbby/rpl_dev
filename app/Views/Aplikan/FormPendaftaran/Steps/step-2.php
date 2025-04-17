@@ -1,7 +1,11 @@
 <!--begin::Step 2-->
 <div class="stepper-content" data-kt-stepper-element="content">
     <div class="card-body pt-5" style="overflow-x: auto;">
-        <h2 class="mb-7">Step 2: Pelatihan</h2>
+        <h2 class="mb-7">Step 2: Pelatihan
+            <span class="ms-1" data-bs-toggle="tooltip" title="Masukkan pelatihan Anda.">
+                <i class="ki-outline ki-information fs-7"></i>
+            </span>
+        </h2>
 
         <!--begin::Table-->
         <div class="table-responsive" style="overflow-x: auto;">

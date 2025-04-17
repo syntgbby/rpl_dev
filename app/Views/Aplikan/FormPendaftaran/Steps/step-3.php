@@ -149,69 +149,26 @@
             <h5 class="mb-5">Pengalaman Lain yang Relevan</h5>
         </div>
 
-        <div class="row mb-7">
-            <div class="col-5">
-                <button type="button" class="btn btn-primary" id="addPK"><i class="fa-solid fa-user-plus"></i></button>
-            </div>
-        </div>
-
-        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_pk">
+        <table class="table align-middle table-row-dashed fs-6 gy-5" id="tablePengalaman">
             <thead>
                 <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
-                    <th class="min-w-15px">No</th>
                     <th class="min-w-75px">Uraian Pengalaman</th>
                     <th class="min-w-100px">Tipe Bukti</th>
+                    <th class="min-w-100px">Action</th>
                 </tr>
             </thead>
-            <tbody class="text-gray-600 fw-semibold" id="table-body">
+            <tbody class="text-gray-600 fw-semibold" id="tbodyPengalaman">
+                <!-- Data akan ditampilkan disini -->
             </tbody>
         </table>
 
-
         <div class="d-flex justify-content-between mt-5">
             <button type="button" class="btn btn-light" data-kt-stepper-action="previous">Back</button>
-            <button type="submit" class="btn btn-success" name="savefrm" id="savefrm">Submit</button>
+            <button type="submit" class="btn btn-success" name="savefrmPendaftaran" id="savefrmPendaftaran">Submit
+                <span class="spinner-border spinner-border-sm align-middle ms-2" role="status" aria-hidden="true" style="display: none;"></span>
+                <span class="visually-hidden">Loading...</span>
+            </button>
         </div>
     </div>
 </div>
 <!--end::Step 3-->
-
-<script>
-document.getElementById('simpanPengalaman').addEventListener('click', function () {
-    const uraian = document.getElementById('uraianPengalaman').value.trim();
-    const fileInput = document.getElementById('buktiPengalaman');
-    const file = fileInput.files[0];
-
-    if (!uraian || !file) {
-        alert("Harap isi uraian dan pilih file PDF!");
-        return;
-    }
-
-    if (file.type !== "application/pdf") {
-        alert("Hanya file PDF yang diperbolehkan!");
-        return;
-    }
-
-    const tbody = document.getElementById("table-body");
-    const rowCount = tbody.rows.length + 1;
-
-    const newRow = `
-        <tr>
-            <td class="text-center">${rowCount}</td>
-            <td>${uraian}</td>
-            <td>${file.name}</td>
-        </tr>
-    `;
-
-    tbody.insertAdjacentHTML('beforeend', newRow);
-
-    // Reset modal input
-    document.getElementById('uraianPengalaman').value = '';
-    fileInput.value = '';
-
-    // Tutup modal
-    const modalElement = document.getElementById('modalPengalaman');
-    const modalInstance = bootstrap.Modal.getInstance(modalElement);
-    modalInstance.hide();
-});
-</script>

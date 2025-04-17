@@ -112,12 +112,15 @@
                 <!--begin::Actions-->
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
                     <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard</button>
-                    <button type="submit" class="btn btn-primary" id="btnSave">Save Changes</button>
+                    <button type="submit" class="btn btn-primary" id="btnSave">Save Changes
+                        <span class="spinner-border spinner-border-sm align-middle ms-2" role="status" aria-hidden="true" style="display: none;"></span>
+                        <span class="visually-hidden">Loading...</span>
+                    </button>
                 </div>
                 <!--end::Actions-->
             </form>
             <!--end::Form-->
-        </div>\\\
+        </div>
         <!--end::Content-->
     </div>
     <!--end::Basic info-->
@@ -315,24 +318,19 @@ $(document).ready(function() {
     // Handle form submit untuk profile
     $('#btnSave').click(function(e) {
         e.preventDefault();
+        const submitBtn = $(this);
+        const spinner = submitBtn.find('.spinner-border');
+
+        spinner.show();
+        submitBtn.prop('disabled', true);
+
         if (e.handled !== true) {
             e.handled = true;
 
             // Validasi form sebelum dikirim
                 var formData = new FormData($('#frmProfile')[0]); // Ambil FormData dari form yang benar
-
                 var fileInput = document.querySelector('input[name="pict"]');
                 
-                if (fileInput.files[0]) {
-                    console.log('File name:', fileInput.files[0].name);
-                    console.log('File size:', fileInput.files[0].size);
-                    console.log('File type:', fileInput.files[0].type);
-                }
-
-                // Disable tombol Save dan tampilkan indikator loading
-                $('#btnSave').attr('disabled', true)
-                    .html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...');
-
                 // Ajax request
                 $.ajax({
                     url: '<?= base_url('edit-profile') ?>', // Sesuaikan dengan route yang benar
@@ -349,6 +347,8 @@ $(document).ready(function() {
                                 text: response.message,
                                 icon: "success",
                                 confirmButtonText: "OK"
+                            }).then(function() {
+                                window.location.href = '<?= base_url('dashboard') ?>';
                             });
                         } else {
                             // Tampilkan pesan error
@@ -358,6 +358,8 @@ $(document).ready(function() {
                                 icon: "error",
                                 buttonsStyling: false,
                                 confirmButtonText: "Ok",
+                            }).then(function() {
+                                window.location.href = '<?= base_url('dashboard') ?>';
                             });
                         }
                     },
@@ -367,14 +369,18 @@ $(document).ready(function() {
                             text: "Terjadi kesalahan pada server",
                             icon: "error",
                             buttonsStyling: false,
+                            confirmButtonText: "Ok",
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }
+                        }).then(function() {
+                            window.location.href = '<?= base_url('dashboard') ?>';
                         });
                     },
                     complete: function() {
                         // Reset tombol setelah proses selesai
-                        $('#btnSave').prop('disabled', false).html('Save Changes');
+                        submitBtn.prop('disabled', false);
+                        spinner.hide();
                     }
                 });
         }

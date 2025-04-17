@@ -135,11 +135,10 @@ License: For each use you must have a valid license purchased only from above li
 				<!--end::Modal body-->
 
 				<!--begin::Modal footer-->
-				<div class="modal-footer bg-light">
-					<button type="submit" class="btn btn-primary" id="savefrm">
-						<span class="indicator-label">Save</span>
-						<span class="indicator-progress">Please wait... 
-						<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+				<div class="modal-footer bg-light" id="modalfooter">
+					<button type="submit" class="btn btn-primary" id="savefrm">Submit
+						<span class="spinner-border spinner-border-sm align-middle ms-2" role="status" aria-hidden="true" style="display: none;"></span>
+						<span class="visually-hidden">Loading...</span>
 					</button>					
 					<button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
 				</div>

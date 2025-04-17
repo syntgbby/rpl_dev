@@ -32,7 +32,6 @@
                                 <th class="min-w-15px">No</th>
                                 <th class="min-w-25px">Name</th>
                                 <th class="min-w-85px">Email</th>
-                                <!-- <th class="min-w-55px">Pict</th> -->
                                 <th class="min-w-85px">Group CD</th>
                                 <th class="min-w-75px">Status</th>
                                 <th class="min-w-100px">Action</th>
@@ -47,7 +46,7 @@
                                 <td><?= $row['email'] ?></td>
                                 <!-- <td class="text-center"><i class="<?= $row['pict'] ?>"></i></td> -->
                                 <td class="text-center"><?= $row['group_cd'] ?></td>
-                                <td class="text-center"><?= $row['status'] ?></td>
+                                <td class="text-center"><?= ($row['status'] == 'Y') ? '<span class="badge bg-success text-white">Active</span>' : '<span class="badge bg-danger text-white">Inactive</span>' ?></td>
                                 <td class="text-center">
                                     <div class="d-flex align-items-center justify-content-center gap-2">
                                         <button type="button" class="btn btn-light btn-sm btn-icon btn-active-light-primary" onClick="editUser(<?= $row['rowid'] ?>)"><i class="fa-solid fa-pen-to-square"></i></button>

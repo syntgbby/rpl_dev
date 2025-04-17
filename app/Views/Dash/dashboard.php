@@ -6,6 +6,7 @@
 <div class="d-flex flex-column flex-column-fluid">
 	<!--begin::Content-->
 	<div id="kt_app_content" class="app-content">
+		<!-- Untuk Aplikan -->
 		<!--begin::Row-->
 		<div class="row g-10">
 			<?php foreach ($data as $item) : ?>
@@ -50,6 +51,20 @@
 			<!--end::Col-->
 		</div>
 		<!--end::Row-->
+		<!-- End Untuk Aplikan -->
+
+		<!-- Untuk Admin -->
+		<div class="row g-10">
+			<div class="col-md-12">
+				<div class="card card-flush h-xl-200">
+					<div class="card-header">
+						<h4 class="card-title text-center">Data Aplikan</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Untuk Admin -->
+		
 	</div>
 	<!--end::Content-->
 </div>

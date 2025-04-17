@@ -129,7 +129,8 @@
 <script>
     // Array untuk menyimpan data pelatihan
     let dataPelatihan = [];
-    let editIndex = -1; // Tambahkan variable untuk tracking index yang sedang diedit
+    let dataPengalaman = [];
+    let editIndex = -1;
 
     // Function untuk menampilkan data ke tabel
     function renderTablePelatihan() {
@@ -201,22 +202,22 @@
         html += `
             <tr id="inputRow">
                 <td>
-                    <input type="text" class="form-control form-control-solid" id="nama_pelatihan" placeholder="Nama Pelatihan" required>
+                    <input type="text" class="form-control form-control-solid" id="nama_pelatihan" placeholder="Nama Pelatihan">
                 </td>
                 <td>
-                    <input type="text" class="form-control form-control-solid" id="penyelenggara" placeholder="Penyelenggara" required>
+                    <input type="text" class="form-control form-control-solid" id="penyelenggara" placeholder="Penyelenggara">
                 </td>
                 <td>
-                    <input type="text" class="form-control form-control-solid" id="peran_serta" placeholder="Peran Serta" required>
+                    <input type="text" class="form-control form-control-solid" id="peran_serta" placeholder="Peran Serta">
                 </td>
                 <td>
-                    <input type="number" class="form-control form-control-solid" id="durasi" placeholder="Durasi (hari)" required>
+                    <input type="number" class="form-control form-control-solid" id="durasi" placeholder="Durasi (hari)">
                 </td>
                 <td>
-                    <input type="text" class="form-control form-control-solid" id="no_sertifikat" placeholder="No. Sertifikat" required>
+                    <input type="text" class="form-control form-control-solid" id="no_sertifikat" placeholder="No. Sertifikat">
                 </td>
                 <td>
-                    <input type="number" class="form-control form-control-solid" id="tahun" placeholder="Tahun" required>
+                    <input type="number" class="form-control form-control-solid" id="tahun" placeholder="Tahun">
                 </td>
                 <td class="text-end">
                     <button type="button" class="btn btn-icon btn-light-success btn-sm" onclick="savePelatihan()">
@@ -230,6 +231,48 @@
         `;
         
         document.getElementById('tbodyPelatihan').innerHTML = html;
+    }
+
+    // Function untuk menampilkan data ke tabel
+    function renderTablePengalaman() {
+        let html = '';
+        // Tampilkan data yang sudah ada
+        dataPengalaman.forEach((item, index) => {
+            // Tampilkan data normal
+            html += `
+                <tr>
+                    <td>${item.uraian}</td>
+                    <td>${item.bukti}</td>
+                    <td class="text-end">
+                        <button type="button" class="btn btn-icon btn-light-danger btn-sm" onclick="deletePengalaman(${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        // Tambahkan baris input untuk data baru
+        html += `
+            <tr id="inputRowPengalaman">
+                <td>
+                    <input type="text" class="form-control form-control-solid" id="uraian" placeholder="Uraian Pengalaman">
+                </td>
+                <td>
+                    <input type="file" class="form-control form-control-solid" id="bukti" placeholder="Bukti">
+                </td>
+                <td class="text-end">
+                    <button type="button" class="btn btn-icon btn-light-success btn-sm" onclick="savePengalaman()">
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button type="button" class="btn btn-icon btn-light-danger btn-sm" onclick="clearInputsPengalaman()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+        
+        document.getElementById('tbodyPengalaman').innerHTML = html;
     }
 
     // Function untuk menyimpan data
@@ -274,6 +317,36 @@
         }
     }
 
+    // Function untuk menyimpan data
+    function savePengalaman() {
+        const uraian = document.getElementById('uraian').value;
+        const bukti = document.getElementById('bukti').value;
+
+        // Validasi
+        if (!uraian || !bukti) {
+            Swal.fire({
+                text: "Mohon lengkapi semua field",
+                icon: "warning",
+                buttonsStyling: false,
+                confirmButtonText: "OK",
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                }
+            });
+            return;
+        }
+
+        // Tambahkan data baru ke array
+        dataPengalaman.push({
+            uraian: uraian,
+            bukti: bukti
+        });
+
+        // Clear inputs dan render ulang tabel
+        clearInputsPengalaman();
+        renderTablePengalaman();
+    }
+
     // Function untuk membersihkan input
     function clearInputs() {
         document.getElementById('nama_pelatihan').value = '';
@@ -284,6 +357,13 @@
         document.getElementById('tahun').value = '';
         editIndex = -1;
         renderTablePelatihan(); // Render ulang untuk reset tombol save
+    }
+
+    // Function untuk membersihkan input
+    function clearInputsPengalaman() {
+        document.getElementById('uraian').value = '';
+        document.getElementById('bukti').value = '';
+        renderTablePengalaman(); // Render ulang untuk reset tombol save
     }
 
     function editPelatihan(index) {
@@ -332,7 +412,6 @@
         editIndex = -1;
         renderTablePelatihan();
     }
-
     // Function untuk menghapus data
     function deletePelatihan(index) {
         Swal.fire({
@@ -354,35 +433,69 @@
         });
     }
 
-    $(document).ready(function() {
-        $('#kt_table_pk').DataTable();
-
-        renderTablePelatihan();
-
-        $('#addPK').click(function() {
-            $('#modaltitle').html('Pengalaman lain yang relevan');
-            $('#modalbody').load("<?= base_url('aplikan/view-add-pk') ?>");
-            $('#modal').data('rowid', 0);
-            $('#modal #savefrm').remove();
-            $('#modal').modal('show');
+    // Function untuk menghapus data
+    function deletePengalaman(index) {
+        Swal.fire({
+            text: "Apakah Anda yakin ingin menghapus data ini?",
+            icon: "warning",
+            showCancelButton: true,
+            buttonsStyling: false,
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Tidak",
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: "btn btn-light"
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dataPengalaman.splice(index, 1);
+                renderTablePengalaman();
+            }
         });
+    }
 
-        $('#savefrm').on('click', function(e) {
+    // Fungsi untuk mengecek apakah semua field sudah diisi
+    function checkAllFieldsStep1() {
+        const name = $('#name').val();
+        const email = $('#email').val();
+        const tanggal_lahir = $('#tanggal_lahir').val();
+        const jenis_kelamin = $('input[name="jenis_kelamin"]:checked').length;
+        const alamat = $('#alamat').val();
+        const provinsi = $('#provinsi').val();
+        const kota = $('#kota').val();
+        const riwayat_pendidikan = $('#riwayat_pendidikan').val();
+        const tempat_pendidikan = $('#tempat_pendidikan').val();
+
+        // Cek semua field
+        if (!name || !email || !tanggal_lahir || !jenis_kelamin || !alamat || !provinsi || !kota || !riwayat_pendidikan || !tempat_pendidikan) {
+            Swal.fire({
+                title: 'Oops...',
+                text: 'Mohon lengkapi semua field yang diperlukan',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            return false;
+        }
+        return true;
+    }
+
+    // Event handler untuk tombol next
+    $('#next-step-1').click(function(e) {
+        e.preventDefault();
+        
+        if (!checkAllFieldsStep1()) {
+            return false;
+        } 
+    });
+
+    renderTablePelatihan();
+    renderTablePengalaman();
+    
+     $('#frmPendaftaran').on('submit', function(e) {
             e.preventDefault();
-            var name = $('#name').val();
-            var email = $('#email').val();
-            var tanggal_lahir = $('#tanggal_lahir').val();
-            var jenis_kelamin = $('#jenis_kelamin').val();
-            var alamat = $('#alamat').val();
-            var provinsi = $('#provinsi').val();
-            var kota = $('kota').val();
-            var kota = $('riwayat_pendidikan').val();
-            var kota = $('tempat_pendidikan').val();
-
-            // Cek apakah semua field sudah diisi
-            if (name == "" || email == "" || tanggal_lahir == "" || jenis_kelamin == "" || alamat == "" || provinsi == "" || kota == "" || riwayat_pendidikan == "" || tempat_pendidikan == "") {
-                toastr.error('All fields must be filled!');
-                return; // Jangan lanjutkan eksekusi
+            
+            if (!checkAllFieldsStep1()) {
+                return false;
             }
 
             // Menyembunyikan indikator dan menampilkan spinner
@@ -390,51 +503,72 @@
             $('.indicator-progress').show();
 
             // Menonaktifkan tombol Save untuk mencegah klik ganda
-            $('#savefrm').prop('disabled', true);
+            $('#savefrmPendaftaran').prop('disabled', true);
 
-            var formData = {
-                menu_cd: menu_cd,
-                title: title,
-                url: url,
-                parent_menucd: parent_menucd,
-                icon: icon,
-                order_seq: order_seq,
-                status: status
-            };
+            // Ambil data form
+            const formData = new FormData(this);
+            formData.append('pelatihan', JSON.stringify(dataPelatihan));
+            formData.append('pengalaman', JSON.stringify(dataPengalaman));
 
-            var actionUrl = '<?= base_url('add-master-menu') ?>'; // Ganti dengan URL yang sesuai
+            console.log(formData);
 
             // Kirim request AJAX
-            $.ajax({
-                url: actionUrl,
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    if (response.status === 'success') {
-                        toastr.success(response.message);
-                        location.reload(); // Reload halaman setelah berhasil
-                    } else {
-                        toastr.error(response.message);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    toastr.error('An error occurred while sending the request.');
-                },
-                complete: function() {
-                    // Mengembalikan status tombol setelah selesai
-                    $('#savefrm').prop('disabled', false);
-                    $('.indicator-label').show();
-                    $('.indicator-progress').hide();
-                }
-            });
+            // $.ajax({
+            //     url: $(this).attr('action'),
+            //     type: 'POST',
+            //     data: formData,
+            //     processData: false,
+            //     contentType: false,
+            //     success: function(response) {
+            //         if (response.status === 'success') {
+            //             Swal.fire({
+            //                 title: 'Sukses',
+            //                 text: response.message,
+            //                 icon: 'success',
+            //                 confirmButtonText: 'Ok'
+            //             }).then((result) => {
+            //                 if (result.isConfirmed) {
+            //                     window.location.href = '<?= base_url('Aplikan/FormPendaftaran/step-2') ?>';
+            //                 }
+            //             });
+            //         } else {
+            //             Swal.fire({
+            //                 title: 'Error',
+            //                 text: response.message,
+            //                 icon: 'error',
+            //                 confirmButtonText: 'Ok'
+            //             });
+            //         }
+            //     },
+            //     error: function(xhr, status, error) {
+            //         Swal.fire({
+            //             title: 'Error',
+            //             text: 'Terjadi kesalahan saat mengirim data',
+            //             icon: 'error',
+            //             confirmButtonText: 'Ok'
+            //         });
+            //     },
+            //     complete: function() {
+            //         // Mengembalikan status tombol setelah selesai
+            //         $('#savefrmPendaftaran').prop('disabled', false);
+            //         $('.indicator-label').show();
+            //         $('.indicator-progress').hide();
+            //     }
+            // });
         });
-    });
 
     document.addEventListener("DOMContentLoaded", function() {
         var stepper = new KTStepper(document.querySelector("#kt_stepper"));
 
         document.querySelectorAll("[data-kt-stepper-action='next']").forEach(button => {
-            button.addEventListener("click", function() {
+            button.addEventListener("click", function(e) {
+                // Cek jika tombol yang diklik adalah tombol next di step 1
+                if (this.id === 'next-step-1') {
+                    e.preventDefault();
+                    if (!checkAllFieldsStep1()) {
+                        return false;
+                    }
+                }
                 stepper.goNext();
             });
         });

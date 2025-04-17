@@ -63,6 +63,6 @@ $routes->post('/edit-password', 'Profile::updatePassword');
 $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan'], function($routes) {
     // Form Pendaftaran
     $routes->get('form-pendaftaran', 'FormPendaftaran::index');
-    $routes->get('view-add-pk', 'FormPendaftaran::addPK');
+    $routes->post('add-form', 'FormPendaftaran::store');
     // $routes->get('/view-add-pelatihan', 'FormPendaftaran::indexAdd');
 });

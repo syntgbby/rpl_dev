@@ -105,6 +105,12 @@
 
     $('#savefrm').on('click', function(e) {
         e.preventDefault();
+        const submitBtn = $(this);
+        const spinner = submitBtn.find('.spinner-border');
+
+        spinner.show();
+        submitBtn.prop('disabled', true);
+
         var rowid = $('#modal').data('rowid');
         var menu_cd = $('#menu_cd').val();
         var title = $('#title').val();
@@ -119,13 +125,6 @@
             toastr.error('All fields must be filled!');
             return;  // Jangan lanjutkan eksekusi
         }
-
-        // Menyembunyikan indikator dan menampilkan spinner
-        $('.indicator-label').hide();
-        $('.indicator-progress').show();
-
-        // Menonaktifkan tombol Save untuk mencegah klik ganda
-        $('#savefrm').prop('disabled', true);
 
         var formData = {
             rowid: rowid,
@@ -159,8 +158,8 @@
             complete: function() {
                 // Mengembalikan status tombol setelah selesai
                 $('#savefrm').prop('disabled', false);
-                $('.indicator-label').show();
-                $('.indicator-progress').hide();
+                spinner.hide();
+                submitBtn.prop('disabled', false);
             }
         });
     });
