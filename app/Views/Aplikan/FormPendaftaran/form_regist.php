@@ -106,7 +106,7 @@
             <!--end::Nav-->
 
             <!--begin::Form-->
-            <form id="frmPendaftaran" class="form" action="#" method="POST">
+            <form id="frmPendaftaran" class="form">
                 <!--begin::Step 1 - Identitas Diri-->
                 <?= $this->include('Aplikan/FormPendaftaran/Steps/step-1') ?>
                 <!--end::Step 1-->
@@ -512,49 +512,51 @@
 
             console.log(formData);
 
+            var actionUrl = '<?= base_url('aplikan/add-form') ?>';
+
             // Kirim request AJAX
-            // $.ajax({
-            //     url: $(this).attr('action'),
-            //     type: 'POST',
-            //     data: formData,
-            //     processData: false,
-            //     contentType: false,
-            //     success: function(response) {
-            //         if (response.status === 'success') {
-            //             Swal.fire({
-            //                 title: 'Sukses',
-            //                 text: response.message,
-            //                 icon: 'success',
-            //                 confirmButtonText: 'Ok'
-            //             }).then((result) => {
-            //                 if (result.isConfirmed) {
-            //                     window.location.href = '<?= base_url('Aplikan/FormPendaftaran/step-2') ?>';
-            //                 }
-            //             });
-            //         } else {
-            //             Swal.fire({
-            //                 title: 'Error',
-            //                 text: response.message,
-            //                 icon: 'error',
-            //                 confirmButtonText: 'Ok'
-            //             });
-            //         }
-            //     },
-            //     error: function(xhr, status, error) {
-            //         Swal.fire({
-            //             title: 'Error',
-            //             text: 'Terjadi kesalahan saat mengirim data',
-            //             icon: 'error',
-            //             confirmButtonText: 'Ok'
-            //         });
-            //     },
-            //     complete: function() {
-            //         // Mengembalikan status tombol setelah selesai
-            //         $('#savefrmPendaftaran').prop('disabled', false);
-            //         $('.indicator-label').show();
-            //         $('.indicator-progress').hide();
-            //     }
-            // });
+            $.ajax({
+                url: actionUrl,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            title: 'Sukses',
+                            text: response.message,
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '<?= base_url('Aplikan/FormPendaftaran/step-2') ?>';
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.message,
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Terjadi kesalahan saat mengirim data',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                },
+                complete: function() {
+                    // Mengembalikan status tombol setelah selesai
+                    $('#savefrmPendaftaran').prop('disabled', false);
+                    $('.indicator-label').show();
+                    $('.indicator-progress').hide();
+                }
+            });
         });
 
     document.addEventListener("DOMContentLoaded", function() {

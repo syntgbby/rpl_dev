@@ -18,7 +18,6 @@ class FormPendaftaran extends BaseController
 
     public function store()
     {
-        $data = $this->request->getVar();
-        dd($data);
+        dd($this->request->getVar());
     }
 }
