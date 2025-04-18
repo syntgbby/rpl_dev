@@ -5,52 +5,52 @@
 
         <div class="fv-row mb-7">
             <label class="fs-6 fw-semibold form-label mt-3">Nama Perusahaan / lembaga : </label>
-            <input type="text" class="form-control form-control-solid" name="nama_perusahaan" />
+            <input type="text" class="form-control form-control-solid" name="nama_company" />
         </div>
 
         <div class="fv-row mb-7">
             <label class="fs-6 fw-semibold form-label mt-3">Alamat</label>
-            <textarea class="form-control form-control-solid" name="alamat"></textarea>
+            <textarea class="form-control form-control-solid" name="alamat_company"></textarea>
         </div>
 
         <div class="row mb-7">
             <div class="col">
                 <label class="fs-6 fw-semibold form-label mt-3">Provinsi</label>
-                <input type="text" class="form-control form-control-solid" name="provinsi" />
+                <input type="text" class="form-control form-control-solid" name="provinsi_company" />
             </div>
             <div class="col">
                 <label class="fs-6 fw-semibold form-label mt-3">Kota</label>
-                <input type="text" class="form-control form-control-solid" name="kota" />
+                <input type="text" class="form-control form-control-solid" name="kota_company" />
             </div>
             <div class="col">
                 <label class="fs-6 fw-semibold form-label mt-3">Negara </label>
-                <input type="text" class="form-control form-control-solid" name="negara" />
+                <input type="text" class="form-control form-control-solid" name="negara_company" />
             </div>
         </div>
 
         <div class="row mb-7">
             <div class="col">
                 <label class="fs-6 fw-semibold form-label mt-3">Kode Pos</label>
-                <input type="text" class="form-control form-control-solid" name="kode_pos" />
+                <input type="text" class="form-control form-control-solid" name="kode_pos_company" />
             </div>
             <div class="col">
                 <label class="fs-6 fw-semibold form-label mt-3">Phone Hp</label>
-                <input type="text" class="form-control form-control-solid" name="hp" />
+                <input type="text" class="form-control form-control-solid" name="hp_company" />
             </div>
         </div>
 
         <div class="row mb-7">
             <div class="col">
                 <label class="fs-6 fw-semibold form-label mt-3">Lama kerja</label>
-                <input type="text" class="form-control form-control-solid" name="provinsi" />
+                <input type="text" class="form-control form-control-solid" name="lama_kerja" />
             </div>
             <div class="col">
                 <label class="fs-6 fw-semibold form-label mt-3">Sejak</label>
-                <input type="date" class="form-control form-control-solid" name="kota" />
+                <input type="date" class="form-control form-control-solid" name="start_work" />
             </div>
             <div class="col">
                 <label class="fs-6 fw-semibold form-label mt-3">Sampai</label>
-                <input type="date" class="form-control form-control-solid" name="negara" />
+                <input type="date" class="form-control form-control-solid" name="end_work" />
             </div>
         </div>
 
@@ -62,11 +62,11 @@
         <div class="row mb-7">
             <div class="col">
                 <label class="fs-6 fw-semibold form-label mt-3">Nama</label>
-                <input type="text" class="form-control form-control-solid" name="nama" />
+                <input type="text" class="form-control form-control-solid" name="nama_pihak_company" />
             </div>
             <div class="col">
                 <label class="fs-6 fw-semibold form-label mt-3">No. HP</label>
-                <input type="text" class="form-control form-control-solid" name="hp" />
+                <input type="text" class="form-control form-control-solid" name="hp_pihak_company" />
             </div>
         </div>
 
@@ -85,7 +85,7 @@
             <div class="col-5">
                 <div class="d-flex flex-column">
                     <label class="fs-6 fw-semibold form-label">Posisi</label>
-                    <input type="text" class="form-control form-control-solid" name="posisi[]" />
+                    <input type="text" class="form-control form-control-solid" name="posisi_1" />
                 </div>
             </div>
 
@@ -93,7 +93,7 @@
             <div class="col-5">
                 <div class="d-flex flex-column">
                     <label class="fs-6 fw-semibold form-label">Lama Waktu (Bulan)</label>
-                    <input type="number" class="form-control form-control-solid" name="lamawaktu[]" />
+                    <input type="number" class="form-control form-control-solid" name="lamawaktu_1" />
                 </div>
             </div>
         </div>
@@ -108,7 +108,7 @@
             <div class="col-5">
                 <div class="d-flex flex-column">
                     <label class="fs-6 fw-semibold form-label">Posisi</label>
-                    <input type="text" class="form-control form-control-solid" name="posisi[]" />
+                    <input type="text" class="form-control form-control-solid" name="posisi_2" />
                 </div>
             </div>
 
@@ -116,7 +116,7 @@
             <div class="col-5">
                 <div class="d-flex flex-column">
                     <label class="fs-6 fw-semibold form-label">Lama Waktu (Bulan)</label>
-                    <input type="number" class="form-control form-control-solid" name="lamawaktu[]" />
+                    <input type="number" class="form-control form-control-solid" name="lamawaktu_2" />
                 </div>
             </div>
         </div>
@@ -131,7 +131,7 @@
             <div class="col-5">
                 <div class="d-flex flex-column">
                     <label class="fs-6 fw-semibold form-label">Posisi</label>
-                    <input type="text" class="form-control form-control-solid" name="posisi[]" />
+                    <input type="text" class="form-control form-control-solid" name="posisi_3" />
                 </div>
             </div>
 
@@ -139,7 +139,7 @@
             <div class="col-5">
                 <div class="d-flex flex-column">
                     <label class="fs-6 fw-semibold form-label">Lama Waktu (Bulan)</label>
-                    <input type="number" class="form-control form-control-solid" name="lamawaktu[]" />
+                    <input type="number" class="form-control form-control-solid" name="lamawaktu_3" />
                 </div>
             </div>
         </div> 

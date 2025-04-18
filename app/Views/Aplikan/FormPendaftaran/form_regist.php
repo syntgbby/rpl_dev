@@ -45,7 +45,7 @@
                 <div class="stepper-item mx-8 my-4" data-kt-stepper-element="nav" data-kt-stepper-action="step">
                     <!--begin::Wrapper-->
                     <div class="stepper-wrapper d-flex align-items-center">
-                        <!--begin::Icon-->
+                        <!--begin::Icon-->  
                         <div class="stepper-icon w-40px h-40px">
                             <i class="stepper-check fas fa-check"></i>
                             <span class="stepper-number">2</span>
@@ -56,7 +56,7 @@
                         <div class="stepper-label">
                             <h3 class="stepper-title">
                                 Step 2
-                            </h3>
+                            </h3> 
 
                             <div class="stepper-desc">
                                 Pelatihan Kerja
@@ -106,7 +106,7 @@
             <!--end::Nav-->
 
             <!--begin::Form-->
-            <form id="frmPendaftaran" class="form">
+            <form id="frmPendaftaran">
                 <!--begin::Step 1 - Identitas Diri-->
                 <?= $this->include('Aplikan/FormPendaftaran/Steps/step-1') ?>
                 <!--end::Step 1-->
@@ -133,7 +133,7 @@
     let editIndex = -1;
 
     // Function untuk menampilkan data ke tabel
-    function renderTablePelatihan() {
+    function renderTablePelatihan() {  
         let html = '';
         // Tampilkan data yang sudah ada
         dataPelatihan.forEach((item, index) => {
@@ -163,7 +163,7 @@
                         </td>
                         <td>
                             <input type="number" class="form-control form-control-solid" id="edit_tahun_${index}" 
-                                value="${item.tahun}" placeholder="Tahun" required>
+                                value="${item.tahun_pelatihan}" placeholder="Tahun" required>
                         </td>
                         <td class="text-end">
                             <button type="button" class="btn btn-icon btn-light-success btn-sm" onclick="updatePelatihan(${index})">
@@ -184,7 +184,7 @@
                         <td>${item.peran_serta}</td>
                         <td>${item.durasi}</td>
                         <td>${item.no_sertifikat}</td>
-                        <td>${item.tahun}</td>
+                        <td>${item.tahun_pelatihan}</td>
                         <td class="text-end">
                             <button type="button" class="btn btn-icon btn-light-success btn-sm" onclick="editPelatihan(${index})">
                                 <i class="fas fa-edit"></i>
@@ -217,7 +217,7 @@
                     <input type="text" class="form-control form-control-solid" id="no_sertifikat" placeholder="No. Sertifikat">
                 </td>
                 <td>
-                    <input type="number" class="form-control form-control-solid" id="tahun" placeholder="Tahun">
+                    <input type="number" class="form-control form-control-solid" id="tahun_pelatihan" placeholder="Tahun">
                 </td>
                 <td class="text-end">
                     <button type="button" class="btn btn-icon btn-light-success btn-sm" onclick="savePelatihan()">
@@ -241,8 +241,8 @@
             // Tampilkan data normal
             html += `
                 <tr>
-                    <td>${item.uraian}</td>
-                    <td>${item.bukti}</td>
+                    <td>${item.uraian_pengalaman}</td>
+                    <td>${item.bukti_pengalaman}</td>
                     <td class="text-end">
                         <button type="button" class="btn btn-icon btn-light-danger btn-sm" onclick="deletePengalaman(${index})">
                             <i class="fas fa-trash"></i>
@@ -256,10 +256,10 @@
         html += `
             <tr id="inputRowPengalaman">
                 <td>
-                    <input type="text" class="form-control form-control-solid" id="uraian" placeholder="Uraian Pengalaman">
+                    <input type="text" class="form-control form-control-solid" id="uraian_pengalaman" placeholder="Uraian Pengalaman">
                 </td>
                 <td>
-                    <input type="file" class="form-control form-control-solid" id="bukti" placeholder="Bukti">
+                    <input type="file" class="form-control form-control-solid" id="bukti_pengalaman" placeholder="Bukti" name="bukti_pengalaman[]">
                 </td>
                 <td class="text-end">
                     <button type="button" class="btn btn-icon btn-light-success btn-sm" onclick="savePengalaman()">
@@ -285,7 +285,7 @@
             const peran_serta = document.getElementById('peran_serta').value;
             const durasi = document.getElementById('durasi').value;
             const no_sertifikat = document.getElementById('no_sertifikat').value;
-            const tahun = document.getElementById('tahun').value;
+            const tahun = document.getElementById('tahun_pelatihan').value;
 
             // Validasi
             if (!nama_pelatihan || !penyelenggara || !peran_serta || !durasi || !no_sertifikat || !tahun) {
@@ -308,7 +308,7 @@
                 peran_serta: peran_serta,
                 durasi: durasi,
                 no_sertifikat: no_sertifikat,
-                tahun: tahun
+                tahun_pelatihan: tahun
             });
 
             // Clear inputs dan render ulang tabel
@@ -319,8 +319,8 @@
 
     // Function untuk menyimpan data
     function savePengalaman() {
-        const uraian = document.getElementById('uraian').value;
-        const bukti = document.getElementById('bukti').value;
+        const uraian = document.getElementById('uraian_pengalaman').value;
+        const bukti = document.getElementById('bukti_pengalaman').value;
 
         // Validasi
         if (!uraian || !bukti) {
@@ -338,8 +338,8 @@
 
         // Tambahkan data baru ke array
         dataPengalaman.push({
-            uraian: uraian,
-            bukti: bukti
+            uraian_pengalaman: uraian,
+            bukti_pengalaman: bukti
         });
 
         // Clear inputs dan render ulang tabel
@@ -354,15 +354,15 @@
         document.getElementById('peran_serta').value = '';
         document.getElementById('durasi').value = '';
         document.getElementById('no_sertifikat').value = '';
-        document.getElementById('tahun').value = '';
+        document.getElementById('tahun_pelatihan').value = '';
         editIndex = -1;
         renderTablePelatihan(); // Render ulang untuk reset tombol save
     }
 
     // Function untuk membersihkan input
     function clearInputsPengalaman() {
-        document.getElementById('uraian').value = '';
-        document.getElementById('bukti').value = '';
+        document.getElementById('uraian_pengalaman').value = '';
+        document.getElementById('bukti_pengalaman').value = '';
         renderTablePengalaman(); // Render ulang untuk reset tombol save
     }
 
@@ -400,7 +400,7 @@
             peran_serta: peran_serta,
             durasi: durasi,
             no_sertifikat: no_sertifikat,
-            tahun: tahun
+            tahun_pelatihan: tahun
         };
 
         // Reset edit mode dan render ulang
@@ -490,74 +490,6 @@
 
     renderTablePelatihan();
     renderTablePengalaman();
-    
-     $('#frmPendaftaran').on('submit', function(e) {
-            e.preventDefault();
-            
-            if (!checkAllFieldsStep1()) {
-                return false;
-            }
-
-            // Menyembunyikan indikator dan menampilkan spinner
-            $('.indicator-label').hide();
-            $('.indicator-progress').show();
-
-            // Menonaktifkan tombol Save untuk mencegah klik ganda
-            $('#savefrmPendaftaran').prop('disabled', true);
-
-            // Ambil data form
-            const formData = new FormData(this);
-            formData.append('pelatihan', JSON.stringify(dataPelatihan));
-            formData.append('pengalaman', JSON.stringify(dataPengalaman));
-
-            console.log(formData);
-
-            var actionUrl = '<?= base_url('aplikan/add-form') ?>';
-
-            // Kirim request AJAX
-            $.ajax({
-                url: actionUrl,
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    if (response.status === 'success') {
-                        Swal.fire({
-                            title: 'Sukses',
-                            text: response.message,
-                            icon: 'success',
-                            confirmButtonText: 'Ok'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.href = '<?= base_url('Aplikan/FormPendaftaran/step-2') ?>';
-                            }
-                        });
-                    } else {
-                        Swal.fire({
-                            title: 'Error',
-                            text: response.message,
-                            icon: 'error',
-                            confirmButtonText: 'Ok'
-                        });
-                    }
-                },
-                error: function(xhr, status, error) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Terjadi kesalahan saat mengirim data',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    });
-                },
-                complete: function() {
-                    // Mengembalikan status tombol setelah selesai
-                    $('#savefrmPendaftaran').prop('disabled', false);
-                    $('.indicator-label').show();
-                    $('.indicator-progress').hide();
-                }
-            });
-        });
 
     document.addEventListener("DOMContentLoaded", function() {
         var stepper = new KTStepper(document.querySelector("#kt_stepper"));
@@ -579,6 +511,56 @@
             button.addEventListener("click", function() {
                 stepper.goPrevious();
             });
+        });
+    });
+
+    $('#savefrmPendaftaran').on('click', function(e) {
+        e.preventDefault();
+        const submitBtn = $(this);
+        const spinner = submitBtn.find('.spinner-border');
+
+        spinner.show();
+        submitBtn.prop('disabled', true);
+
+        const formElement = document.getElementById("frmPendaftaran");
+        const formData = new FormData(formElement);
+            formData.append('pelatihan', JSON.stringify(dataPelatihan));
+            formData.append('pengalaman', JSON.stringify(dataPengalaman));
+
+        // Tambah file-file pengalaman manual karena gak semua input file masuk ke <form>
+        const fileInputs = document.querySelectorAll('input[type="file"][name="bukti_pengalaman[]"]');
+        fileInputs.forEach(fileInput => {
+            if (fileInput.files.length > 0) {
+                formData.append('bukti_pengalaman[]', fileInput.files[0]);
+            }
+        });
+
+        var actionUrl = '<?= base_url('aplikan/add-form') ?>'; // Ganti dengan URL yang sesuai
+
+        // // Kirim request AJAX
+        $.ajax({
+            url: actionUrl,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.status === 'success') {
+                    toastr.success(response.message);
+                    location.reload();  // Reload halaman setelah berhasil
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                toastr.error('An error occurred while sending the request.');
+            },
+            complete: function() {
+                // Mengembalikan status tombol setelah selesai
+                $('#savefrmPendaftaran').prop('disabled', false);
+                spinner.hide();
+                submitBtn.prop('disabled', false);
+            }
         });
     });
 </script>

@@ -101,7 +101,7 @@
                 </label>
                 <select required class="form-select form-select-md form-select-solid text-sm h-40px" data-control="select2" name="riwayat_pendidikan" id="riwayat_pendidikan" data-placeholder="Pilih Pend. Terakhir">
                     <option></option>
-                    <option value="SMA">SMA/SMK</option>
+                    <option value="SMA-SMK">SMA/SMK</option>
                     <option value="D3">D3</option>
                     <option value="S1">S1</option>
                     <option value="S2">S2</option>
