@@ -96,32 +96,37 @@ class FormPendaftaran extends BaseController
             // ---------- INSERT PENGALAMAN ----------
             if (!empty($data['pengalaman'])) {
                 $pengalaman = json_decode($data['pengalaman'], true);
-                $files = $this->request->getFileMultiple('bukti_pengalaman');
-
-                foreach ($pengalaman as $index => $row) {
-                    $uploadedFile = $files[$index] ?? null; // pakai null-safe
-
-                    $pathToStore = null;
+                $files = $this->request->getFile('bukti_pengalaman');
+                log_message('debug', 'FILES: ' . print_r($files, true));
+            
+                foreach ($pengalaman as $index) {
+                    $uploadedFile = $files[$index];
+            
                     if ($uploadedFile && $uploadedFile->isValid() && !$uploadedFile->hasMoved()) {
                         $ext = $uploadedFile->getClientExtension();
                         $folderPath = 'uploads/bukti-pengalaman/' . $form_id;
-
+            
                         if (!is_dir($folderPath)) {
                             mkdir($folderPath, 0755, true);
                         }
-
+            
                         $filename = $form_id . '_' . $index . '.' . $ext;
                         $uploadedFile->move($folderPath, $filename);
                         $pathToStore = $folderPath . '/' . $filename;
+            
+                        $url = base_url($pathToStore);
+                    }  else {
+                        log_message('error', "File tidak valid atau tidak ditemukan di index $index");
                     }
-
+            
+                    // ⬇️ INSERT di dalam foreach setelah semua siap
                     $builderPengalaman->insert([
                         'form_id' => $form_id,
-                        'uraian_pengalaman' => $row['uraian_pengalaman'],
-                        'bukti_pengalaman' => $pathToStore,
+                        'uraian_pengalaman' => $index['uraian_pengalaman'],
+                        'bukti_pengalaman' => $url,
                     ]);
                 }
-            }            
+            }                   
 
             $response = [
                 'status' => 'success',

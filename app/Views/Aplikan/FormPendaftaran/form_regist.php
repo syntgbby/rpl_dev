@@ -106,7 +106,7 @@
             <!--end::Nav-->
 
             <!--begin::Form-->
-            <form id="frmPendaftaran">
+            <form id="frmPendaftaran" class="form" enctype="multipart/form-data">
                 <!--begin::Step 1 - Identitas Diri-->
                 <?= $this->include('Aplikan/FormPendaftaran/Steps/step-1') ?>
                 <!--end::Step 1-->
@@ -256,10 +256,10 @@
         html += `
             <tr id="inputRowPengalaman">
                 <td>
-                    <input type="text" class="form-control form-control-solid" id="uraian_pengalaman" placeholder="Uraian Pengalaman">
+                    <input type="text" class="form-control form-control-solid" id="uraian_pengalaman" placeholder="Uraian Pengalaman" name="uraian_pengalaman">
                 </td>
                 <td>
-                    <input type="file" class="form-control form-control-solid" id="bukti_pengalaman" placeholder="Bukti" name="bukti_pengalaman[]">
+                    <input type="file" accept=".pdf" class="form-control form-control-solid" id="bukti_pengalaman" placeholder="Bukti Pengalaman" name="bukti_pengalaman[]">
                 </td>
                 <td class="text-end">
                     <button type="button" class="btn btn-icon btn-light-success btn-sm" onclick="savePengalaman()">
@@ -320,7 +320,8 @@
     // Function untuk menyimpan data
     function savePengalaman() {
         const uraian = document.getElementById('uraian_pengalaman').value;
-        const bukti = document.getElementById('bukti_pengalaman').value;
+        const buktiInput = document.getElementById('bukti_pengalaman');
+        const bukti = buktiInput.files[0];
 
         // Validasi
         if (!uraian || !bukti) {
@@ -339,7 +340,7 @@
         // Tambahkan data baru ke array
         dataPengalaman.push({
             uraian_pengalaman: uraian,
-            bukti_pengalaman: bukti
+            bukti_pengalaman: bukti.name
         });
 
         // Clear inputs dan render ulang tabel
@@ -527,6 +528,10 @@
             formData.append('pelatihan', JSON.stringify(dataPelatihan));
             formData.append('pengalaman', JSON.stringify(dataPengalaman));
 
+            for (let pair of formData.entries()) {
+                console.log(pair[0]+ ', ' + pair[1]);
+            }
+
         // Tambah file-file pengalaman manual karena gak semua input file masuk ke <form>
         const fileInputs = document.querySelectorAll('input[type="file"][name="bukti_pengalaman[]"]');
         fileInputs.forEach(fileInput => {
@@ -547,7 +552,7 @@
             success: function(response) {
                 if (response.status === 'success') {
                     toastr.success(response.message);
-                    location.reload();  // Reload halaman setelah berhasil
+                    // location.reload();  // Reload halaman setelah berhasil
                 } else {
                     toastr.error(response.message);
                 }
