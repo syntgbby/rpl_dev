@@ -11,42 +11,26 @@
         <!--end::Heading-->
         <!--begin::Statistics-->
         <div class="d-flex flex-center">
-            <!--begin::Items-->
-            <div class="d-flex flex-wrap flex-center justify-content-lg-between mb-15 mx-auto w-100 max-w-900px">
-                <!--begin::Item-->
-                <div class="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain p-5 text-center" style="background-image: url('assets/media/svg/misc/octagon.svg'); background-size: cover;">
-                <span class="text-white fw-semibold fs-5 mb-5">Gelombang Pertama</span>
-                    <!--begin::Info-->
-                    <div class="mt-3 text-gray-400 fw-semibold text-center mb-3">
-                        10 Desember 2024 <br> - <br> 10 Januari 2025
+            <?php foreach ($gelombang as $g): ?>
+                <!--begin::Items-->
+                <div class="d-flex flex-wrap flex-center justify-content-lg-between mb-15 mx-auto w-100 max-w-900px">
+                    <!--begin::Item-->
+                    <div class="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain p-5 text-center"
+                        style="background-image: url('assets/media/svg/misc/octagon.svg'); background-size: cover;">
+                        <span class="text-white fw-semibold fs-5 mb-5">
+                            <?= $g['nama_gelombang']; ?>
+                        </span>
+                        <!--begin::Info-->
+                        <div class="mt-3 text-gray-400 fw-semibold text-center mb-3">
+                            <?= tanggal_indo($g['tanggal_mulai']); ?> <br> - <br>
+                            <?= tanggal_indo($g['tanggal_selesai']); ?>
+                        </div>
+                        <!--end::Info-->
                     </div>
-                    <!--end::Info-->
+                    <!--end::Item-->
                 </div>
-                <!--end::Item-->
-                
-                <!--begin::Item-->
-                <div class="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain p-5 text-center" style="background-image: url('assets/media/svg/misc/octagon.svg'); background-size: cover;">
-                <span class="text-white fw-semibold fs-5 mb-5">Gelombang Kedua</span>
-                    <!--begin::Info-->
-                    <div class="mt-3 text-gray-400 fw-semibold text-center mb-3">
-                        10 Februari 2025 <br> - <br> 10 Maret 2025
-                    </div>
-                    <!--end::Info-->
-                </div>
-                <!--end::Item-->
-                
-                <!--begin::Item-->
-                <div class="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain p-5 text-center" style="background-image: url('assets/media/svg/misc/octagon.svg'); background-size: cover;">
-                <span class="text-white fw-semibold fs-5 mb-5">Gelombang Ketiga</span>
-                    <!--begin::Info-->
-                    <div class="mt-3 text-gray-400 fw-semibold text-center mb-3">
-                        10 Maret 2025 <br> - <br> 10 April 2025
-                    </div>
-                    <!--end::Info-->
-                </div>
-                <!--end::Item-->
-            </div>
-            <!--end::Items-->
+                <!--end::Items-->
+            <?php endforeach ?>
         </div>
         <!--end::Statistics-->
     </div>

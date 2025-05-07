@@ -1,23 +1,34 @@
 <?php
 
 namespace App\Controllers;
+
 use CodeIgniter\Controller;
+
+use App\Models\ProdiModel;
+use App\Models\GelombangModel;
 
 class LandingPage extends Controller
 {
     public function index()
     {
-        $db = \Config\Database::connect();
-        $total = $db->table('users')->countAllResults();
-        // dd($total);
+        $gelombangModel = new GelombangModel();
+        $prodiModel = new ProdiModel();
 
-        $prodi = $db->table('master_prodi')->orderBy('prodi_name', 'ASC')->get()->getResultArray();
-        
-        $data = [
-            'total_user' => $total,
-            'prodi' => $prodi
-        ];
+        $data['gelombang'] = $gelombangModel->findAll();
+        $data['prodi'] = $prodiModel->findAll();
 
         return view('LandingPage/template', $data);
+    }
+
+    public function detailProdi($slug)
+    {
+        $prodiModel = new ProdiModel();
+        $data['prodi'] = $prodiModel->where('slug', $slug)->first();
+
+        if (!$data['prodi']) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        return view('LandingPage/detail_prodi', $data);
     }
 }

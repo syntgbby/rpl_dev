@@ -2,17 +2,25 @@
 
 namespace App\Controllers;
 
+use App\Models\UserModel;
+
 class Profile extends BaseController
 {
     public function indexEdit($hashEmail)
     {
         $email = base64_decode($hashEmail);
-        $db = \config\Database::connect();
-        $query = $db->query("SELECT * FROM users WHERE email = '$email'")->getResultArray();
+        $users = new UserModel();
+
+        // Ambil data user berdasarkan email
+        $query = $users->where('email', $email)->first();
+        // dd($query);
+
+        if (!$query) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException("User tidak ditemukan.");
+        }
 
         return $this->render('Aplikan/editprofile', ['get' => $query]);
     }
-
     public function updateProfile()
     {
         try {
@@ -27,7 +35,7 @@ class Profile extends BaseController
             $telepon = $data['telepon'];
             $jenis_kelamin = $data['jenis_kelamin'];
             $agama = $data['agama'];
-            
+
             // Data untuk update
             $data = [
                 'name' => $name,
@@ -59,8 +67,8 @@ class Profile extends BaseController
 
             // Update data
             $db->table('users')
-            ->where('email', $email)
-            ->update($data);
+                ->where('email', $email)
+                ->update($data);
 
             return $this->response->setJSON([
                 'status' => 'success',
@@ -93,22 +101,22 @@ class Profile extends BaseController
             }
 
             $passHash = strtoupper(md5(strtoupper(md5($emailaddress)) . 'P@ssw0rd' . $confirmemailpassword));
-            
+
             $dt_update = [
                 'email' => $emailaddress,
                 'pass_hash' => $passHash
             ];
 
             $update = $db->table('users')
-            ->where('email', $email)
-            ->update($dt_update);
+                ->where('email', $email)
+                ->update($dt_update);
 
             if ($update) {
                 return $this->response->setJSON([
                     'status' => 'success',
                     'message' => 'Email berhasil diupdate'
                 ]);
-                
+
                 $session = session();
                 $session->remove('is_login');
                 $session->destroy();
@@ -124,7 +132,7 @@ class Profile extends BaseController
                 'status' => 'error',
                 'message' => 'Terjadi kesalahan: ' . $e->getMessage()
             ]);
-        }   
+        }
     }
-    
+
 }

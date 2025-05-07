@@ -3,27 +3,21 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Models\UserModel;
 
 class Users extends BaseController
 {
     public function index(): string
     {
-        $db = \Config\Database::connect();
-        $query = $db->table("users")->get()->getResultArray();
-        $data = [
-            'data' => $query
-        ];
+        $model = new UserModel();
+        $data['users'] = $model->findAll();
+
         return $this->render('Admin/Users/master_users', $data);
     }
 
     public function indexAdd()
     {
-        $db = \Config\Database::connect();
-        $query = $db->table("master_user")->get()->getResultArray();
-        $data = [
-            'group' => $query
-        ];
-        return $this->render('Admin/Users/add_user', $data);
+        return $this->render('Admin/Users/add_user');
     }
 
     public function getById($rowid)
@@ -111,7 +105,7 @@ class Users extends BaseController
         $rowid = $data['rowid'];
 
         $db = \Config\Database::connect();
-        
+
         $query = $db->table("users")->where("rowid", $rowid)->delete();
 
         if ($query) {

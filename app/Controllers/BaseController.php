@@ -8,6 +8,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use App\Models\UserModel;
 
 /**
  * Class BaseController
@@ -74,14 +75,14 @@ abstract class BaseController extends Controller
         $session = \config\Services::session();
         $name = $session->get('name');
         $email = $session->get('email');
-        $group_cd = $session->get('group_cd');
+        $role = $session->get('role');
         $pict = $session->get('pict');
 
         $data = [
             'name' => $name,
             'email' => $email,
-            'group_cd' => $group_cd,
-            'pict' => $pict,
+            'role' => $role,
+            'pict' => $pict
         ];
 
         return $data;
@@ -91,10 +92,11 @@ abstract class BaseController extends Controller
     public function render($view, $data = [])
     {
         // Merge the $menu with any other data passed to the view
-        $data['menu'] = $this->getMenu();
+        // $data['menu'] = $this->getMenu();
         $data['year'] = $this->getYear();
         $data['user'] = $this->getUser();
-        
+        // dd($data['user']);
+
         return view($view, $data);
     }
 }
