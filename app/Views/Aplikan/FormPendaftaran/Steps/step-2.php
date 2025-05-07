@@ -30,7 +30,11 @@
 
         <div class="d-flex justify-content-between mt-5">
             <button type="button" class="btn btn-light" data-kt-stepper-action="previous">Back</button>
-            <button type="button" class="btn btn-primary" data-kt-stepper-action="next">Next</button>
+            <button type="submit" class="btn btn-success" name="savefrmPendaftaran" id="savefrmPendaftaran">Submit
+                <span class="spinner-border spinner-border-sm align-middle ms-2" role="status" aria-hidden="true" style="display: none;"></span>
+                <span class="visually-hidden">Loading...</span>
+            </button>
+            <!-- <button type="button" class="btn btn-primary" data-kt-stepper-action="next">Next</button> -->
         </div>
     </div>
 </div>

@@ -77,14 +77,14 @@
                     <!--begin::Wrapper-->
                     <div class="stepper-wrapper d-flex align-items-center">
                         <!--begin::Icon-->
-                        <div class="stepper-icon w-40px h-40px">
+                        <!-- <div class="stepper-icon w-40px h-40px">
                             <i class="stepper-check fas fa-check"></i>
                             <span class="stepper-number">3</span>
-                        </div>
+                        </div> -->
                         <!--end::Icon-->
 
                         <!--begin::Label-->
-                        <div class="stepper-label">
+                        <!-- <div class="stepper-label">
                             <h3 class="stepper-title">
                                 Step 3
                             </h3>
@@ -92,7 +92,7 @@
                             <div class="stepper-desc">
                                 Pengalaman Kerja
                             </div>
-                        </div>
+                        </div> -->
                         <!--end::Label-->
                     </div>
                     <!--end::Wrapper-->
@@ -116,7 +116,7 @@
                 <!--end::Step 2-->
 
                 <!--begin::Step 3 - Pengalaman Kerja-->
-                <?= $this->include('Aplikan/FormPendaftaran/Steps/step-3') ?>
+                <!-- <?= $this->include('Aplikan/FormPendaftaran/Steps/step-3') ?> -->
                 <!--end::Step 3-->
             </form>
             <!--end::Form-->
@@ -259,7 +259,7 @@
                     <input type="text" class="form-control form-control-solid" id="uraian_pengalaman" placeholder="Uraian Pengalaman" name="uraian_pengalaman">
                 </td>
                 <td>
-                    <input type="file" accept=".pdf" class="form-control form-control-solid" id="bukti_pengalaman" placeholder="Bukti Pengalaman" name="bukti_pengalaman[]">
+                    <input type="file" class="form-control form-control-solid" id="bukti_pengalaman" placeholder="Bukti Pengalaman" name="bukti_pengalaman[]" multiple>
                 </td>
                 <td class="text-end">
                     <button type="button" class="btn btn-icon btn-light-success btn-sm" onclick="savePengalaman()">

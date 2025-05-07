@@ -54,6 +54,7 @@ class FormPendaftaran extends BaseController
             'nama_pihak_company' => $data['nama_pihak_company'],
             'telp_pihak_company' => $data['hp_pihak_company'],
             'tahun_angkatan' => date('Y'),
+            'upload_status' => '1',
             'audit_date' => date('Y-m-d H:i:s'),
         ];
 
@@ -92,41 +93,6 @@ class FormPendaftaran extends BaseController
                     ]);
                 }
             }
-    
-            // ---------- INSERT PENGALAMAN ----------
-            if (!empty($data['pengalaman'])) {
-                $pengalaman = json_decode($data['pengalaman'], true);
-                $files = $this->request->getFile('bukti_pengalaman');
-                log_message('debug', 'FILES: ' . print_r($files, true));
-            
-                foreach ($pengalaman as $index) {
-                    $uploadedFile = $files[$index];
-            
-                    if ($uploadedFile && $uploadedFile->isValid() && !$uploadedFile->hasMoved()) {
-                        $ext = $uploadedFile->getClientExtension();
-                        $folderPath = 'uploads/bukti-pengalaman/' . $form_id;
-            
-                        if (!is_dir($folderPath)) {
-                            mkdir($folderPath, 0755, true);
-                        }
-            
-                        $filename = $form_id . '_' . $index . '.' . $ext;
-                        $uploadedFile->move($folderPath, $filename);
-                        $pathToStore = $folderPath . '/' . $filename;
-            
-                        $url = base_url($pathToStore);
-                    }  else {
-                        log_message('error', "File tidak valid atau tidak ditemukan di index $index");
-                    }
-            
-                    // ⬇️ INSERT di dalam foreach setelah semua siap
-                    $builderPengalaman->insert([
-                        'form_id' => $form_id,
-                        'uraian_pengalaman' => $index['uraian_pengalaman'],
-                        'bukti_pengalaman' => $url,
-                    ]);
-                }
-            }                   
 
             $response = [
                 'status' => 'success',
@@ -142,4 +108,11 @@ class FormPendaftaran extends BaseController
         }
     }
 
+    public function storeFile()
+    {
+        $data = $this->request->getVar();
+        $db = \Config\Database::connect();
+        $builderPengalaman = $db->table('pengalaman_rpl');
+        
+    }
 }
