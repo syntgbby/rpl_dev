@@ -10,6 +10,9 @@
     <link href="<?= base_url('assets/plugins/global/plugins.bundle.css') ?>" rel="stylesheet" type="text/css" />
     <link href="<?= base_url('assets/css/style.bundle.css') ?>" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.1/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 </head>
 
 <body>
@@ -33,23 +36,23 @@
 
                             <div class="fv-row mb-5">
                                 <input type="text" placeholder="Name" name="username" id="username"
-                                    class="form-control bg-transparent" required />
+                                    class="form-control form-control-lg" required />
                             </div>
                             <div class="fv-row mb-5">
                                 <input type="email" placeholder="Email" name="email" id="email"
-                                    class="form-control bg-transparent" required />
+                                    class="form-control form-control-lg" required />
                             </div>
                             <div class="fv-row mb-3">
                                 <input type="password" placeholder="Password" name="password" id="password"
-                                    class="form-control bg-transparent" required />
+                                    class="form-control form-control-lg" required />
                             </div>
                             <div class="fv-row mb-10">
                                 <input type="password" placeholder="Confirm Password" name="confirm_password"
-                                    id="confirm_password" class="form-control bg-transparent" required />
+                                    id="confirm_password" class="form-control form-control-lg" required />
                             </div>
                             <div class="fv-row mb-5">
                                 <select name="pertanyaan_id" id="pertanyaan_id"
-                                    class="form-select form-control bg-transparent" required>
+                                    class="form-control form-control-lg" data-control="select2" required>
                                     <option value="" disabled selected>Select Question</option>
                                     <?php foreach ($pertanyaan as $p): ?>
                                         <option value="<?= $p['id'] ?>"><?= $p['pertanyaan'] ?></option>
@@ -58,7 +61,7 @@
                             </div>
                             <div class="fv-row mb-5">
                                 <input type="text" placeholder="Answer" name="jawaban" id="jawaban"
-                                    class="form-control bg-transparent" required />
+                                    class="form-control form-control-lg" required />
                             </div>
                             <div class="d-grid mb-2">
                                 <button type="submit" id="kt_sign_up_submit" class="btn btn-primary">

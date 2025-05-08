@@ -13,7 +13,6 @@ class Profile extends BaseController
 
         // Ambil data user berdasarkan email
         $query = $users->where('email', $email)->first();
-        // dd($query);
 
         if (!$query) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException("User tidak ditemukan.");
@@ -21,34 +20,34 @@ class Profile extends BaseController
 
         return $this->render('Aplikan/editprofile', ['get' => $query]);
     }
+    
     public function updateProfile()
     {
         try {
-            $db = \Config\Database::connect();
+            $users = new UserModel();
             $data = $this->request->getPost();
-
+            $role = session()->get('role');
             $email = session()->get('email');
-            $get_groupcd = session()->get('group_cd');
-            $name = ucwords(strtolower($data['name']));
-            $tempat_lahir = ucwords(strtolower($data['tempat_lahir']));
-            $tanggal_lahir = $data['tanggal_lahir'];
-            $telepon = $data['telepon'];
-            $jenis_kelamin = $data['jenis_kelamin'];
-            $agama = $data['agama'];
+
+            // Validasi input
+            if (empty($data['name']) || empty($data['tempat_lahir']) || empty($data['tanggal_lahir']) || 
+                empty($data['telepon']) || empty($data['jenis_kelamin']) || empty($data['agama'])) {
+                return redirect()->back()->with('error', 'Semua field harus diisi');
+            }
 
             // Data untuk update
-            $data = [
-                'name' => $name,
-                'tempat_lahir' => $tempat_lahir,
-                'tanggal_lahir' => $tanggal_lahir,
-                'telepon' => $telepon,
-                'jenis_kelamin' => $jenis_kelamin,
-                'agama' => $agama,
+            $updateData = [
+                'username' => $data['name'],
+                'tempat_lahir' => $data['tempat_lahir'],
+                'tanggal_lahir' => $data['tanggal_lahir'],
+                'telepon' => $data['telepon'],
+                'jenis_kelamin' => $data['jenis_kelamin'],
+                'agama' => $data['agama']
             ];
-
-            if ($get_groupcd == 'ASR') {
+            
+            if ($role == 'asesor') {
                 $path = 'uploads/profile/asesor/';
-            } else if ($get_groupcd == 'ADM') {
+            } else if ($role == 'admin') {
                 $path = 'uploads/profile/admin/';
             } else {
                 $path = 'uploads/profile/aplikan/';
@@ -56,29 +55,35 @@ class Profile extends BaseController
 
             // Handle file upload
             $pict = $this->request->getFile('pict');
+            if ($pict && $pict->isValid() && !$pict->hasMoved()) {
+                // Pastikan direktori ada
+                if (!is_dir(FCPATH . $path)) {
+                    mkdir(FCPATH . $path, 0777, true);
+                }
 
-            if ($pict && $pict->isValid()) {
                 $extension = $pict->getExtension();
-                $pict_name = $name . '.' . $extension;
+                $pict_name = $data['name'] . '.' . $extension;
                 $pict->move(FCPATH . $path, $pict_name);
 
-                $data['pict'] = base_url($path . $pict_name);
+                $updateData['pict'] = base_url($path . $pict_name);
             }
 
-            // Update data
-            $db->table('users')
-                ->where('email', $email)
-                ->update($data);
+            // Cek apakah user dengan email tersebut ada
+            $user = $users->where('email', $email)->first();
+            if (!$user) {
+                return redirect()->back()->with('error', 'User tidak ditemukan');
+            }
 
-            return $this->response->setJSON([
-                'status' => 'success',
-                'message' => 'Profile updated successfully'
-            ]);
+            // Update data menggunakan where clause
+            $update = $users->where('email', $email)->set($updateData)->update();
+
+            if ($update) {
+                return redirect()->to('/dashboard')->with('success', 'Profile berhasil diupdate');
+            } else {
+                return redirect()->back()->with('error', 'Profile gagal diupdate');
+            }
         } catch (\Exception $e) {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
-            ]);
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 

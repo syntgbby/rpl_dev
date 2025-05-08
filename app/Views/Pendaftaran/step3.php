@@ -1,0 +1,127 @@
+<?= $this->extend('Layout/template') ?>
+
+<?= $this->section('content') ?>
+
+<!--begin::Content-->
+<div id="kt_app_content" class="app-content">
+    <!--begin::Basic info-->
+    <div class="card mb-5 mb-xl-10">
+        <!--begin::Card header-->
+        <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
+            data-bs-target="#kt_account_profile_details" aria-expanded="true"
+            aria-controls="kt_account_profile_details">
+            <div class="card-title m-0">
+                <h3 class="fw-bold m-0">Step 3: Riwayat Kerja</h3>
+            </div>
+        </div>
+        <!--end::Card header-->
+        <!--begin::Content-->
+        <div id="kt_account_settings_profile_details" class="collapse show">
+            <!--begin::Form-->
+            <form action="<?= base_url('aplikan/pendaftaran/saveStep3') ?>" method="post" enctype="multipart/form-data">
+                <div class="card-body border-top p-9">
+                    <!--begin::Input group for Full Name-->
+                    <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Nama Perusahaan</label>
+                        <div class="col-lg-8">
+                            <input type="text" name="nama_perusahaan" required
+                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                placeholder="Nama Perusahaan" />
+                        </div>
+                    </div>
+                    <!--end::Input group for Full Name-->
+                    <!--begin::Input group for Full Name-->
+                    <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Deskripsi Pekerjaan</label>
+                        <div class="col-lg-8">
+                            <input type="text" name="deskripsi_pekerjaan" required
+                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                placeholder="Deskripsi Pekerjaan" />
+                        </div>
+                    </div>
+                    <!--end::Input group for Full Name-->
+                    <!--begin::Input group for Full Name-->
+                    <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Jabatan / Posisi</label>
+                        <div class="col-lg-8">
+                            <input type="text" name="posisi" required
+                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                placeholder="Jabatan / Posisi" />
+                        </div>
+                    </div>
+                    <!--end::Input group for Full Name-->
+                    
+                    <!--begin::Input group for Full Name-->
+                    <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Upload Bukti</label>
+                        <div class="col-lg-8">
+                            <input type="file" name="file_bukti" accept=".pdf" required
+                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                placeholder="Upload Bukti" />
+                            <span class="text-danger">*Format file: .pdf</span>
+                        </div>
+                    </div>
+                    <!--end::Input group for Full Name-->
+                    <!--begin::Input group for Full Name-->
+                    <div class="row mb-6">
+                        <div class="col-md-6">
+                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Tahun Mulai</label>
+                            <div class="col-lg-8">
+                                <select name="tahun_mulai" required class="form-select form-select-solid" data-control="select2" data-placeholder="Pilih Tahun Mulai">
+                                    <option></option>
+                                    <?php 
+                                    $currentYear = date('Y');
+                                    for($i = $currentYear; $i >= 1990; $i--) {
+                                        echo "<option value='$i'>$i</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Tahun Selesai</label>
+                            <div class="col-lg-8">
+                                <select name="tahun_selesai" class="form-select form-select-solid" data-control="select2" data-placeholder="Pilih Tahun Selesai">
+                                    <option></option>
+                                    <?php 
+                                    $currentYear = date('Y');
+                                    for($i = $currentYear; $i >= 1990; $i--) {
+                                        echo "<option value='$i'>$i</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Input group for Full Name-->
+                </div>
+                <!--begin::Actions-->
+                <div class="card-footer d-flex justify-content-end py-6 px-9">
+                    <button type="cancel" class="btn btn-light btn-active-light-primary me-2" onclick="window.location.href='<?= base_url('dashboard') ?>'">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan
+                    </button>
+                </div>
+                <!--end::Actions-->
+            </form>
+            <!--end::Form-->
+        </div>
+        <!--end::Content-->
+    </div>
+
+</div>
+<!--end::Basic info-->
+</div>
+<!--end::Content-->
+
+<!-- Tambahkan script untuk inisialisasi Select2 -->
+<script>
+    $(document).ready(function() {
+        // Inisialisasi Select2 untuk semua select
+        $('[data-control="select2"]').select2({
+            minimumResultsForSearch: -1,
+            width: '100%'
+        });
+    });
+</script>
+
+<?= $this->endSection() ?>

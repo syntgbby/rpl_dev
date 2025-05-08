@@ -47,7 +47,6 @@
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->
-                    <?php if ($user['role'] == "admin"): ?>
                         <!--begin:Menu item-->
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
                             class="menu-item <?= (current_url() == base_url('master-group-user') || current_url() == base_url('master-menu') || current_url() == base_url('users') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
@@ -68,12 +67,14 @@
                                     <!--begin:Menu link-->
                                     <span class="menu-link">
                                         <span class="menu-icon">
-                                            <i class="ki-duotone ki-users"></i>
+                                            <i class="ki-duotone ki-users fs-2">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
                                         </span>
                                         <span class="menu-title">
                                             Users
                                         </span>
-                                        <!-- <span class="menu-arrow"></span> -->
                                     </span>
                                     <!--end:Menu link-->
                                 </div>
@@ -96,20 +97,53 @@
                                     <!--end:Menu link-->
                                 </div>
                                 <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('admin/tahun-ajar') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('admin/tahun-ajar') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-users"></i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Academic Year
+                                        </span>
+                                        <!-- <span class="menu-arrow"></span> -->
+                                    </span>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('admin/mata-kuliah') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('admin/mata-kuliah') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-users"></i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Subjects
+                                        </span>
+                                        <!-- <span class="menu-arrow"></span> -->
+                                    </span>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
                             </div>
                             <!--end:Menu sub-->
                         </div>
                         <!--end:Menu item-->
-                    <?php endif; ?>
 
-                    <?php if ($user['role'] == "aplikan"): ?>
                         <div class="menu-item <?= (current_url() == base_url('user-dashboard') ? 'here show menu-here-bg' : '') ?>"
                             onclick="window.location.href='<?= base_url('user-dashboard') ?>'">
                             <span class="menu-link">
                                 <span class="menu-title">User Dashboard</span>
                             </span>
                         </div>
-                    <?php endif; ?>
                 </div>
                 <!--end::Menu-->
             </div>
@@ -175,8 +209,13 @@
                     <div class="cursor-pointer symbol symbol-35px symbol-md-45px"
                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                         data-kt-menu-placement="bottom-end">
-                        <img class="symbol symbol-circle symbol-35px symbol-md-45px" src="<?= $user['pict'] ?>"
-                            alt="user" />
+                        <?php if ($user['pict'] == null) { ?>
+                            <img class="symbol symbol-circle symbol-35px symbol-md-45px" src="<?= base_url('assets/media/avatars/300-1.jpg') ?>"
+                                alt="user" />
+                        <?php } else { ?>
+                            <img class="symbol symbol-circle symbol-35px symbol-md-45px" src="<?= $user['pict'] ?>"
+                                alt="user" />
+                        <?php } ?>
                     </div>
                     <!--begin::User account menu-->
                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
@@ -184,11 +223,6 @@
                         <!--begin::Menu item-->
                         <div class="menu-item px-3">
                             <div class="menu-content d-flex align-items-center px-3">
-                                <!--begin::Avatar-->
-                                <div class="symbol symbol-50px me-5">
-                                    <img alt="Logo" src="<?= $user['pict'] ?>" />
-                                </div>
-                                <!--end::Avatar-->
                                 <!--begin::Username-->
                                 <div class="d-flex flex-column">
                                     <div class="fw-bold d-flex align-items-center fs-5">

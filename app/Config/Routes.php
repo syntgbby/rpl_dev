@@ -55,26 +55,43 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
     $routes->post('prodi/update/(:num)', 'ProdiController::update/$1');
     $routes->get('prodi/delete/(:num)', 'ProdiController::delete/$1');
 
-    // Master Matkul
-    $routes->get('master-matkul', 'MasterMatkul::index');
-    $routes->get('view-add-master-matkul', 'MasterMatkul::indexAdd');
-    $routes->get('get-master-matkul/(:num)', 'MasterMatkul::getById/$1');
-    $routes->post('add-master-matkul', 'MasterMatkul::store');
-    $routes->post('delete-master-matkul', 'MasterMatkul::delete');
+    // Tahun Ajar
+    $routes->get('tahun-ajar', 'TahunAjarController::index');
+    $routes->get('tahun-ajar/create', 'TahunAjarController::create');
+    $routes->post('tahun-ajar/store', 'TahunAjarController::store');
+    $routes->get('tahun-ajar/edit/(:num)', 'TahunAjarController::edit/$1');
+    $routes->post('tahun-ajar/update/(:num)', 'TahunAjarController::update/$1');
+    $routes->get('tahun-ajar/delete/(:num)', 'TahunAjarController::delete/$1');
+
+    // Mata Kuliah
+    $routes->get('mata-kuliah', 'MataKuliahController::index');
+    $routes->get('mata-kuliah/create', 'MataKuliahController::create');
+    $routes->post('mata-kuliah/store', 'MataKuliahController::store');
+    $routes->get('mata-kuliah/edit/(:num)', 'MataKuliahController::edit/$1');
+    $routes->post('mata-kuliah/update/(:num)', 'MataKuliahController::update/$1');
+    $routes->get('mata-kuliah/delete/(:num)', 'MataKuliahController::delete/$1');
 });
 
 // Profile
 $routes->get('/editprofile/(:any)', 'Profile::indexEdit/$1');
-$routes->post('/edit-profile', 'Profile::updateProfile');
 $routes->post('/edit-email', 'Profile::updateEmail');
 $routes->post('/edit-password', 'Profile::updatePassword');
 
-// Form Pendaftaran
-// $routes->get('/list-pendaftaran', 'ListController::index');
-
 $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan'], function ($routes) {
-    // Form Pendaftaran
-    $routes->get('form-pendaftaran', 'FormPendaftaran::index');
-    $routes->post('add-form', 'FormPendaftaran::store');
-    // $routes->get('/view-add-pelatihan', 'FormPendaftaran::indexAdd');
+    //step 1
+    $routes->get('pendaftaran/step1', 'PendaftaranController::step1');
+    $routes->post('pendaftaran/saveStep1', 'PendaftaranController::saveStep1');
+
+    //step 2
+    $routes->get('pendaftaran/step2', 'PendaftaranController::step2');
+    $routes->post('pendaftaran/saveStep2', 'PendaftaranController::saveStep2');
+    $routes->get('pendaftaran/deletePelatihan/(:num)', 'PendaftaranController::deletePelatihan/$1');
+
+    //step 3
+    $routes->get('pendaftaran/step3', 'PendaftaranController::step3');
+    $routes->post('pendaftaran/saveStep3', 'PendaftaranController::saveStep3');
+
+    //step 4
+    $routes->get('pendaftaran/step4', 'PendaftaranController::step4');
+    $routes->post('pendaftaran/saveStep4', 'PendaftaranController::saveStep4');
 });

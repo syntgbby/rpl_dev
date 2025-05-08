@@ -2,24 +2,74 @@
 
 namespace App\Controllers;
 
+use App\Models\UserModel;
+use App\Models\AplikanModel;
 use App\Models\ProdiModel;
 
 class DashController extends BaseController
 {
+    protected $userModel;
+    protected $aplikanModel;
+    protected $prodiModel;
+
+    public function __construct()
+    {
+        $this->userModel = new UserModel();
+        $this->aplikanModel = new AplikanModel();
+        $this->prodiModel = new ProdiModel();
+    }
+
     public function index()
     {
-        $prodiModel = new ProdiModel();
+        $email = session()->get('email');
 
-        // $data['gelombang'] = $gelombangModel->findAll();
-        $data['prodi'] = $prodiModel->findAll();
+        if (!$email) {
+            return redirect()->to('/login');
+        }
 
-        // return view('LandingPage/template', $data);
+        $where = ['email' => $email];
+        $dataUser = $this->userModel->where($where)->first();
 
-        // $db = \Config\Database::connect();
+        if (!$dataUser) {
+            return redirect()->to('/login');
+        }
 
-        // $data = $db->table('master_prodi')->get()->getResultArray();
-        // $data_form = $db->table('form_rpl')->where('email', session()->get('email'))->get()->getRowArray();
-        // dd($data_form);
-        return $this->render('Dash/dashboard', $data);
+        // Query untuk mendapatkan user yang belum mendaftar
+        $getBlmMendaftar = $this->userModel->select('users.*')
+            ->join('pendaftaran_rpl', 'users.email = pendaftaran_rpl.email', 'left')
+            ->where('users.role', 'aplikan')
+            ->where('pendaftaran_rpl.pendaftaran_id IS NULL')
+            ->findAll();
+
+        // Query untuk mendapatkan total aplikan
+        $totalAplikan = $this->userModel->where('role', 'aplikan')->countAllResults();
+
+        // Query untuk mendapatkan jumlah asesor aktif
+        $asesor = $this->userModel->where('role', 'asesor')
+            ->where('status', 'y')
+            ->countAllResults();
+
+        $user = $this->userModel->where($where)->first();
+
+        $data = [
+            'title' => 'Dashboard',
+            'user' => $this->userModel->getUser(),
+            'dataUser' => $user,
+            'prodi' => $this->prodiModel->getProdi(),
+            'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),
+            'belumMendaftar' => $getBlmMendaftar,
+            'totalAplikan' => $totalAplikan,
+            'asesor' => $asesor
+            // 'aplikan' => $this->aplikanModel->getAplikan(),
+            // 'aplikan2025' => $this->aplikanModel->getAplikanByYear(2025)
+        ];
+
+        if ($dataUser['role'] === "aplikan") {
+            return $this->render('Dash/dashboard-aplikan', $data);
+        } else if ($dataUser['role'] === "admin") {
+            return $this->render('Dash/dashboard-admin', $data);
+        } else {
+            return $this->render('Dash/dashboard-asesor', $data);
+        }
     }
-}
+} 

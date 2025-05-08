@@ -12,12 +12,12 @@
             <div class="card-header border-0 pt-6">
                 <!--begin::Card title-->
                 <div class="card-title">
-                    <h1>Users Management</h1>
+                    <h1>Subjects Management</h1>
                 </div>
                 <div class="card-title">
                     <div class="d-flex align-items-center position-relative my-1">
                         <button type="button" class="btn btn-primary"
-                            onclick="window.location.href='<?= base_url('admin/users/create') ?>'"><i
+                            onclick="window.location.href='<?= base_url('admin/mata-kuliah/create') ?>'"><i
                                 class="fa-solid fa-plus"></i>
                             Add</button>
                     </div>
@@ -29,46 +29,53 @@
             <div class="card-body py-4">
                 <!--begin::Table-->
                 <div class="table-responsive">
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_prodi">
                         <thead>
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-15px">No</th>
-                                <th class="min-w-25px">Name</th>
-                                <th class="min-w-85px">Email</th>
-                                <th class="min-w-85px">Role</th>
-                                <th class="min-w-75px">Status</th>
+                                <th class="min-w-25px">Study Programme</th>
+                                <th class="min-w-85px">Academic Year</th>
+                                <th class="min-w-85px">Subjects</th>
+                                <th class="min-w-85px">SKS</th>
+                                <th class="min-w-85px">Status</th>
                                 <th class="min-w-100px">Action</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-semibold">
                             <?php $no = 1; ?>
-                            <?php foreach ($users as $row): ?>
+                            <?php foreach ($mata_kuliah as $row): ?>
                                 <tr>
                                     <td class="text-center">
                                         <?= $no++ ?>
                                     </td>
                                     <td>
-                                        <?= $row['username'] ?>
+                                        <?= $row['prodi_id'] ? $row['prodi_id'] : '' ?>
                                     </td>
                                     <td>
-                                        <?= $row['email'] ?>
+                                        <?= $row['tahun_ajar_id'] ? $row['tahun_ajar_id'] : '' ?>
                                     </td>
-                                    <!-- <td class="text-center"><i class="<?= $row['pict'] ?>"></i></td> -->
-                                    <td class="text-center">
-                                        <?= $row['role'] ?>
+                                    <td>
+                                        <?= $row['nama_matkul'] ? $row['nama_matkul'] : '' ?>
                                     </td>
-                                    <td class="text-center">
-                                        <?= ($row['status'] == 'Y') ? '<span class="badge bg-success text-white">Active</span>' : '<span class="badge bg-danger text-white">Inactive</span>' ?>
+                                    <td>
+                                        <?= $row['sks'] ? $row['sks'] : '' ?>
+                                    </td>
+                                    <td>
+                                        <?php if ($row['status'] == 'Y'): ?>
+                                            <span class="badge bg-success">Active</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-danger">Inactive</span>
+                                        <?php endif; ?>
                                     </td>
                                     <td class="text-center">
                                         <div class="d-flex align-items-center justify-content-center gap-2">
                                             <button type="button"
                                                 class="btn btn-light btn-sm btn-icon btn-active-light-primary"
-                                                onClick="window.location.href='<?= base_url('admin/users/edit/') . $row['id'] ?>'"><i
+                                                onClick="window.location.href='<?= base_url('admin/mata-kuliah/edit/') . $row['id'] ?>'"><i
                                                     class="fa-solid fa-pen-to-square"></i></button>
                                             <button type="button"
                                                 class="btn btn-light btn-sm btn-icon btn-active-light-danger"
-                                                onClick="window.location.href='<?= base_url('admin/users/delete/') . $row['id'] ?>'"><i
+                                                onClick="window.location.href='<?= base_url('admin/mata-kuliah/delete/') . $row['id'] ?>'"><i
                                                     class="fa-solid fa-trash"></i></button>
                                         </div>
                                     </td>
