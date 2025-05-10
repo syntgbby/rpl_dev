@@ -12,14 +12,7 @@
             <div class="card-header border-0 pt-6">
                 <!--begin::Card title-->
                 <div class="card-title">
-                    <h1>Tahun Ajaran Management</h1>
-                </div>
-                <div class="card-title">
-                    <div class="d-flex align-items-center position-relative my-1">
-                        <button type="button" class="btn btn-primary" id="btnAddTahunAjar"><i
-                                class="fa-solid fa-plus"></i>
-                            Add</button>
-                    </div>
+                    <h1>Data Pendaftaran</h1>
                 </div>
                 <!--begin::Card title-->
             </div>
@@ -32,42 +25,41 @@
                         <thead>
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-15px">No</th>
-                                <th class="min-w-25px">Tahun</th>
-                                <th class="min-w-85px">Keterangan</th>
-                                <th class="min-w-85px">Status</th>
+                                <th class="min-w-25px">Nama</th>
+                                <th class="min-w-85px">Email</th>
+                                <th class="min-w-85px">No HP</th>
                                 <th class="min-w-100px">Action</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-semibold">
                             <?php $no = 1; ?>
-                            <?php foreach ($tahun_ajar as $row): ?>
+                            <?php foreach ($dtpendaftaran as $row): ?>
                                 <tr>
                                     <td class="text-center">
                                         <?= $no++ ?>
                                     </td>
                                     <td>
-                                        <?= $row['tahun'] ?>
+                                        <?= $row['nama'] ?>
                                     </td>
                                     <td>
-                                        <?= $row['keterangan'] ?>
+                                        <?= $row['email'] ?>
                                     </td>
                                     <td>
-                                        <?php if ($row['status'] == 'Y'): ?>
-                                            <span class="badge bg-success">Active</span>
+                                        <?= $row['program_study'] ?>
+                                    </td>
+                                    <td>
+                                        <?php if ($row['status'] == 'Draft'): ?>
+                                            <span class="badge bg-success">Draft</span>
                                         <?php else: ?>
-                                            <span class="badge bg-danger">Inactive</span>
+                                            <span class="badge bg-danger">Submitted</span>
                                         <?php endif; ?>
                                     </td>
                                     <td class="text-center">
                                         <div class="d-flex align-items-center justify-content-center gap-2">
                                             <button type="button"
                                                 class="btn btn-light btn-sm btn-icon btn-active-light-primary"
-                                                onClick="btnEditTahunAjar(<?= $row['id'] ?>)"><i
-                                                    class="fa-solid fa-pen-to-square"></i></button>
-                                            <button type="button"
-                                                class="btn btn-light btn-sm btn-icon btn-active-light-danger"
-                                                onClick="btnDeleteTahunAjar(<?= $row['id'] ?>)"><i
-                                                    class="fa-solid fa-trash"></i></button>
+                                                onClick="btnViewDetail(<?= $row['id'] ?>)"><i
+                                                    class="fa-solid fa-eye"></i></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -94,8 +86,8 @@
         });
     });
 
-    function btnEditTahunAjar(id) {
-        $('#modaltitle').html('Edit Tahun Ajar');
+    function btnViewDetail(id) {
+        $('#modaltitle').html('View Detail');
         $('#modalbody').load("<?= base_url('admin/tahun-ajar/edit/') ?>" + id);
         $('#modal').data('rowid', 0);
         $('#modal').modal('show');

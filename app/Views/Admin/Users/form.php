@@ -42,9 +42,14 @@
                                 <div class="col-md-5">
                                     <label for="email" class="form-label">Email</label>
                                 </div>
-                                <div class="col-md-7">
+                                <div class="col-md-5">
                                     <input type="text" class="form-control" id="email" name="email"
                                         placeholder="Enter Email" value="<?= $dtuser['email'] ?? '' ?>">
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-primary" id="btnEmail">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -115,5 +120,23 @@
 
 </div>
 <!--end::Content-->
+
+<script>
+    $(document).ready(function() {
+        $('#btnEmail').click(function() {
+            Swal.fire({
+                title: 'Change Email',
+                text: 'Are you sure you want to change email?',
+                icon: 'warning',
+                confirmButtonText: 'Yes',
+                showCancelButton: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '<?= base_url('edit-email') ?>';
+                }
+            });
+        });
+    });
+</script>
 
 <?= $this->endSection() ?>

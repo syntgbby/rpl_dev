@@ -25,8 +25,8 @@
                                     <!--begin::Heading-->
                                     <div class="mb-7 text-center">
                                         <?php if ($p['pict'] != null): ?>
-                                            <img src="<?= base_url('uploads/prodi/' . $p['pict']) ?>"
-                                                alt="<?= $p['nama_prodi'] ?>" class="img-fluid mb-5">
+                                            <img src="<?= $p['pict'] ?>" alt="<?= $p['nama_prodi'] ?>"
+                                                class="img-fluid mb-5">
                                         <?php endif; ?>
                                         <!--begin::Title-->
                                         <h1 class="text-gray-900 mb-5 fw-boldest text-white">

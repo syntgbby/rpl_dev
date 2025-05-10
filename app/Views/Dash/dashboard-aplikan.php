@@ -39,7 +39,7 @@
 		<?php endif; ?>
 		<div class="row g-10">
 			<div class="card-header">
-				<h4 class="card-title text-center">Study Program</h4>
+				<h4 class="card-title text-center">Program Studi</h4>
 			</div>
 			<!--begin::Col-->
 			<?php foreach ($prodi as $item): ?>

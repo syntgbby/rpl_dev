@@ -56,7 +56,7 @@
                         <div class="col-lg-8">
                             <input type="text" name="no_hp" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="No HP" value="<?= $data['telepon'] ?? $dataPendaftaran['no_hp'] ?>" readonly />
+                                placeholder="No HP" value="<?= $data['telepon'] ?? $dataPendaftaran['no_hp'] ?>"  />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -77,6 +77,21 @@
                             <input type="date" name="tanggal_lahir" required
                                 class="form-control form-control-lg form-control-solid" placeholder="Tanggal Lahir"
                                 value="<?= $data['tanggal_lahir'] ?? $dataPendaftaran['tanggal_lahir'] ?>" />
+                        </div>
+                    </div>
+                    <!--end::Input group for Tanggal Lahir-->
+                    <!--begin::Input group for Tanggal Lahir-->
+                    <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Program Studi</label>
+                        <div class="col-lg-8">
+                            <select name="program_studi" required
+                                class="form-control form-control-lg form-control-solid" placeholder="Program Studi"
+                                value="<?= $data['program_study'] ?? $dataPendaftaran['program_study'] ?>">
+                                <option value="">Pilih Program Studi</option>
+                                <?php foreach ($prodi as $p): ?>
+                                    <option value="<?= $p['nama_prodi'] ?>"><?= $p['nama_prodi'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                     </div>
                     <!--end::Input group for Tanggal Lahir-->

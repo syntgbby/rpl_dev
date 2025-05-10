@@ -10,6 +10,7 @@ class ProdiController extends BaseController
     public function index()
     {
         $model = new ProdiModel();
+
         $data['prodi'] = $model->findAll();
 
         return $this->render('Admin/Prodi/index', $data);
@@ -51,7 +52,6 @@ class ProdiController extends BaseController
     {
         $model = new ProdiModel();
         $data['dtprodi'] = $model->find($id);
-        // dd($data['user']);
 
         return $this->render('Admin/Prodi/form', $data);
     }

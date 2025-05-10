@@ -137,17 +137,6 @@ License: For each use you must have a valid license purchased only from above li
 			<div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15 mt-5" id="modalbody">
 			</div>
 			<!--end::Modal body-->
-
-			<!--begin::Modal footer-->
-			<div class="modal-footer bg-light" id="modalfooter">
-				<button type="submit" class="btn btn-primary" id="savefrm">Submit
-					<span class="spinner-border spinner-border-sm align-middle ms-2" role="status" aria-hidden="true"
-						style="display: none;"></span>
-					<span class="visually-hidden">Loading...</span>
-				</button>
-				<button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-			</div>
-			<!--end::Modal footer-->
 		</div>
 		<!--end::Modal content-->
 	</div>

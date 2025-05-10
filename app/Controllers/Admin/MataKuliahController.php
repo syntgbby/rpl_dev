@@ -5,19 +5,16 @@ namespace App\Controllers\Admin;
 use App\Models\MataKuliahModel;
 use App\Models\ProdiModel;
 use App\Models\TahunAjarModel;
+use App\Models\View\ViewMataKuliah;
 use App\Controllers\BaseController;
 
 class MataKuliahController extends BaseController
 {
     public function index()
     {
-        $model = new MataKuliahModel();
-        $prodiModel = new ProdiModel();
-        $tahunAjarModel = new TahunAjarModel();
+        $viewMataKuliah = new ViewMataKuliah();
 
-        $data['mata_kuliah'] = $model->findAll();
-        $data['prodi'] = $prodiModel->findAll();
-        $data['tahun_ajar'] = $tahunAjarModel->findAll();
+        $data['v_mata_kuliah'] = $viewMataKuliah->getViewMataKuliah();
 
         return $this->render('Admin/MataKuliah/index', $data);
     }
@@ -54,6 +51,12 @@ class MataKuliahController extends BaseController
     {
         $model = new MataKuliahModel();
         $data['dtmata_kuliah'] = $model->find($id);
+
+        $prodiModel = new ProdiModel();
+        $data['prodi'] = $prodiModel->getProdi();
+
+        $tahunAjarModel = new TahunAjarModel();
+        $data['tahun_ajar'] = $tahunAjarModel->findAll();
 
         return $this->render('Admin/MataKuliah/form', $data);
     }

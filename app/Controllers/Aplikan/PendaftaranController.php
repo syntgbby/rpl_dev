@@ -7,6 +7,7 @@ use App\Models\PelatihanModel;
 use App\Models\PengalamanKerjaModel;
 use App\Models\BuktiPendukungModel;
 use App\Models\TimelineModel;
+use App\Models\ProdiModel;
 use App\Models\UserModel;
 use App\Controllers\BaseController;
 
@@ -20,6 +21,7 @@ class PendaftaranController extends BaseController
     protected $pengalamanKerjaModel;
     protected $buktiPendukungModel;
     protected $timelineModel;
+    protected $prodiModel;
 
     public function __construct()
     {
@@ -29,6 +31,7 @@ class PendaftaranController extends BaseController
         $this->pengalamanKerjaModel = new PengalamanKerjaModel();
         $this->buktiPendukungModel = new BuktiPendukungModel();
         $this->timelineModel = new TimelineModel();
+        $this->prodiModel = new ProdiModel();
     }
 
     public function step1()
@@ -38,16 +41,15 @@ class PendaftaranController extends BaseController
         $dataUser = $this->userModel->where('email', $email)->first();
         $getPendaftaran = $this->pendaftaranModel->where('email', $email)->first();
         $getStatusPendaftaran = $this->timelineModel->where('pendaftaran_id', $getPendaftaran['pendaftaran_id'])->first();
-
-        if ($getStatusPendaftaran['status'] == 'submitted') {
-
-        if ($getPendaftaran) {
-            return $this->render('pendaftaran/step2', ['data' => $dataUser, 'dataPendaftaran' => $getPendaftaran]);
-        } else {
-                return $this->render('pendaftaran/step1', ['data' => $dataUser]);
-            }
-        }
-
+        $prodi = $this->prodiModel->where('id !=', 1)->findAll();
+        
+        // if ($getStatusPendaftaran['status'] == 'submitted') {
+        //     if ($getPendaftaran) {
+                return $this->render('pendaftaran/step1', ['data' => $dataUser, 'dataPendaftaran' => $getPendaftaran, 'prodi' => $prodi]);
+        //     } else {
+        //         return $this->render('pendaftaran/step1', ['data' => $dataUser]);
+        //     }
+        // }
     }
 
     public function saveStep1()
@@ -88,7 +90,6 @@ class PendaftaranController extends BaseController
         $email = session()->get('email');
         $pendaftaran = $this->pendaftaranModel->where('email', $email)->first();
         $pelatihans = $this->pelatihanModel->where('pendaftaran_id', $pendaftaran['pendaftaran_id'])->get()->getResultArray();
-        dd($pelatihans);
 
         if ($pelatihans) {
             return $this->render('pendaftaran/step2', ['pelatihan' => $pelatihans]);

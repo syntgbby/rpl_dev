@@ -12,6 +12,8 @@ class MataKuliahModel extends Model
         'prodi_id', 'tahun_ajar_id', 'nama_matkul', 'sks', 'status'
     ];
 
+    protected $useTimestamps = true;
+
     public function getMataKuliah()
     {
         return $this->findAll();

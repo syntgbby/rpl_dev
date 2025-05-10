@@ -12,12 +12,11 @@
             <div class="card-header border-0 pt-6">
                 <!--begin::Card title-->
                 <div class="card-title">
-                    <h1>Subjects Management</h1>
+                    <h1>Mata Kuliah Management</h1>
                 </div>
                 <div class="card-title">
                     <div class="d-flex align-items-center position-relative my-1">
-                        <button type="button" class="btn btn-primary"
-                            onclick="window.location.href='<?= base_url('admin/mata-kuliah/create') ?>'"><i
+                        <button type="button" class="btn btn-primary" id="btnAddMataKuliah"><i
                                 class="fa-solid fa-plus"></i>
                             Add</button>
                     </div>
@@ -43,39 +42,39 @@
                         </thead>
                         <tbody class="text-gray-600 fw-semibold">
                             <?php $no = 1; ?>
-                            <?php foreach ($mata_kuliah as $row): ?>
+                            <?php foreach ($v_mata_kuliah as $row): ?>
                                 <tr>
                                     <td class="text-center">
                                         <?= $no++ ?>
                                     </td>
                                     <td>
-                                        <?= $row['prodi_id'] ? $row['prodi_id'] : '' ?>
+                                        <?= $row['nama_prodi'] ?>
                                     </td>
                                     <td>
-                                        <?= $row['tahun_ajar_id'] ? $row['tahun_ajar_id'] : '' ?>
+                                        <?= $row['tahun'] ?>
                                     </td>
                                     <td>
-                                        <?= $row['nama_matkul'] ? $row['nama_matkul'] : '' ?>
+                                        <?= $row['nama_matkul'] ?>
                                     </td>
                                     <td>
-                                        <?= $row['sks'] ? $row['sks'] : '' ?>
+                                        <?= $row['sks'] ?>
                                     </td>
                                     <td>
                                         <?php if ($row['status'] == 'Y'): ?>
-                                            <span class="badge bg-success">Active</span>
+                                            <span class="badge bg-success text-white">Active</span>
                                         <?php else: ?>
-                                            <span class="badge bg-danger">Inactive</span>
+                                            <span class="badge bg-danger text-white">Inactive</span>
                                         <?php endif; ?>
                                     </td>
                                     <td class="text-center">
                                         <div class="d-flex align-items-center justify-content-center gap-2">
                                             <button type="button"
                                                 class="btn btn-light btn-sm btn-icon btn-active-light-primary"
-                                                onClick="window.location.href='<?= base_url('admin/mata-kuliah/edit/') . $row['id'] ?>'"><i
+                                                onClick="btnEditMataKuliah(<?= $row['id'] ?>)"><i
                                                     class="fa-solid fa-pen-to-square"></i></button>
                                             <button type="button"
                                                 class="btn btn-light btn-sm btn-icon btn-active-light-danger"
-                                                onClick="window.location.href='<?= base_url('admin/mata-kuliah/delete/') . $row['id'] ?>'"><i
+                                                onClick="btnDeleteMataKuliah(<?= $row['id'] ?>)"><i
                                                     class="fa-solid fa-trash"></i></button>
                                         </div>
                                     </td>
@@ -92,5 +91,39 @@
     </div>
     <!--end::Content-->
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#btnAddMataKuliah').click(function() {
+            $('#modaltitle').html('Tambah Mata Kuliah');
+            $('#modalbody').load("<?= base_url('admin/mata-kuliah/create') ?>");
+            $('#modal').data('rowid', 0);
+            $('#modal').modal('show');
+        });
+    });
+
+    function btnEditMataKuliah(id) {
+        $('#modaltitle').html('Edit Mata Kuliah');
+        $('#modalbody').load("<?= base_url('admin/mata-kuliah/edit/') ?>" + id);
+        $('#modal').data('rowid', 0);
+        $('#modal').modal('show');
+    }
+
+    function btnDeleteMataKuliah(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '<?= base_url('admin/mata-kuliah/delete/') ?>' + id;
+            }
+        });
+    }
+</script>
 <!--end::Content wrapper-->
 <?= $this->endSection() ?>

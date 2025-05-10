@@ -21,51 +21,39 @@ class Profile extends BaseController
         return $this->render('Aplikan/editprofile', ['get' => $query]);
     }
     
-    public function updateProfile()
+    public function update()
     {
         try {
             $users = new UserModel();
-            $data = $this->request->getPost();
+
             $role = session()->get('role');
             $email = session()->get('email');
 
-            // Validasi input
-            if (empty($data['name']) || empty($data['tempat_lahir']) || empty($data['tanggal_lahir']) || 
-                empty($data['telepon']) || empty($data['jenis_kelamin']) || empty($data['agama'])) {
-                return redirect()->back()->with('error', 'Semua field harus diisi');
-            }
-
             // Data untuk update
             $updateData = [
-                'username' => $data['name'],
-                'tempat_lahir' => $data['tempat_lahir'],
-                'tanggal_lahir' => $data['tanggal_lahir'],
-                'telepon' => $data['telepon'],
-                'jenis_kelamin' => $data['jenis_kelamin'],
-                'agama' => $data['agama']
+                'username' => $this->request->getPost('name'),
+                'tempat_lahir' => $this->request->getPost('tempat_lahir'),
+                'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
+                'telepon' => $this->request->getPost('telepon'),
+                'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
+                'agama' => $this->request->getPost('agama')
             ];
-            
-            if ($role == 'asesor') {
-                $path = 'uploads/profile/asesor/';
-            } else if ($role == 'admin') {
-                $path = 'uploads/profile/admin/';
-            } else {
-                $path = 'uploads/profile/aplikan/';
-            }
+            // dd($updateData);
 
             // Handle file upload
             $pict = $this->request->getFile('pict');
             if ($pict && $pict->isValid() && !$pict->hasMoved()) {
+                $path = 'uploads/profile/' . $role;
                 // Pastikan direktori ada
                 if (!is_dir(FCPATH . $path)) {
                     mkdir(FCPATH . $path, 0777, true);
                 }
 
                 $extension = $pict->getExtension();
-                $pict_name = $data['name'] . '.' . $extension;
+                $pict_name = $this->request->getPost('name') . '.' . $extension;
                 $pict->move(FCPATH . $path, $pict_name);
 
-                $updateData['pict'] = base_url($path . $pict_name);
+                $updateData['pict'] = base_url($path . '/' . $pict_name);
             }
 
             // Cek apakah user dengan email tersebut ada
@@ -75,13 +63,9 @@ class Profile extends BaseController
             }
 
             // Update data menggunakan where clause
-            $update = $users->where('email', $email)->set($updateData)->update();
+            $users->updateUser($email, $updateData);
 
-            if ($update) {
-                return redirect()->to('/dashboard')->with('success', 'Profile berhasil diupdate');
-            } else {
-                return redirect()->back()->with('error', 'Profile gagal diupdate');
-            }
+            return redirect()->to('/dashboard')->with('success', 'Profile berhasil diupdate');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }

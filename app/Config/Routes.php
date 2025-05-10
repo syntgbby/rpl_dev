@@ -74,6 +74,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
 
 // Profile
 $routes->get('/editprofile/(:any)', 'Profile::indexEdit/$1');
+$routes->post('/edit-profile', 'Profile::update');
 $routes->post('/edit-email', 'Profile::updateEmail');
 $routes->post('/edit-password', 'Profile::updatePassword');
 
@@ -94,4 +95,8 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan'], function (
     //step 4
     $routes->get('pendaftaran/step4', 'PendaftaranController::step4');
     $routes->post('pendaftaran/saveStep4', 'PendaftaranController::saveStep4');
+});
+
+$routes->group('asesor', ['namespace' => 'App\Controllers\Asesor'], function ($routes) {
+    $routes->get('data-pendaftaran', 'DataPendaftaranController::index');
 });

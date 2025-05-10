@@ -14,13 +14,13 @@
         <!--end::Header mobile toggle-->
         <!--begin::Logo-->
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15">
-            <a href="index.html">
-                <img alt="Logo" src="<?= base_url('assets/media/logos/demo30-small.svg') ?>" class="h-25px d-lg-none" />
-                <img alt="Logo" src="<?= base_url('assets/media/logos/demo30.svg') ?>"
-                    class="h-25px d-none d-lg-inline app-sidebar-logo-default theme-light-show" />
-                <img alt="Logo" src="<?= base_url('assets/media/logos/demo30-dark.png') ?>"
-                    class="h-25px d-none d-lg-inline app-sidebar-logo-default theme-dark-show" />
-            </a>
+            <!-- <a href="index.html"> -->
+                <img alt="Logo" src="<?= base_url('assets/media/logos/logo-dark.svg') ?>" class="h-35px d-lg-none" />
+                <img alt="Logo" src="<?= base_url('assets/media/logos/logo-dark.svg') ?>"
+                    class="h-35px d-none d-lg-inline app-sidebar-logo-default theme-light-show" />
+                <img alt="Logo" src="<?= base_url('assets/media/logos/logo-dark.svg') ?>"
+                    class="h-35px d-none d-lg-inline app-sidebar-logo-default theme-dark-show" />
+            <!-- </a> -->
         </div>
         <!--end::Logo-->
         <!--begin::Header wrapper-->
@@ -52,7 +52,7 @@
                             class="menu-item <?= (current_url() == base_url('master-group-user') || current_url() == base_url('master-menu') || current_url() == base_url('users') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
                             <!--begin:Menu link-->
                             <span class="menu-link">
-                                <span class="menu-title">RBAC Setting</span>
+                                <span class="menu-title">Master Data</span>
                                 <span class="menu-arrow d-lg-none"></span>
                             </span>
                             <!--end:Menu link-->
@@ -90,7 +90,7 @@
                                             <i class="ki-duotone ki-users"></i>
                                         </span>
                                         <span class="menu-title">
-                                            Study Programme
+                                            Program Studi
                                         </span>
                                         <!-- <span class="menu-arrow"></span> -->
                                     </span>
@@ -108,7 +108,7 @@
                                             <i class="ki-duotone ki-users"></i>
                                         </span>
                                         <span class="menu-title">
-                                            Academic Year
+                                            Tahun Ajaran
                                         </span>
                                         <!-- <span class="menu-arrow"></span> -->
                                     </span>
@@ -126,7 +126,98 @@
                                             <i class="ki-duotone ki-users"></i>
                                         </span>
                                         <span class="menu-title">
-                                            Subjects
+                                            Mata Kuliah
+                                        </span>
+                                        <!-- <span class="menu-arrow"></span> -->
+                                    </span>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                            </div>
+                            <!--end:Menu sub-->
+                        </div>
+                        <!--end:Menu item-->
+
+                        <!--begin:Menu item-->
+                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
+                            class="menu-item <?= (current_url() == base_url('asesor/data-pendaftaran') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+                                <span class="menu-title">Asesor Sistem</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </span>
+                            <!--end:Menu link-->
+                            <!--begin:Menu sub-->
+                            <div
+                                class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-250px">
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('asesor/data-pendaftaran') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('asesor/data-pendaftaran') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-users fs-2">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Data Pendaftaran
+                                        </span>
+                                    </span>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('asesor/data-program-studi') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('asesor/data-program-studi') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-users"></i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Data Program Studi
+                                        </span>
+                                        <!-- <span class="menu-arrow"></span> -->
+                                    </span>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('asesor/data-tahun-ajar') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('asesor/data-tahun-ajar') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-users"></i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Data Tahun Ajaran
+                                        </span>
+                                        <!-- <span class="menu-arrow"></span> -->
+                                    </span>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('asesor/data-mata-kuliah') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('asesor/data-mata-kuliah') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-users"></i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Data Mata Kuliah
                                         </span>
                                         <!-- <span class="menu-arrow"></span> -->
                                     </span>
@@ -234,7 +325,7 @@
                                         } else {
                                             $badge = 'secondary';
                                         } ?>
-                                        <span class="badge badge-light-<?= $badge ?> fw-bold fs-8 px-2 py-1 ms-2"><?= $user['role'] ?></span>
+                                        <span class="badge badge-light-<?= $badge ?> fw-bold fs-8 px-2 py-1 ms-2"><?= strtoupper($user['role']) ?></span>
                                     </div>
                                     <div class="text-muted text-hover-primary fs-7">
                                         <?= $user['email'] ?>

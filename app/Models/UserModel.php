@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class UserModel extends Model
 {
     protected $table = 'users';
-    protected $allowedFields = ['username', 'email', 'password', 'role', 'status', 'created_at', 'updated_at', 'pertanyaan_id', 'jawaban'];
+    protected $allowedFields = ['username', 'email', 'password', 'role', 'status', 'created_at', 'updated_at', 'pertanyaan_id', 'jawaban', 'pict', 'tempat_lahir', 'tanggal_lahir', 'telepon', 'jenis_kelamin', 'agama'];
     protected $useTimestamps = true;
 
     public function getUser()
@@ -18,5 +18,10 @@ class UserModel extends Model
     public function getAplikanByRole($role)
     {
         return $this->where('role', $role)->findAll();
+    }
+
+    public function updateUser($email, $data)
+    {
+        return $this->where('email', $email)->set($data)->update();
     }
 }

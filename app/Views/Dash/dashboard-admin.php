@@ -23,10 +23,9 @@
 						</div>
 					</div>
 					<!--end::Header-->
-
 					<!--begin::Body-->
 					<div class="card-body d-flex flex-column ps-4 pe-4 pb-4">
-						<canvas id="aplikanChart"></canvas>
+						<canvas id="aplikanChart" style="width: 50%; height: 50%;"></canvas>
 					</div>
 					<!--end::Body-->
 				</div>
@@ -54,6 +53,7 @@
 					<div class="card-body d-flex flex-column ps-4 pe-4 pb-4">
 						<div class="d-flex justify-content-center align-items-center h-100">
 							<div class="text-center">
+								<i class="fa-solid fa-user-check fs-1 text-primary"></i>
 								<h1 class="display-4 fw-bold text-primary mb-3"><?= $asesor ?></h1>
 								<p class="fs-3 text-gray-600">Asesor Aktif</p>
 							</div>
