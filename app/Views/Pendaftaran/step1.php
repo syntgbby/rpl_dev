@@ -26,7 +26,7 @@
                         <div class="col-lg-8">
                             <input type="text" name="nama_lengkap" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Nama Lengkap" value="<?= $data['username'] ?? $dataPendaftaran['nama_lengkap'] ?>" />
+                                placeholder="Nama Lengkap" value="<?= $data['username'] ?>" />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -36,7 +36,7 @@
                         <div class="col-lg-8">
                             <input type="text" name="nik" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="NIK" value="<?= $data['nik'] ?? $dataPendaftaran['nik'] ?>" />
+                                placeholder="NIK" />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -46,7 +46,7 @@
                         <div class="col-lg-8">
                             <textarea name="alamat" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Alamat Rumah" value="<?= $data['alamat'] ?? $dataPendaftaran['alamat'] ?>"></textarea>
+                                placeholder="Alamat Rumah"></textarea>
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -56,7 +56,7 @@
                         <div class="col-lg-8">
                             <input type="text" name="no_hp" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="No HP" value="<?= $data['telepon'] ?? $dataPendaftaran['no_hp'] ?>"  />
+                                placeholder="No HP" value="<?= $data['telepon'] ?>" />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -66,7 +66,7 @@
                         <div class="col-lg-8">
                             <input type="text" name="tempat_lahir" required
                                 class="form-control form-control-lg form-control-solid" placeholder="Tempat Lahir"
-                                value="<?= $data['tempat_lahir'] ?? $dataPendaftaran['tempat_lahir'] ?>" />
+                                value="<?= $data['tempat_lahir'] ?>" />
                         </div>
                     </div>
                     <!--end::Input group for Tempat Lahir-->
@@ -76,7 +76,7 @@
                         <div class="col-lg-8">
                             <input type="date" name="tanggal_lahir" required
                                 class="form-control form-control-lg form-control-solid" placeholder="Tanggal Lahir"
-                                value="<?= $data['tanggal_lahir'] ?? $dataPendaftaran['tanggal_lahir'] ?>" />
+                                value="<?= $data['tanggal_lahir'] ?>" />
                         </div>
                     </div>
                     <!--end::Input group for Tanggal Lahir-->
@@ -86,7 +86,7 @@
                         <div class="col-lg-8">
                             <select name="program_studi" required
                                 class="form-control form-control-lg form-control-solid" placeholder="Program Studi"
-                                value="<?= $data['program_study'] ?? $dataPendaftaran['program_study'] ?>">
+                                >
                                 <option value="">Pilih Program Studi</option>
                                 <?php foreach ($prodi as $p): ?>
                                     <option value="<?= $p['nama_prodi'] ?>"><?= $p['nama_prodi'] ?></option>

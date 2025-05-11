@@ -34,22 +34,19 @@ class PendaftaranController extends BaseController
         $this->prodiModel = new ProdiModel();
     }
 
+    public function statusPendaftaran()
+    {
+        return $this->render('Dash/status-pendaftaran');
+    }
+
     public function step1()
     {
         $email = session()->get('email'); // pastikan user sudah login
 
         $dataUser = $this->userModel->where('email', $email)->first();
-        $getPendaftaran = $this->pendaftaranModel->where('email', $email)->first();
-        $getStatusPendaftaran = $this->timelineModel->where('pendaftaran_id', $getPendaftaran['pendaftaran_id'])->first();
         $prodi = $this->prodiModel->where('id !=', 1)->findAll();
         
-        // if ($getStatusPendaftaran['status'] == 'submitted') {
-        //     if ($getPendaftaran) {
-                return $this->render('pendaftaran/step1', ['data' => $dataUser, 'dataPendaftaran' => $getPendaftaran, 'prodi' => $prodi]);
-        //     } else {
-        //         return $this->render('pendaftaran/step1', ['data' => $dataUser]);
-        //     }
-        // }
+        return $this->render('pendaftaran/step1', ['data' => $dataUser, 'prodi' => $prodi]);
     }
 
     public function saveStep1()
@@ -258,9 +255,9 @@ class PendaftaranController extends BaseController
                 'label' => 'File KK',
                 'rules' => 'uploaded[file_kk]|ext_in[file_kk,pdf,jpg,jpeg,png]|max_size[file_kk,2048]',
             ],
-            'file_skl' => [
+            'file_ijazah' => [
                 'label' => 'File SKL',
-                'rules' => 'uploaded[file_skl]|ext_in[file_skl,pdf,jpg,jpeg,png]|max_size[file_skl,2048]',
+                'rules' => 'uploaded[file_ijazah]|ext_in[file_ijazah,pdf,jpg,jpeg,png]|max_size[file_ijazah,2048]',
             ],
 
         ];
@@ -273,13 +270,13 @@ class PendaftaranController extends BaseController
         // Ambil file yang diupload
         $fileKtp = $this->request->getFile('file_ktp');
         $fileKk = $this->request->getFile('file_kk');
-        $fileSkl = $this->request->getFile('file_skl');
+        $fileIjazah = $this->request->getFile('file_ijazah');
 
-        if ($fileKtp->isValid() && !$fileKtp->hasMoved() && $fileKk->isValid() && !$fileKk->hasMoved() && $fileSkl->isValid() && !$fileSkl->hasMoved()) {
+        if ($fileKtp->isValid() && !$fileKtp->hasMoved() && $fileKk->isValid() && !$fileKk->hasMoved() && $fileIjazah->isValid() && !$fileIjazah->hasMoved()) {
             // Generate nama acak untuk file
             $fileNameKtp = $fileKtp->getRandomName();
             $fileNameKk = $fileKk->getRandomName();
-            $fileNameSkl = $fileSkl->getRandomName();
+            $fileNameIjazah = $fileIjazah->getRandomName();
             $path = FCPATH . 'uploads/bukti-pendukung/' . $formatNama;
 
             // Pastikan direktori sudah ada
@@ -291,19 +288,19 @@ class PendaftaranController extends BaseController
                 // Pindahkan file ke folder tujuan
                 $fileKtp->move($path, $fileNameKtp);
                 $fileKk->move($path, $fileNameKk);
-                $fileSkl->move($path, $fileNameSkl);
+                $fileIjazah->move($path, $fileNameIjazah);
 
                 // Buat URL file
                 $fileUrlKtp = base_url('uploads/bukti-pendukung/' . $formatNama . '/' . $fileNameKtp);
                 $fileUrlKk = base_url('uploads/bukti-pendukung/' . $formatNama . '/' . $fileNameKk);
-                $fileUrlSkl = base_url('uploads/bukti-pendukung/' . $formatNama . '/' . $fileNameSkl);
+                $fileUrlIjazah = base_url('uploads/bukti-pendukung/' . $formatNama . '/' . $fileNameIjazah);
 
                 // Insert data pelatihan ke database
                 $this->buktiPendukungModel->insert([
                     'pendaftaran_id' => $getPendaftaran['pendaftaran_id'],
                     'file_ktp' => $fileUrlKtp,
                     'file_kk' => $fileUrlKk,
-                    'file_skl' => $fileUrlSkl,
+                    'file_ijazah' => $fileUrlIjazah,
                 ]);
 
                 $this->pendaftaranModel->update($getPendaftaran['pendaftaran_id'], [

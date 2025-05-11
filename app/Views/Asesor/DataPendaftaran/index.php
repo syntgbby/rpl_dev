@@ -26,8 +26,8 @@
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-15px">No</th>
                                 <th class="min-w-25px">Nama</th>
-                                <th class="min-w-85px">Email</th>
-                                <th class="min-w-85px">No HP</th>
+                                <th class="min-w-85px">Program Study</th>
+                                <th class="min-w-85px">Status</th>
                                 <th class="min-w-100px">Action</th>
                             </tr>
                         </thead>
@@ -39,10 +39,7 @@
                                         <?= $no++ ?>
                                     </td>
                                     <td>
-                                        <?= $row['nama'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $row['email'] ?>
+                                        <?= $row['nama_lengkap'] ?>
                                     </td>
                                     <td>
                                         <?= $row['program_study'] ?>
@@ -58,7 +55,7 @@
                                         <div class="d-flex align-items-center justify-content-center gap-2">
                                             <button type="button"
                                                 class="btn btn-light btn-sm btn-icon btn-active-light-primary"
-                                                onClick="btnViewDetail(<?= $row['id'] ?>)"><i
+                                                onClick="btnViewDetail('<?= $row['pendaftaran_id'] ?>')"><i
                                                     class="fa-solid fa-eye"></i></button>
                                         </div>
                                     </td>
@@ -88,25 +85,9 @@
 
     function btnViewDetail(id) {
         $('#modaltitle').html('View Detail');
-        $('#modalbody').load("<?= base_url('admin/tahun-ajar/edit/') ?>" + id);
+        $('#modalbody').load("<?= base_url('asesor/view-detail-pendaftaran/') ?>" + id);
         $('#modal').data('rowid', 0);
         $('#modal').modal('show');
-    }
-
-    function btnDeleteTahunAjar(id) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = '<?= base_url('admin/tahun-ajar/delete/') ?>' + id;
-            }
-        });
     }
 </script>
 <!--end::Content wrapper-->

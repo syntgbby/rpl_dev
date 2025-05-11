@@ -9,7 +9,7 @@ class BuktiPendukungModel extends Model
     protected $table = 'bukti_lain';
     protected $primaryKey = 'id';
     protected $allowedFields = [
-        'pendaftaran_id', 'file_ktp', 'file_kk', 'file_skl'
+        'pendaftaran_id', 'file_ktp', 'file_kk', 'file_ijazah'
     ];
 
     public function getBuktiPendukung()

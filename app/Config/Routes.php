@@ -24,6 +24,13 @@ $routes->get('/forgot-password', 'RegisterController::viewFPass');
 // Dashboard
 $routes->get('/dashboard', 'DashController::index');
 
+// Profile
+$routes->get('/editprofile/(:any)', 'Profile::indexEdit/$1');
+$routes->post('/edit-profile', 'Profile::update');
+$routes->post('/edit-email', 'Profile::updateEmail');
+$routes->post('/edit-password', 'Profile::updatePassword');
+
+// Bagian Admin
 $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($routes) {
     // Master Menu
     $routes->get('master-menu', 'MasterMenu::index');
@@ -72,13 +79,11 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
     $routes->get('mata-kuliah/delete/(:num)', 'MataKuliahController::delete/$1');
 });
 
-// Profile
-$routes->get('/editprofile/(:any)', 'Profile::indexEdit/$1');
-$routes->post('/edit-profile', 'Profile::update');
-$routes->post('/edit-email', 'Profile::updateEmail');
-$routes->post('/edit-password', 'Profile::updatePassword');
-
+// Bagian Aplikan
 $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan'], function ($routes) {
+    // Status Pendaftaran
+    $routes->get('status-pendaftaran', 'PendaftaranController::statusPendaftaran');
+
     //step 1
     $routes->get('pendaftaran/step1', 'PendaftaranController::step1');
     $routes->post('pendaftaran/saveStep1', 'PendaftaranController::saveStep1');
@@ -97,6 +102,9 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan'], function (
     $routes->post('pendaftaran/saveStep4', 'PendaftaranController::saveStep4');
 });
 
+// Bagian Asesor
 $routes->group('asesor', ['namespace' => 'App\Controllers\Asesor'], function ($routes) {
     $routes->get('data-pendaftaran', 'DataPendaftaranController::index');
+    $routes->get('view-detail-pendaftaran/(:any)', 'DataPendaftaranController::viewDetail/$1');
+    $routes->get('approve-pendaftaran/(:any)', 'DataPendaftaranController::approvePendaftaran/$1');
 });

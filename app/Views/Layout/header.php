@@ -229,10 +229,10 @@
                         </div>
                         <!--end:Menu item-->
 
-                        <div class="menu-item <?= (current_url() == base_url('user-dashboard') ? 'here show menu-here-bg' : '') ?>"
-                            onclick="window.location.href='<?= base_url('user-dashboard') ?>'">
+                        <div class="menu-item <?= (current_url() == base_url('aplikan/status-pendaftaran') ? 'here show menu-here-bg' : '') ?>"
+                            onclick="window.location.href='<?= base_url('aplikan/status-pendaftaran') ?>'">
                             <span class="menu-link">
-                                <span class="menu-title">User Dashboard</span>
+                                <span class="menu-title">Status Pendaftaran</span>
                             </span>
                         </div>
                 </div>

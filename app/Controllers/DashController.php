@@ -55,7 +55,7 @@ class DashController extends BaseController
             'title' => 'Dashboard',
             'user' => $this->userModel->getUser(),
             'dataUser' => $user,
-            'prodi' => $this->prodiModel->getProdi(),
+            'prodi' => $this->prodiModel->where('type =', 1)->findAll(),
             'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),
             'belumMendaftar' => $getBlmMendaftar,
             'totalAplikan' => $totalAplikan,

@@ -16,4 +16,17 @@ class DataPendaftaranController extends BaseController
         return $this->render('Asesor/DataPendaftaran/index', $data);
     }
 
+    public function viewDetail($id)
+    {
+        $model = new ViewDataPendaftaran();
+        $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
+        return $this->render('Asesor/DataPendaftaran/view-detail', $data);
+    }
+
+    public function approvePendaftaran($id)
+    {
+        $model = new ViewDataPendaftaran();
+        $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
+        return $this->render('Asesor/validasi', $data);
+    }
 }

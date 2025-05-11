@@ -13,4 +13,9 @@ class ViewDataPendaftaran extends Model
     {
         return $this->findAll();
     }
+
+    public function getDataPendaftaranById($id)
+    {
+        return $this->where('pendaftaran_id', $id)->first();
+    }
 }

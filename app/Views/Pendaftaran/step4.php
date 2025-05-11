@@ -44,9 +44,9 @@
                     <!--end::Input group for Full Name-->
                     <!--begin::Input group for Full Name-->
                     <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Upload Bukti SKL (Surat Keterangan Lulus)</label>
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Upload Bukti Ijazah (Surat Keterangan Lulus)</label>
                         <div class="col-lg-8">
-                            <input type="file" name="file_skl" accept=".pdf" required
+                            <input type="file" name="file_ijazah" accept=".pdf" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                 placeholder="Upload Bukti" />
                             <span class="text-danger">*Format file: .pdf</span>

@@ -1,51 +1,14 @@
 <?= $this->extend('layout/template'); ?>
 <?= $this->section('content'); ?>
 
-<div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
-    <div id="kt_app_toolbar" class="app-toolbar py-6">
-        <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex align-items-start">
-            <div class="d-flex flex-column flex-row-fluid">
-                <div class="d-flex flex-stack flex-wrap flex-lg-nowrap gap-4 gap-lg-10 pt-6 pb-18 py-lg-13">
-                    <div class="page-title d-flex align-items-center me-3">
-                        <img alt="Logo" src="<?= base_url('assets/media/svg/misc/layer.svg') ?>" class="h-60px me-5" />
-                        <h1 class="page-heading d-flex text-white fw-bolder fs-2 flex-column justify-content-center my-0">Validasi - Assessment
-                            <span class="page-desc text-white opacity-50 fs-6 fw-bold pt-4">Calon Mahasiswa RPL</span>
-                        </h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="app-container container-xxl">
-        <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
-            <div class="d-flex flex-column flex-column-fluid">
+<div class="d-flex flex-column flex-column-fluid">
                 <div id="kt_app_content" class="app-content">
                     <div class="card">
                         <div class="card-body">
                             <!-- Data Mahasiswa Readonly -->
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Nama</label>
-                                <div><?= esc($data['name']) ?></div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Posisi</label>
-                                <div><?= esc($data['position']) ?></div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Kantor</label>
-                                <div><?= esc($data['office']) ?></div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Umur</label>
-                                <div><?= esc($data['age']) ?> tahun</div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Tanggal Masuk</label>
-                                <div><?= esc($data['start_date']) ?></div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Gaji</label>
-                                <div>$<?= esc($data['salary']) ?></div>
+                                <div><?= esc($dtpendaftaran['nama_lengkap']) ?></div>
                             </div>
                             <!-- END Data Mahasiswa Readonly -->
 
@@ -108,8 +71,5 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 
 <?= $this->endSection(); ?>
