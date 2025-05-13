@@ -45,7 +45,7 @@ class PendaftaranController extends BaseController
 
         $dataUser = $this->userModel->where('email', $email)->first();
         $prodi = $this->prodiModel->where('id !=', 1)->findAll();
-        
+
         return $this->render('pendaftaran/step1', ['data' => $dataUser, 'prodi' => $prodi]);
     }
 
@@ -53,8 +53,9 @@ class PendaftaranController extends BaseController
     {
         $email = session()->get('email');
         $tahunAngkatan = date('Y');
+        $formatTahun = date('Ym');
 
-        $pendaftaranId = 'FRPL-' . $tahunAngkatan . random_string('numeric', 2);
+        $pendaftaranId = 'FRPL' . $formatTahun . random_string('numeric', 2);
 
         $getUser = $this->userModel->where('email', $email)->first();
 
@@ -63,21 +64,25 @@ class PendaftaranController extends BaseController
             'tahun_angkatan' => $tahunAngkatan,
             'nama_lengkap'  => $getUser['username'],
             'nik'           => $this->request->getPost('nik'),
-            'tempat_lahir'  => $getUser['tempat_lahir'],
-            'tanggal_lahir' => $getUser['tanggal_lahir'],
+            'program_study' => $this->request->getPost('program_studi'),
+            'tempat_lahir'  => $this->request->getPost('tempat_lahir'),
+            'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
             'jenis_kelamin' => $getUser['jenis_kelamin'],
             'alamat'        => $this->request->getPost('alamat'),
-            'no_hp'         => $getUser['telepon'],
+            'no_hp'         => $this->request->getPost('no_hp'),
             'email'         => $email,
         ];
 
-        $existing = $this->pendaftaranModel->where('email', $email)->first();
+        $this->pendaftaranModel->insert($data);
 
-        if ($existing) {
-            return redirect()->to('/aplikan/pendaftaran/step2')->with('alert', 'Anda sudah melakukan pendaftaran');
-        } else {
-            $this->pendaftaranModel->insert($data);
-        }
+        $data_timeline = [
+            'pendaftaran_id' => $pendaftaranId,
+            'icon' => 'ki-outline ki-user fs-2 text-warning',
+            'status' => 'Upload Biodata',
+            'keterangan' => 'Biodata berhasil diupload',
+        ];
+
+        $this->timelineModel->insert($data_timeline);
 
         return redirect()->to('/aplikan/pendaftaran/step2');
     }
@@ -86,21 +91,22 @@ class PendaftaranController extends BaseController
     {
         $email = session()->get('email');
         $pendaftaran = $this->pendaftaranModel->where('email', $email)->first();
-        $pelatihans = $this->pelatihanModel->where('pendaftaran_id', $pendaftaran['pendaftaran_id'])->get()->getResultArray();
 
-        if ($pelatihans) {
-            return $this->render('pendaftaran/step2', ['pelatihan' => $pelatihans]);
+        if ($pendaftaran) {
+            $pendaftaranId = $pendaftaran['pendaftaran_id'];
+            $pelatihans = $this->pelatihanModel->where('pendaftaran_id =', $pendaftaranId)->get()->getResultArray();
         } else {
-            return $this->render('pendaftaran/step2');
+            $pelatihans = [];
         }
+
+        return $this->render('pendaftaran/step2', ['pelatihan' => $pelatihans]);
     }
 
     public function saveStep2()
     {
         $email = session()->get('email');
 
-        $getPendaftaran = $this->pendaftaranModel->where('email', $email)->first();
-        $nama = $getPendaftaran['nama_lengkap'];
+        $nama = session()->get('name');
         $formatNama = str_replace(' ', '-', $nama);
 
         // Update validasi untuk hanya menerima PDF, JPG, JPEG, PNG
@@ -120,6 +126,7 @@ class PendaftaranController extends BaseController
         $file = $this->request->getFile('file_bukti');
 
         if ($file->isValid() && !$file->hasMoved()) {
+            $getPendaftaran = $this->pendaftaranModel->where('email', $email)->first();
             // Generate nama acak untuk file
             $fileName = $file->getRandomName();
             $path = FCPATH . 'uploads/bukti-pelatihan/' . $formatNama;
@@ -144,6 +151,21 @@ class PendaftaranController extends BaseController
                     'tahun' => $this->request->getPost('tahun'),
                     'file_bukti' => $fileUrl, // Simpan URL file
                 ]);
+
+                $checkTimeline = $this->timelineModel->where('pendaftaran_id', $getPendaftaran['pendaftaran_id'])
+                                ->where('status', 'Upload Pelatihan')
+                                ->first();
+
+                if (!$checkTimeline) {
+                    $data_timeline = [
+                        'pendaftaran_id' => $getPendaftaran['pendaftaran_id'],
+                        'icon' => 'ki-outline ki-book-open fs-2 text-primary',
+                        'status' => 'Upload Pelatihan',
+                        'keterangan' => 'Pelatihan berhasil diupload',
+                    ];
+
+                    $this->timelineModel->insert($data_timeline);
+                }
 
                 // Redirect ke halaman step 2 dengan pesan sukses
                 return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Data pelatihan berhasil disimpan');
@@ -220,8 +242,16 @@ class PendaftaranController extends BaseController
                     'file_bukti' => $fileUrl, // Simpan URL file
                 ]);
 
+                $data_timeline = [
+                    'pendaftaran_id' => $getPendaftaran['pendaftaran_id'],
+                    'icon' => 'ki-outline ki-briefcase fs-2 text-dark',
+                    'status' => 'Upload Pengalaman Kerja',
+                    'keterangan' => 'Pengalaman kerja berhasil diupload',
+                ];
+
+                $this->timelineModel->insert($data_timeline);
                 // Redirect ke halaman step 2 dengan pesan sukses
-                return redirect()->to('/aplikan/pendaftaran/step3')->with('success', 'Data pengalaman kerja berhasil disimpan');
+                return redirect()->to('/aplikan/pendaftaran/step4')->with('success', 'Data pengalaman kerja berhasil disimpan');
             } catch (\Exception $e) {
                 // Tangani error jika gagal mengupload file
                 return redirect()->back()->withInput()->with('error', 'Gagal mengupload file: ' . $e->getMessage());
@@ -307,8 +337,26 @@ class PendaftaranController extends BaseController
                     'status_pendaftaran' => 'submitted',
                 ]);
 
+                $data_timeline1 = [
+                    'pendaftaran_id' => $getPendaftaran['pendaftaran_id'],
+                    'icon' => 'ki-outline ki-folder-added fs-2 text-info',
+                    'status' => 'Upload Bukti Pendukung',
+                    'keterangan' => 'Bukti pendukung berhasil diupload',
+                ];
+
+                $this->timelineModel->insert($data_timeline1);
+
+                $data_timeline2 = [
+                    'pendaftaran_id' => $getPendaftaran['pendaftaran_id'],
+                    'icon' => 'ki-outline ki-check-circle fs-2 text-success',
+                    'status' => 'Pendaftaran Selesai',
+                    'keterangan' => 'Pendaftaran berhasil disubmit',
+                ];
+
+                $this->timelineModel->insert($data_timeline2);
+
                 // Redirect ke halaman step 2 dengan pesan sukses
-                return redirect()->to('/aplikan/pendaftaran/step3')->with('success', 'Data pengalaman kerja berhasil disimpan');
+                return redirect()->to('/dashboard')->with('success', 'Data pengalaman kerja berhasil disimpan');
             } catch (\Exception $e) {
                 // Tangani error jika gagal mengupload file
                 return redirect()->back()->withInput()->with('error', 'Gagal mengupload file: ' . $e->getMessage());

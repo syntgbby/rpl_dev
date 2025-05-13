@@ -25,7 +25,7 @@ $routes->get('/forgot-password', 'RegisterController::viewFPass');
 $routes->get('/dashboard', 'DashController::index');
 
 // Profile
-$routes->get('/editprofile/(:any)', 'Profile::indexEdit/$1');
+$routes->get('/editprofile', 'Profile::indexEdit');
 $routes->post('/edit-profile', 'Profile::update');
 $routes->post('/edit-email', 'Profile::updateEmail');
 $routes->post('/edit-password', 'Profile::updatePassword');

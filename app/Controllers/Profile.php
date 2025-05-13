@@ -6,9 +6,9 @@ use App\Models\UserModel;
 
 class Profile extends BaseController
 {
-    public function indexEdit($hashEmail)
+    public function indexEdit()
     {
-        $email = base64_decode($hashEmail);
+        $email = session()->get('email');
         $users = new UserModel();
 
         // Ambil data user berdasarkan email

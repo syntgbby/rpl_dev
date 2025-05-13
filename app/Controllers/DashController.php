@@ -5,18 +5,24 @@ namespace App\Controllers;
 use App\Models\UserModel;
 use App\Models\AplikanModel;
 use App\Models\ProdiModel;
+use App\Models\PendaftaranModel;
+use App\Models\TimelineModel;
 
 class DashController extends BaseController
 {
     protected $userModel;
     protected $aplikanModel;
     protected $prodiModel;
+    protected $pendaftaranModel;
+    protected $timelineModel;
 
     public function __construct()
     {
         $this->userModel = new UserModel();
         $this->aplikanModel = new AplikanModel();
         $this->prodiModel = new ProdiModel();
+        $this->pendaftaranModel = new PendaftaranModel();
+        $this->timelineModel = new TimelineModel();
     }
 
     public function index()
@@ -51,6 +57,8 @@ class DashController extends BaseController
 
         $user = $this->userModel->where($where)->first();
 
+        $pendaftaran = $this->pendaftaranModel->where('email', $email)->first();
+
         $data = [
             'title' => 'Dashboard',
             'user' => $this->userModel->getUser(),
@@ -59,7 +67,9 @@ class DashController extends BaseController
             'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),
             'belumMendaftar' => $getBlmMendaftar,
             'totalAplikan' => $totalAplikan,
-            'asesor' => $asesor
+            'asesor' => $asesor,
+            'pendaftaran' => $this->pendaftaranModel->where('email', $email)->first(),
+            'timeline' => $this->timelineModel->where('pendaftaran_id', $pendaftaran['pendaftaran_id'])->findAll(),
             // 'aplikan' => $this->aplikanModel->getAplikan(),
             // 'aplikan2025' => $this->aplikanModel->getAplikanByYear(2025)
         ];
@@ -71,5 +81,13 @@ class DashController extends BaseController
         } else {
             return $this->render('Dash/dashboard-asesor', $data);
         }
+    }
+
+    public function timeline()
+    {
+        $email = session()->get('email');
+        $pendaftaran = $this->pendaftaranModel->where('email', $email)->first();
+        
+        
     }
 } 

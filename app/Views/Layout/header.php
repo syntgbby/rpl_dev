@@ -340,10 +340,7 @@
                         <!--end::Menu separator-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <?php
-                            $emailHash = base64_encode($user['email']);
-                            ?>
-                            <a href="<?= base_url('editprofile/' . $emailHash) ?>" class="menu-link px-5">My
+                            <a href="<?= base_url('editprofile') ?>" class="menu-link px-5">My
                                 Profile</a>
                         </div>
                         <!--end::Menu item-->
