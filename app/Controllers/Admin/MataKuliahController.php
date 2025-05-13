@@ -12,22 +12,16 @@ class MataKuliahController extends BaseController
 {
     public function index()
     {
-        $viewMataKuliah = new ViewMataKuliah();
+        $mataKuliah = new MataKuliahModel();
 
-        $data['v_mata_kuliah'] = $viewMataKuliah->getViewMataKuliah();
+        $data['mata_kuliah'] = $mataKuliah->findAll();
 
         return $this->render('Admin/MataKuliah/index', $data);
     }
 
     public function create()
     {
-        $prodiModel = new ProdiModel();
-        $data['prodi'] = $prodiModel->getProdi();
-
-        $tahunAjarModel = new TahunAjarModel();
-        $data['tahun_ajar'] = $tahunAjarModel->findAll();
-
-        return $this->render('Admin/MataKuliah/form', $data);
+        return $this->render('Admin/MataKuliah/form');
     }
 
     public function store()
@@ -35,8 +29,6 @@ class MataKuliahController extends BaseController
         $model = new MataKuliahModel();
 
         $data = [
-            'prodi_id' => $this->request->getPost('prodi_id'),
-            'tahun_ajar_id' => $this->request->getPost('tahun_ajar_id'),
             'nama_matkul' => $this->request->getPost('nama_matkul'),
             'sks' => $this->request->getPost('sks'),
             'status' => $this->request->getPost('status'),
@@ -52,12 +44,6 @@ class MataKuliahController extends BaseController
         $model = new MataKuliahModel();
         $data['dtmata_kuliah'] = $model->find($id);
 
-        $prodiModel = new ProdiModel();
-        $data['prodi'] = $prodiModel->getProdi();
-
-        $tahunAjarModel = new TahunAjarModel();
-        $data['tahun_ajar'] = $tahunAjarModel->findAll();
-
         return $this->render('Admin/MataKuliah/form', $data);
     }
 
@@ -66,8 +52,6 @@ class MataKuliahController extends BaseController
         $model = new MataKuliahModel();
 
         $data = [
-            'prodi_id' => $this->request->getPost('prodi_id'),
-            'tahun_ajar_id' => $this->request->getPost('tahun_ajar_id'),
             'nama_matkul' => $this->request->getPost('nama_matkul'),
             'sks' => $this->request->getPost('sks'),
             'status' => $this->request->getPost('status'),
@@ -80,7 +64,7 @@ class MataKuliahController extends BaseController
 
     public function delete($id)
     {
-        $model = new ProdiModel();
+        $model = new MataKuliahModel();
         $model->delete($id);
 
         return redirect()->to('/admin/mata-kuliah');

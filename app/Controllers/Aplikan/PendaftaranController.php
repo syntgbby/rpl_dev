@@ -7,7 +7,6 @@ use App\Models\PelatihanModel;
 use App\Models\PengalamanKerjaModel;
 use App\Models\BuktiPendukungModel;
 use App\Models\TimelineModel;
-use App\Models\KurikulumProdiModel;
 use App\Models\ProdiModel;
 use App\Models\UserModel;
 use App\Models\TahunAjarModel;
@@ -24,7 +23,6 @@ class PendaftaranController extends BaseController
     protected $buktiPendukungModel;
     protected $timelineModel;
     protected $prodiModel;
-    protected $kurikulumProdiModel;
     protected $tahunAjarModel;
 
     public function __construct()
@@ -36,7 +34,6 @@ class PendaftaranController extends BaseController
         $this->buktiPendukungModel = new BuktiPendukungModel();
         $this->timelineModel = new TimelineModel();
         $this->prodiModel = new ProdiModel();
-        $this->kurikulumProdiModel = new KurikulumProdiModel();
         $this->tahunAjarModel = new TahunAjarModel();
     }
 

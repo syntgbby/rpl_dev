@@ -4,12 +4,12 @@ namespace App\Models\View;
 
 use CodeIgniter\Model;
 
-class ViewMataKuliah extends Model
+class ViewKurikulum extends Model
 {
-    protected $table = 'view_mata_kuliah';
+    protected $table = 'view_kurikulum';
     protected $primaryKey = 'id';
 
-    public function getViewMataKuliah()
+    public function getViewKurikulum()
     {
         return $this->findAll();
     }

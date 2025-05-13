@@ -9,7 +9,7 @@ class MataKuliahModel extends Model
     protected $table = 'mata_kuliah';
     protected $primaryKey = 'id';
     protected $allowedFields = [
-        'prodi_id', 'tahun_ajar_id', 'nama_matkul', 'sks', 'status'
+        'nama_matkul', 'sks', 'status'
     ];
 
     protected $useTimestamps = true;

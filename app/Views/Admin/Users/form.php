@@ -48,7 +48,25 @@
                                 </div>
                                 <div class="col-md-2">
                                     <button type="button" class="btn btn-primary" id="btnEmail">
-                                        <i class="fa-solid fa-envelope"></i>
+                                        Change Email
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="fv-row mb-8">
+                            <div class="row align-items-center">
+                                <div class="col-md-5">
+                                    <label for="password" class="form-label">Password</label>
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" id="password" name="password"
+                                        placeholder="Enter Password" value="<?= $dtuser['password'] ?? '' ?>">
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-primary" id="btnPassword">
+                                        Change Password
                                     </button>
                                 </div>
                             </div>
@@ -65,7 +83,8 @@
                                     <select name="role"
                                         class="form-select form-select-md form-select-solid text-sm h-40px"
                                         data-control="select2">
-                                        <option value="Admin" <?= (isset($dtuser) && $dtuser['role'] == 'Admin') ? 'selected' : '' ?>>Admin
+                                        <option value="Admin" <?= (isset($dtuser) && $dtuser['role'] == 'Admin') ? 'selected' : '' ?>>
+                                            Admin
                                         </option>
                                         <option value="Asesor" <?= (isset($dtuser) && $dtuser['role'] == 'Asesor') ? 'selected' : '' ?>>
                                             Assessor
@@ -133,6 +152,20 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = '<?= base_url('edit-email') ?>';
+                }
+            });
+        });
+
+        $('#btnPassword').click(function() {
+            Swal.fire({
+                title: 'Change Password',
+                text: 'Are you sure you want to change password?',
+                icon: 'warning',
+                confirmButtonText: 'Yes',
+                showCancelButton: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '<?= base_url('edit-password') ?>';
                 }
             });
         });

@@ -50,22 +50,27 @@
                         <label class="col-lg-4 col-form-label fw-semibold fs-6">Gambar</label>
                     </div>
                     <div class="col-md-7">
+                        <?php
+                        if ($dtprodi['pict'] != null) {
+                            $pictPath = $dtprodi['pict'];
+                        } else {
+                            $pictPath = base_url('assets/media/svg/picts/blank.svg');
+                        }
+                        ?>
                         <div class="image-input image-input-outline" data-kt-image-input="true"
-                            style="background-image: url('<?= $dtprodi['pict'] ?? base_url('assets/media/svg/picts/blank.svg') ?>')">
+                            style="background-image: url('<?= $pictPath ?>')">
                             <div class="image-input-wrapper w-125px h-125px"
-                                style="background-image: url('<?= $dtprodi['pict'] ?? base_url('assets/media/svg/picts/blank.svg') ?>')"></div>
+                                style="background-image: url('<?= $pictPath ?>')"></div>
                             <label
                                 class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                data-kt-image-input-action="change" data-bs-toggle="tooltip"
-                                title="Change pict">
+                                data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change pict">
                                 <i class="ki-outline ki-pencil fs-7"></i>
                                 <input type="file" name="pict" accept=".png, .jpg, .jpeg" />
                                 <input type="hidden" name="pict_remove" />
                             </label>
                             <span
                                 class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
-                                title="Cancel pict">
+                                data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel pict">
                                 <i class="ki-outline ki-cross fs-2"></i>
                             </span>
                         </div>

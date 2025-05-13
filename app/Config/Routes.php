@@ -27,25 +27,17 @@ $routes->get('/dashboard', 'DashController::index');
 // Profile
 $routes->get('/editprofile', 'Profile::indexEdit');
 $routes->post('/edit-profile', 'Profile::update');
+
+// Edit Email
+$routes->get('/edit-email', 'Profile::viewEditEmail');
 $routes->post('/edit-email', 'Profile::updateEmail');
+
+// Edit Password
+$routes->get('/edit-password', 'Profile::viewEditPassword');
 $routes->post('/edit-password', 'Profile::updatePassword');
 
 // Bagian Admin
 $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($routes) {
-    // Master Menu
-    $routes->get('master-menu', 'MasterMenu::index');
-    $routes->get('view-add-master-menu', 'MasterMenu::indexAdd');
-    $routes->get('get-master-menu/(:num)', 'MasterMenu::getById/$1');
-    $routes->post('add-master-menu', 'MasterMenu::store');
-    $routes->post('delete-master-menu', 'MasterMenu::delete');
-
-    // Master Group User
-    $routes->get('master-group-user', 'MasterGroupUser::index');
-    $routes->get('view-add-master-group-user', 'MasterGroupUser::indexAdd');
-    $routes->get('get-master-group-user/(:num)', 'MasterGroupUser::getById/$1');
-    $routes->post('add-master-group-user', 'MasterGroupUser::store');
-    $routes->post('delete-master-group-user', 'MasterGroupUser::delete');
-
     // Users
     $routes->get('users', 'UserController::index');
     $routes->get('users/create', 'UserController::create');
@@ -78,21 +70,18 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
     $routes->post('mata-kuliah/update/(:num)', 'MataKuliahController::update/$1');
     $routes->get('mata-kuliah/delete/(:num)', 'MataKuliahController::delete/$1');
 
-    // Kurikulum Prodi
-    $routes->get('kurikulum-prodi', 'KurikulumProdiController::index');
-    $routes->get('kurikulum-prodi/create', 'KurikulumProdiController::create');
-    $routes->post('kurikulum-prodi/store', 'KurikulumProdiController::store');
-    $routes->get('kurikulum-prodi/edit/(:num)', 'KurikulumProdiController::edit/$1');
-    $routes->post('kurikulum-prodi/update/(:num)', 'KurikulumProdiController::update/$1');
-    $routes->get('kurikulum-prodi/delete/(:num)', 'KurikulumProdiController::delete/$1');
+    // Kurikulum
+    $routes->get('kurikulum', 'KurikulumController::index');
+    $routes->get('kurikulum/create', 'KurikulumController::create');
+    $routes->post('kurikulum/store', 'KurikulumController::store');
+    $routes->get('kurikulum/edit/(:num)', 'KurikulumController::edit/$1');
+    $routes->post('kurikulum/update/(:num)', 'KurikulumController::update/$1');
+    $routes->get('kurikulum/delete/(:num)', 'KurikulumController::delete/$1');
 
-    // Kurikulum Mata Kuliah
-    $routes->get('kurikulum-mata-kuliah', 'KurikulumMataKuliahController::index');
-    $routes->get('kurikulum-mata-kuliah/create', 'KurikulumMataKuliahController::create');
-    $routes->post('kurikulum-mata-kuliah/store', 'KurikulumMataKuliahController::store');
-    $routes->get('kurikulum-mata-kuliah/edit/(:num)', 'KurikulumMataKuliahController::edit/$1');
-    $routes->post('kurikulum-mata-kuliah/update/(:num)', 'KurikulumMataKuliahController::update/$1');
-    $routes->get('kurikulum-mata-kuliah/delete/(:num)', 'KurikulumMataKuliahController::delete/$1');
+    // Assign Asesor
+    $routes->get('data-pendaftaran', 'DataPendaftaranController::index');
+    $routes->get('data-pendaftaran/detail/(:any)', 'DataPendaftaranController::viewDetail/$1');
+    $routes->post('data-pendaftaran/assign-asesor', 'DataPendaftaranController::assignAsesor');
 });
 
 // Bagian Aplikan

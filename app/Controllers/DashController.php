@@ -40,21 +40,6 @@ class DashController extends BaseController
             return redirect()->to('/login');
         }
 
-        // Query untuk mendapatkan user yang belum mendaftar
-        $getBlmMendaftar = $this->userModel->select('users.*')
-            ->join('pendaftaran_rpl', 'users.email = pendaftaran_rpl.email', 'left')
-            ->where('users.role', 'aplikan')
-            ->where('pendaftaran_rpl.pendaftaran_id IS NULL')
-            ->findAll();
-
-        // Query untuk mendapatkan total aplikan
-        $totalAplikan = $this->userModel->where('role', 'aplikan')->countAllResults();
-
-        // Query untuk mendapatkan jumlah asesor aktif
-        $asesor = $this->userModel->where('role', 'asesor')
-            ->where('status', 'y')
-            ->countAllResults();
-
         $user = $this->userModel->where($where)->first();
 
         if ($dataUser['role'] === "aplikan") {
@@ -72,23 +57,33 @@ class DashController extends BaseController
                 'dataUser' => $user,
                 'prodi' => $this->prodiModel->where('type =', 1)->findAll(),
                 'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),
-                'belumMendaftar' => $getBlmMendaftar,
-                'totalAplikan' => $totalAplikan,
-                'asesor' => $asesor,
                 'pendaftaran' => $pendaftaran,
-                'timeline' => $timeline,
-                // 'aplikan' => $this->aplikanModel->getAplikan(),
-                // 'aplikan2025' => $this->aplikanModel->getAplikanByYear(2025)
+                'timeline' => $timeline
             ];
             return $this->render('Dash/dashboard-aplikan', $data_aplikan);
         } else if ($dataUser['role'] === "admin") {
+            // Query untuk mendapatkan user yang belum mendaftar
+            $getSdhMendaftar = $this->userModel->select('users.*')
+                ->join('pendaftaran_rpl', 'users.email = pendaftaran_rpl.email', 'left')
+                ->where('users.role', 'aplikan')
+                ->where('pendaftaran_rpl.email IS NOT NULL')
+                ->findAll();
+
+            // Query untuk mendapatkan total aplikan
+            $totalAplikan = $this->userModel->where('role', 'aplikan')->countAllResults();
+
+            // Query untuk mendapatkan jumlah asesor aktif
+            $asesor = $this->userModel->where('role', 'asesor')
+                ->where('status', 'y')
+                ->countAllResults();
+
             $data_admin = [
                 'title' => 'Dashboard',
                 'user' => $this->userModel->getUser(),
                 'dataUser' => $user,
                 'prodi' => $this->prodiModel->where('type =', 1)->findAll(),
                 'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),
-                'belumMendaftar' => $getBlmMendaftar,
+                'sdhMendaftar' => $getSdhMendaftar,
                 'totalAplikan' => $totalAplikan,
                 'asesor' => $asesor,
                 // 'aplikan' => $this->aplikanModel->getAplikan(),
@@ -102,19 +97,8 @@ class DashController extends BaseController
                 'dataUser' => $user,
                 'prodi' => $this->prodiModel->where('type =', 1)->findAll(),
                 'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),
-                'belumMendaftar' => $getBlmMendaftar,
-                'totalAplikan' => $totalAplikan,
-                'asesor' => $asesor,
-                // 'aplikan' => $this->aplikanModel->getAplikan(),
-                // 'aplikan2025' => $this->aplikanModel->getAplikanByYear(2025)
             ];
             return $this->render('Dash/dashboard-asesor', $data_asesor);
         }
-    }
-
-    public function timeline()
-    {
-        $email = session()->get('email');
-        $pendaftaran = $this->pendaftaranModel->where('email', $email)->first();
     }
 }

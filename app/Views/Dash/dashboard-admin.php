@@ -53,7 +53,6 @@
 					<div class="card-body d-flex flex-column ps-4 pe-4 pb-4">
 						<div class="d-flex justify-content-center align-items-center h-100">
 							<div class="text-center">
-								<i class="fa-solid fa-user-check fs-1 text-primary"></i>
 								<h1 class="display-4 fw-bold text-primary mb-3"><?= $asesor ?></h1>
 								<p class="fs-3 text-gray-600">Asesor Aktif</p>
 							</div>
@@ -77,13 +76,13 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 	// Data untuk diagram pie
-	const aplikanData = <?= json_encode($belumMendaftar) ?>;
+	const aplikanData = <?= json_encode($sdhMendaftar) ?>;
 	const totalAplikan = <?= $totalAplikan ?>;
 	
 	// Hitung jumlah aplikan berdasarkan status
 	const statusCount = {
-		'Belum Mendaftar': aplikanData.length,
-		'Sudah Mendaftar': totalAplikan - aplikanData.length
+		'Sudah Mendaftar': aplikanData.length,
+		'Belum Mendaftar': totalAplikan - aplikanData.length
 	};
 
 	// Siapkan data untuk Chart.js
