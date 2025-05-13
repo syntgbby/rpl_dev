@@ -12,11 +12,11 @@
             <div class="card-header border-0 pt-6">
                 <!--begin::Card title-->
                 <div class="card-title">
-                    <h1>Tahun Ajaran Management</h1>
+                    <h1>Kurikulum Prodi Management</h1>
                 </div>
                 <div class="card-title">
                     <div class="d-flex align-items-center position-relative my-1">
-                        <button type="button" class="btn btn-primary" id="btnAddTahunAjar"><i
+                        <button type="button" class="btn btn-primary" id="btnAddKurikulumProdi"><i
                                 class="fa-solid fa-plus"></i>
                             Add</button>
                     </div>
@@ -32,37 +32,54 @@
                         <thead>
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-15px">No</th>
-                                <th class="min-w-25px">Tahun</th>
+                                <th class="min-w-25px">Prodi</th>
+                                <th class="min-w-85px">Tahun Ajar</th>
                                 <th class="min-w-85px">Status</th>
                                 <th class="min-w-100px">Action</th>
                             </tr>
                         </thead>
+                        <?php
+                        function getProdiName($id, $prodiList)
+                        {
+                            foreach ($prodiList as $p) {
+                                if ($p['id'] == $id) {
+                                    return $p['nama_prodi'];
+                                }
+                            }
+                            return 'Tidak Ada Prodi';
+                        }
+
+                        function getTahunAjar($id, $tahunAjarList)
+                        {
+                            foreach ($tahunAjarList as $t) {
+                                if ($t['id'] == $id) {
+                                    return $t['tahun'];
+                                }
+                            }
+                            return 'Tidak Ada Tahun Ajar';
+                        }
+                        ?>
+
                         <tbody class="text-gray-600 fw-semibold">
                             <?php $no = 1; ?>
-                            <?php foreach ($tahun_ajar as $row): ?>
+                            <?php foreach ($kurikulum_prodi as $row): ?>
                                 <tr>
                                     <td class="text-center">
                                         <?= $no++ ?>
                                     </td>
+                                    <td><?= getProdiName($row['prodi_id'], $prodi) ?></td>
+                                    <td><?= getTahunAjar($row['tahun_ajar_id'], $tahun_ajar) ?></td>
                                     <td>
-                                        <?= $row['tahun'] ?>
-                                    </td>
-                                    <td class="text-center">
-                                        <?php if ($row['status'] == 'Y'): ?>
-                                            <span class="badge bg-success text-white">Active</span>
-                                        <?php else: ?>
-                                            <span class="badge bg-danger text-white">Inactive</span>
-                                        <?php endif; ?>
+                                        <?= $row['status'] = $row['status'] == 'Y' ? '<span class="badge bg-success text-white">Active</span>' : '<span class="badge bg-danger text-white">Inactive</span>' ?>
                                     </td>
                                     <td class="text-center">
                                         <div class="d-flex align-items-center justify-content-center gap-2">
                                             <button type="button"
-                                                class="btn btn-light btn-sm btn-icon btn-active-light-primary"
-                                                onClick="btnEditTahunAjar(<?= $row['id'] ?>)"><i
+                                                class="btn btn-light btn-sm btn-icon btn-active-light-primary" onClick="btnEditKurikulumProdi(<?= $row['id'] ?>)"><i
                                                     class="fa-solid fa-pen-to-square"></i></button>
                                             <button type="button"
                                                 class="btn btn-light btn-sm btn-icon btn-active-light-danger"
-                                                onClick="btnDeleteTahunAjar(<?= $row['id'] ?>)"><i
+                                                onClick="btnDeleteKurikulumProdi(<?= $row['id'] ?>)"><i
                                                     class="fa-solid fa-trash"></i></button>
                                         </div>
                                     </td>
@@ -82,22 +99,22 @@
 
 <script>
     $(document).ready(function() {
-        $('#btnAddTahunAjar').click(function() {
-            $('#modaltitle').html('Tambah Tahun Ajar');
-            $('#modalbody').load("<?= base_url('admin/tahun-ajar/create') ?>");
+        $('#btnAddKurikulumProdi').click(function() {
+            $('#modaltitle').html('Tambah Kurikulum Prodi');
+            $('#modalbody').load("<?= base_url('admin/kurikulum-prodi/create') ?>");
             $('#modal').data('rowid', 0);
             $('#modal').modal('show');
         });
     });
 
-    function btnEditTahunAjar(id) {
-        $('#modaltitle').html('Edit Tahun Ajar');
-        $('#modalbody').load("<?= base_url('admin/tahun-ajar/edit/') ?>" + id);
+    function btnEditKurikulumProdi(id) {
+        $('#modaltitle').html('Edit Kurikulum Prodi');
+        $('#modalbody').load("<?= base_url('admin/kurikulum-prodi/edit/') ?>" + id);
         $('#modal').data('rowid', 0);
         $('#modal').modal('show');
     }
 
-    function btnDeleteTahunAjar(id) {
+    function btnDeleteKurikulumProdi(id) {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -108,10 +125,11 @@
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = '<?= base_url('admin/tahun-ajar/delete/') ?>' + id;
+                window.location.href = '<?= base_url('admin/kurikulum-prodi/delete/') ?>' + id;
             }
         });
     }
 </script>
+
 <!--end::Content wrapper-->
 <?= $this->endSection() ?>

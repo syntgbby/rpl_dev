@@ -20,7 +20,7 @@ class Profile extends BaseController
 
         return $this->render('Aplikan/editprofile', ['get' => $query]);
     }
-    
+
     public function update()
     {
         try {
@@ -29,47 +29,53 @@ class Profile extends BaseController
             $role = session()->get('role');
             $email = session()->get('email');
 
-            // Data untuk update
-            $updateData = [
-                'username' => $this->request->getPost('name'),
-                'tempat_lahir' => $this->request->getPost('tempat_lahir'),
-                'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
-                'telepon' => $this->request->getPost('telepon'),
-                'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
-                'agama' => $this->request->getPost('agama')
-            ];
-            // dd($updateData);
-
-            // Handle file upload
-            $pict = $this->request->getFile('pict');
-            if ($pict && $pict->isValid() && !$pict->hasMoved()) {
-                $path = 'uploads/profile/' . $role;
-                // Pastikan direktori ada
-                if (!is_dir(FCPATH . $path)) {
-                    mkdir(FCPATH . $path, 0777, true);
-                }
-
-                $extension = $pict->getExtension();
-                $pict_name = $this->request->getPost('name') . '.' . $extension;
-                $pict->move(FCPATH . $path, $pict_name);
-
-                $updateData['pict'] = base_url($path . '/' . $pict_name);
-            }
-
-            // Cek apakah user dengan email tersebut ada
+            // Ambil data user dulu
             $user = $users->where('email', $email)->first();
             if (!$user) {
                 return redirect()->back()->with('error', 'User tidak ditemukan');
             }
 
-            // Update data menggunakan where clause
-            $users->updateUser($email, $updateData);
+            // Data untuk update
+            $updateData = [
+                'username'       => $this->request->getPost('name'),
+                'tempat_lahir'   => $this->request->getPost('tempat_lahir'),
+                'tanggal_lahir'  => $this->request->getPost('tanggal_lahir'),
+                'telepon'        => $this->request->getPost('telepon'),
+                'jenis_kelamin'  => $this->request->getPost('jenis_kelamin'),
+                'agama'          => $this->request->getPost('agama'),
+            ];
+
+            // Handle file upload jika ada
+            $pict = $this->request->getFile('pict');
+            if ($pict && $pict->isValid() && !$pict->hasMoved()) {
+                $path = 'uploads/profile/' . $role;
+
+                // Pastikan direktori ada
+                if (!is_dir(FCPATH . $path)) {
+                    mkdir(FCPATH . $path, 0777, true);
+                }
+
+                // Bikin nama file unik
+                $extension = $pict->getExtension();
+                $pict_name = $this->request->getPost('name') . '_' . time() . '.' . $extension;
+                $pict->move(FCPATH . $path, $pict_name);
+
+                // Simpan URL pict
+                $updateData['pict'] = base_url($path . '/' . $pict_name);
+            } else {
+                // Jika tidak upload gambar, tetap pakai yang lama
+                $updateData['pict'] = $user['pict'];
+            }
+
+            // Update data
+            $users->where('email', $email)->set($updateData)->update();
 
             return redirect()->to('/dashboard')->with('success', 'Profile berhasil diupdate');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
+
 
     public function updateEmail()
     {
@@ -123,5 +129,4 @@ class Profile extends BaseController
             ]);
         }
     }
-
 }

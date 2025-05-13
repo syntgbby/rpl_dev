@@ -7,7 +7,7 @@ class TahunAjarModel extends Model
 {
     protected $table = 'tahun_ajar';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['tahun', 'keterangan', 'status'];
+    protected $allowedFields = ['tahun', 'status'];
 
     public function getTahunAjar()
     {

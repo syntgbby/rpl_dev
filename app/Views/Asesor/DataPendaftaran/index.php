@@ -38,17 +38,17 @@
                                     <td class="text-center">
                                         <?= $no++ ?>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <?= $row['nama_lengkap'] ?>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <?= $row['program_study'] ?>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <?php if ($row['status'] == 'Draft'): ?>
-                                            <span class="badge bg-success">Draft</span>
+                                            <span class="badge bg-warning text-white">Draft</span>
                                         <?php else: ?>
-                                            <span class="badge bg-danger">Submitted</span>
+                                            <span class="badge bg-success text-white">Submitted</span>
                                         <?php endif; ?>
                                     </td>
                                     <td class="text-center">

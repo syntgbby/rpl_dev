@@ -19,26 +19,12 @@
             <div class="fv-row mb-8">
                 <div class="row align-items-center">
                     <div class="col-md-5">
-                        <label for="email" class="form-label">Keterangan</label>
-                    </div>
-                    <div class="col-md-7">
-                        <input type="text" class="form-control" id="keterangan"
-                            name="keterangan" placeholder="Enter Keterangan"
-                            value="<?= $dttahun_ajar['keterangan'] ?? '' ?>">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="fv-row mb-8">
-                <div class="row align-items-center">
-                    <div class="col-md-5">
                         <label for="email" class="form-label">Status</label>
                     </div>
                     <div class="col-md-7">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="status" id="status" value="Y"
-                                <?= (isset($dttahun_ajar) && $dttahun_ajar['status'] === 'Y') ? 'checked' : '' ?>>
+                                <?= (isset($dttahun_ajar) && $dttahun_ajar['status'] === 'Y') ? 'checked' : '' ?> defaultChecked>
                             <label class="form-check-label" for="status">Active</label>
                         </div>
                         <div class="form-check form-check-inline">

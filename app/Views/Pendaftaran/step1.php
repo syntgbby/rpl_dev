@@ -89,7 +89,7 @@
                                 >
                                 <option value="">Pilih Program Studi</option>
                                 <?php foreach ($prodi as $p): ?>
-                                    <option value="<?= $p['nama_prodi'] ?>"><?= $p['nama_prodi'] ?></option>
+                                    <option value="<?= $p['id'] ?>"><?= $p['nama_prodi'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>

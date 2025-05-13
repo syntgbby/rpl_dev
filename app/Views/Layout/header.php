@@ -133,6 +133,37 @@
                                     <!--end:Menu link-->
                                 </div>
                                 <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <!-- <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="right-start" data-kt-menu-offset="0,0"
+                                    class="menu-item menu-lg-down-accordion me-0 me-lg-2">
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-users"></i>
+                                        </span>
+                                        <span class="menu-title">Kurikulum</span>
+                                        <span class="menu-arrow"></span>
+                                    </span>
+                                    <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-sub-lg-dropdown-right px-lg-4 py-lg-4 w-lg-250px">
+                                        <div class="menu-item">
+                                            <a class="menu-link" href="<?= base_url('admin/kurikulum-prodi') ?>">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Kurikulum Prodi</span>
+                                            </a>
+                                        </div>
+                                        <div class="menu-item">
+                                            <a class="menu-link" href="<?= base_url('admin/kurikulum-mata-kuliah') ?>">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Kurikulum Mata Kuliah</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!--end:Menu item-->
                             </div>
                             <!--end:Menu sub-->
                         </div>

@@ -7,8 +7,10 @@ use App\Models\PelatihanModel;
 use App\Models\PengalamanKerjaModel;
 use App\Models\BuktiPendukungModel;
 use App\Models\TimelineModel;
+use App\Models\KurikulumProdiModel;
 use App\Models\ProdiModel;
 use App\Models\UserModel;
+use App\Models\TahunAjarModel;
 use App\Controllers\BaseController;
 
 helper('text');
@@ -22,6 +24,8 @@ class PendaftaranController extends BaseController
     protected $buktiPendukungModel;
     protected $timelineModel;
     protected $prodiModel;
+    protected $kurikulumProdiModel;
+    protected $tahunAjarModel;
 
     public function __construct()
     {
@@ -32,6 +36,8 @@ class PendaftaranController extends BaseController
         $this->buktiPendukungModel = new BuktiPendukungModel();
         $this->timelineModel = new TimelineModel();
         $this->prodiModel = new ProdiModel();
+        $this->kurikulumProdiModel = new KurikulumProdiModel();
+        $this->tahunAjarModel = new TahunAjarModel();
     }
 
     public function statusPendaftaran()
@@ -59,12 +65,15 @@ class PendaftaranController extends BaseController
 
         $getUser = $this->userModel->where('email', $email)->first();
 
+        $tahunAjar = $this->tahunAjarModel->where('status', 'Y')->first();
+
         $data = [
             'pendaftaran_id' => $pendaftaranId,
             'tahun_angkatan' => $tahunAngkatan,
+            'tahun_ajar_id' => $tahunAjar['id'],
             'nama_lengkap'  => $getUser['username'],
             'nik'           => $this->request->getPost('nik'),
-            'program_study' => $this->request->getPost('program_studi'),
+            'program_study_id' => $this->request->getPost('program_studi'),
             'tempat_lahir'  => $this->request->getPost('tempat_lahir'),
             'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
             'jenis_kelamin' => $getUser['jenis_kelamin'],
@@ -333,9 +342,7 @@ class PendaftaranController extends BaseController
                     'file_ijazah' => $fileUrlIjazah,
                 ]);
 
-                $this->pendaftaranModel->update($getPendaftaran['pendaftaran_id'], [
-                    'status_pendaftaran' => 'submitted',
-                ]);
+                $this->pendaftaranModel->updateStatusPendaftaran($getPendaftaran['pendaftaran_id'], 'submitted');
 
                 $data_timeline1 = [
                     'pendaftaran_id' => $getPendaftaran['pendaftaran_id'],

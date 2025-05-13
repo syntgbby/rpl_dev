@@ -17,7 +17,7 @@
 					<!--end::Icon-->
 
 					<!--begin::Wrapper-->
-					<div class="d-flex flex-column">
+					<div class="d-flex flex-column flex-grow-1">
 						<!--begin::Title-->
 						<h4 class="mb-1 text-warning">Biodata Belum Lengkap</h4>
 						<!--end::Title-->
@@ -27,11 +27,11 @@
 					</div>
 					<!--end::Wrapper-->
 
-					<!--begin::Close-->
-					<button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+					<!--begin::Button-->
+					<div class="ms-4">
 						<a href="/editprofile" class="btn btn-sm btn-warning">Lengkapi Biodata</a>
-					</button>
-					<!--end::Close-->
+					</div>
+					<!--end::Button-->
 				</div>
 				<!--end::Alert-->
 				<!--end::Col-->

@@ -77,6 +77,22 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
     $routes->get('mata-kuliah/edit/(:num)', 'MataKuliahController::edit/$1');
     $routes->post('mata-kuliah/update/(:num)', 'MataKuliahController::update/$1');
     $routes->get('mata-kuliah/delete/(:num)', 'MataKuliahController::delete/$1');
+
+    // Kurikulum Prodi
+    $routes->get('kurikulum-prodi', 'KurikulumProdiController::index');
+    $routes->get('kurikulum-prodi/create', 'KurikulumProdiController::create');
+    $routes->post('kurikulum-prodi/store', 'KurikulumProdiController::store');
+    $routes->get('kurikulum-prodi/edit/(:num)', 'KurikulumProdiController::edit/$1');
+    $routes->post('kurikulum-prodi/update/(:num)', 'KurikulumProdiController::update/$1');
+    $routes->get('kurikulum-prodi/delete/(:num)', 'KurikulumProdiController::delete/$1');
+
+    // Kurikulum Mata Kuliah
+    $routes->get('kurikulum-mata-kuliah', 'KurikulumMataKuliahController::index');
+    $routes->get('kurikulum-mata-kuliah/create', 'KurikulumMataKuliahController::create');
+    $routes->post('kurikulum-mata-kuliah/store', 'KurikulumMataKuliahController::store');
+    $routes->get('kurikulum-mata-kuliah/edit/(:num)', 'KurikulumMataKuliahController::edit/$1');
+    $routes->post('kurikulum-mata-kuliah/update/(:num)', 'KurikulumMataKuliahController::update/$1');
+    $routes->get('kurikulum-mata-kuliah/delete/(:num)', 'KurikulumMataKuliahController::delete/$1');
 });
 
 // Bagian Aplikan

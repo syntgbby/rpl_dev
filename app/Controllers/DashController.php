@@ -57,29 +57,58 @@ class DashController extends BaseController
 
         $user = $this->userModel->where($where)->first();
 
-        $pendaftaran = $this->pendaftaranModel->where('email', $email)->first();
-
-        $data = [
-            'title' => 'Dashboard',
-            'user' => $this->userModel->getUser(),
-            'dataUser' => $user,
-            'prodi' => $this->prodiModel->where('type =', 1)->findAll(),
-            'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),
-            'belumMendaftar' => $getBlmMendaftar,
-            'totalAplikan' => $totalAplikan,
-            'asesor' => $asesor,
-            'pendaftaran' => $this->pendaftaranModel->where('email', $email)->first(),
-            'timeline' => $this->timelineModel->where('pendaftaran_id', $pendaftaran['pendaftaran_id'])->findAll(),
-            // 'aplikan' => $this->aplikanModel->getAplikan(),
-            // 'aplikan2025' => $this->aplikanModel->getAplikanByYear(2025)
-        ];
-
         if ($dataUser['role'] === "aplikan") {
-            return $this->render('Dash/dashboard-aplikan', $data);
+            $pendaftaran = $this->pendaftaranModel->where('email', $email)->first();
+
+            if ($pendaftaran) {
+                $timeline = $this->timelineModel->where('pendaftaran_id', $pendaftaran['pendaftaran_id'])->findAll();
+            } else {
+                $timeline = [];
+            }
+
+            $data_aplikan = [
+                'title' => 'Dashboard',
+                'user' => $this->userModel->getUser(),
+                'dataUser' => $user,
+                'prodi' => $this->prodiModel->where('type =', 1)->findAll(),
+                'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),
+                'belumMendaftar' => $getBlmMendaftar,
+                'totalAplikan' => $totalAplikan,
+                'asesor' => $asesor,
+                'pendaftaran' => $pendaftaran,
+                'timeline' => $timeline,
+                // 'aplikan' => $this->aplikanModel->getAplikan(),
+                // 'aplikan2025' => $this->aplikanModel->getAplikanByYear(2025)
+            ];
+            return $this->render('Dash/dashboard-aplikan', $data_aplikan);
         } else if ($dataUser['role'] === "admin") {
-            return $this->render('Dash/dashboard-admin', $data);
+            $data_admin = [
+                'title' => 'Dashboard',
+                'user' => $this->userModel->getUser(),
+                'dataUser' => $user,
+                'prodi' => $this->prodiModel->where('type =', 1)->findAll(),
+                'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),
+                'belumMendaftar' => $getBlmMendaftar,
+                'totalAplikan' => $totalAplikan,
+                'asesor' => $asesor,
+                // 'aplikan' => $this->aplikanModel->getAplikan(),
+                // 'aplikan2025' => $this->aplikanModel->getAplikanByYear(2025)
+            ];
+            return $this->render('Dash/dashboard-admin', $data_admin);
         } else {
-            return $this->render('Dash/dashboard-asesor', $data);
+            $data_asesor = [
+                'title' => 'Dashboard',
+                'user' => $this->userModel->getUser(),
+                'dataUser' => $user,
+                'prodi' => $this->prodiModel->where('type =', 1)->findAll(),
+                'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),
+                'belumMendaftar' => $getBlmMendaftar,
+                'totalAplikan' => $totalAplikan,
+                'asesor' => $asesor,
+                // 'aplikan' => $this->aplikanModel->getAplikan(),
+                // 'aplikan2025' => $this->aplikanModel->getAplikanByYear(2025)
+            ];
+            return $this->render('Dash/dashboard-asesor', $data_asesor);
         }
     }
 
@@ -87,7 +116,5 @@ class DashController extends BaseController
     {
         $email = session()->get('email');
         $pendaftaran = $this->pendaftaranModel->where('email', $email)->first();
-        
-        
     }
-} 
+}

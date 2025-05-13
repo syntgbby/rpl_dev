@@ -26,7 +26,6 @@ class TahunAjarController extends BaseController
 
         $data = [
             'tahun' => $this->request->getPost('tahun'),
-            'keterangan' => $this->request->getPost('keterangan'),
             'status' => $this->request->getPost('status'),
         ];
 
@@ -49,7 +48,6 @@ class TahunAjarController extends BaseController
 
         $data = [
             'tahun' => $this->request->getPost('tahun'),
-            'keterangan' => $this->request->getPost('keterangan'),
             'status' => $this->request->getPost('status'),
         ];
 

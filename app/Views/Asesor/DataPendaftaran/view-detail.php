@@ -82,7 +82,7 @@
                 <div class="border rounded p-2">
                     <label class="text-muted d-block small mb-2">KTP</label>
                     <?php if (!empty($dtpendaftaran['file_ktp'])): ?>
-                        <a href="<?= base_url('uploads/' . $dtpendaftaran['file_ktp']) ?>"
+                        <a href="<?= $dtpendaftaran['file_ktp'] ?>"
                             class="btn btn-sm btn-outline-primary w-100"
                             target="_blank">
                             <i class="fas fa-file-pdf me-1"></i> Lihat KTP
@@ -114,7 +114,7 @@
                 <div class="border rounded p-2">
                     <label class="text-muted d-block small mb-2">Ijazah</label>
                     <?php if (!empty($dtpendaftaran['file_ijazah'])): ?>
-                        <a href="<?= base_url('uploads/' . $dtpendaftaran['file_ijazah']) ?>"
+                        <a href="<?= $dtpendaftaran['file_ijazah'] ?>"
                             class="btn btn-sm btn-outline-primary w-100"
                             target="_blank">
                             <i class="fas fa-file-pdf me-1"></i> Lihat Ijazah
@@ -128,28 +128,12 @@
             <!-- Sertifikat -->
             <div class="col-md-6">
                 <div class="border rounded p-2">
-                    <label class="text-muted d-block small mb-2">Sertifikat</label>
-                    <?php if (!empty($dtpendaftaran['file_sertifikat'])): ?>
-                        <a href="<?= base_url('uploads/' . $dtpendaftaran['file_sertifikat']) ?>"
+                    <label class="text-muted d-block small mb-2">Bukti Pelatihan</label>
+                    <?php if (!empty($dtpendaftaran['bukti_pelatihan'])): ?>
+                        <a href="<?= $dtpendaftaran['bukti_pelatihan'] ?>"
                             class="btn btn-sm btn-outline-primary w-100"
                             target="_blank">
-                            <i class="fas fa-file-pdf me-1"></i> Lihat Sertifikat
-                        </a>
-                    <?php else: ?>
-                        <span class="text-muted small">File tidak tersedia</span>
-                    <?php endif; ?>
-                </div>
-            </div>
-
-            <!-- CV -->
-            <div class="col-md-6">
-                <div class="border rounded p-2">
-                    <label class="text-muted d-block small mb-2">CV</label>
-                    <?php if (!empty($dtpendaftaran['file_cv'])): ?>
-                        <a href="<?= base_url('uploads/' . $dtpendaftaran['file_cv']) ?>"
-                            class="btn btn-sm btn-outline-primary w-100"
-                            target="_blank">
-                            <i class="fas fa-file-pdf me-1"></i> Lihat CV
+                            <i class="fas fa-file-pdf me-1"></i> Lihat Bukti Pelatihan
                         </a>
                     <?php else: ?>
                         <span class="text-muted small">File tidak tersedia</span>
