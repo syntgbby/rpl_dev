@@ -10,6 +10,7 @@ use App\Models\TimelineModel;
 use App\Models\ProdiModel;
 use App\Models\UserModel;
 use App\Models\TahunAjarModel;
+use App\Models\KonfirmasiStepModel;
 use App\Controllers\BaseController;
 
 helper('text');
@@ -24,6 +25,7 @@ class PendaftaranController extends BaseController
     protected $timelineModel;
     protected $prodiModel;
     protected $tahunAjarModel;
+    protected $konfirmasiStepModel;
 
     public function __construct()
     {
@@ -35,6 +37,7 @@ class PendaftaranController extends BaseController
         $this->timelineModel = new TimelineModel();
         $this->prodiModel = new ProdiModel();
         $this->tahunAjarModel = new TahunAjarModel();
+        $this->konfirmasiStepModel = new KonfirmasiStepModel();
     }
 
     public function statusPendaftaran()
@@ -90,6 +93,19 @@ class PendaftaranController extends BaseController
 
         $this->timelineModel->insert($data_timeline);
 
+        $data_konfirmasi_step = [[
+            'pendaftaran_id' => $pendaftaranId,
+            'step' => 'step2',
+            'status' => 'N',
+        ],
+        [
+            'pendaftaran_id' => $pendaftaranId,
+            'step' => 'step3',
+            'status' => 'N',
+        ]];
+
+        $this->konfirmasiStepModel->insertBatch($data_konfirmasi_step);
+
         return redirect()->to('/aplikan/pendaftaran/step2');
     }
 
@@ -100,12 +116,53 @@ class PendaftaranController extends BaseController
 
         if ($pendaftaran) {
             $pendaftaranId = $pendaftaran['pendaftaran_id'];
+
+            $konfirmasi_step = $this->konfirmasiStepModel->where('pendaftaran_id =', $pendaftaranId)->where('step =', 'step2')->first();
             $pelatihans = $this->pelatihanModel->where('pendaftaran_id =', $pendaftaranId)->get()->getResultArray();
         } else {
+            $konfirmasi_step = [];
             $pelatihans = [];
         }
 
-        return $this->render('pendaftaran/step2', ['pelatihan' => $pelatihans]);
+        return $this->render('pendaftaran/step2', ['pelatihan' => $pelatihans, 'konfirmasi_step' => $konfirmasi_step]);
+    }
+
+    public function updateKonfirmasiStep($step)
+    {
+        $email = session()->get('email');
+        $pendaftaran = $this->pendaftaranModel->where('email', $email)->first();
+        $pendaftaranId = $pendaftaran['pendaftaran_id'];
+
+        $where = [
+            'pendaftaran_id' => $pendaftaranId,
+            'step' => $step,
+        ];
+
+        $data_konfirmasi_step = [
+            'status' => 'Y',
+        ];
+
+        if ($step == 'step2') {
+            $langkah = 'Pelatihan';
+        } else {
+            $langkah = 'Pengalaman Kerja';
+        }
+
+        $data_timeline = [
+            'pendaftaran_id' => $pendaftaranId,
+            'icon' => 'ki-outline ki-check-warning fs-2 text-warning',
+            'status' => 'Konfirmasi ' . $langkah,
+            'keterangan' => 'Konfirmasi pengisian data ' . $langkah,
+        ];
+
+        $this->konfirmasiStepModel->update($where, $data_konfirmasi_step);
+        $this->timelineModel->insert($data_timeline);
+
+        if ($step == 'step2') {
+            return redirect()->to('/aplikan/pendaftaran/step3');
+        } else {
+            return redirect()->to('/aplikan/pendaftaran/step4');
+        }
     }
 
     public function saveStep2()
@@ -193,7 +250,17 @@ class PendaftaranController extends BaseController
 
     public function step3()
     {
-        return $this->render('pendaftaran/step3');
+        $email = session()->get('email');
+        $pendaftaran = $this->pendaftaranModel->where('email', $email)->first();
+
+        if ($pendaftaran) {
+            $pendaftaranId = $pendaftaran['pendaftaran_id'];
+            $konfirmasi_step = $this->konfirmasiStepModel->where('pendaftaran_id =', $pendaftaranId)->where('step =', 'step3')->first();
+        } else {
+            $konfirmasi_step = [];
+        }
+
+        return $this->render('pendaftaran/step3', ['konfirmasi_step' => $konfirmasi_step]);
     }
 
     public function saveStep3()
@@ -339,7 +406,7 @@ class PendaftaranController extends BaseController
                     'file_ijazah' => $fileUrlIjazah,
                 ]);
 
-                $this->pendaftaranModel->updateStatusPendaftaran($getPendaftaran['pendaftaran_id'], 'submitted');
+                $this->pendaftaranModel->updateStatusPendaftaran($getPendaftaran['pendaftaran_id'], 'done');
 
                 $data_timeline1 = [
                     'pendaftaran_id' => $getPendaftaran['pendaftaran_id'],

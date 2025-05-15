@@ -20,12 +20,12 @@ class AuthController extends Controller
     {
         $users = new UserModel();
 
-        $email = $this->request->getPost('email');
+        $email = strtolower($this->request->getPost('email'));
         $password = $this->request->getPost('password');
         $passHash = strtoupper(md5(strtoupper(md5($email)) . 'P@ssw0rd' . $password));
 
         $users->save([
-            'username' => $this->request->getPost('username'),
+            'username' => ucwords($this->request->getPost('username')),
             'email' => $email,
             'password' => $passHash,
             'role' => 'aplikan',
@@ -45,7 +45,7 @@ class AuthController extends Controller
     public function loginProcess()
     {
         $users = new UserModel();
-        $email = $this->request->getPost('email');
+        $email = strtolower($this->request->getPost('email'));
         $password = $this->request->getPost('password');
 
         $user = $users->where('email', $email)->first();

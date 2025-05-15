@@ -34,10 +34,10 @@
                                 <th class="min-w-15px">No</th>
                                 <th class="min-w-25px">Name</th>
                                 <th class="min-w-85px">Desc</th>
-                                <th class="min-w-85px">Full Desc</th>
                                 <th class="min-w-100px">Action</th>
                             </tr>
                         </thead>
+                        <?php if ($prodi): ?>
                         <tbody class="text-gray-600 fw-semibold">
                             <?php $no = 1; ?>
                             <?php foreach ($prodi as $row): ?>
@@ -50,9 +50,6 @@
                                     </td>
                                     <td>
                                         <?= $row['deskripsi_singkat'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $row['deskripsi_lengkap'] ?>
                                     </td>
                                     <td class="text-center">
                                         <div class="d-flex align-items-center justify-content-center gap-2">
@@ -68,6 +65,13 @@
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
+                        <?php else: ?>
+                            <tbody>
+                                <tr>
+                                    <td colspan="4" class="text-center">No data found</td>
+                                </tr>
+                            </tbody>
+                        <?php endif; ?>
                     </table>
                 </div>
                 <!--end::Table-->

@@ -8,13 +8,21 @@
     <div class="bg-light p-3 rounded mb-4">
         <h5 class="text-dark mb-3 border-bottom pb-2">Biodata Pribadi</h5>
         <div class="row g-3">
-            <div class="col-12">
+            <div class="col-md-6">
+                <label class="text-muted d-block small">NIK</label>
+                <span class="fw-bold d-block"><?= $dtpendaftaran['nik'] ?? '-' ?></span>
+            </div>
+            <div class="col-md-6">
                 <label class="text-muted d-block small">Nama Lengkap</label>
                 <span class="fw-bold d-block"><?= $dtpendaftaran['nama_lengkap'] ?? '-' ?></span>
             </div>
-            <div class="col-12">
-                <label class="text-muted d-block small">NIK</label>
-                <span class="fw-bold d-block"><?= $dtpendaftaran['nik'] ?? '-' ?></span>
+            <div class="col-md-6">
+                <label class="text-muted d-block small">Email</label>
+                <span class="fw-bold d-block"><?= $dtpendaftaran['email'] ?? '-' ?></span>
+            </div>
+            <div class="col-md-6">
+                <label class="text-muted d-block small">No. Telepon</label>
+                <span class="fw-bold d-block"><?= $dtpendaftaran['no_telepon'] ?? '-' ?></span>
             </div>
             <div class="col-md-6">
                 <label class="text-muted d-block small">Tempat Lahir</label>
@@ -27,14 +35,6 @@
             <div class="col-12">
                 <label class="text-muted d-block small">Alamat</label>
                 <span class="fw-bold d-block"><?= $dtpendaftaran['alamat'] ?? '-' ?></span>
-            </div>
-            <div class="col-md-6">
-                <label class="text-muted d-block small">No. Telepon</label>
-                <span class="fw-bold d-block"><?= $dtpendaftaran['no_telepon'] ?? '-' ?></span>
-            </div>
-            <div class="col-md-6">
-                <label class="text-muted d-block small">Email</label>
-                <span class="fw-bold d-block"><?= $dtpendaftaran['email'] ?? '-' ?></span>
             </div>
         </div>
     </div>
@@ -148,12 +148,17 @@
         <h5 class="text-dark mb-3 border-bottom pb-2">Assign Asesor</h5>
         <form action="<?= base_url('admin/data-pendaftaran/assign-asesor') ?>" method="post">
             <div class="row g-3 align-items-center">
-            <input type="hidden" name="pendaftaran_id" value="<?= $dtpendaftaran['pendaftaran_id'] ?>">                <div class="col-md-8">
-                    <select class="form-select form-control" data-control="select2" name="asesor_id" id="asesor_id" placeholder="Pilih Asesor" >
-                        <option value="" disabled selected>Pilih Asesor</option>
-                        <?php foreach ($asesor as $a): ?>
-                            <option value="<?= $a['id'] ?>"><?= $a['username'] ?></option>
-                        <?php endforeach; ?>
+            <input type="hidden" name="pendaftaran_id" value="<?= $dtpendaftaran['pendaftaran_id'] ?>">                
+                <div class="col-md-8">
+                    <select class="form-select form-control" data-control="select2" name="asesor_id" id="asesor_id" data-placeholder="Pilih Asesor">
+                        <option value="" disabled selected></option>
+                        <?php if ($asesor): ?>
+                            <?php foreach ($asesor as $a): ?>
+                                <option value="<?= $a['id'] ?>"><?= $a['username'] ?></option>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <option value="" disabled selected class="text-center">No data found</option>
+                        <?php endif; ?>
                     </select>
                 </div>
                 <div class="col-md-4">
@@ -164,13 +169,6 @@
             </div>
         </form>
     </div>
-
-    <div class="d-flex gap-2 mt-3 justify-content-end">
-        <a href="<?= base_url('admin/data-pendaftaran') ?>" class="btn btn-secondary btn-sm">
-            <i class="fas fa-times"></i> Close
-        </a>
-    </div>
-
     <script>
         $(document).ready(function() {
             $('#asesor_id').select2();

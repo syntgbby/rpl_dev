@@ -8,6 +8,6 @@ class KurikulumModel extends Model
 {
     protected $table = 'kurikulum';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['prodi_id', 'tahun_ajar_id', 'matkul_id', 'status'];
+    protected $allowedFields = ['prodi_id', 'tahun_ajar_id', 'kode_matkul', 'status'];
 
 }

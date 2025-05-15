@@ -43,10 +43,10 @@
                         <label for="email" class="form-label">Subjects</label>
                     </div>
                     <div class="col-md-7">
-                        <select class="form-control form-control-solid" data-control="select2" id="matkul_id" name="matkul_id" placeholder="Select Subjects" required>
+                        <select class="form-control form-control-solid" data-control="select2" id="kode_matkul" name="kode_matkul" placeholder="Select Subjects" required>
                             <option value="" disabled selected>Select Subjects</option>
                             <?php foreach ($mata_kuliah as $mrow): ?>
-                                <option value="<?= $mrow['id'] ?>" <?= (isset($dtkurikulum) && $dtkurikulum['matkul_id'] == $mrow['id']) ? 'selected' : '' ?>><?= $mrow['nama_matkul'] ?></option>
+                                <option value="<?= $mrow['kode_matkul'] ?>" <?= (isset($dtkurikulum) && $dtkurikulum['kode_matkul'] == $mrow['kode_matkul']) ? 'selected' : '' ?>><?= $mrow['kode_matkul'] ?> - <?= $mrow['nama_matkul'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

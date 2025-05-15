@@ -24,8 +24,21 @@ class UserController extends BaseController
     {
         $model = new UserModel();
 
-        $data = $this->request->getPost();
-        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        $datas = $this->request->getPost();
+
+        $email = strtolower($datas['email']);
+        $username = ucwords($datas['username']);
+        $passHash = strtoupper(md5(strtoupper(md5($email)) . 'P@ssw0rd' . $datas['password']));
+        $role = $datas['role'];
+        $status = $datas['status'];
+
+        $data = [
+            'email' => $email,
+            'username' => $username,
+            'password' => $passHash,
+            'role' => $role,
+            'status' => $status,
+        ];
 
         $model->save($data);
 
@@ -36,7 +49,6 @@ class UserController extends BaseController
     {
         $model = new UserModel();
         $data['dtuser'] = $model->find($id);
-        // dd($data['user']);
 
         return $this->render('Admin/Users/form', $data);
     }
@@ -45,18 +57,19 @@ class UserController extends BaseController
     {
         $model = new UserModel();
 
-        $data = [
-            'username' => $this->request->getPost('username'),
-            'email' => $this->request->getPost('email'),
-            'role' => $this->request->getPost('role'),
-            'status' => $this->request->getPost('status'),
-        ];
+        $datas = $this->request->getPost();
 
-        if (!empty($data['password'])) {
-            $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-        } else {
-            unset($data['password']);
-        }
+        $email = strtolower($datas['email']);
+        $username = ucwords($datas['username']);
+        $role = $datas['role'];
+        $status = $datas['status'];
+
+        $data = [
+            'username' => $username,
+            'email' => $email,
+            'role' => $role,
+            'status' => $status,
+        ];
 
         $model->update($id, $data);
 

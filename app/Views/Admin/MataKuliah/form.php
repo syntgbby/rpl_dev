@@ -6,6 +6,20 @@
             <div class="fv-row mb-8">
                 <div class="row align-items-center">
                     <div class="col-md-5">
+                        <label for="name" class="form-label">Kode Mata Kuliah</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control" id="kode_matkul"
+                            name="kode_matkul" placeholder="Enter Kode Mata Kuliah"
+                            value="<?= $dtmata_kuliah['kode_matkul'] ?? '' ?>">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="fv-row mb-8">
+                <div class="row align-items-center">
+                    <div class="col-md-5">
                         <label for="name" class="form-label">Nama Mata Kuliah</label>
                     </div>
                     <div class="col-md-7">

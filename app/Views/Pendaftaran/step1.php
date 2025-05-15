@@ -11,7 +11,7 @@
             data-bs-target="#kt_account_profile_details" aria-expanded="true"
             aria-controls="kt_account_profile_details">
             <div class="card-title m-0">
-                <h3 class="fw-bold m-0">Step 1: Biodata Diri</h3>
+                <h3 class="fw-bold m-0">Data Biodata Diri</h3>
             </div>
         </div>
         <!--end::Card header-->
@@ -85,7 +85,7 @@
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">Program Studi</label>
                         <div class="col-lg-8">
                             <select name="program_studi" required
-                                class="form-control form-control-lg form-control-solid" placeholder="Program Studi"
+                                class="form-control form-control-lg form-control-solid" data-control="select2" data-placeholder="Pilih Program Studi"
                                 >
                                 <option value="">Pilih Program Studi</option>
                                 <?php foreach ($prodi as $p): ?>
@@ -99,7 +99,7 @@
                 <!--begin::Actions-->
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
                     <button type="cancel" class="btn btn-light btn-active-light-primary me-2" onclick="window.location.href='<?= base_url('dashboard') ?>'">Batal</button>
-                    <button type="submit" class="btn btn-primary" id="btnSave">Lanjutkan ke Step 2
+                    <button type="submit" class="btn btn-primary" id="btnSave">Submit
                         <span class="spinner-border spinner-border-sm align-middle ms-2" role="status"
                             aria-hidden="true" style="display: none;"></span>
                         <span class="visually-hidden">Loading...</span>

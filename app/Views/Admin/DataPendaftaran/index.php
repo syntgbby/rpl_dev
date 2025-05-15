@@ -31,6 +31,7 @@
                                 <th class="min-w-100px">Action</th>
                             </tr>
                         </thead>
+                        <?php if ($dtpendaftaran): ?>
                         <tbody class="text-gray-600 fw-semibold">
                             <?php $no = 1; ?>
                             <?php foreach ($dtpendaftaran as $row): ?>
@@ -62,6 +63,13 @@
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
+                        <?php else: ?>
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" class="text-center">No data found</td>
+                                </tr>
+                            </tbody>
+                        <?php endif; ?>
                     </table>
                 </div>
                 <!--end::Table-->

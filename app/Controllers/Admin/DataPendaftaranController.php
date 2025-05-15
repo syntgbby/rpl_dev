@@ -13,7 +13,7 @@ class DataPendaftaranController extends BaseController
     {
         $model = new ViewDataPendaftaran();
 
-        $data['dtpendaftaran'] = $model->where('asesor_id', '')->findAll();
+        $data['dtpendaftaran'] = $model->where('asesor_id', null)->findAll();
 
         return $this->render('Admin/DataPendaftaran/index', $data);
     }
@@ -25,7 +25,6 @@ class DataPendaftaranController extends BaseController
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
         $data['asesor'] = $asesor->where('role', 'asesor')->where('status', 'Y')->findAll();
 
-        // dd($data);
         return $this->render('Admin/DataPendaftaran/view-detail', $data);
     }
 

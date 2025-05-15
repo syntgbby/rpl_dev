@@ -34,12 +34,13 @@
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-15px">No</th>
                                 <th class="min-w-25px">Name</th>
-                                <th class="min-w-85px">Email</th>
-                                <th class="min-w-85px">Role</th>
-                                <th class="min-w-75px">Status</th>
+                                <th class="min-w-55px">Email</th>
+                                <th class="min-w-55px">Role</th>
+                                <th class="min-w-55px">Status</th>
                                 <th class="min-w-100px">Action</th>
                             </tr>
                         </thead>
+                        <?php if ($users): ?>
                         <tbody class="text-gray-600 fw-semibold">
                             <?php $no = 1; ?>
                             <?php foreach ($users as $row): ?>
@@ -47,15 +48,20 @@
                                     <td class="text-center">
                                         <?= $no++ ?>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <?= $row['username'] ?>
                                     </td>
                                     <td>
                                         <?= $row['email'] ?>
                                     </td>
-                                    <!-- <td class="text-center"><i class="<?= $row['pict'] ?>"></i></td> -->
                                     <td class="text-center">
-                                        <?= $row['role'] ?>
+                                        <?php if ($row['role'] == 'admin'): ?>
+                                            <span class="badge bg-info text-white">Admin</span>
+                                        <?php elseif ($row['role'] == 'aplikan'): ?>
+                                            <span class="badge bg-primary text-white">Aplikan</span>
+                                        <?php elseif ($row['role'] == 'asesor'): ?>
+                                            <span class="badge bg-dark text-white">Asesor</span>
+                                        <?php endif; ?>
                                     </td>
                                     <td class="text-center">
                                         <?= ($row['status'] == 'Y') ? '<span class="badge bg-success text-white">Active</span>' : '<span class="badge bg-danger text-white">Inactive</span>' ?>
@@ -75,6 +81,13 @@
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
+                        <?php else: ?>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" class="text-center">No data found</td>
+                                </tr>
+                            </tbody>
+                        <?php endif; ?>
                     </table>
                 </div>
                 <!--end::Table-->

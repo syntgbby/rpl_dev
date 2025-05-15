@@ -29,6 +29,7 @@ class MataKuliahController extends BaseController
         $model = new MataKuliahModel();
 
         $data = [
+            'kode_matkul' => $this->request->getPost('kode_matkul'),
             'nama_matkul' => $this->request->getPost('nama_matkul'),
             'sks' => $this->request->getPost('sks'),
             'status' => $this->request->getPost('status'),
@@ -52,6 +53,7 @@ class MataKuliahController extends BaseController
         $model = new MataKuliahModel();
 
         $data = [
+            'kode_matkul' => $this->request->getPost('kode_matkul'),
             'nama_matkul' => $this->request->getPost('nama_matkul'),
             'sks' => $this->request->getPost('sks'),
             'status' => $this->request->getPost('status'),

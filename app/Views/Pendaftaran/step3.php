@@ -17,6 +17,33 @@
         <!--end::Card header-->
         <!--begin::Content-->
         <div id="kt_account_settings_profile_details" class="collapse show">
+        <?php if ($konfirmasi_step['status'] == 'N'): ?>
+                <!--begin::Alert-->
+                <div class="alert alert-warning d-flex align-items-center p-5 mb-10">
+                    <!--begin::Icon-->
+                    <i class="ki-duotone ki-question fs-2hx text-warning me-4"><span class="path1"></span><span class="path2"></span></i>
+                    <!--end::Icon-->
+
+                    <!--begin::Wrapper-->
+                    <div class="d-flex flex-column flex-grow-1">
+                        <!--begin::Title-->
+                        <h4 class="mb-1 text-warning">Konfirmasi Pendataan</h4>
+                        <!--end::Title-->
+                        <!--begin::Content-->
+                        <span>Apakah anda ingin mengisi data riwayat kerja?</span>
+                        <!--end::Content-->
+                    </div>
+                    <!--end::Wrapper-->
+
+                    <!--begin::Button-->
+                    <div class="ms-4">
+                        <a href="/aplikan/update-konfirmasi-step/step3" class="btn btn-sm btn-primary me-2">Ya</a>
+                        <a href="/aplikan/pendaftaran/step4" class="btn btn-sm btn-light">Lanjutkan ke Upload File Pendukung</a>
+                    </div>
+                    <!--end::Button-->
+                </div>
+                <!--end::Alert-->
+            <?php endif; ?>
             <!--begin::Form-->
             <form action="<?= base_url('aplikan/pendaftaran/saveStep3') ?>" method="post" enctype="multipart/form-data">
                 <div class="card-body border-top p-9">

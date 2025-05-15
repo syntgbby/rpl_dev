@@ -40,7 +40,7 @@ class KurikulumController extends BaseController
         $data = [
             'prodi_id' => $this->request->getPost('prodi_id'),
             'tahun_ajar_id' => $this->request->getPost('tahun_ajar_id'),
-            'matkul_id' => $this->request->getPost('matkul_id'),
+            'kode_matkul' => $this->request->getPost('kode_matkul'),
             'status' => $this->request->getPost('status'),
         ];
 
@@ -72,7 +72,7 @@ class KurikulumController extends BaseController
         $data = [
             'prodi_id' => $this->request->getPost('prodi_id'),
             'tahun_ajar_id' => $this->request->getPost('tahun_ajar_id'),
-            'matkul_id' => $this->request->getPost('matkul_id'),
+            'kode_matkul' => $this->request->getPost('kode_matkul'),
             'status' => $this->request->getPost('status'),
         ];
 

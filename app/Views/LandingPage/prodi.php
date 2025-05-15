@@ -43,7 +43,8 @@
                                         <!--end::Heading-->
                                         <!--begin::Select-->
                                         <div class="text-center">
-                                            <a href="#" class="btn btn-primary">Baca Selengkapnya</a>
+                                            <button href="#" class="btn btn-primary" id="detailProdi">
+                                                Baca Selengkapnya</button>
                                         </div>
                                         <!--end::Select-->
                                     </div>
@@ -63,3 +64,70 @@
     <!--end::Card-->
 </div>
 <!--end::Container-->
+
+<div class="modal fade" id="detailProdiModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailProdiTitle">Detail <?= $p['nama_prodi'] ?></h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?php if ($p['pict'] != null): ?>
+                                    <img src="<?= $p['pict'] ?>" alt="<?= $p['nama_prodi'] ?>"
+                                        class="img-fluid rounded-3"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="modal-title"><?= $p['nama_prodi'] ?></h5>
+                            </div>
+                            <div class="col-md-12">
+                                <p class="modal-description"><?= $p['deskripsi_singkat'] ?></p>
+                            </div>
+                            <div class="col-md-12">
+                                <p class="modal-description"><?= $p['deskripsi_lengkap'] ?></p>
+                                <p class="modal-description"><?= $p['jenjang_karir'] ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="minatProdi">
+                    Minat
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#detailProdi').click(function() {
+            $('#detailProdiModal').modal('show');
+        });
+
+        $('#minatProdi').click(function() {
+            Swal.fire({
+                title: 'Minat',
+                text: 'Apakah anda yakin ingin menjadi mahasiswa <?= $p['nama_prodi'] ?>?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '<?= base_url('login') ?>';
+                }
+            });
+        });
+    });
+</script>

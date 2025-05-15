@@ -31,14 +31,17 @@
                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_prodi">
                         <thead>
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
-                                <th class="min-w-15px">No</th>
-                                <th class="min-w-85px">Program Studi</th>
-                                <th class="min-w-85px">Tahun Ajaran</th>
-                                <th class="min-w-85px">Mata Kuliah</th>
-                                <th class="min-w-85px">Status</th>
+                                <th class="min-w-10px">No</th>
+                                <th class="min-w-55px">Kode Mata Kuliah</th>
+                                <th class="min-w-55px">Program Studi</th>
+                                <th class="min-w-55px">Tahun Ajaran</th>
+                                <th class="min-w-55px">Mata Kuliah</th>
+                                <th class="min-w-55px">SKS</th>
+                                <th class="min-w-55px">Status</th>
                                 <th class="min-w-100px">Action</th>
                             </tr>
                         </thead>
+                        <?php if ($kurikulum): ?>
                         <tbody class="text-gray-600 fw-semibold">
                             <?php $no = 1; ?>
                             <?php foreach ($kurikulum as $row): ?>
@@ -46,19 +49,22 @@
                                     <td class="text-center">
                                         <?= $no++ ?>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
+                                        <?= $row['kode_matkul'] ?>
+                                    </td>
+                                    <td class="text-center">
                                         <?= $row['nama_prodi'] ?>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <?= $row['tahun'] ?>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <?= $row['nama_matkul'] ?>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <?= $row['sks'] ?>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <?php if ($row['status'] == 'Y'): ?>
                                             <span class="badge bg-success text-white">Active</span>
                                         <?php else: ?>
@@ -80,6 +86,13 @@
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
+                        <?php else: ?>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" class="text-center">No data found</td>
+                                </tr>
+                            </tbody>
+                        <?php endif; ?>
                     </table>
                 </div>
                 <!--end::Table-->

@@ -105,6 +105,9 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan'], function (
     //step 4
     $routes->get('pendaftaran/step4', 'PendaftaranController::step4');
     $routes->post('pendaftaran/saveStep4', 'PendaftaranController::saveStep4');
+
+    //update konfirmasi step
+    $routes->get('update-konfirmasi-step/(:segment)', 'PendaftaranController::updateKonfirmasiStep/$1');
 });
 
 // Bagian Asesor
