@@ -13,11 +13,11 @@ class TahunAjarModel extends Model
     {
         return $this->findAll();
     }
-    public function getDistinctTahun()
-    {
-        return $this->select('tahun')
-                    ->distinct()
-                    ->orderBy('tahun', 'DESC')
-                    ->findAll();
-    }
+// public function getDistinctTahun()
+// {
+//     return $this->select('tahun', 'id')
+//                 ->distinct()
+//                 ->orderBy('tahun', 'DESC')
+//                 ->findAll();
+// }
 }

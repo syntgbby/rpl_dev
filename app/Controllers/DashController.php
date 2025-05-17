@@ -56,7 +56,7 @@ class DashController extends BaseController
                 'user' => $this->userModel->getUser(),
                 'dataUser' => $user,
                 'prodi' => $this->prodiModel->where('type =', 1)->findAll(),
-                'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),
+                'aplikan' => $this->userModel->getAplikanByRole('aplikan'),
                 'pendaftaran' => $pendaftaran,
                 'timeline' => $timeline
             ];
@@ -82,7 +82,7 @@ class DashController extends BaseController
                 'user' => $this->userModel->getUser(),
                 'dataUser' => $user,
                 'prodi' => $this->prodiModel->where('type =', 1)->findAll(),
-                'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),
+                'aplikan' => $this->userModel->getAplikanByRole('aplikan'),
                 'sdhMendaftar' => $getSdhMendaftar,
                 'totalAplikan' => $totalAplikan,
                 'asesor' => $asesor,

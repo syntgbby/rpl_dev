@@ -47,13 +47,11 @@ class DataPendaftaranController extends BaseController
         $model = new ViewDataPendaftaran();
         $model_kurikulum = new TahunAjarModel();
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
-        $data['dtkurikulum'] = $model_kurikulum->getDistinctTahun();
+        $data['dtkurikulum'] = $model_kurikulum->getTahunAjar();
         return $this->render('Asesor/validasi', $data);
     }
-    public function getMatkulByTahun()
+    public function getMatkulByTahun($tahun)
     {
-        $tahun = $this->request->getGet('tahun');
-
         if (!$tahun) {
             return $this->response->setJSON([
                 'status' => 'error',
@@ -80,5 +78,5 @@ class DataPendaftaranController extends BaseController
             ]);
         }
     }
-    
+
 }

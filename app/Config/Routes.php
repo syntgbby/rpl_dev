@@ -115,4 +115,5 @@ $routes->group('asesor', ['namespace' => 'App\Controllers\Asesor'], function ($r
     $routes->get('data-pendaftaran', 'DataPendaftaranController::index');
     $routes->get('view-detail-pendaftaran/(:any)', 'DataPendaftaranController::viewDetail/$1');
     $routes->get('approve-pendaftaran/(:any)', 'DataPendaftaranController::approvePendaftaran/$1');
+    $routes->get('get-matkul/(:any)', 'DataPendaftaranController::getMatkulByTahun/$1');
 });

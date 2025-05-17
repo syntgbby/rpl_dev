@@ -8,7 +8,9 @@
                 <!-- Data Mahasiswa Readonly -->
                 <div class="mb-3">
                     <label class="form-label fw-bold">Nama</label>
-                    <div><?= esc($dtpendaftaran['nama_lengkap']) ?></div>
+                    <div>
+                        <?= esc($dtpendaftaran['nama_lengkap']) ?>
+                    </div>
                 </div>
                 <!-- END Data Mahasiswa Readonly -->
                 <!-- Select Tahun Kurikulum -->
@@ -18,7 +20,7 @@
                         <select class="form-select" id="tahunSelect">
                             <option value="" selected disabled>Pilih Tahun Kurikulum</option>
                             <?php foreach ($dtkurikulum as $row): ?>
-                                <option value="<?= $row['tahun'] ?>"><?= $row['tahun'] ?></option>
+                                <option value="<?= $row['id'] ?>"><?= $row['tahun'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -39,13 +41,15 @@
                             </tr>
                             <tr>
                                 <th style="width: 15%;">
-                                    <label class="form-check form-check-custom form-check-solid" style="display: inline-flex; align-items: center; gap: 5px;">
+                                    <label class="form-check form-check-custom form-check-solid"
+                                        style="display: inline-flex; align-items: center; gap: 5px;">
                                         <input class="form-check-input" id="yesALL" type="checkbox" value="1" />
                                         Ya
                                     </label>
                                 </th>
                                 <th style="width: 15%;">
-                                    <label class="form-check form-check-custom form-check-solid" style="display: inline-flex; align-items: center; gap: 5px;">
+                                    <label class="form-check form-check-custom form-check-solid"
+                                        style="display: inline-flex; align-items: center; gap: 5px;">
                                         <input class="form-check-input" id="noALL" type="checkbox" value="0" />
                                         Tidak
                                     </label>
@@ -68,48 +72,48 @@
     </div>
 </div>
 <script>
-    $('#cariBtn').click(function() {
-    var tahun = $('#tahunSelect').val();
-    if (tahun) {
-        $.ajax({
-            url: '<?= base_url('get-matkul') ?>',
-            type: 'GET',
-            data: { tahun: tahun },
-            dataType: 'json',
-            success: function(response) {
-                var tbody = $('#tabelRplBody');
-                tbody.empty();
+    $('#cariBtn').click(function () {
+        var tahun = $('#tahunSelect').val();
+        if (tahun) {
+            $.ajax({
+                url: '<?= base_url('asesor/get-matkul') ?>/' + tahun,
+                type: 'GET',
+                data: { tahun: tahun },
+                dataType: 'json',
+                success: function (response) {
+                    var tbody = $('#tabelRplBody');
+                    tbody.empty();
 
-                if (response.status === 'success' && response.data.length > 0) {
-                    $.each(response.data, function(index, matkul) {
-                        var row = '<tr>' +
-                            '<td>' + (index + 1) + '</td>' +
-                            '<td>' + matkul.kode_matkul + '</td>' +
-                            '<td>' + matkul.nama_matkul + '</td>' +
-                            '<td><input type="checkbox" class="yes-check" name="rpl[' + matkul.id + ']" value="1"></td>' +
-                            '<td><input type="checkbox" class="no-check" name="rpl[' + matkul.id + ']" value="0"></td>' +
-                            '</tr>';
-                        tbody.append(row);
-                    });
-                    $('#matkulContainer').show();
-                } else {
-                    tbody.html('<tr><td colspan="5">Tidak ada data mata kuliah.</td></tr>');
-                    $('#matkulContainer').show();
+                    if (response.status === 'success' && response.data.length > 0) {
+                        $.each(response.data, function (index, matkul) {
+                            var row = '<tr>' +
+                                '<td>' + (index + 1) + '</td>' +
+                                '<td>' + matkul.kode_matkul + '</td>' +
+                                '<td>' + matkul.nama_matkul + '</td>' +
+                                '<td><input type="checkbox" class="yes-check" name="rpl[' + matkul.id + ']" value="1" checked></td>' +
+                                '<td><input type="checkbox" class="no-check" name="rpl[' + matkul.id + ']" value="0"></td>' +
+                                '</tr>';
+                            tbody.append(row);
+                        });
+                        $('#matkulContainer').show();
+                    } else {
+                        tbody.html('<tr><td colspan="5">Tidak ada data mata kuliah.</td></tr>');
+                        $('#matkulContainer').show();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat mengambil data.');
+                    $('#matkulContainer').hide();
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan saat mengambil data.');
-                $('#matkulContainer').hide();
-            }
-        });
-    } else {
-        alert('Silakan pilih tahun kurikulum terlebih dahulu.');
-        $('#matkulContainer').hide();
+            });
+        } else {
+            alert('Silakan pilih tahun kurikulum terlebih dahulu.');
+            $('#matkulContainer').hide();
+        }
+
     }
-    
-}
-);
+    );
 
 </script>
 
