@@ -3,8 +3,11 @@
 namespace App\Controllers\Asesor;
 
 use App\Models\View\ViewDataPendaftaran;
+use App\Models\View\ViewKurikulum;
 use App\Models\UserModel;
 use App\Controllers\BaseController;
+use App\Models\KurikulumModel;
+use App\Models\TahunAjarModel;
 
 class DataPendaftaranController extends BaseController
 {
@@ -42,7 +45,40 @@ class DataPendaftaranController extends BaseController
     public function approvePendaftaran($id)
     {
         $model = new ViewDataPendaftaran();
+        $model_kurikulum = new TahunAjarModel();
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
+        $data['dtkurikulum'] = $model_kurikulum->getDistinctTahun();
         return $this->render('Asesor/validasi', $data);
     }
+    public function getMatkulByTahun()
+    {
+        $tahun = $this->request->getGet('tahun');
+
+        if (!$tahun) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Tahun kurikulum tidak ditemukan.'
+            ])->setStatusCode(400);
+        }
+
+        $kurikulumModel = new \App\Models\KurikulumModel();
+
+        // Asumsi kamu punya method getMatkulByTahun di KurikulumModel
+        $data = $kurikulumModel->getMatkulByTahun($tahun);
+
+        if ($data) {
+            return $this->response->setJSON([
+                'status' => 'success',
+                'message' => 'Data berhasil ditemukan.',
+                'data' => $data
+            ]);
+        } else {
+            return $this->response->setJSON([
+                'status' => 'empty',
+                'message' => 'Tidak ada data mata kuliah di tahun tersebut.',
+                'data' => []
+            ]);
+        }
+    }
+    
 }
