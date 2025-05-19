@@ -116,4 +116,7 @@ $routes->group('asesor', ['namespace' => 'App\Controllers\Asesor'], function ($r
     $routes->get('view-detail-pendaftaran/(:any)', 'DataPendaftaranController::viewDetail/$1');
     $routes->get('approve-pendaftaran/(:any)', 'DataPendaftaranController::approvePendaftaran/$1');
     $routes->get('get-matkul/(:any)', 'DataPendaftaranController::getMatkulByTahun/$1');
+    $routes->post('approve-rpl', 'AsesorController::approveRpl');
+    $routes->get('approve-nilai', 'AsesorController::viewApprove');
+
 });

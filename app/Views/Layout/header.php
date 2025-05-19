@@ -230,7 +230,7 @@
                                         </i>
                                     </span>
                                     <span class="menu-title">
-                                        Data Pendaftaran
+                                        Data Aproved
                                     </span>
                                 </span>
                                 <!--end:Menu link-->

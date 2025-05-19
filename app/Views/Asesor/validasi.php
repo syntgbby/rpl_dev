@@ -30,62 +30,63 @@
                 </div>
 
                 <!-- Tabel RPL -->
-                <div class="table-responsive" id="matkulContainer" style="display:none;">
-                    <table class="table table-bordered text-center" id="matkulTable">
-                        <thead style="background-color: #b3e0ff; text-align: center; vertical-align: middle;">
-                            <tr>
-                                <th rowspan="2" style="width: 10%;">No</th>
-                                <th rowspan="2" style="width: 20%;">Kode Mata Kuliah</th>
-                                <th rowspan="2" style="width: 40%;">Nama Mata Kuliah</th>
-                                <th colspan="2" style="width: 30%;">Mengajukan RPL</th>
-                            </tr>
-                            <tr>
-                                <th style="width: 15%;">
-                                    <label class="form-check form-check-custom form-check-solid"
-                                        style="display: inline-flex; align-items: center; gap: 5px;">
-                                        <input class="form-check-input" id="yesALL" type="checkbox" value="1" />
-                                        Ya
-                                    </label>
-                                </th>
-                                <th style="width: 15%;">
-                                    <label class="form-check form-check-custom form-check-solid"
-                                        style="display: inline-flex; align-items: center; gap: 5px;">
-                                        <input class="form-check-input" id="noALL" type="checkbox" value="0" />
-                                        Tidak
-                                    </label>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabelRplBody">
-                            <!-- Data dari AJAX -->
-                        </tbody>
-                    </table>
-                    <div class="row">
-                        <div class="text-end my-3">
-                            <button class="btn btn-danger" id="submitBtn">Approve</button>
-                            <button class="btn btn-secondary" id="kembaliBtn">Kembali</button>
+                <form id="approveRplForm" method="post">
+                    <input type="hidden" name="pendaftaran_id" value="<?= esc($dtpendaftaran['pendaftaran_id']) ?>">
+                    <input type="hidden" name="tahunSelectApprove" id="tahunApprove">
+                    <div class="table-responsive" id="matkulContainer" style="display:none;">
+                        <table class="table table-bordered text-center" id="matkulTable">
+                            <thead style="background-color: #b3e0ff; text-align: center; vertical-align: middle;">
+                                <tr>
+                                    <th rowspan="2" style="width: 10%;">No</th>
+                                    <th rowspan="2" style="width: 20%;">Kode Mata Kuliah</th>
+                                    <th rowspan="2" style="width: 40%;">Nama Mata Kuliah</th>
+                                    <th colspan="2" style="width: 30%;">Mengajukan RPL</th>
+                                </tr>
+                                <tr>
+                                    <th style="width: 15%;">Ya</th>
+                                    <th style="width: 15%;">Tidak</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelRplBody">
+                                <!-- Data dari AJAX -->
+                            </tbody>
+                        </table>
+                        <div class="row my-3">
+                            <div class="col">
+                                <label class="form-label fw-bold">Nilai Akhir</label>
+                                <input type="text" class="form-control" name="Nilai" id="nilai">
+                            </div>
+                            <div class="col d-flex align-items-end justify-content-end ">
+                                <button type="submit" class="btn btn-danger" id="submitBtn">Approve</button>
+                                <button type="button" class="btn btn-secondary ms-3" id="kembaliBtn">Kembali</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
 <script>
-    $('#cariBtn').click(function () {
+    // Load data mata kuliah
+    $('#cariBtn').click(function() {
         var tahun = $('#tahunSelect').val();
         if (tahun) {
             $.ajax({
                 url: '<?= base_url('asesor/get-matkul') ?>/' + tahun,
                 type: 'GET',
-                data: { tahun: tahun },
+                data: {
+                    tahun: tahun
+                },
                 dataType: 'json',
-                success: function (response) {
+                success: function(response) {
                     var tbody = $('#tabelRplBody');
+                    $('#tahunApprove').val(tahun); //simpan data pilihan tahun kurikulum
                     tbody.empty();
 
                     if (response.status === 'success' && response.data.length > 0) {
-                        $.each(response.data, function (index, matkul) {
+                        $.each(response.data, function(index, matkul) {
                             var row = '<tr>' +
                                 '<td>' + (index + 1) + '</td>' +
                                 '<td>' + matkul.kode_matkul + '</td>' +
@@ -100,8 +101,22 @@
                         tbody.html('<tr><td colspan="5">Tidak ada data mata kuliah.</td></tr>');
                         $('#matkulContainer').show();
                     }
+
+                    // Tambahkan logika checkbox saling eksklusif
+                    $('.yes-check').on('change', function() {
+                        var noCheck = $(this).closest('tr').find('.no-check');
+                        if ($(this).is(':checked')) {
+                            noCheck.prop('checked', false);
+                        }
+                    });
+                    $('.no-check').on('change', function() {
+                        var yesCheck = $(this).closest('tr').find('.yes-check');
+                        if ($(this).is(':checked')) {
+                            yesCheck.prop('checked', false);
+                        }
+                    });
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     console.error('Error:', error);
                     alert('Terjadi kesalahan saat mengambil data.');
                     $('#matkulContainer').hide();
@@ -111,11 +126,37 @@
             alert('Silakan pilih tahun kurikulum terlebih dahulu.');
             $('#matkulContainer').hide();
         }
+    });
 
-    }
-    );
+    // Submit form via AJAX
+    $('#approveRplForm').on('submit', function(e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
 
+        $.ajax({
+            url: '<?= base_url('asesor/approve-rpl') ?>',
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    alert(response.message);
+                    window.location.href='<?= base_url('asesor/data-pendaftaran') ?>'; // Refresh halaman
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat meng-approve data.');
+            }
+        });
+    });
+
+    // Tombol Kembali
+    $('#kembaliBtn').on('click', function() {
+        window.history.back();
+    });
 </script>
-
 
 <?= $this->endSection(); ?>

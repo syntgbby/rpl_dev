@@ -7,6 +7,7 @@ use App\Models\View\ViewKurikulum;
 use App\Models\UserModel;
 use App\Controllers\BaseController;
 use App\Models\KurikulumModel;
+use App\Models\PendaftaranModel;
 use App\Models\TahunAjarModel;
 
 class DataPendaftaranController extends BaseController
@@ -59,7 +60,7 @@ class DataPendaftaranController extends BaseController
             ])->setStatusCode(400);
         }
 
-        $kurikulumModel = new \App\Models\KurikulumModel();
+        $kurikulumModel = new KurikulumModel();
 
         // Asumsi kamu punya method getMatkulByTahun di KurikulumModel
         $data = $kurikulumModel->getMatkulByTahun($tahun);
@@ -78,5 +79,6 @@ class DataPendaftaranController extends BaseController
             ]);
         }
     }
+    
 
 }

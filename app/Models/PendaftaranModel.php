@@ -10,7 +10,7 @@ class PendaftaranModel extends Model
     protected $primaryKey = 'id';
     protected $allowedFields = [
         'pendaftaran_id', 'asesor_id', 'user_id', 'nama_lengkap', 'nik', 'tempat_lahir', 'tanggal_lahir',
-        'jenis_kelamin', 'alamat', 'no_hp', 'email', 'status_pendaftaran', 'program_study_id', 'tahun_angkatan', 'tahun_ajar_id'
+        'jenis_kelamin', 'alamat', 'no_hp', 'email', 'status_pendaftaran', 'program_study_id', 'tahun_angkatan', 'tahun_ajar_id', 'status_pendaftaran'
     ];
 
     public function getPendaftaran()
