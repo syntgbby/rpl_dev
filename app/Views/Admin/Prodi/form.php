@@ -50,17 +50,10 @@
                         <label class="col-lg-4 col-form-label fw-semibold fs-6">Gambar</label>
                     </div>
                     <div class="col-md-7">
-                        <?php
-                        if ($dtprodi['pict'] != null) {
-                            $pictPath = $dtprodi['pict'];
-                        } else {
-                            $pictPath = base_url('assets/media/svg/picts/blank.svg');
-                        }
-                        ?>
                         <div class="image-input image-input-outline" data-kt-image-input="true"
-                            style="background-image: url('<?= $pictPath ?>')">
+                            style="background-image: url('<?= $dtprodi['pict'] ?? base_url('assets/media/svg/picts/blank.svg') ?>')">
                             <div class="image-input-wrapper w-125px h-125px"
-                                style="background-image: url('<?= $pictPath ?>')"></div>
+                                style="background-image: url('<?= $dtprodi['pict'] ?? base_url('assets/media/svg/picts/blank.svg') ?>')"></div>
                             <label
                                 class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                 data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change pict">

@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\UserModel;
+use App\Models\{UserModel, PendaftaranModel, BuktiPendukungModel, KonfirmasiStepModel, PelatihanModel, PengalamanKerjaModel, TimelineModel};
 use App\Controllers\BaseController;
 
 class UserController extends BaseController
@@ -32,17 +32,24 @@ class UserController extends BaseController
         $role = $datas['role'];
         $status = $datas['status'];
 
-        $data = [
-            'email' => $email,
-            'username' => $username,
-            'password' => $passHash,
-            'role' => $role,
-            'status' => $status,
-        ];
+        $checkEmail = $model->where('email', $email)->first();
 
-        $model->save($data);
+        if ($checkEmail) {
+            $error = 'Email sudah terdaftar';
+            return redirect()->to('/admin/users/create')->with('error', $error);
+        } else {
+            $data = [
+                'email' => $email,
+                'username' => $username,
+                'password' => $passHash,
+                'role' => $role,
+                'status' => $status,
+            ];
 
-        return redirect()->to('/admin/users');
+            $model->save($data);
+
+            return redirect()->to('/admin/users')->with('success', 'User berhasil ditambahkan');
+        }
     }
 
     public function edit($id)
@@ -71,16 +78,55 @@ class UserController extends BaseController
             'status' => $status,
         ];
 
-        $model->update($id, $data);
+        $checkEmail = $model->where('email', $email)->first();
 
-        return redirect()->to('/admin/users');
+        if ($checkEmail) {
+            $error = 'Email sudah terdaftar';
+            return redirect()->to('/admin/users/edit/' . $id)->with('error', $error);
+        } else {
+            $model->update($id, $data);
+            return redirect()->to('/admin/users')->with('success', 'User berhasil diubah');
+        }
     }
 
     public function delete($id)
     {
         $model = new UserModel();
-        $model->delete($id);
+        $modelPendaftaran = new PendaftaranModel();
+        $modelBuktiPendukung = new BuktiPendukungModel();
+        $modelKonfirmasiStep = new KonfirmasiStepModel();
+        $modelPelatihan = new PelatihanModel();
+        $modelPengalamanKerja = new PengalamanKerjaModel();
+        $modelTimeline = new TimelineModel();
+        $email = $model->find($id)['email'];
 
+        $checkPendaftaran = $modelPendaftaran->where('email', $email)->first();
+
+        if ($checkPendaftaran) {
+            $idPendaftaran = $checkPendaftaran['pendaftaran_id'];
+            $modelBuktiPendukung->where('pendaftaran_id', $idPendaftaran)->delete();
+            $modelKonfirmasiStep->where('pendaftaran_id', $idPendaftaran)->delete();
+            $modelPelatihan->where('pendaftaran_id', $idPendaftaran)->delete();
+            $modelPengalamanKerja->where('pendaftaran_id', $idPendaftaran)->delete();
+            $modelTimeline->where('pendaftaran_id', $idPendaftaran)->delete();
+            $modelPendaftaran->delete($idPendaftaran);
+            $model->delete($id);
+        } else {
+            $model->delete($id);
+        }
         return redirect()->to('/admin/users');
+    }
+
+    public function deactivate($id)
+    {
+        $model = new UserModel();
+        
+        $deactivate = $model->update($id, ['status' => 'N']);
+
+        if ($deactivate) {
+            return redirect()->to('/admin/users')->with('success', 'User berhasil dinonaktifkan');
+        } else {
+            return redirect()->to('/admin/users')->with('error', 'User gagal dinonaktifkan');
+        }
     }
 }

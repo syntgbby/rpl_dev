@@ -17,28 +17,21 @@
         <!--begin::Content-->
         <div id="kt_account_settings_profile_details" class="collapse show">
             <!--begin::Form-->
-            <form id="frmProfile" class="form" action="<?= base_url('edit-profile') ?>" method="post">
+            <form id="frmProfile" class="form" action="<?= base_url('edit-profile') ?>" method="post" enctype="multipart/form-data">
                 <div class="card-body border-top p-9">
                     <!--begin::Input group for pict-->
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label fw-semibold fs-6">Picture</label>
                         <div class="col-lg-8">
-                            <?php
-                            if ($get['pict'] != null) {
-                                $pictPath = $get['pict'];
-                            } else {
-                                $pictPath = base_url('assets/media/svg/picts/blank.svg');
-                            }
-                            ?>
                             <div class="image-input image-input-outline" data-kt-image-input="true"
-                                style="background-image: url('<?= $pictPath ?>')">
+                                style="background-image: url('<?= $get['pict'] ?? base_url('assets/media/svg/picts/blank.svg') ?>')">
                                 <div class="image-input-wrapper w-125px h-125px"
-                                    style="background-image: url('<?= $pictPath ?>')"></div>
+                                    style="background-image: url('<?= $get['pict'] ?? base_url('assets/media/svg/picts/blank.svg') ?>')"></div>
                                 <label
                                     class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                     data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change pict">
                                     <i class="ki-outline ki-pencil fs-7"></i>
-                                    <input type="file" name="pict" accept=".png, .jpg, .jpeg" />
+                                    <input type="file" name="pict" id="pict" accept=".png, .jpg, .jpeg" />
                                     <input type="hidden" name="pict_remove" />
                                 </label>
                                 <span

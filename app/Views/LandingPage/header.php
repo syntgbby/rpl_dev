@@ -1,5 +1,50 @@
+<style>
+    /* Navbar */
+    .landing-header {
+        background-color: #001f3f !important;
+        /* biru tua */
+        position: sticky;
+        top: 0;
+        z-index: 999;
+    }
+
+    /* Background Image Container */
+    .landing-hero {
+        background-image: url('assets/media/logos/politeknik.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100vh;
+        padding: 100px 0;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    /* Overlay layer if needed */
+    .landing-hero .overlay-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(128, 128, 128, 0.8);
+        /* warna abu-abu dengan opacity 70% */
+        z-index: 2;
+    }
+
+    .landing-hero .button-container {
+        position: relative;
+        z-index: 3;
+        padding: 30px 0;
+        text-align: center;
+    }
+</style>
 <!--begin::Wrapper-->
-<div class="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg" style="background-image: url(assets/media/svg/illustrations/landing.svg)">
+<div class="landing">
     <!--begin::Header-->
     <div class="landing-header" data-kt-sticky="true" data-kt-sticky-name="landing-header" data-kt-sticky-offset="{default: '200px', lg: '300px'}">
         <!--begin::Container-->
@@ -16,7 +61,7 @@
                     <!--begin::Logo image-->
                     <span href="landing.html">
                         <img alt="Logo" src="<?= base_url('assets/media/logos/logo.svg') ?>" class="logo-default h-35px h-lg-40px" />
-                        <img alt="Logo" src="<?= base_url('assets/media/logos/logo-dark.svg') ?>" class="logo-sticky h-35px h-lg-40px" />
+                        <img alt="Logo" src="<?= base_url('assets/media/logos/logo.svg') ?>" class="logo-sticky h-35px h-lg-40px" />
                     </span>
                     <!--end::Logo image-->
                 </div>
@@ -33,14 +78,31 @@
     </div>
     <!--end::Header-->
     <!--begin::Landing hero-->
-    <div class="d-flex flex-column flex-center w-100 min-h-350px min-h-lg-500px px-9">
-        <!--begin::Heading-->
-        <div class="text-center mb-5 mb-lg-10 py-10 py-lg-20">
-            <!--begin::Title-->
-            <h1 class="text-white lh-base fw-bold fs-2x fs-lg-3x mb-15">ALUR PENDAFTARAN RPL
-            <!--end::Title-->
+    <div class="landing-hero">
+        <div class="overlay-layer"></div>
+        <div class="container text-center text-white position-relative mb-5" style="z-index: 3;">
+            <h3 class="fs-2hx text-white mb-5">Program RPL (Rekognisi Pembelajaran Lampau)</h3>
+            <div class="fs-5 fw-semibold">
+                LP3I Hadir Sebagai Lembaga Pendidikan yang akan menjadi #temansetia
+                <br />untukmu dalam mempersiapkan karir profesional impian masa depan!
+            </div>
         </div>
-        <!--end::Heading-->
+        <!--begin::Description-->
+        <div class="container text-center text-white position-relative mb-5" style="z-index: 3;">
+            <!--begin::Text-->
+            <div class="fs-5 fw-semibold mb-8">Politeknik LP3I Jakarta merupakan pendidikan tinggi vokasi khusus bidang Bisnis & Teknologi yang menggunakan konsep Link & Match dengan dunia usaha dan dunia industri berfokus pada penyiapan kompetensi dan Penempatan Kerja.
+                <a href="https://www.lp3i.ac.id/" class="link-primary pe-1">LP3I</a>
+            </div>
+            <!--end::Text-->
+            <!--begin::Text-->
+            <div class="fs-5 fw-semibold">Rekognisi Pembelajaran Lampau merupakan satu proses pengakuan terhadap capaian pembelajaran seseorang yang diperoleh melalui pendidikan nonformal,informal, maupun pengalaman kerja. Konsep ini memberikan kesempatan kepada individu yang memiliki keahlian tertentu, namun tidak menempuh pendidikan
+                formal di perguruan tinggi untuk tetap mendapatkan pengakuan atas kompentesinya dalam bentuk sertifat keahlian.</div>
+            <!--end::Text-->
+        </div>
+        <div class="button-container">
+            <a href="<?= base_url('statuspendaftaran') ?>" class="btn btn-light-primary btn-lg px-8">Daftar Sekarang</a>
+        </div>
+        <!--end::Description-->
     </div>
     <!--end::Landing hero-->
 </div>

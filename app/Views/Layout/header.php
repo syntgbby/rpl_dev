@@ -53,248 +53,268 @@
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-                        class="menu-item <?= (current_url() == base_url('master-group-user') || current_url() == base_url('master-menu') || current_url() == base_url('users') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
-                        <!--begin:Menu link-->
-                        <span class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-duotone ki-setting fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
+
+                    <!-- menu admin -->
+                    <?php if ($user['role'] == 'admin') { ?>
+                        <!--begin:Menu item-->
+                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
+                            class="menu-item <?= (current_url() == base_url('master-group-user') || current_url() == base_url('master-menu') || current_url() == base_url('users') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+                                <span class="menu-icon">
+                                    <i class="ki-duotone ki-setting fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                </span>
+                                <span class="menu-title">Master Data</span>
+                                <span class="menu-arrow d-lg-none"></span>
                             </span>
-                            <span class="menu-title">Master Data</span>
-                            <span class="menu-arrow d-lg-none"></span>
-                        </span>
-                        <!--end:Menu link-->
-                        <!--begin:Menu sub-->
-                        <div
-                            class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-250px">
-                            <!--begin:Menu item-->
-                            <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                                data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
-                                class="menu-item <?= (current_url() == base_url('admin/users') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
-                                onclick="window.location.href='<?= base_url('admin/users') ?>'">
-                                <!--begin:Menu link-->
-                                <span class="menu-link">
-                                    <span class="menu-icon">
-                                        <i class="ki-duotone ki-profile-user fs-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                            <span class="path4"></span>
-                                        </i>
+                            <!--end:Menu link-->
+                            <!--begin:Menu sub-->
+                            <div
+                                class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-250px">
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('admin/users') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('admin/users') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-profile-user fs-2">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                                <span class="path3"></span>
+                                                <span class="path4"></span>
+                                            </i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Data Users
+                                        </span>
                                     </span>
-                                    <span class="menu-title">
-                                        Data Users
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('admin/prodi') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('admin/prodi') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-element-11 fs-2">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                                <span class="path3"></span>
+                                                <span class="path4"></span>
+                                            </i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Data Program Studi
+                                        </span>
+                                        <!-- <span class="menu-arrow"></span> -->
                                     </span>
-                                </span>
-                                <!--end:Menu link-->
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('admin/tahun-ajar') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('admin/tahun-ajar') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-calendar fs-2">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Data Tahun Ajaran
+                                        </span>
+                                        <!-- <span class="menu-arrow"></span> -->
+                                    </span>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('admin/mata-kuliah') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('admin/mata-kuliah') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-book-open fs-2">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                                <span class="path3"></span>
+                                                <span class="path4"></span>
+                                            </i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Data Mata Kuliah
+                                        </span>
+                                        <!-- <span class="menu-arrow"></span> -->
+                                    </span>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('admin/kurikulum') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('admin/kurikulum') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-questionnaire-tablet fs-2">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Data Kurikulum
+                                        </span>
+                                        <!-- <span class="menu-arrow"></span> -->
+                                    </span>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
                             </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                                data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
-                                class="menu-item <?= (current_url() == base_url('admin/prodi') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
-                                onclick="window.location.href='<?= base_url('admin/prodi') ?>'">
-                                <!--begin:Menu link-->
-                                <span class="menu-link">
-                                    <span class="menu-icon">
-                                        <i class="ki-duotone ki-element-11 fs-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                            <span class="path4"></span>
-                                        </i>
-                                    </span>
-                                    <span class="menu-title">
-                                        Data Program Studi
-                                    </span>
-                                    <!-- <span class="menu-arrow"></span> -->
-                                </span>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                                data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
-                                class="menu-item <?= (current_url() == base_url('admin/tahun-ajar') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
-                                onclick="window.location.href='<?= base_url('admin/tahun-ajar') ?>'">
-                                <!--begin:Menu link-->
-                                <span class="menu-link">
-                                    <span class="menu-icon">
-                                        <i class="ki-duotone ki-calendar fs-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-                                    </span>
-                                    <span class="menu-title">
-                                        Data Tahun Ajaran
-                                    </span>
-                                    <!-- <span class="menu-arrow"></span> -->
-                                </span>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                                data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
-                                class="menu-item <?= (current_url() == base_url('admin/mata-kuliah') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
-                                onclick="window.location.href='<?= base_url('admin/mata-kuliah') ?>'">
-                                <!--begin:Menu link-->
-                                <span class="menu-link">
-                                    <span class="menu-icon">
-                                        <i class="ki-duotone ki-book-open fs-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                            <span class="path4"></span>
-                                        </i>
-                                    </span>
-                                    <span class="menu-title">
-                                        Data Mata Kuliah
-                                    </span>
-                                    <!-- <span class="menu-arrow"></span> -->
-                                </span>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                                data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
-                                class="menu-item <?= (current_url() == base_url('admin/kurikulum') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
-                                onclick="window.location.href='<?= base_url('admin/kurikulum') ?>'">
-                                <!--begin:Menu link-->
-                                <span class="menu-link">
-                                    <span class="menu-icon">
-                                        <i class="ki-duotone ki-questionnaire-tablet fs-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-                                    </span>
-                                    <span class="menu-title">
-                                        Data Kurikulum
-                                    </span>
-                                    <!-- <span class="menu-arrow"></span> -->
-                                </span>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
+                            <!--end:Menu sub-->
                         </div>
-                        <!--end:Menu sub-->
-                    </div>
-                    <!--end:Menu item-->
+                        <!--end:Menu item-->
 
-                    <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-                        class="menu-item <?= (current_url() == base_url('admin/data-pendaftaran') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2"
-                        onclick="window.location.href='<?= base_url('admin/data-pendaftaran') ?>'">
-                        <!--begin:Menu link-->
-                        <span class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-duotone ki-teacher fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
+                        <!--begin:Menu item-->
+                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
+                            class="menu-item <?= (current_url() == base_url('admin/data-pendaftaran') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2"
+                            onclick="window.location.href='<?= base_url('admin/data-pendaftaran') ?>'">
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+                                <span class="menu-icon">
+                                    <i class="ki-duotone ki-teacher fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                </span>
+                                <span class="menu-title">Assign Asesor</span>
                             </span>
-                            <span class="menu-title">Assign Asesor</span>
-                        </span>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-
-                    <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-                        class="menu-item <?= (current_url() == base_url('asesor/data-pendaftaran') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
-                        <!--begin:Menu link-->
-                        <span class="menu-link">
-                            <span class="menu-title">Asesor Sistem</span>
-                            <span class="menu-arrow d-lg-none"></span>
-                        </span>
-                        <!--end:Menu link-->
-                        <!--begin:Menu sub-->
-                        <div
-                            class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-250px">
-                            <!--begin:Menu item-->
-                            <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                                data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
-                                class="menu-item <?= (current_url() == base_url('asesor/data-pendaftaran') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
-                                onclick="window.location.href='<?= base_url('asesor/data-pendaftaran') ?>'">
-                                <!--begin:Menu link-->
-                                <span class="menu-link">
-                                    <span class="menu-icon">
-                                        <i class="ki-duotone ki-users fs-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-                                    </span>
-                                    <span class="menu-title">
-                                        Data Aproved
-                                    </span>
-                                </span>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                                data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
-                                class="menu-item <?= (current_url() == base_url('asesor/data-program-studi') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
-                                onclick="window.location.href='<?= base_url('asesor/data-program-studi') ?>'">
-                                <!--begin:Menu link-->
-                                <span class="menu-link">
-                                    <span class="menu-icon">
-                                        <i class="ki-duotone ki-users"></i>
-                                    </span>
-                                    <span class="menu-title">
-                                        Data Program Studi
-                                    </span>
-                                    <!-- <span class="menu-arrow"></span> -->
-                                </span>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                                data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
-                                class="menu-item <?= (current_url() == base_url('asesor/data-tahun-ajar') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
-                                onclick="window.location.href='<?= base_url('asesor/data-tahun-ajar') ?>'">
-                                <!--begin:Menu link-->
-                                <span class="menu-link">
-                                    <span class="menu-icon">
-                                        <i class="ki-duotone ki-users"></i>
-                                    </span>
-                                    <span class="menu-title">
-                                        Data Tahun Ajaran
-                                    </span>
-                                    <!-- <span class="menu-arrow"></span> -->
-                                </span>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                                data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
-                                class="menu-item <?= (current_url() == base_url('asesor/data-mata-kuliah') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
-                                onclick="window.location.href='<?= base_url('asesor/data-mata-kuliah') ?>'">
-                                <!--begin:Menu link-->
-                                <span class="menu-link">
-                                    <span class="menu-icon">
-                                        <i class="ki-duotone ki-users"></i>
-                                    </span>
-                                    <span class="menu-title">
-                                        Data Mata Kuliah
-                                    </span>
-                                    <!-- <span class="menu-arrow"></span> -->
-                                </span>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
+                            <!--end:Menu link-->
                         </div>
-                        <!--end:Menu sub-->
-                    </div>
-                    <!--end:Menu item-->
+                        <!--end:Menu item-->
+                    <?php } ?>
 
+                    <!-- menu asesor -->
+                    <?php if ($user['role'] == 'asesor') { ?>
+                        <!--begin:Menu item-->
+                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
+                            class="menu-item <?= (current_url() == base_url('asesor/data-pendaftaran') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+                                <span class="menu-title">Asesor Sistem</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </span>
+                            <!--end:Menu link-->
+                            <!--begin:Menu sub-->
+                            <div
+                                class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-250px">
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('asesor/data-pendaftaran') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('asesor/data-pendaftaran') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-users fs-2">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Data Approved
+                                        </span>
+                                    </span>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('asesor/data-program-studi') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('asesor/data-program-studi') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-users"></i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Data Program Studi
+                                        </span>
+                                        <!-- <span class="menu-arrow"></span> -->
+                                    </span>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('asesor/data-tahun-ajar') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('asesor/data-tahun-ajar') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-users"></i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Data Tahun Ajaran
+                                        </span>
+                                        <!-- <span class="menu-arrow"></span> -->
+                                    </span>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('asesor/data-mata-kuliah') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('asesor/data-mata-kuliah') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-users"></i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Data Mata Kuliah
+                                        </span>
+                                        <!-- <span class="menu-arrow"></span> -->
+                                    </span>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                            </div>
+                            <!--end:Menu sub-->
+                        </div>
+                        <!--end:Menu item-->
+                    <?php } ?>
+
+                    <!-- menu aplikan -->
+                    <?php if ($user['role'] == 'aplikan') { ?>
+                        <!--begin:Menu item-->
+                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
+                            class="menu-item <?= (current_url() == base_url('aplikan/tentang-rpl') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+                                <span class="menu-title">Tentang RPL</span>
+                            </span>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                    <?php } ?>
                 </div>
                 <!--end::Menu-->
             </div>
@@ -360,13 +380,8 @@
                     <div class="cursor-pointer symbol symbol-35px symbol-md-45px"
                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                         data-kt-menu-placement="bottom-end">
-                        <?php if ($user['pict'] == null) { ?>
-                            <img class="symbol symbol-circle symbol-35px symbol-md-45px" src="<?= base_url('assets/media/avatars/300-1.jpg') ?>"
-                                alt="user" />
-                        <?php } else { ?>
-                            <img class="symbol symbol-circle symbol-35px symbol-md-45px" src="<?= $user['pict'] ?>"
-                                alt="user" />
-                        <?php } ?>
+                        <img class="symbol symbol-circle symbol-35px symbol-md-45px" src="<?= $user['pict'] ?? base_url('assets/media/avatars/300-1.jpg') ?>"
+                            alt="user" style="object-fit: cover;" />
                     </div>
                     <!--begin::User account menu-->
                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"

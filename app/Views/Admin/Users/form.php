@@ -18,6 +18,11 @@
         <div id="kt_account_settings_profile_details" class="collapse show">
             <div class="card-body py-4">
                 <form action="<?= isset($dtuser) && isset($dtuser['id']) ? base_url('admin/users/update/' . $dtuser['id']) : base_url('admin/users/store') ?>" id="frmusers" class="p-3" method="post">
+                    <?php if (session()->has('error')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                    </div>
+                    <?php endif; ?>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="fv-row mb-8">

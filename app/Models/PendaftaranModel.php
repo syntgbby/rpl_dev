@@ -25,7 +25,9 @@ class PendaftaranModel extends Model
 
     public function updateStatusPendaftaran($pendaftaranId, $status)
     {
-        $this->update($pendaftaranId, ['status_pendaftaran' => $status]);
+        $pendaftaran = $this->where('pendaftaran_id', $pendaftaranId)->first();
+        $id = $pendaftaran['id'];
+        $this->update($id, ['status_pendaftaran' => $status]);
     }
 
     public function assignAsesor($pendaftaranId, $asesorId)

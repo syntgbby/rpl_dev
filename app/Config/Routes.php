@@ -37,7 +37,7 @@ $routes->get('/edit-password', 'Profile::viewEditPassword');
 $routes->post('/edit-password', 'Profile::updatePassword');
 
 // Bagian Admin
-$routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($routes) {
+$routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'auth:admin'], function ($routes) {
     // Users
     $routes->get('users', 'UserController::index');
     $routes->get('users/create', 'UserController::create');
@@ -45,6 +45,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
     $routes->get('users/edit/(:num)', 'UserController::edit/$1');
     $routes->post('users/update/(:num)', 'UserController::update/$1');
     $routes->get('users/delete/(:num)', 'UserController::delete/$1');
+    $routes->get('users/deactivate/(:num)', 'UserController::deactivate/$1');
 
     // Prodi
     $routes->get('prodi', 'ProdiController::index');
@@ -85,7 +86,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
 });
 
 // Bagian Aplikan
-$routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan'], function ($routes) {
+$routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan', 'filter' => 'auth:aplikan'], function ($routes) {
     // Status Pendaftaran
     $routes->get('status-pendaftaran', 'PendaftaranController::statusPendaftaran');
 
@@ -111,12 +112,15 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan'], function (
 });
 
 // Bagian Asesor
-$routes->group('asesor', ['namespace' => 'App\Controllers\Asesor'], function ($routes) {
+$routes->group('asesor', ['namespace' => 'App\Controllers\Asesor', 'filter' => 'auth'], function ($routes) {
     $routes->get('data-pendaftaran', 'DataPendaftaranController::index');
     $routes->get('view-detail-pendaftaran/(:any)', 'DataPendaftaranController::viewDetail/$1');
     $routes->get('approve-pendaftaran/(:any)', 'DataPendaftaranController::approvePendaftaran/$1');
     $routes->get('get-matkul/(:any)', 'DataPendaftaranController::getMatkulByTahun/$1');
     $routes->post('approve-rpl', 'AsesorController::approveRpl');
     $routes->get('approve-nilai', 'AsesorController::viewApprove');
+});
 
+$routes->get('unauthorized', function () {
+    return view('errors/custom_unauthorized');
 });

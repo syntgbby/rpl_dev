@@ -58,6 +58,11 @@ class Profile extends BaseController
                 // Bikin nama file unik
                 $extension = $pict->getExtension();
                 $pict_name = $this->request->getPost('name') . '_' . time() . '.' . $extension;
+
+                $checkfoto = FCPATH . $path . '/' . $pict_name;
+                if (file_exists($checkfoto)) {
+                    unlink($checkfoto);
+                }
                 $pict->move(FCPATH . $path, $pict_name);
 
                 // Simpan URL pict

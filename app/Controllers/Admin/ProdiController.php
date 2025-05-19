@@ -38,6 +38,12 @@ class ProdiController extends BaseController
         if ($pict && $pict->isValid()) {
             $extension = $pict->getExtension();
             $pict_name = $this->request->getPost('nama_prodi') . '.' . $extension;
+
+            $checkfoto = FCPATH . 'uploads/prodi/' . $pict_name;
+            if (file_exists($checkfoto)) {
+                unlink($checkfoto);
+            }
+            
             $pict->move(FCPATH . 'uploads/prodi/', $pict_name);
 
             $data['pict'] = base_url('uploads/prodi/' . $pict_name);
@@ -74,6 +80,11 @@ class ProdiController extends BaseController
             if ($pict && $pict->isValid()) {
                 $extension = $pict->getExtension();
                 $pict_name = $this->request->getPost('nama_prodi') . '.' . $extension;
+
+                $checkfoto = FCPATH . 'uploads/prodi/' . $pict_name;
+                if (file_exists($checkfoto)) {
+                    unlink($checkfoto);
+                }
                 $pict->move(FCPATH . 'uploads/prodi/', $pict_name);
 
                 $data['pict'] = base_url('uploads/prodi/' . $pict_name);

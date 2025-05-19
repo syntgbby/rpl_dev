@@ -51,6 +51,7 @@ class DataPendaftaranController extends BaseController
         $data['dtkurikulum'] = $model_kurikulum->getTahunAjar();
         return $this->render('Asesor/validasi', $data);
     }
+    
     public function getMatkulByTahun($tahun)
     {
         if (!$tahun) {

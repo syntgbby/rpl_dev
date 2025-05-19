@@ -3,11 +3,11 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ApprovalRplModel extends Model
+class FinalApprovalModel extends Model
 {
-    protected $table = 'approval_rpl';
+    protected $table = 'final_approval';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['pendaftaran_id', 'kurikulum_id'];
+    protected $allowedFields = ['pendaftaran_id', 'status', 'type'];
     protected $useTimestamps = true;
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';

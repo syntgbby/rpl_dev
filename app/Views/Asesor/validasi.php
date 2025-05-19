@@ -17,7 +17,7 @@
                 <h5 class="card-title mt-5">Data Kurikulum</h5>
                 <div class="row g-3 align-items-center mb-5">
                     <div class="col-md-6">
-                        <select class="form-select" id="tahunSelect">
+                        <select class="form-select form-select-md" data-control="select2" data-placeholder="Pilih Tahun Kurikulum" id="tahunSelect">
                             <option value="" selected disabled>Pilih Tahun Kurikulum</option>
                             <?php foreach ($dtkurikulum as $row): ?>
                                 <option value="<?= $row['id'] ?>"><?= $row['tahun'] ?></option>
@@ -52,13 +52,26 @@
                             </tbody>
                         </table>
                         <div class="row my-3">
-                            <div class="col">
-                                <label class="form-label fw-bold">Nilai Akhir</label>
-                                <input type="text" class="form-control" name="Nilai" id="nilai">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Tipe RPL</label>
+                                <select class="form-select form-select-md" data-control="select2" data-placeholder="Pilih Tipe RPL" name="type">
+                                    <option value="" selected disabled>Pilih Tipe RPL</option>
+                                    <option value="A">Type A</option>
+                                    <option value="B">Type B</option>
+                                    <option value="C">Type C</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Status Approval</label>
+                                <select class="form-select form-select-md" data-control="select2" data-placeholder="Pilih Status Approval" name="status">
+                                    <option value="" selected disabled>Pilih Status Approval</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="rejected">Rejected</option>
+                                </select>
                             </div>
                             <div class="col d-flex align-items-end justify-content-end ">
                                 <button type="submit" class="btn btn-danger" id="submitBtn">Approve</button>
-                                <button type="button" class="btn btn-secondary ms-3" id="kembaliBtn">Kembali</button>
+                                <button type="button" class="btn btn-secondary ms-3" onclick="window.history.back()">Kembali</button>
                             </div>
                         </div>
                     </div>
@@ -151,11 +164,6 @@
                 alert('Terjadi kesalahan saat meng-approve data.');
             }
         });
-    });
-
-    // Tombol Kembali
-    $('#kembaliBtn').on('click', function() {
-        window.history.back();
     });
 </script>
 
