@@ -44,26 +44,21 @@ class AsesorController extends Controller
             $approvalModel->insertBatch($dataToInsert);
             // Update status pendaftaran menggunakan method yang benar
             $pendaftaranModel->updateStatusPendaftaran($pendaftaranId, $status);
-            $finalInsert = $finalApprovalModel->insert([
+            $finalApprovalModel->insert([
                 'pendaftaran_id' => $pendaftaranId,
                 'status' => $status,
                 'type' => $type
             ]);
-            if ($finalInsert) {
-                return redirect()->to('/admin/kurikulum')->with('success', 'Kurikulum berhasil diubah');
-            } else {
-                return redirect()->to('/admin/kurikulum')->with('error', 'Kurikulum gagal diubah');
-            }
+
+            return $this->response->setJSON([
+                'status' => 'success',
+                'message' => 'Data RPL berhasil di approve.'
+            ]);
         } else {
             return $this->response->setJSON([
                 'status' => 'error',
                 'message' => 'Data RPL gagal di-approve.'
             ]);
         }
-
-        return $this->response->setJSON([
-            'status' => 'error',
-            'message' => 'Tidak ada mata kuliah yang dipilih untuk RPL.'
-        ]);
     }
 }
