@@ -49,7 +49,7 @@ class ProdiController extends BaseController
             if (file_exists($checkfoto)) {
                 unlink($checkfoto);
             }
-            
+
             $pict->move(FCPATH . 'uploads/prodi/', $pict_name);
 
             $data['pict'] = base_url('uploads/prodi/' . $pict_name);
@@ -58,9 +58,9 @@ class ProdiController extends BaseController
         $insert = $model->save($data);
 
         if ($insert) {
-            return redirect()->to('/admin/prodi')->with('success', 'Program Studi berhasil ditambahkan');
+            return redirect()->to('/admin/prodi')->with('success', 'Program Studi berhasil ditambahkan!');
         } else {
-            return redirect()->to('/admin/prodi')->with('error', 'Program Studi gagal ditambahkan');
+            return redirect()->to('/admin/prodi')->with('error', 'Program Studi gagal ditambahkan!');
         }
     }
 
@@ -75,7 +75,7 @@ class ProdiController extends BaseController
     public function update($id)
     {
         $model = new ProdiModel();
-        
+
         $data = [
             'nama_prodi' => $this->request->getPost('nama_prodi'),
             'deskripsi_singkat' => $this->request->getPost('deskripsi_singkat'),
@@ -106,9 +106,9 @@ class ProdiController extends BaseController
         $update = $model->update($id, $data);
 
         if ($update) {
-            return redirect()->to('/admin/prodi')->with('success', 'Program Studi berhasil diubah');
+            return redirect()->to('/admin/prodi')->with('success', 'Program Studi berhasil diubah!');
         } else {
-            return redirect()->to('/admin/prodi')->with('error', 'Program Studi gagal diubah');
+            return redirect()->to('/admin/prodi')->with('error', 'Program Studi gagal diubah!');
         }
     }
 
@@ -118,9 +118,9 @@ class ProdiController extends BaseController
         $delete = $model->delete($id);
 
         if ($delete) {
-            return redirect()->to('/admin/prodi')->with('success', 'Program Studi berhasil dihapus');
+            return redirect()->to('/admin/prodi')->with('success', 'Program Studi berhasil dihapus!');
         } else {
-            return redirect()->to('/admin/prodi')->with('error', 'Program Studi gagal dihapus');
+            return redirect()->to('/admin/prodi')->with('error', 'Program Studi gagal dihapus!');
         }
     }
 }

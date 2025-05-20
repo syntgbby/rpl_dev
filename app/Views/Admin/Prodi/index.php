@@ -16,8 +16,7 @@
                 </div>
                 <div class="card-title">
                     <div class="d-flex align-items-center position-relative my-1">
-                        <button type="button" class="btn btn-primary" id="btnAddProdi"><i
-                                class="fa-solid fa-plus"></i>
+                        <button type="button" class="btn btn-primary" id="btnAddProdi"><i class="fa-solid fa-plus"></i>
                             Add</button>
                     </div>
                 </div>
@@ -27,14 +26,23 @@
             <!--begin::Card body-->
             <div class="card-body py-4">
                 <?php if (session()->getFlashdata('success')): ?>
-                    <div class="alert alert-success">
-                        <?= session()->getFlashdata('success') ?>
-                    </div>
-                <?php endif; ?>
-                <?php if (session()->getFlashdata('error')): ?>
-                    <div class="alert alert-danger">
-                        <?= session()->getFlashdata('error') ?>
-                    </div>
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: '<?= session()->getFlashdata('success') ?>',
+                            confirmButtonColor: '#3085d6',
+                        });
+                    </script>
+                <?php elseif (session()->getFlashdata('error')): ?>
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: '<?= session()->getFlashdata('error') ?>',
+                            confirmButtonColor: '#d33',
+                        });
+                    </script>
                 <?php endif; ?>
                 <!--begin::Table-->
                 <div class="table-responsive">
@@ -64,7 +72,8 @@
                                         <td class="text-center">
                                             <div class="d-flex align-items-center justify-content-center gap-2">
                                                 <button type="button"
-                                                    class="btn btn-light btn-sm btn-icon btn-active-light-primary" onClick="btnEditProdi(<?= $row['id'] ?>)"><i
+                                                    class="btn btn-light btn-sm btn-icon btn-active-light-primary"
+                                                    onClick="btnEditProdi(<?= $row['id'] ?>)"><i
                                                         class="fa-solid fa-pen-to-square"></i></button>
                                                 <button type="button"
                                                     class="btn btn-light btn-sm btn-icon btn-active-light-danger"
@@ -94,8 +103,8 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('#btnAddProdi').click(function() {
+    $(document).ready(function () {
+        $('#btnAddProdi').click(function () {
             $('#modaltitle').html('Tambah Program Studi');
             $('#modalbody').load("<?= base_url('admin/prodi/create') ?>");
             $('#modal').data('rowid', 0);

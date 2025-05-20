@@ -41,9 +41,9 @@ class KurikulumController extends BaseController
         $model = new KurikulumModel();
 
         $checkKurikulum = $model->where('tahun_ajar_id', $this->request->getPost('tahun_ajar_id'))
-                    ->where('prodi_id', $this->request->getPost('prodi_id'))
-                    ->where('kode_matkul', $this->request->getPost('kode_matkul'))
-                    ->findAll();
+            ->where('prodi_id', $this->request->getPost('prodi_id'))
+            ->where('kode_matkul', $this->request->getPost('kode_matkul'))
+            ->findAll();
 
         if ($checkKurikulum) {
             return redirect()->to('/admin/kurikulum')->with('error', 'Kurikulum sudah ada');
@@ -59,9 +59,9 @@ class KurikulumController extends BaseController
         $insert = $model->save($data);
 
         if ($insert) {
-            return redirect()->to('/admin/kurikulum')->with('success', 'Kurikulum berhasil ditambahkan');
+            return redirect()->to('/admin/kurikulum')->with('success', 'Kurikulum berhasil ditambahkan!');
         } else {
-            return redirect()->to('/admin/kurikulum')->with('error', 'Kurikulum gagal ditambahkan');
+            return redirect()->to('/admin/kurikulum')->with('error', 'Kurikulum gagal ditambahkan!');
         }
     }
 
@@ -97,9 +97,9 @@ class KurikulumController extends BaseController
         $update = $model->update($id, $data);
 
         if ($update) {
-            return redirect()->to('/admin/kurikulum')->with('success', 'Kurikulum berhasil diubah');
+            return redirect()->to('/admin/kurikulum')->with('success', 'Kurikulum berhasil diubah!');
         } else {
-            return redirect()->to('/admin/kurikulum')->with('error', 'Kurikulum gagal diubah');
+            return redirect()->to('/admin/kurikulum')->with('error', 'Kurikulum gagal diubah!');
         }
     }
 
@@ -107,13 +107,13 @@ class KurikulumController extends BaseController
     public function delete($id)
     {
         $model = new KurikulumModel();
-        
+
         $delete = $model->delete($id);
 
         if ($delete) {
-            return redirect()->to('/admin/kurikulum')->with('success', 'Kurikulum berhasil dihapus');
+            return redirect()->to('/admin/kurikulum')->with('success', 'Kurikulum berhasil dihapus!');
         } else {
-            return redirect()->to('/admin/kurikulum')->with('error', 'Kurikulum gagal dihapus');
+            return redirect()->to('/admin/kurikulum')->with('error', 'Kurikulum gagal dihapus!');
         }
     }
 }

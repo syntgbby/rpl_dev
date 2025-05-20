@@ -27,15 +27,24 @@
             <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body py-4">
-                <?php if (session()->has('success')): ?>
-                <div class="alert alert-success">
-                    <?= session()->getFlashdata('success') ?>
-                </div>
-                <?php endif; ?>
-                <?php if (session()->has('error')): ?>
-                <div class="alert alert-danger">
-                    <?= session()->getFlashdata('error') ?>
-                </div>
+                <?php if (session()->getFlashdata('success')): ?>
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: '<?= session()->getFlashdata('success') ?>',
+                            confirmButtonColor: '#3085d6',
+                        });
+                    </script>
+                <?php elseif (session()->getFlashdata('error')): ?>
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: '<?= session()->getFlashdata('error') ?>',
+                            confirmButtonColor: '#d33',
+                        });
+                    </script>
                 <?php endif; ?>
                 <!--begin::Table-->
                 <div class="table-responsive">
@@ -82,7 +91,7 @@
                                                     class="btn btn-light btn-sm btn-icon btn-active-light-primary"
                                                     onClick="window.location.href='<?= base_url('admin/users/edit/') . $row['id'] ?>'"><i
                                                         class="fa-solid fa-pen-to-square"></i></button>
-                                                <?php if ($row['role'] == 'asesor' || $row['role'] == 'admin' && $row['status'] == 'Y') : ?>
+                                                <?php if ($row['role'] == 'asesor' || $row['role'] == 'admin' && $row['status'] == 'Y'): ?>
                                                     <button type="button"
                                                         class="btn btn-light btn-sm btn-icon btn-active-light-warning"
                                                         onclick="confirmDeactivate('<?= base_url('admin/users/deactivate/') . $row['id'] ?>')">
@@ -136,21 +145,21 @@
                 $.ajax({
                     url: deleteUrl,
                     type: 'GET',
-                    success: function(response) {
+                    success: function (response) {
                         Swal.fire({
                             title: 'Berhasil!',
                             text: 'Data berhasil dihapus',
                             icon: 'success'
                         });
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         Swal.fire({
                             title: 'Gagal!',
                             text: 'Data gagal dihapus',
                             icon: 'error'
                         });
                     },
-                    complete: function() {
+                    complete: function () {
                         window.location.href = '/admin/users';
                     }
                 });
@@ -173,21 +182,21 @@
                 $.ajax({
                     url: deactivateUrl,
                     type: 'GET',
-                    success: function(response) {
+                    success: function (response) {
                         Swal.fire({
                             title: 'Berhasil!',
                             text: 'Akun berhasil dinonaktifkan',
                             icon: 'success'
                         });
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         Swal.fire({
                             title: 'Gagal!',
                             text: 'Akun gagal dinonaktifkan',
                             icon: 'error'
                         });
                     },
-                    complete: function() {
+                    complete: function () {
                         window.location.href = '/admin/users';
                     }
                 });

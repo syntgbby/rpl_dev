@@ -19,6 +19,26 @@
             <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body py-4">
+                <?php if (session()->getFlashdata('success')): ?>
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: '<?= session()->getFlashdata('success') ?>',
+                            confirmButtonColor: '#3085d6',
+                        });
+                    </script>
+                <?php elseif (session()->getFlashdata('error')): ?>
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: '<?= session()->getFlashdata('error') ?>',
+                            confirmButtonColor: '#d33',
+                        });
+                    </script>
+                <?php endif; ?>
+
                 <!--begin::Table-->
                 <div class="table-responsive">
                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_prodi">
@@ -32,37 +52,37 @@
                             </tr>
                         </thead>
                         <?php if ($dtpendaftaran): ?>
-                        <tbody class="text-gray-600 fw-semibold">
-                            <?php $no = 1; ?>
-                            <?php foreach ($dtpendaftaran as $row): ?>
-                                <tr>
-                                    <td class="text-center">
-                                        <?= $no++ ?>
-                                    </td>
-                                    <td class="text-center">
-                                        <?= $row['nama_lengkap'] ?>
-                                    </td>
-                                    <td class="text-center">
-                                        <?= $row['program_study'] ?>
-                                    </td>
-                                    <td class="text-center">
-                                        <?php if ($row['status'] == 'Draft'): ?>
-                                            <span class="badge bg-warning text-white">Draft</span>
-                                        <?php else: ?>
-                                            <span class="badge bg-success text-white">Submitted</span>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="d-flex align-items-center justify-content-center gap-2">
-                                            <button type="button"
-                                                class="btn btn-light btn-sm btn-icon btn-active-light-primary"
-                                                onClick="btnAssignAsesor('<?= $row['pendaftaran_id'] ?>')"><i
-                                                    class="fa-solid fa-user-pen"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
+                            <tbody class="text-gray-600 fw-semibold">
+                                <?php $no = 1; ?>
+                                <?php foreach ($dtpendaftaran as $row): ?>
+                                    <tr>
+                                        <td class="text-center">
+                                            <?= $no++ ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?= $row['nama_lengkap'] ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?= $row['program_study'] ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?php if ($row['status'] == 'Draft'): ?>
+                                                <span class="badge bg-warning text-white">Draft</span>
+                                            <?php else: ?>
+                                                <span class="badge bg-success text-white">Submitted</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                                <button type="button"
+                                                    class="btn btn-light btn-sm btn-icon btn-active-light-primary"
+                                                    onClick="btnAssignAsesor('<?= $row['pendaftaran_id'] ?>')"><i
+                                                        class="fa-solid fa-user-pen"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
                         <?php else: ?>
                             <tbody>
                                 <tr>
@@ -82,8 +102,8 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('#btnAddTahunAjar').click(function() {
+    $(document).ready(function () {
+        $('#btnAddTahunAjar').click(function () {
             $('#modaltitle').html('Tambah Tahun Ajar');
             $('#modalbody').load("<?= base_url('admin/tahun-ajar/create') ?>");
             $('#modal').data('rowid', 0);

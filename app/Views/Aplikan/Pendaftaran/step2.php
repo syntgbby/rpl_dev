@@ -21,7 +21,8 @@
                 <!--begin::Alert-->
                 <div class="alert alert-warning d-flex align-items-center p-5 mb-10">
                     <!--begin::Icon-->
-                    <i class="ki-duotone ki-question fs-2hx text-warning me-4"><span class="path1"></span><span class="path2"></span></i>
+                    <i class="ki-duotone ki-question fs-2hx text-warning me-4"><span class="path1"></span><span
+                            class="path2"></span></i>
                     <!--end::Icon-->
 
                     <!--begin::Wrapper-->
@@ -38,7 +39,8 @@
                     <!--begin::Button-->
                     <div class="ms-4">
                         <a href="/aplikan/update-konfirmasi-step/step2" class="btn btn-sm btn-primary me-2">Ya</a>
-                        <a href="/aplikan/pendaftaran/step3" class="btn btn-sm btn-light">Lanjutkan ke Data Riwayat Kerja</a>
+                        <a href="/aplikan/pendaftaran/step3" class="btn btn-sm btn-light">Lanjutkan ke Data Riwayat
+                            Kerja</a>
                     </div>
                     <!--end::Button-->
                 </div>
@@ -91,8 +93,10 @@
                 </div>
                 <!--begin::Actions-->
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <button type="cancel" class="btn btn-light btn-active-light-primary me-2" onclick="window.location.href='<?= base_url('dashboard') ?>'">Close</button>
-                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save text-white text-center"></i></button>
+                    <button type="cancel" class="btn btn-light btn-active-light-primary me-2"
+                        onclick="window.location.href='<?= base_url('dashboard') ?>'">Close</button>
+                    <button type="submit" class="btn btn-primary"><i
+                            class="fa-solid fa-save text-white text-center"></i></button>
                 </div>
                 <!--end::Actions-->
             </form>
@@ -101,6 +105,25 @@
         <!--end::Content-->
 
         <div class="card-body border-top p-9">
+            <?php if (session()->getFlashdata('success')): ?>
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: '<?= session()->getFlashdata('success') ?>',
+                        confirmButtonColor: '#3085d6',
+                    });
+                </script>
+            <?php elseif (session()->getFlashdata('error')): ?>
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '<?= session()->getFlashdata('error') ?>',
+                        confirmButtonColor: '#d33',
+                    });
+                </script>
+            <?php endif; ?>
             <!--begin::Table-->
             <div class="table-responsive">
                 <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
@@ -133,15 +156,15 @@
                                     </td>
                                     <td class="text-center">
                                         <?php if ($row['file_bukti']): ?>
-                                            <a href="<?= $row['file_bukti'] ?>" target="_blank"><i class="fa-solid fa-eye"></i> Lihat Bukti</a>
+                                            <a href="<?= $row['file_bukti'] ?>" target="_blank"><i class="fa-solid fa-eye"></i>
+                                                Lihat Bukti</a>
                                         <?php else: ?>
                                             -
                                         <?php endif; ?>
                                     </td>
                                     <td class="text-center">
                                         <div class="d-flex align-items-center justify-content-center gap-2">
-                                            <button type="button"
-                                                class="btn btn-light btn-sm btn-icon btn-active-light-danger"
+                                            <button type="button" class="btn btn-light btn-sm btn-icon btn-active-light-danger"
                                                 onClick="window.location.href='<?= base_url('aplikan/pendaftaran/deletePelatihan/') . $row['id'] ?>'"><i
                                                     class="fa-solid fa-trash"></i></button>
                                         </div>
@@ -158,7 +181,9 @@
             </div>
             <!--end::Table-->
             <?php if ($pelatihan): ?>
-                <button type="submit" class="btn btn-primary text-white"><a href="<?= base_url('aplikan/pendaftaran/step3') ?>" class="text-white">Lanjutkan ke Step 3</a></button>
+                <button type="submit" class="btn btn-primary text-white"><a
+                        href="<?= base_url('aplikan/pendaftaran/step3') ?>" class="text-white">Lanjutkan ke Step
+                        3</a></button>
             <?php endif; ?>
         </div>
     </div>

@@ -34,8 +34,12 @@ class DataPendaftaranController extends BaseController
         $asesor_id = $this->request->getVar('asesor_id');
 
         $model = new PendaftaranModel();
-        $model->where('pendaftaran_id', $id)->set(['asesor_id' => $asesor_id])->update();
+        $assign = $model->where('pendaftaran_id', $id)->set(['asesor_id' => $asesor_id])->update();
 
-        return redirect()->to(base_url('admin/data-pendaftaran'))->with('success', 'Asesor berhasil diassign');
+        if ($assign) {
+            return redirect()->to('/admin/data-pendaftaran')->with('success', 'Assign Asesor berhasi!');
+        } else {
+            return redirect()->to('/admin/data-pendaftaran')->with('error', 'Assign Asesor gagal!');
+        }
     }
 }

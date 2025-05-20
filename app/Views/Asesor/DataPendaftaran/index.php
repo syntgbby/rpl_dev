@@ -21,6 +21,25 @@
             <div class="card-body py-4">
                 <!--begin::Table-->
                 <div class="table-responsive">
+                    <?php if (session()->getFlashdata('success')): ?>
+                        <script>
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: '<?= session()->getFlashdata('success') ?>',
+                                confirmButtonColor: '#3085d6',
+                            });
+                        </script>
+                    <?php elseif (session()->getFlashdata('error')): ?>
+                        <script>
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: '<?= session()->getFlashdata('error') ?>',
+                                confirmButtonColor: '#d33',
+                            });
+                        </script>
+                    <?php endif; ?>
                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_prodi">
                         <thead>
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
@@ -74,8 +93,8 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('#btnAddTahunAjar').click(function() {
+    $(document).ready(function () {
+        $('#btnAddTahunAjar').click(function () {
             $('#modaltitle').html('Tambah Tahun Ajar');
             $('#modalbody').load("<?= base_url('admin/tahun-ajar/create') ?>");
             $('#modal').data('rowid', 0);

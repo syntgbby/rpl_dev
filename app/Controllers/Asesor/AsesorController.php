@@ -50,15 +50,9 @@ class AsesorController extends Controller
                 'type' => $type
             ]);
             if ($finalInsert) {
-                return $this->response->setJSON([
-                    'status' => 'success',
-                    'message' => 'Data RPL berhasil di-approve.'
-                ]);
+                return redirect()->to('/admin/kurikulum')->with('success', 'Kurikulum berhasil diubah');
             } else {
-                return $this->response->setJSON([
-                    'status' => 'error',
-                    'message' => 'Data RPL gagal di-approve.'
-                ]);
+                return redirect()->to('/admin/kurikulum')->with('error', 'Kurikulum gagal diubah');
             }
         } else {
             return $this->response->setJSON([

@@ -46,9 +46,9 @@ class MataKuliahController extends BaseController
         $insert = $model->save($data);
 
         if ($insert) {
-            return redirect()->to('/admin/mata-kuliah')->with('success', 'Mata Kuliah berhasil ditambahkan');
+            return redirect()->to('/admin/mata-kuliah')->with('success', 'Mata Kuliah berhasil ditambahkan!');
         } else {
-            return redirect()->to('/admin/mata-kuliah')->with('error', 'Mata Kuliah gagal ditambahkan');
+            return redirect()->to('/admin/mata-kuliah')->with('error', 'Mata Kuliah gagal ditambahkan!');
         }
     }
 
@@ -74,9 +74,9 @@ class MataKuliahController extends BaseController
         $update = $model->update($id, $data);
 
         if ($update) {
-            return redirect()->to('/admin/mata-kuliah')->with('success', 'Mata Kuliah berhasil diubah');
+            return redirect()->to('/admin/mata-kuliah')->with('success', 'Mata Kuliah berhasil diubah!');
         } else {
-            return redirect()->to('/admin/mata-kuliah')->with('error', 'Mata Kuliah gagal diubah');
+            return redirect()->to('/admin/mata-kuliah')->with('error', 'Mata Kuliah gagal diubah!');
         }
     }
 
@@ -86,9 +86,9 @@ class MataKuliahController extends BaseController
         $delete = $model->delete($id);
 
         if ($delete) {
-            return redirect()->to('/admin/mata-kuliah')->with('success', 'Mata Kuliah berhasil dihapus');
+            return redirect()->to('/admin/mata-kuliah')->with('success', 'Mata Kuliah berhasil dihapus!');
         } else {
-            return redirect()->to('/admin/mata-kuliah')->with('error', 'Mata Kuliah gagal dihapus');
+            return redirect()->to('/admin/mata-kuliah')->with('error', 'Mata Kuliah gagal dihapus!');
         }
     }
 }

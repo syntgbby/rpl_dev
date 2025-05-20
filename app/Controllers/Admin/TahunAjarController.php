@@ -38,9 +38,9 @@ class TahunAjarController extends BaseController
         $insert = $model->save($data);
 
         if ($insert) {
-            return redirect()->to('/admin/tahun-ajar')->with('success', 'Tahun Ajaran berhasil ditambahkan');
+            return redirect()->to('/admin/tahun-ajar')->with('success', 'Tahun Ajaran berhasil ditambahkan!');
         } else {
-            return redirect()->to('/admin/tahun-ajar')->with('error', 'Tahun Ajaran gagal ditambahkan');
+            return redirect()->to('/admin/tahun-ajar')->with('error', 'Tahun Ajaran gagal ditambahkan!');
         }
     }
 
@@ -64,9 +64,9 @@ class TahunAjarController extends BaseController
         $update = $model->update($id, $data);
 
         if ($update) {
-            return redirect()->to('/admin/tahun-ajar')->with('success', 'Tahun Ajaran berhasil diubah');
+            return redirect()->to('/admin/tahun-ajar')->with('success', 'Tahun Ajaran berhasil diubah!');
         } else {
-            return redirect()->to('/admin/tahun-ajar')->with('error', 'Tahun Ajaran gagal diubah');
+            return redirect()->to('/admin/tahun-ajar')->with('error', 'Tahun Ajaran gagal diubah!');
         }
     }
 
@@ -76,9 +76,9 @@ class TahunAjarController extends BaseController
         $delete = $model->delete($id);
 
         if ($delete) {
-            return redirect()->to('/admin/tahun-ajar')->with('success', 'Tahun Ajaran berhasil dihapus');
+            return redirect()->to('/admin/tahun-ajar')->with('success', 'Tahun Ajaran berhasil dihapus!');
         } else {
-            return redirect()->to('/admin/tahun-ajar')->with('error', 'Tahun Ajaran gagal dihapus');
+            return redirect()->to('/admin/tahun-ajar')->with('error', 'Tahun Ajaran gagal dihapus!');
         }
     }
 }

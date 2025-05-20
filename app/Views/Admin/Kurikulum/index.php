@@ -27,15 +27,25 @@
             <!--begin::Card body-->
             <div class="card-body py-4">
                 <?php if (session()->getFlashdata('success')): ?>
-                    <div class="alert alert-success">
-                        <?= session()->getFlashdata('success') ?>
-                    </div>
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: '<?= session()->getFlashdata('success') ?>',
+                            confirmButtonColor: '#3085d6',
+                        });
+                    </script>
+                <?php elseif (session()->getFlashdata('error')): ?>
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: '<?= session()->getFlashdata('error') ?>',
+                            confirmButtonColor: '#d33',
+                        });
+                    </script>
                 <?php endif; ?>
-                <?php if (session()->getFlashdata('error')): ?>
-                    <div class="alert alert-danger">
-                        <?= session()->getFlashdata('error') ?>
-                    </div>
-                <?php endif; ?>
+
                 <!--begin::Table-->
                 <div class="table-responsive">
                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_prodi">
@@ -115,8 +125,8 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('#btnAddKurikulum').click(function() {
+    $(document).ready(function () {
+        $('#btnAddKurikulum').click(function () {
             $('#modaltitle').html('Tambah Kurikulum');
             $('#modalbody').load("<?= base_url('admin/kurikulum/create') ?>");
             $('#modal').data('rowid', 0);

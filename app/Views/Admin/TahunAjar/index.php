@@ -27,14 +27,23 @@
             <!--begin::Card body-->
             <div class="card-body py-4">
                 <?php if (session()->getFlashdata('success')): ?>
-                    <div class="alert alert-success">
-                        <?= session()->getFlashdata('success') ?>
-                    </div>
-                <?php endif; ?>
-                <?php if (session()->getFlashdata('error')): ?>
-                    <div class="alert alert-danger">
-                        <?= session()->getFlashdata('error') ?>
-                    </div>
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: '<?= session()->getFlashdata('success') ?>',
+                            confirmButtonColor: '#3085d6',
+                        });
+                    </script>
+                <?php elseif (session()->getFlashdata('error')): ?>
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: '<?= session()->getFlashdata('error') ?>',
+                            confirmButtonColor: '#d33',
+                        });
+                    </script>
                 <?php endif; ?>
                 <!--begin::Table-->
                 <div class="table-responsive">
@@ -99,8 +108,8 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('#btnAddTahunAjar').click(function() {
+    $(document).ready(function () {
+        $('#btnAddTahunAjar').click(function () {
             $('#modaltitle').html('Tambah Tahun Ajar');
             $('#modalbody').load("<?= base_url('admin/tahun-ajar/create') ?>");
             $('#modal').data('rowid', 0);

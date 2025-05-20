@@ -52,7 +52,7 @@ class PendaftaranController extends BaseController
         $dataUser = $this->userModel->where('email', $email)->first();
         $prodi = $this->prodiModel->where('id !=', 1)->findAll();
 
-        return $this->render('pendaftaran/step1', ['data' => $dataUser, 'prodi' => $prodi]);
+        return $this->render('aplikan/pendaftaran/step1', ['data' => $dataUser, 'prodi' => $prodi]);
     }
 
     public function saveStep1()
@@ -77,15 +77,15 @@ class PendaftaranController extends BaseController
             'pendaftaran_id' => $pendaftaranId,
             'tahun_angkatan' => $tahunAngkatan,
             'tahun_ajar_id' => $tahunAjar['id'],
-            'nama_lengkap'  => $getUser['username'],
-            'nik'           => $this->request->getPost('nik'),
+            'nama_lengkap' => $getUser['username'],
+            'nik' => $this->request->getPost('nik'),
             'program_study_id' => $this->request->getPost('program_studi'),
-            'tempat_lahir'  => $this->request->getPost('tempat_lahir'),
+            'tempat_lahir' => $this->request->getPost('tempat_lahir'),
             'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
             'jenis_kelamin' => $getUser['jenis_kelamin'],
-            'alamat'        => $this->request->getPost('alamat'),
-            'no_hp'         => $this->request->getPost('no_hp'),
-            'email'         => $email,
+            'alamat' => $this->request->getPost('alamat'),
+            'no_hp' => $this->request->getPost('no_hp'),
+            'email' => $email,
         ];
 
         $this->pendaftaranModel->insert($data);
@@ -99,23 +99,25 @@ class PendaftaranController extends BaseController
 
         $this->timelineModel->insert($data_timeline);
 
-        $data_konfirmasi_step = [[
-            'pendaftaran_id' => $pendaftaranId,
-            'step' => 'step2',
-            'status' => 'N',
-        ],
-        [
-            'pendaftaran_id' => $pendaftaranId,
-            'step' => 'step3',
-            'status' => 'N',
-        ]];
+        $data_konfirmasi_step = [
+            [
+                'pendaftaran_id' => $pendaftaranId,
+                'step' => 'step2',
+                'status' => 'N',
+            ],
+            [
+                'pendaftaran_id' => $pendaftaranId,
+                'step' => 'step3',
+                'status' => 'N',
+            ]
+        ];
 
         $insert = $this->konfirmasiStepModel->insertBatch($data_konfirmasi_step);
 
         if ($insert) {
-            return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Pendaftaran RPL berhasil');
+            return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Pendaftaran RPL berhasil!');
         } else {
-            return redirect()->to('/aplikan/pendaftaran/step2')->with('error', 'Pendaftaran RPL gagal');
+            return redirect()->to('/aplikan/pendaftaran/step2')->with('error', 'Pendaftaran RPL gagal!');
         }
     }
 
@@ -134,7 +136,7 @@ class PendaftaranController extends BaseController
             $pelatihans = [];
         }
 
-        return $this->render('pendaftaran/step2', ['pelatihan' => $pelatihans, 'konfirmasi_step' => $konfirmasi_step]);
+        return $this->render('aplikan/pendaftaran/step2', ['pelatihan' => $pelatihans, 'konfirmasi_step' => $konfirmasi_step]);
     }
 
     public function updateKonfirmasiStep($step)
@@ -169,7 +171,7 @@ class PendaftaranController extends BaseController
         $this->timelineModel->insert($data_timeline);
 
         if ($step == 'step2') {
-            return redirect()->to('/aplikan/pendaftaran/step3');
+            return redirect()->to('/aplikan/pendaftaran/step2');
         } else {
             return redirect()->to('/aplikan/pendaftaran/step4');
         }
@@ -226,8 +228,8 @@ class PendaftaranController extends BaseController
                 ]);
 
                 $checkTimeline = $this->timelineModel->where('pendaftaran_id', $getPendaftaran['pendaftaran_id'])
-                                ->where('status', 'Upload Pelatihan')
-                                ->first();
+                    ->where('status', 'Upload Pelatihan')
+                    ->first();
 
                 if (!$checkTimeline) {
                     $data_timeline = [
@@ -270,7 +272,7 @@ class PendaftaranController extends BaseController
             $konfirmasi_step = [];
         }
 
-        return $this->render('pendaftaran/step3', ['konfirmasi_step' => $konfirmasi_step]);
+        return $this->render('aplikan/pendaftaran/step3', ['konfirmasi_step' => $konfirmasi_step]);
     }
 
     public function saveStep3()
@@ -351,7 +353,7 @@ class PendaftaranController extends BaseController
 
     public function step4()
     {
-        return $this->render('pendaftaran/step4');
+        return $this->render('aplikan/pendaftaran/step4');
     }
 
     public function saveStep4()

@@ -35,7 +35,7 @@ class UserController extends BaseController
         $checkEmail = $model->where('email', $email)->first();
 
         if ($checkEmail) {
-            return redirect()->to('/admin/users/create')->with('error', 'Email sudah terdaftar');
+            return redirect()->to('/admin/users/create')->with('error', 'Email sudah terdaftar!');
         } else {
             $data = [
                 'email' => $email,
@@ -48,9 +48,9 @@ class UserController extends BaseController
             $insert = $model->save($data);
 
             if ($insert) {
-                return redirect()->to('/admin/users')->with('success', 'User berhasil ditambahkan');
+                return redirect()->to('/admin/users')->with('success', 'User berhasil ditambahkan!');
             } else {
-                return redirect()->to('/admin/users/create')->with('error', 'User gagal ditambahkan');
+                return redirect()->to('/admin/users/create')->with('error', 'User gagal ditambahkan!');
             }
         }
     }
@@ -85,9 +85,9 @@ class UserController extends BaseController
         $update = $model->update($id, $data);
 
         if ($update) {
-            return redirect()->to('/admin/users')->with('success', 'Data User berhasil diubah');
+            return redirect()->to('/admin/users')->with('success', 'Data User berhasil diubah!');
         } else {
-            return redirect()->to('/admin/users/edit/' . $id)->with('error', 'Data User gagal diubah');
+            return redirect()->to('/admin/users/edit/' . $id)->with('error', 'Data User gagal diubah!');
         }
     }
 
@@ -118,9 +118,9 @@ class UserController extends BaseController
         }
 
         if ($delete) {
-            return redirect()->to('/admin/users')->with('success', 'User berhasil dihapus');
+            return redirect()->to('/admin/users')->with('success', 'User berhasil dihapus!');
         } else {
-            return redirect()->to('/admin/users')->with('error', 'User gagal dihapus');
+            return redirect()->to('/admin/users')->with('error', 'User gagal dihapus!');
         }
     }
 
@@ -131,9 +131,9 @@ class UserController extends BaseController
         $deactivate = $model->update($id, ['status' => 'N']);
 
         if ($deactivate) {
-            return redirect()->to('/admin/users')->with('success', 'User berhasil dinonaktifkan');
+            return redirect()->to('/admin/users')->with('success', 'User berhasil dinonaktifkan!');
         } else {
-            return redirect()->to('/admin/users')->with('error', 'User gagal dinonaktifkan');
+            return redirect()->to('/admin/users')->with('error', 'User gagal dinonaktifkan!');
         }
     }
 }
