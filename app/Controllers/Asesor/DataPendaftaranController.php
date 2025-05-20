@@ -24,7 +24,7 @@ class DataPendaftaranController extends BaseController
             return redirect()->to('/asesor/login')->with('error', 'Anda tidak memiliki akses ke halaman ini');
         } else {
             $model = new ViewDataPendaftaran();
-            $dtPendaftaran = $model->where('asesor_id', $asesor['id'])->findAll();
+            $dtPendaftaran = $model->where('asesor_id', $asesor['id'])->where('status', 'submitted')->findAll();
 
             if ($dtPendaftaran) {
                 $data['dtpendaftaran'] = $dtPendaftaran;

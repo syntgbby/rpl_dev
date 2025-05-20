@@ -73,9 +73,13 @@ class Profile extends BaseController
             }
 
             // Update data
-            $users->where('email', $email)->set($updateData)->update();
+            $update = $users->where('email', $email)->set($updateData)->update();
 
-            return redirect()->to('/dashboard')->with('success', 'Profile berhasil diupdate');
+            if ($update) {
+                return redirect()->to('/dashboard')->with('success', 'Profile berhasil diupdate');
+            } else {
+                return redirect()->back()->with('error', 'Profile gagal diupdate');
+            }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }

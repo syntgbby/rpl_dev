@@ -26,6 +26,16 @@
             <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body py-4">
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+                <?php if (session()->getFlashdata('error')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                    </div>
+                <?php endif; ?>
                 <!--begin::Table-->
                 <div class="table-responsive">
                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_prodi">
@@ -38,33 +48,33 @@
                             </tr>
                         </thead>
                         <?php if ($prodi): ?>
-                        <tbody class="text-gray-600 fw-semibold">
-                            <?php $no = 1; ?>
-                            <?php foreach ($prodi as $row): ?>
-                                <tr>
-                                    <td class="text-center">
-                                        <?= $no++ ?>
-                                    </td>
-                                    <td>
-                                        <?= $row['nama_prodi'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $row['deskripsi_singkat'] ?>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="d-flex align-items-center justify-content-center gap-2">
-                                            <button type="button"
-                                                class="btn btn-light btn-sm btn-icon btn-active-light-primary" onClick="btnEditProdi(<?= $row['id'] ?>)"><i
-                                                    class="fa-solid fa-pen-to-square"></i></button>
-                                            <button type="button"
-                                                class="btn btn-light btn-sm btn-icon btn-active-light-danger"
-                                                onClick="btnDeleteProdi(<?= $row['id'] ?>)"><i
-                                                    class="fa-solid fa-trash"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
+                            <tbody class="text-gray-600 fw-semibold">
+                                <?php $no = 1; ?>
+                                <?php foreach ($prodi as $row): ?>
+                                    <tr>
+                                        <td class="text-center">
+                                            <?= $no++ ?>
+                                        </td>
+                                        <td>
+                                            <?= $row['nama_prodi'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $row['deskripsi_singkat'] ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                                <button type="button"
+                                                    class="btn btn-light btn-sm btn-icon btn-active-light-primary" onClick="btnEditProdi(<?= $row['id'] ?>)"><i
+                                                        class="fa-solid fa-pen-to-square"></i></button>
+                                                <button type="button"
+                                                    class="btn btn-light btn-sm btn-icon btn-active-light-danger"
+                                                    onClick="btnDeleteProdi(<?= $row['id'] ?>)"><i
+                                                        class="fa-solid fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
                         <?php else: ?>
                             <tbody>
                                 <tr>

@@ -10,6 +10,7 @@ use App\Controllers\BaseController;
 
 class MataKuliahController extends BaseController
 {
+    // Tampilan Index
     public function index()
     {
         $mataKuliah = new MataKuliahModel();
@@ -19,6 +20,7 @@ class MataKuliahController extends BaseController
         return $this->render('Admin/MataKuliah/index', $data);
     }
 
+    // Tampilan Form Tambah Mata Kuliah
     public function create()
     {
         return $this->render('Admin/MataKuliah/form');
@@ -28,6 +30,12 @@ class MataKuliahController extends BaseController
     {
         $model = new MataKuliahModel();
 
+        $checkMataKuliah = $model->where('kode_matkul', $this->request->getPost('kode_matkul'))->findAll();
+
+        if ($checkMataKuliah) {
+            return redirect()->to('/admin/mata-kuliah')->with('error', 'Mata Kuliah sudah ada');
+        }
+
         $data = [
             'kode_matkul' => $this->request->getPost('kode_matkul'),
             'nama_matkul' => $this->request->getPost('nama_matkul'),
@@ -35,9 +43,13 @@ class MataKuliahController extends BaseController
             'status' => $this->request->getPost('status'),
         ];
 
-        $model->save($data);
+        $insert = $model->save($data);
 
-        return redirect()->to('/admin/mata-kuliah');
+        if ($insert) {
+            return redirect()->to('/admin/mata-kuliah')->with('success', 'Mata Kuliah berhasil ditambahkan');
+        } else {
+            return redirect()->to('/admin/mata-kuliah')->with('error', 'Mata Kuliah gagal ditambahkan');
+        }
     }
 
     public function edit($id)
@@ -59,16 +71,24 @@ class MataKuliahController extends BaseController
             'status' => $this->request->getPost('status'),
         ];
 
-        $model->update($id, $data);
+        $update = $model->update($id, $data);
 
-        return redirect()->to('/admin/mata-kuliah');
+        if ($update) {
+            return redirect()->to('/admin/mata-kuliah')->with('success', 'Mata Kuliah berhasil diubah');
+        } else {
+            return redirect()->to('/admin/mata-kuliah')->with('error', 'Mata Kuliah gagal diubah');
+        }
     }
 
     public function delete($id)
     {
         $model = new MataKuliahModel();
-        $model->delete($id);
+        $delete = $model->delete($id);
 
-        return redirect()->to('/admin/mata-kuliah');
+        if ($delete) {
+            return redirect()->to('/admin/mata-kuliah')->with('success', 'Mata Kuliah berhasil dihapus');
+        } else {
+            return redirect()->to('/admin/mata-kuliah')->with('error', 'Mata Kuliah gagal dihapus');
+        }
     }
 }

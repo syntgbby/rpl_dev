@@ -95,7 +95,6 @@ abstract class BaseController extends Controller
         // $data['menu'] = $this->getMenu();
         $data['year'] = $this->getYear();
         $data['user'] = $this->getUser();
-        // dd($data['user']);
 
         return view($view, $data);
     }

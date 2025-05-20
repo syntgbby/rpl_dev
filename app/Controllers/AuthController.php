@@ -5,6 +5,7 @@ use App\Models\UserModel;
 use App\Models\PertanyaanModel;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Controller;
+use App\Helpers\send_email;
 
 class AuthController extends Controller
 {
@@ -24,7 +25,7 @@ class AuthController extends Controller
         $password = $this->request->getPost('password');
         $passHash = strtoupper(md5(strtoupper(md5($email)) . 'P@ssw0rd' . $password));
 
-        $users->save([
+        $addUser = $users->save([
             'username' => ucwords($this->request->getPost('username')),
             'email' => $email,
             'password' => $passHash,
@@ -34,7 +35,21 @@ class AuthController extends Controller
             'jawaban' => $this->request->getPost('jawaban')
         ]);
 
-        return redirect()->to('/login')->with('alert', 'Registrasi berhasil');
+        $attributes = [
+            'from' => 'noreply@example.com',
+            'fromName' => 'Example',
+            'to' => $email,
+            'subject' => 'Registrasi Berhasil',
+            'message' => 'Registrasi berhasil, silahkan login ke aplikasi'
+        ];
+        
+        kirimEmail($attributes);
+
+        if ($addUser) {
+            return redirect()->to('/login')->with('success', 'Registrasi berhasil');
+        } else {
+            return redirect()->to('/register')->with('error', 'Registrasi gagal');
+        }
     }
 
     public function login()
@@ -65,12 +80,12 @@ class AuthController extends Controller
             }
         }
 
-        return redirect()->back()->with('alert', 'Login gagal, email atau password salah!');
+        return redirect()->back()->with('error', 'Login gagal, email atau password salah!');
     }
 
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/');
+        return redirect()->to('/')->with('success', 'Logout berhasil');
     }
 }

@@ -11,6 +11,7 @@ use App\Controllers\BaseController;
 
 class KurikulumController extends BaseController
 {
+    // Tampilan Index
     public function index()
     {
         $kurikulum = new ViewKurikulum();
@@ -20,6 +21,7 @@ class KurikulumController extends BaseController
         return $this->render('Admin/Kurikulum/index', $data);
     }
 
+    // Tampilan Form Tambah Kurikulum
     public function create()
     {
         $prodi = new ProdiModel();
@@ -33,9 +35,19 @@ class KurikulumController extends BaseController
         return $this->render('Admin/Kurikulum/form', $data);
     }
 
+    // Proses Tambah Kurikulum
     public function store()
     {
         $model = new KurikulumModel();
+
+        $checkKurikulum = $model->where('tahun_ajar_id', $this->request->getPost('tahun_ajar_id'))
+                    ->where('prodi_id', $this->request->getPost('prodi_id'))
+                    ->where('kode_matkul', $this->request->getPost('kode_matkul'))
+                    ->findAll();
+
+        if ($checkKurikulum) {
+            return redirect()->to('/admin/kurikulum')->with('error', 'Kurikulum sudah ada');
+        }
 
         $data = [
             'prodi_id' => $this->request->getPost('prodi_id'),
@@ -44,11 +56,16 @@ class KurikulumController extends BaseController
             'status' => $this->request->getPost('status'),
         ];
 
-        $model->save($data);
+        $insert = $model->save($data);
 
-        return redirect()->to('/admin/kurikulum');
+        if ($insert) {
+            return redirect()->to('/admin/kurikulum')->with('success', 'Kurikulum berhasil ditambahkan');
+        } else {
+            return redirect()->to('/admin/kurikulum')->with('error', 'Kurikulum gagal ditambahkan');
+        }
     }
 
+    // Tampilan Form Edit Kurikulum
     public function edit($id)
     {
         $model = new KurikulumModel();
@@ -65,6 +82,7 @@ class KurikulumController extends BaseController
         return $this->render('Admin/Kurikulum/form', $data);
     }
 
+    // Proses Edit Kurikulum
     public function update($id)
     {
         $model = new KurikulumModel();
@@ -76,16 +94,26 @@ class KurikulumController extends BaseController
             'status' => $this->request->getPost('status'),
         ];
 
-        $model->update($id, $data);
+        $update = $model->update($id, $data);
 
-        return redirect()->to('/admin/kurikulum');
+        if ($update) {
+            return redirect()->to('/admin/kurikulum')->with('success', 'Kurikulum berhasil diubah');
+        } else {
+            return redirect()->to('/admin/kurikulum')->with('error', 'Kurikulum gagal diubah');
+        }
     }
 
+    // Proses Hapus Kurikulum
     public function delete($id)
     {
         $model = new KurikulumModel();
-        $model->delete($id);
+        
+        $delete = $model->delete($id);
 
-        return redirect()->to('/admin/kurikulum');
+        if ($delete) {
+            return redirect()->to('/admin/kurikulum')->with('success', 'Kurikulum berhasil dihapus');
+        } else {
+            return redirect()->to('/admin/kurikulum')->with('error', 'Kurikulum gagal dihapus');
+        }
     }
 }

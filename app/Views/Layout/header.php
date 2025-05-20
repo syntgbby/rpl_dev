@@ -55,7 +55,7 @@
                     <!--end:Menu item-->
 
                     <!-- menu admin -->
-                    <?php if ($user['role'] == 'admin') { ?>
+                    <?php if ($user['role'] == 'admin') : ?>
                         <!--begin:Menu item-->
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
                             class="menu-item <?= (current_url() == base_url('master-group-user') || current_url() == base_url('master-menu') || current_url() == base_url('users') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
@@ -206,16 +206,16 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
-                    <?php } ?>
+                    <?php endif; ?>
 
                     <!-- menu asesor -->
-                    <?php if ($user['role'] == 'asesor') { ?>
+                    <?php if ($user['role'] == 'asesor') : ?>
                         <!--begin:Menu item-->
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
                             class="menu-item <?= (current_url() == base_url('asesor/data-pendaftaran') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
                             <!--begin:Menu link-->
                             <span class="menu-link">
-                                <span class="menu-title">Asesor Sistem</span>
+                                <span class="menu-title">Approval Pendaftaran</span>
                                 <span class="menu-arrow d-lg-none"></span>
                             </span>
                             <!--end:Menu link-->
@@ -236,60 +236,24 @@
                                             </i>
                                         </span>
                                         <span class="menu-title">
+                                            Data Not Approved
+                                        </span>
+                                    </span>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('asesor/data-approved') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('asesor/data-approved') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-users"></i>
+                                        </span>
+                                        <span class="menu-title">
                                             Data Approved
-                                        </span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                </div>
-                                <!--end:Menu item-->
-                                <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
-                                    class="menu-item <?= (current_url() == base_url('asesor/data-program-studi') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
-                                    onclick="window.location.href='<?= base_url('asesor/data-program-studi') ?>'">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="ki-duotone ki-users"></i>
-                                        </span>
-                                        <span class="menu-title">
-                                            Data Program Studi
-                                        </span>
-                                        <!-- <span class="menu-arrow"></span> -->
-                                    </span>
-                                    <!--end:Menu link-->
-                                </div>
-                                <!--end:Menu item-->
-                                <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
-                                    class="menu-item <?= (current_url() == base_url('asesor/data-tahun-ajar') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
-                                    onclick="window.location.href='<?= base_url('asesor/data-tahun-ajar') ?>'">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="ki-duotone ki-users"></i>
-                                        </span>
-                                        <span class="menu-title">
-                                            Data Tahun Ajaran
-                                        </span>
-                                        <!-- <span class="menu-arrow"></span> -->
-                                    </span>
-                                    <!--end:Menu link-->
-                                </div>
-                                <!--end:Menu item-->
-                                <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
-                                    class="menu-item <?= (current_url() == base_url('asesor/data-mata-kuliah') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
-                                    onclick="window.location.href='<?= base_url('asesor/data-mata-kuliah') ?>'">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="ki-duotone ki-users"></i>
-                                        </span>
-                                        <span class="menu-title">
-                                            Data Mata Kuliah
                                         </span>
                                         <!-- <span class="menu-arrow"></span> -->
                                     </span>
@@ -300,10 +264,10 @@
                             <!--end:Menu sub-->
                         </div>
                         <!--end:Menu item-->
-                    <?php } ?>
+                    <?php endif; ?>
 
                     <!-- menu aplikan -->
-                    <?php if ($user['role'] == 'aplikan') { ?>
+                    <?php if ($user['role'] == 'aplikan') : ?>
                         <!--begin:Menu item-->
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
                             class="menu-item <?= (current_url() == base_url('aplikan/tentang-rpl') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
@@ -314,7 +278,7 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
-                    <?php } ?>
+                    <?php endif; ?>
                 </div>
                 <!--end::Menu-->
             </div>

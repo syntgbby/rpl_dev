@@ -38,6 +38,17 @@
 			</div>
 		<?php endif; ?>
 
+		<?php if (session()->has('success')): ?>
+			<div class="alert alert-success">
+				<?= session()->getFlashdata('success') ?>
+			</div>
+		<?php endif; ?>
+		<?php if (session()->has('error')): ?>
+			<div class="alert alert-danger">
+				<?= session()->getFlashdata('error') ?>
+			</div>
+		<?php endif; ?>
+
 		<?php if ($pendaftaran) : ?>
 			<!--begin::Row-->
 			<div class="row gx-5 gx-xl-12">
@@ -63,17 +74,17 @@
 										<!--begin::Timeline-->
 										<div class="timeline">
 											<?php foreach ($timeline as $item): ?>
-											<!--begin::Timeline item-->
-											<div class="timeline-item">
-												<div class="timeline-line"></div>
-												<div class="timeline-icon">
-													<i class="<?= $item['icon'] ?>"></i>
+												<!--begin::Timeline item-->
+												<div class="timeline-item">
+													<div class="timeline-line"></div>
+													<div class="timeline-icon">
+														<i class="<?= $item['icon'] ?>"></i>
+													</div>
+													<div class="timeline-content">
+														<span class="fw-bold text-gray-800"><?= $item['status'] ?></span>
+														<p class="text-gray-600"><?= $item['keterangan'] ?></p>
+													</div>
 												</div>
-												<div class="timeline-content">
-													<span class="fw-bold text-gray-800"><?= $item['status'] ?></span>
-													<p class="text-gray-600"><?= $item['keterangan'] ?></p>
-												</div>
-											</div>
 											<?php endforeach; ?>
 										</div>
 										<!--end::Timeline-->

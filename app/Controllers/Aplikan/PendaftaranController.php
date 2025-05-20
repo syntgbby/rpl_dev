@@ -65,6 +65,12 @@ class PendaftaranController extends BaseController
 
         $getUser = $this->userModel->where('email', $email)->first();
 
+        $checkPendaftaran = $this->pendaftaranModel->where('email', $email)->first();
+
+        if ($checkPendaftaran) {
+            return redirect()->to('/aplikan/pendaftaran')->with('error', 'Anda sudah melakukan pendaftaran!');
+        }
+
         $tahunAjar = $this->tahunAjarModel->where('status', 'Y')->first();
 
         $data = [
@@ -104,9 +110,13 @@ class PendaftaranController extends BaseController
             'status' => 'N',
         ]];
 
-        $this->konfirmasiStepModel->insertBatch($data_konfirmasi_step);
+        $insert = $this->konfirmasiStepModel->insertBatch($data_konfirmasi_step);
 
-        return redirect()->to('/aplikan/pendaftaran/step2');
+        if ($insert) {
+            return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Pendaftaran RPL berhasil');
+        } else {
+            return redirect()->to('/aplikan/pendaftaran/step2')->with('error', 'Pendaftaran RPL gagal');
+        }
     }
 
     public function step2()
@@ -245,7 +255,7 @@ class PendaftaranController extends BaseController
     public function deletePelatihan($id)
     {
         $this->pelatihanModel->delete($id);
-        return redirect()->to('/aplikan/pendaftaran/step2');
+        return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Data pelatihan berhasil dihapus');
     }
 
     public function step3()
@@ -322,9 +332,13 @@ class PendaftaranController extends BaseController
                     'keterangan' => 'Pengalaman kerja berhasil diupload',
                 ];
 
-                $this->timelineModel->insert($data_timeline);
+                $insert = $this->timelineModel->insert($data_timeline);
                 // Redirect ke halaman step 2 dengan pesan sukses
-                return redirect()->to('/aplikan/pendaftaran/step4')->with('success', 'Data pengalaman kerja berhasil disimpan');
+                if ($insert) {
+                    return redirect()->to('/aplikan/pendaftaran/step4')->with('success', 'Data pengalaman kerja berhasil disimpan');
+                } else {
+                    return redirect()->to('/aplikan/pendaftaran/step4')->with('error', 'Data pengalaman kerja gagal disimpan');
+                }
             } catch (\Exception $e) {
                 // Tangani error jika gagal mengupload file
                 return redirect()->back()->withInput()->with('error', 'Gagal mengupload file: ' . $e->getMessage());
@@ -424,10 +438,14 @@ class PendaftaranController extends BaseController
                     'keterangan' => 'Pendaftaran berhasil disubmit',
                 ];
 
-                $this->timelineModel->insert($data_timeline2);
+                $insert = $this->timelineModel->insert($data_timeline2);
 
                 // Redirect ke halaman step 2 dengan pesan sukses
-                return redirect()->to('/dashboard')->with('success', 'Data pengalaman kerja berhasil disimpan');
+                if ($insert) {
+                    return redirect()->to('/dashboard')->with('success', 'Pendaftaran RPL berhasil disimpan');
+                } else {
+                    return redirect()->to('/dashboard')->with('error', 'Pendaftaran RPL gagal disimpan');
+                }
             } catch (\Exception $e) {
                 // Tangani error jika gagal mengupload file
                 return redirect()->back()->withInput()->with('error', 'Gagal mengupload file: ' . $e->getMessage());

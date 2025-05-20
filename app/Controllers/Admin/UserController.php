@@ -35,8 +35,7 @@ class UserController extends BaseController
         $checkEmail = $model->where('email', $email)->first();
 
         if ($checkEmail) {
-            $error = 'Email sudah terdaftar';
-            return redirect()->to('/admin/users/create')->with('error', $error);
+            return redirect()->to('/admin/users/create')->with('error', 'Email sudah terdaftar');
         } else {
             $data = [
                 'email' => $email,
@@ -46,9 +45,13 @@ class UserController extends BaseController
                 'status' => $status,
             ];
 
-            $model->save($data);
+            $insert = $model->save($data);
 
-            return redirect()->to('/admin/users')->with('success', 'User berhasil ditambahkan');
+            if ($insert) {
+                return redirect()->to('/admin/users')->with('success', 'User berhasil ditambahkan');
+            } else {
+                return redirect()->to('/admin/users/create')->with('error', 'User gagal ditambahkan');
+            }
         }
     }
 
@@ -78,14 +81,13 @@ class UserController extends BaseController
             'status' => $status,
         ];
 
-        $checkEmail = $model->where('email', $email)->first();
 
-        if ($checkEmail) {
-            $error = 'Email sudah terdaftar';
-            return redirect()->to('/admin/users/edit/' . $id)->with('error', $error);
+        $update = $model->update($id, $data);
+
+        if ($update) {
+            return redirect()->to('/admin/users')->with('success', 'Data User berhasil diubah');
         } else {
-            $model->update($id, $data);
-            return redirect()->to('/admin/users')->with('success', 'User berhasil diubah');
+            return redirect()->to('/admin/users/edit/' . $id)->with('error', 'Data User gagal diubah');
         }
     }
 
@@ -110,17 +112,22 @@ class UserController extends BaseController
             $modelPengalamanKerja->where('pendaftaran_id', $idPendaftaran)->delete();
             $modelTimeline->where('pendaftaran_id', $idPendaftaran)->delete();
             $modelPendaftaran->delete($idPendaftaran);
-            $model->delete($id);
+            $delete = $model->delete($id);
         } else {
-            $model->delete($id);
+            $delete = $model->delete($id);
         }
-        return redirect()->to('/admin/users');
+
+        if ($delete) {
+            return redirect()->to('/admin/users')->with('success', 'User berhasil dihapus');
+        } else {
+            return redirect()->to('/admin/users')->with('error', 'User gagal dihapus');
+        }
     }
 
     public function deactivate($id)
     {
         $model = new UserModel();
-        
+
         $deactivate = $model->update($id, ['status' => 'N']);
 
         if ($deactivate) {

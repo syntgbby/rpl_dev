@@ -113,12 +113,16 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan', 'filter' =>
 
 // Bagian Asesor
 $routes->group('asesor', ['namespace' => 'App\Controllers\Asesor', 'filter' => 'auth'], function ($routes) {
+    // Data Pendaftaran
     $routes->get('data-pendaftaran', 'DataPendaftaranController::index');
     $routes->get('view-detail-pendaftaran/(:any)', 'DataPendaftaranController::viewDetail/$1');
     $routes->get('approve-pendaftaran/(:any)', 'DataPendaftaranController::approvePendaftaran/$1');
     $routes->get('get-matkul/(:any)', 'DataPendaftaranController::getMatkulByTahun/$1');
     $routes->post('approve-rpl', 'AsesorController::approveRpl');
     $routes->get('approve-nilai', 'AsesorController::viewApprove');
+
+    // Data Approved
+    $routes->get('data-approved', 'ApprovalController::index');
 });
 
 $routes->get('unauthorized', function () {

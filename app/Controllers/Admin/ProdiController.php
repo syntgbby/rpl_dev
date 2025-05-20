@@ -25,6 +25,12 @@ class ProdiController extends BaseController
     {
         $model = new ProdiModel();
 
+        $checkProdi = $model->where('nama_prodi', $this->request->getPost('nama_prodi'))->findAll();
+
+        if ($checkProdi) {
+            return redirect()->to('/admin/prodi')->with('error', 'Program Studi sudah ada');
+        }
+
         $data = [
             'nama_prodi' => $this->request->getPost('nama_prodi'),
             'deskripsi_singkat' => $this->request->getPost('deskripsi_singkat'),
@@ -49,9 +55,13 @@ class ProdiController extends BaseController
             $data['pict'] = base_url('uploads/prodi/' . $pict_name);
         }
 
-        $model->save($data);
+        $insert = $model->save($data);
 
-        return redirect()->to('/admin/prodi');
+        if ($insert) {
+            return redirect()->to('/admin/prodi')->with('success', 'Program Studi berhasil ditambahkan');
+        } else {
+            return redirect()->to('/admin/prodi')->with('error', 'Program Studi gagal ditambahkan');
+        }
     }
 
     public function edit($id)
@@ -65,7 +75,7 @@ class ProdiController extends BaseController
     public function update($id)
     {
         $model = new ProdiModel();
-
+        
         $data = [
             'nama_prodi' => $this->request->getPost('nama_prodi'),
             'deskripsi_singkat' => $this->request->getPost('deskripsi_singkat'),
@@ -93,16 +103,24 @@ class ProdiController extends BaseController
             unset($data['pict']);
         }
 
-        $model->update($id, $data);
+        $update = $model->update($id, $data);
 
-        return redirect()->to('/admin/prodi');
+        if ($update) {
+            return redirect()->to('/admin/prodi')->with('success', 'Program Studi berhasil diubah');
+        } else {
+            return redirect()->to('/admin/prodi')->with('error', 'Program Studi gagal diubah');
+        }
     }
 
     public function delete($id)
     {
         $model = new ProdiModel();
-        $model->delete($id);
+        $delete = $model->delete($id);
 
-        return redirect()->to('/admin/prodi');
+        if ($delete) {
+            return redirect()->to('/admin/prodi')->with('success', 'Program Studi berhasil dihapus');
+        } else {
+            return redirect()->to('/admin/prodi')->with('error', 'Program Studi gagal dihapus');
+        }
     }
 }

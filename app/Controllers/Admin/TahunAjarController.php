@@ -24,14 +24,24 @@ class TahunAjarController extends BaseController
     {
         $model = new TahunAjarModel();
 
+        $checkTahunAjar = $model->where('tahun', $this->request->getPost('tahun'))->findAll();
+
+        if ($checkTahunAjar) {
+            return redirect()->to('/admin/tahun-ajar')->with('error', 'Tahun Ajaran sudah ada');
+        }
+
         $data = [
             'tahun' => $this->request->getPost('tahun'),
             'status' => $this->request->getPost('status'),
         ];
 
-        $model->save($data);
+        $insert = $model->save($data);
 
-        return redirect()->to('/admin/tahun-ajar');
+        if ($insert) {
+            return redirect()->to('/admin/tahun-ajar')->with('success', 'Tahun Ajaran berhasil ditambahkan');
+        } else {
+            return redirect()->to('/admin/tahun-ajar')->with('error', 'Tahun Ajaran gagal ditambahkan');
+        }
     }
 
     public function edit($id)
@@ -51,16 +61,24 @@ class TahunAjarController extends BaseController
             'status' => $this->request->getPost('status'),
         ];
 
-        $model->update($id, $data);
+        $update = $model->update($id, $data);
 
-        return redirect()->to('/admin/tahun-ajar');
+        if ($update) {
+            return redirect()->to('/admin/tahun-ajar')->with('success', 'Tahun Ajaran berhasil diubah');
+        } else {
+            return redirect()->to('/admin/tahun-ajar')->with('error', 'Tahun Ajaran gagal diubah');
+        }
     }
 
     public function delete($id)
     {
         $model = new TahunAjarModel();
-        $model->delete($id);
+        $delete = $model->delete($id);
 
-        return redirect()->to('/admin/tahun-ajar');
+        if ($delete) {
+            return redirect()->to('/admin/tahun-ajar')->with('success', 'Tahun Ajaran berhasil dihapus');
+        } else {
+            return redirect()->to('/admin/tahun-ajar')->with('error', 'Tahun Ajaran gagal dihapus');
+        }
     }
 }

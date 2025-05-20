@@ -60,7 +60,7 @@ class DashController extends BaseController
                 'pendaftaran' => $pendaftaran,
                 'timeline' => $timeline
             ];
-            return $this->render('Dash/dashboard-aplikan', $data_aplikan);
+            return $this->render('Dashboard/dashboard-aplikan', $data_aplikan);
         } else if ($dataUser['role'] === "admin") {
             // Query untuk mendapatkan user yang belum mendaftar
             $getSdhMendaftar = $this->userModel->select('users.*')
@@ -89,7 +89,7 @@ class DashController extends BaseController
                 // 'aplikan' => $this->aplikanModel->getAplikan(),
                 // 'aplikan2025' => $this->aplikanModel->getAplikanByYear(2025)
             ];
-            return $this->render('Dash/dashboard-admin', $data_admin);
+            return $this->render('Dashboard/dashboard-admin', $data_admin);
         } else {
             $data_asesor = [
                 'title' => 'Dashboard',
@@ -98,7 +98,7 @@ class DashController extends BaseController
                 'prodi' => $this->prodiModel->where('type =', 1)->findAll(),
                 'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),
             ];
-            return $this->render('Dash/dashboard-asesor', $data_asesor);
+            return $this->render('Dashboard/dashboard-asesor', $data_asesor);
         }
     }
 }

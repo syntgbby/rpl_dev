@@ -41,17 +41,29 @@ class AsesorController extends Controller
         ];
 
         if (!empty($dataToInsert)) {
-            // $approvalModel->insertBatch($dataToInsert);
+            $approvalModel->insertBatch($dataToInsert);
             // Update status pendaftaran menggunakan method yang benar
             $pendaftaranModel->updateStatusPendaftaran($pendaftaranId, $status);
-            // $finalApprovalModel->insert([
-            //     'pendaftaran_id' => $pendaftaranId,
-            //     'status' => $status,
-            //     'type' => $type
-            // ]);
+            $finalInsert = $finalApprovalModel->insert([
+                'pendaftaran_id' => $pendaftaranId,
+                'status' => $status,
+                'type' => $type
+            ]);
+            if ($finalInsert) {
+                return $this->response->setJSON([
+                    'status' => 'success',
+                    'message' => 'Data RPL berhasil di-approve.'
+                ]);
+            } else {
+                return $this->response->setJSON([
+                    'status' => 'error',
+                    'message' => 'Data RPL gagal di-approve.'
+                ]);
+            }
+        } else {
             return $this->response->setJSON([
-                'status' => 'success',
-                'message' => 'Data RPL berhasil di-approve.'
+                'status' => 'error',
+                'message' => 'Data RPL gagal di-approve.'
             ]);
         }
 
@@ -60,6 +72,4 @@ class AsesorController extends Controller
             'message' => 'Tidak ada mata kuliah yang dipilih untuk RPL.'
         ]);
     }
-
-
 }

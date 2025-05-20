@@ -26,6 +26,16 @@
             <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body py-4">
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+                <?php if (session()->getFlashdata('error')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                    </div>
+                <?php endif; ?>
                 <!--begin::Table-->
                 <div class="table-responsive">
                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_prodi">
@@ -38,38 +48,38 @@
                             </tr>
                         </thead>
                         <?php if ($tahun_ajar): ?>
-                        <tbody class="text-gray-600 fw-semibold">
-                            <?php $no = 1; ?>
-                            <?php foreach ($tahun_ajar as $row): ?>
-                                <tr>
-                                    <td class="text-center">
-                                        <?= $no++ ?>
-                                    </td>
-                                    <td>
-                                        <?= $row['tahun'] ?>
-                                    </td>
-                                    <td class="text-center">
-                                        <?php if ($row['status'] == 'Y'): ?>
-                                            <span class="badge bg-success text-white">Active</span>
-                                        <?php else: ?>
-                                            <span class="badge bg-danger text-white">Inactive</span>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="d-flex align-items-center justify-content-center gap-2">
-                                            <button type="button"
-                                                class="btn btn-light btn-sm btn-icon btn-active-light-primary"
-                                                onClick="btnEditTahunAjar(<?= $row['id'] ?>)"><i
-                                                    class="fa-solid fa-pen-to-square"></i></button>
-                                            <button type="button"
-                                                class="btn btn-light btn-sm btn-icon btn-active-light-danger"
-                                                onClick="btnDeleteTahunAjar(<?= $row['id'] ?>)"><i
-                                                    class="fa-solid fa-trash"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
+                            <tbody class="text-gray-600 fw-semibold">
+                                <?php $no = 1; ?>
+                                <?php foreach ($tahun_ajar as $row): ?>
+                                    <tr>
+                                        <td class="text-center">
+                                            <?= $no++ ?>
+                                        </td>
+                                        <td>
+                                            <?= $row['tahun'] ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?php if ($row['status'] == 'Y'): ?>
+                                                <span class="badge bg-success text-white">Active</span>
+                                            <?php else: ?>
+                                                <span class="badge bg-danger text-white">Inactive</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                                <button type="button"
+                                                    class="btn btn-light btn-sm btn-icon btn-active-light-primary"
+                                                    onClick="btnEditTahunAjar(<?= $row['id'] ?>)"><i
+                                                        class="fa-solid fa-pen-to-square"></i></button>
+                                                <button type="button"
+                                                    class="btn btn-light btn-sm btn-icon btn-active-light-danger"
+                                                    onClick="btnDeleteTahunAjar(<?= $row['id'] ?>)"><i
+                                                        class="fa-solid fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
                         <?php else: ?>
                             <tbody>
                                 <tr>
