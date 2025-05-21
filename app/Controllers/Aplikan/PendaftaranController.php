@@ -112,13 +112,9 @@ class PendaftaranController extends BaseController
             ]
         ];
 
-        $insert = $this->konfirmasiStepModel->insertBatch($data_konfirmasi_step);
+        $this->konfirmasiStepModel->insertBatch($data_konfirmasi_step);
 
-        if ($insert) {
-            return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Pendaftaran RPL berhasil!');
-        } else {
-            return redirect()->to('/aplikan/pendaftaran/step2')->with('error', 'Pendaftaran RPL gagal!');
-        }
+        return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Pendaftaran RPL berhasil!');
     }
 
     public function step2()

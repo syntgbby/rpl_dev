@@ -22,6 +22,13 @@ class AuthController extends Controller
         $users = new UserModel();
 
         $email = strtolower($this->request->getPost('email'));
+
+        $checkEmail = $users->where('email', $email)->first();
+
+        if ($checkEmail) {
+            return redirect()->to('/register')->with('error', 'Email sudah terdaftar');
+        }
+
         $password = $this->request->getPost('password');
         $passHash = strtoupper(md5(strtoupper(md5($email)) . 'P@ssw0rd' . $password));
 
@@ -29,6 +36,7 @@ class AuthController extends Controller
             'username' => ucwords($this->request->getPost('username')),
             'email' => $email,
             'password' => $passHash,
+            'telepon' => '+62' . $this->request->getPost('telepon'),
             'role' => 'aplikan',
             'status' => 'Y',
             'pertanyaan_id' => $this->request->getPost('pertanyaan_id'),
@@ -36,8 +44,6 @@ class AuthController extends Controller
         ]);
 
         $attributes = [
-            'from' => 'noreply@example.com',
-            'fromName' => 'Example',
             'to' => $email,
             'subject' => 'Registrasi Berhasil',
             'message' => 'Registrasi berhasil, silahkan login ke aplikasi'

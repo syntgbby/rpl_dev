@@ -87,7 +87,7 @@ class UserController extends BaseController
         if ($update) {
             return redirect()->to('/admin/users')->with('success', 'Data User berhasil diubah!');
         } else {
-            return redirect()->to('/admin/users/edit/' . $id)->with('error', 'Data User gagal diubah!');
+            return redirect()->to('/admin/users')->with('error', 'Data User gagal diubah!');
         }
     }
 

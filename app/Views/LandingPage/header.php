@@ -15,7 +15,7 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        height: 100vh;
+        height: 80vh;
         padding: 100px 0;
         position: relative;
         z-index: 1;
@@ -80,27 +80,23 @@
     <!--begin::Landing hero-->
     <div class="landing-hero">
         <div class="overlay-layer"></div>
-        <div class="container text-center text-white position-relative mb-5" style="z-index: 3;">
+        <div class="container text-center text-white position-relative p-5" style="z-index: 3;">
             <h3 class="fs-2hx text-white mb-5">Program RPL (Rekognisi Pembelajaran Lampau)</h3>
-            <div class="fs-5 fw-semibold">
-                LP3I Hadir Sebagai Lembaga Pendidikan yang akan menjadi #temansetia
-                <br />untukmu dalam mempersiapkan karir profesional impian masa depan!
-            </div>
         </div>
         <!--begin::Description-->
         <div class="container text-center text-white position-relative mb-5" style="z-index: 3;">
             <!--begin::Text-->
-            <div class="fs-5 fw-semibold mb-8">Politeknik LP3I Jakarta merupakan pendidikan tinggi vokasi khusus bidang Bisnis & Teknologi yang menggunakan konsep Link & Match dengan dunia usaha dan dunia industri berfokus pada penyiapan kompetensi dan Penempatan Kerja.
-                <a href="https://www.lp3i.ac.id/" class="link-primary pe-1">LP3I</a>
+            <div class="fs-5 fw-semibold mb-8 text-justify">
+                Politeknik LP3I Jakarta merupakan pendidikan tinggi vokasi khusus bidang Bisnis & Teknologi yang menggunakan konsep Link & Match dengan dunia usaha dan dunia industri berfokus pada penyiapan kompetensi dan Penempatan Kerja.
             </div>
             <!--end::Text-->
             <!--begin::Text-->
-            <div class="fs-5 fw-semibold">Rekognisi Pembelajaran Lampau merupakan satu proses pengakuan terhadap capaian pembelajaran seseorang yang diperoleh melalui pendidikan nonformal,informal, maupun pengalaman kerja. Konsep ini memberikan kesempatan kepada individu yang memiliki keahlian tertentu, namun tidak menempuh pendidikan
+            <div class="fs-5 fw-semibold text-justify">Rekognisi Pembelajaran Lampau merupakan satu proses pengakuan terhadap capaian pembelajaran seseorang yang diperoleh melalui pendidikan nonformal,informal, maupun pengalaman kerja. Konsep ini memberikan kesempatan kepada individu yang memiliki keahlian tertentu, namun tidak menempuh pendidikan
                 formal di perguruan tinggi untuk tetap mendapatkan pengakuan atas kompentesinya dalam bentuk sertifat keahlian.</div>
             <!--end::Text-->
         </div>
         <div class="button-container">
-            <a href="<?= base_url('statuspendaftaran') ?>" class="btn btn-light-primary btn-lg px-8">Daftar Sekarang</a>
+            <a href="<?= base_url('register') ?>" class="btn btn-light-primary btn-lg px-8">Daftar Sekarang</a>
         </div>
         <!--end::Description-->
     </div>

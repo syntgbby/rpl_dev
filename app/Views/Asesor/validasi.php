@@ -30,7 +30,7 @@
                 </div>
 
                 <!-- Tabel RPL -->
-                <form id="approveRplForm" method="post">
+                <form id="approveRplForm" method="post" action="<?= base_url('asesor/approve-rpl') ?>">
                     <input type="hidden" name="pendaftaran_id" value="<?= esc($dtpendaftaran['pendaftaran_id']) ?>">
                     <input type="hidden" name="tahunSelectApprove" id="tahunApprove">
                     <div class="table-responsive" id="matkulContainer" style="display:none;">
@@ -139,31 +139,6 @@
             alert('Silakan pilih tahun kurikulum terlebih dahulu.');
             $('#matkulContainer').hide();
         }
-    });
-
-    // Submit form via AJAX
-    $('#approveRplForm').on('submit', function(e) {
-        e.preventDefault();
-        var formData = $(this).serialize();
-
-        $.ajax({
-            url: '<?= base_url('asesor/approve-rpl') ?>',
-            type: 'POST',
-            data: formData,
-            dataType: 'json',
-            success: function(response) {
-                if (response.status === 'success') {
-                    alert(response.message);
-                    window.location.href='<?= base_url('asesor/data-pendaftaran') ?>'; // Refresh halaman
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan saat meng-approve data.');
-            }
-        });
     });
 </script>
 

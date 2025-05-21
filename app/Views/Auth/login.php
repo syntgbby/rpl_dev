@@ -12,8 +12,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link href="<?= base_url('assets/plugins/global/plugins.bundle.css') ?>" rel="stylesheet" type="text/css" />
     <link href="<?= base_url('assets/css/style.bundle.css') ?>" rel="stylesheet" type="text/css" />
-    <script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking)
-        if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
+    <script>
+        // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking)
+        if (window.top != window.self) {
+            window.top.location.replace(window.self.location.href);
+        }
     </script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -28,11 +31,24 @@
             <div class="d-flex flex-column flex-md-row-fluid w-md-50">
                 <div class="d-flex flex-center flex-column flex-md-row-fluid">
                     <div class="w-md-500px">
-
-                        <?php if (session()->getFlashdata('alert')): ?>
-                            <div class="alert alert-danger">
-                                <?= session()->getFlashdata('alert') ?>
-                            </div>
+                        <?php if (session()->getFlashdata('success')): ?>
+                            <script>
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success!',
+                                    text: '<?= session()->getFlashdata('success') ?>',
+                                    confirmButtonColor: '#3085d6',
+                                });
+                            </script>
+                        <?php elseif (session()->getFlashdata('error')): ?>
+                            <script>
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: '<?= session()->getFlashdata('error') ?>',
+                                    confirmButtonColor: '#d33',
+                                });
+                            </script>
                         <?php endif; ?>
 
                         <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="/login"
@@ -86,7 +102,7 @@
     </div>
 
     <script>
-        $('#kt_sign_in_form').on('submit', function (e) {
+        $('#kt_sign_in_form').on('submit', function(e) {
             const email = $('#email').val().trim();
             const password = $('#password').val().trim();
             const $submitBtn = $('#kt_sign_in_submit');
