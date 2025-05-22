@@ -4,7 +4,6 @@ namespace App\Controllers;
 use App\Models\{UserModel, DetailAplikanModel, PertanyaanModel, ProdiModel};
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Controller;
-use App\Helpers\send_email;
 
 class AuthController extends Controller
 {
