@@ -88,6 +88,25 @@ class DashController extends BaseController
                 'asesor' => $asesor
             ];
             return $this->render('Dashboard/dashboard-admin', $data_admin);
+        } else if ($dataUser['role'] === "kaprodi") {
+            // Query untuk mendapatkan jumlah asesor aktif
+            $asesor = $this->userModel->where('role', 'asesor')
+                ->where('status', 'y')
+                ->countAllResults();
+
+            $prodi = $this->prodiModel->where('type', '1')
+                ->countAllResults();
+
+            $data_kaprodi = [
+                'title' => 'Dashboard',
+                'user' => $this->userModel->getUser(),
+                'dataUser' => $user,
+                'prodi' => $prodi,
+                'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),
+                'asesor' => $asesor
+            ];
+
+            return $this->render('Dashboard/dashboard-kaprodi', $data_kaprodi);
         } else {
             // Query untuk mendapatkan jumlah asesor aktif
             $asesor = $this->userModel->where('role', 'asesor')

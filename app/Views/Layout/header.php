@@ -55,7 +55,7 @@
                     <!--end:Menu item-->
 
                     <!-- menu admin -->
-                    <?php if ($user['role'] == 'admin') : ?>
+                    <?php if ($user['role'] == 'admin'): ?>
                         <!--begin:Menu item-->
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
                             class="menu-item <?= (current_url() == base_url('master-group-user') || current_url() == base_url('master-menu') || current_url() == base_url('users') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
@@ -209,7 +209,7 @@
                     <?php endif; ?>
 
                     <!-- menu asesor -->
-                    <?php if ($user['role'] == 'asesor') : ?>
+                    <?php if ($user['role'] == 'asesor'): ?>
                         <!--begin:Menu item-->
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
                             class="menu-item <?= (current_url() == base_url('asesor/data-pendaftaran') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
@@ -267,13 +267,39 @@
                     <?php endif; ?>
 
                     <!-- menu aplikan -->
-                    <?php if ($user['role'] == 'aplikan') : ?>
+                    <?php if ($user['role'] == 'aplikan'): ?>
                         <!--begin:Menu item-->
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
                             class="menu-item <?= (current_url() == base_url('aplikan/tentang-rpl') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
                             <!--begin:Menu link-->
                             <span class="menu-link">
                                 <span class="menu-title">Tentang RPL</span>
+                            </span>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                    <?php endif; ?>
+
+                    <!-- menu kaprodi -->
+                    <?php if ($user['role'] == 'kaprodi'): ?>
+                        <!--begin:Menu item-->
+                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
+                            class="menu-item <?= (current_url() == base_url('kaprodi/kurikulum') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2"
+                            onclick="window.location.href='<?= base_url('kaprodi/kurikulum') ?>'">
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+                                <span class="menu-title">Kurikulum</span>
+                            </span>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
+                            class="menu-item <?= (current_url() == base_url('kaprodi/data-pendaftaran') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2"
+                            onclick="window.location.href='<?= base_url('kaprodi/data-pendaftaran') ?>'">
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+                                <span class="menu-title">Assign Asessor</span>
                             </span>
                             <!--end:Menu link-->
                         </div>
@@ -346,14 +372,17 @@
                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                         data-kt-menu-placement="bottom-end">
                         <?php if ($user['role'] == 'aplikan') { ?>
-                            <img class="symbol symbol-circle symbol-35px symbol-md-45px" src="<?= base_url('assets/media/avatars/300-2.jpg') ?>"
-                                alt="user" style="object-fit: cover;" />
+                            <img class="symbol symbol-circle symbol-35px symbol-md-45px"
+                                src="<?= base_url('assets/media/avatars/300-2.jpg') ?>" alt="user"
+                                style="object-fit: cover;" />
                         <?php } else if ($user['role'] == 'asesor') { ?>
-                            <img class="symbol symbol-circle symbol-35px symbol-md-45px" src="<?= base_url('assets/media/avatars/300-1.jpg') ?>"
-                                alt="user" style="object-fit: cover;" />
+                                <img class="symbol symbol-circle symbol-35px symbol-md-45px"
+                                    src="<?= base_url('assets/media/avatars/300-1.jpg') ?>" alt="user"
+                                    style="object-fit: cover;" />
                         <?php } else { ?>
-                            <img class="symbol symbol-circle symbol-35px symbol-md-45px" src="<?= base_url('assets/media/avatars/300-3.jpg') ?>"
-                                alt="user" style="object-fit: cover;" />
+                                <img class="symbol symbol-circle symbol-35px symbol-md-45px"
+                                    src="<?= base_url('assets/media/avatars/300-3.jpg') ?>" alt="user"
+                                    style="object-fit: cover;" />
                         <?php } ?>
                     </div>
                     <!--begin::User account menu-->
@@ -363,7 +392,7 @@
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
                                 <a href="<?= base_url('editprofile') ?>" class="menu-link px-5">My
-                                Profile</a>
+                                    Profile</a>
                             </div>
                             <!--end::Menu item-->
                         <?php } ?>

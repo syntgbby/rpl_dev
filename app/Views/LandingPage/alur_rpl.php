@@ -1,74 +1,126 @@
-<!--begin::Wrapper-->
-<div class="pb-15 pt-18 landing-dark-bg">
-    <!--begin::Container-->
-    <div class="container">
-        <!--begin::Heading-->
-        <div class="text-center mt-15 mb-18" id="flow" data-kt-scroll-offset="{default: 100, lg: 150}">
-            <!--begin::Title-->
-            <h3 class="fs-2hx text-white fw-bold mb-5">Alur RPL</h3>
-            <!--end::Title-->
-        </div>
-        <!--end::Heading-->
+<div class="container py-10">
+    <h3 class="text-center fw-bold fs-2 mb-10 text-primary">RPL FLOW Politeknik LP3i Jakarta</h3>
 
-        <!--begin::Flow-->
-        <div class="d-flex flex-center justify-content-center">
-            <div class="d-flex flex-wrap justify-content-center gap-6 bg-white p-8 rounded-4 shadow-sm" style="max-width: 1200px;">
-                <?php
-                $steps = [
-                    'Pendaftaran RPL',
-                    'Upload Portofolio',
-                    'Pembayaran Assessment',
-                    'Assessment, Konversi',
-                    'Pembayaran Kuliah',
-                    'Penerbitan NIM',
-                    'Unduh Dokumen RPL',
-                    'Penerbitan SK Penyetaraan',
-                    'Pendaftaran Ke Sierra',
-                    'Pembuatan Akun LMS',
-                    'Proses KRS',
-                    'Proses Kuliah',
-                    'Pembayaran Tugas Akhir',
-                    'Bimbingan',
-                    'Sidang',
-                    'Yudisium',
-                    'Pembayaran Wisuda',
-                    'Wisuda'
-                ];
+    <div class="d-flex flex-wrap justify-content-center position-relative px-5">
+        <style>
+            .timeline-step {
+                width: 120px;
+                text-align: center;
+                position: relative;
+                z-index: 1;
+            }
 
-                $colors = [
-                    1 => 'success',
-                    2 => 'primary',
-                    3 => 'danger',
-                    4 => 'info',
-                    5 => 'danger',
-                    6 => 'primary',
-                    7 => 'warning',
-                    8 => 'success',
-                    9 => 'info',
-                    10 => 'info',
-                    11 => 'success',
-                    12 => 'warning',
-                    13 => 'danger',
-                    14 => 'info',
-                    15 => 'primary',
-                    16 => 'success',
-                    17 => 'warning',
-                    18 => 'dark'
-                ];
-                ?>
+            .timeline-circle {
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+                border-radius: 50%;
+                font-weight: bold;
+                color: white;
+                margin: 0 auto 10px;
+            }
 
+            .timeline-line {
+                position: absolute;
+                top: 20px;
+                left: 50%;
+                width: 100%;
+                height: 2px;
+                background-color: #ccc;
+                z-index: 0;
+            }
+
+            .timeline-wrapper {
+                position: relative;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .timeline-wrapper::before {
+                content: '';
+                position: absolute;
+                top: 20px;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: #ccc;
+                z-index: 0;
+            }
+
+            .timeline-icon {
+                font-size: 24px;
+                margin-top: -4px;
+            }
+        </style>
+
+        <?php
+        $steps = [
+            'Pendaftaran RPL',
+            'Upload Portofolio',
+            'Pembayaran Assessment',
+            'Assessment, Konversi',
+            'Pembayaran Kuliah',
+            'Penerbitan NIM',
+            'Unduh Dokumen RPL',
+            'Penerbitan SK Penyetaraan',
+            'Pendaftaran Ke Sierra',
+            'Pembuatan Akun LMS',
+            'Proses KRS',
+            'Proses Kuliah',
+            'Pembayaran Tugas Akhir',
+            'Bimbingan',
+            'Sidang',
+            'Yudisium',
+            'Pembayaran Wisuda',
+            'Wisuda'
+        ];
+
+        $colors = [
+            1 => 'bg-success',
+            2 => 'bg-info',
+            3 => 'bg-danger',
+            4 => 'bg-primary',
+            5 => 'bg-danger',
+            6 => 'bg-success',
+            7 => 'bg-warning',
+            8 => 'bg-success',
+            9 => 'bg-info',
+            10 => 'bg-dark',
+            11 => 'bg-success',
+            12 => 'bg-warning',
+            13 => 'bg-danger',
+            14 => 'bg-primary',
+            15 => 'bg-dark',
+            16 => 'bg-success',
+            17 => 'bg-warning',
+            18 => 'bg-secondary'
+        ];
+        ?>
+
+        <div class="overflow-auto">
+            <div class="d-flex flex-nowrap gap-4"></div>
+            <div class="timeline-wrapper mb-5">
                 <?php foreach ($steps as $index => $label): ?>
-                    <div class="d-flex flex-column align-items-center text-center" style="width: 200px;">
-                        <div class="symbol symbol-150px symbol-circle bg-<?= $colors[$index + 1] ?? 'light' ?> text-white fw-bold d-flex align-items-center justify-content-center mb-3">
+                    <div class="timeline-step">
+                        <div class="timeline-circle <?= $colors[$index + 1] ?>">
                             <?= $index + 1 ?>
                         </div>
-                        <div class="fw-semibold text-gray-800 fs-6"><?= $label ?></div>
+                        <?php if (in_array($label, ['Upload Portofolio', 'Assessment, Konversi'])): ?>
+                            <a href="#" class="text-primary text-decoration-underline small"><?= $label ?></a>
+                        <?php elseif ($label == 'Wisuda'): ?>
+                            <div class="small">
+                                <i class="bi bi-mortarboard timeline-icon"></i><br>Wisuda
+                            </div>
+                        <?php else: ?>
+                            <div class="small"><?= $label ?></div>
+                        <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
             </div>
         </div>
-        <!--end::Flow-->
     </div>
-    <!--end::Container-->
 </div>
-<!--end::Wrapper-->
+</div>

@@ -78,11 +78,6 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'au
     $routes->get('kurikulum/edit/(:num)', 'KurikulumController::edit/$1');
     $routes->post('kurikulum/update/(:num)', 'KurikulumController::update/$1');
     $routes->get('kurikulum/delete/(:num)', 'KurikulumController::delete/$1');
-
-    // Assign Asesor
-    $routes->get('data-pendaftaran', 'DataPendaftaranController::index');
-    $routes->get('data-pendaftaran/detail/(:any)', 'DataPendaftaranController::viewDetail/$1');
-    $routes->post('data-pendaftaran/assign-asesor', 'DataPendaftaranController::assignAsesor');
 });
 
 // Bagian Aplikan
@@ -109,6 +104,25 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan', 'filter' =>
 
     //update konfirmasi step
     $routes->get('update-konfirmasi-step/(:segment)', 'PendaftaranController::updateKonfirmasiStep/$1');
+});
+
+// Bagian Kaprodi
+$routes->group('kaprodi', ['namespace' => 'App\Controllers\Kaprodi', 'filter' => 'auth'], function ($routes) {
+    //View Kurikulum
+    $routes->get('kurikulum', 'KurikulumController::index');
+    // $routes->get('kurikulum/create', 'KurikulumController::create');
+    // $routes->post('kurikulum/store', 'KurikulumController::store');
+    // $routes->get('kurikulum/edit/(:num)', 'KurikulumController::edit/$1');
+    // $routes->post('kurikulum/update/(:num)', 'KurikulumController::update/$1');
+    // $routes->get('kurikulum/delete/(:num)', 'KurikulumController::delete/$1');
+
+    // Assign Asesor
+    $routes->get('data-pendaftaran', 'DataPendaftaranController::index');
+    $routes->get('data-pendaftaran/detail/(:any)', 'DataPendaftaranController::viewDetail/$1');
+    $routes->post('data-pendaftaran/assign-asesor', 'DataPendaftaranController::assignAsesor');
+
+    // Data Approved
+    $routes->get('data-approved', 'ApprovalController::index');
 });
 
 // Bagian Asesor

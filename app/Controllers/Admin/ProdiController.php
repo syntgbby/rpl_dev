@@ -34,6 +34,7 @@ class ProdiController extends BaseController
         $data = [
             'nama_prodi' => $this->request->getPost('nama_prodi'),
             'deskripsi_singkat' => $this->request->getPost('deskripsi_singkat'),
+            'type' => '1',
             'deskripsi_lengkap' => $this->request->getPost('deskripsi_lengkap'),
             'jenjang_karir' => $this->request->getPost('jenjang_karir'),
             'status' => $this->request->getPost('status'),

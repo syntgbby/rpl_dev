@@ -53,7 +53,7 @@
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-15px">No</th>
                                 <th class="min-w-55px">Email</th>
-                                <th class="min-w-55px">Role</th>
+                                <th class="min-w-55px">Peran</th>
                                 <th class="min-w-55px">Status</th>
                                 <th class="min-w-100px">Action</th>
                             </tr>
@@ -74,12 +74,14 @@
                                                 <span class="badge bg-info text-white">Admin</span>
                                             <?php elseif ($row['role'] == 'aplikan'): ?>
                                                 <span class="badge bg-primary text-white">Aplikan</span>
+                                            <?php elseif ($row['role'] == 'kaprodi'): ?>
+                                                <span class="badge bg-warning text-white">Kaprodi</span>
                                             <?php elseif ($row['role'] == 'asesor'): ?>
                                                 <span class="badge bg-dark text-white">Asesor</span>
                                             <?php endif; ?>
                                         </td>
                                         <td class="text-center">
-                                            <?= ($row['status'] == 'Y') ? '<span class="badge bg-success text-white">Active</span>' : '<span class="badge bg-danger text-white">Inactive</span>' ?>
+                                            <?= ($row['status'] == 'Y') ? '<span class="badge bg-success text-white">Aktif</span>' : '<span class="badge bg-danger text-white">Tidak Aktif</span>' ?>
                                         </td>
                                         <td class="text-center">
                                             <div class="d-flex align-items-center justify-content-center gap-2">
@@ -109,7 +111,7 @@
                         <?php else: ?>
                             <tbody>
                                 <tr>
-                                    <td colspan="6" class="text-center">No data found</td>
+                                    <td colspan="6" class="text-center">Tidak Ada Data</td>
                                 </tr>
                             </tbody>
                         <?php endif; ?>

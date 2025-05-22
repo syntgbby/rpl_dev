@@ -12,13 +12,13 @@
             <div class="card-header border-0 pt-6">
                 <!--begin::Card title-->
                 <div class="card-title">
-                    <h1>Mata Kuliah Management</h1>
+                    <h1>Data Mata Kuliah</h1>
                 </div>
                 <div class="card-title">
                     <div class="d-flex align-items-center position-relative my-1">
                         <button type="button" class="btn btn-primary" id="btnAddMataKuliah"><i
                                 class="fa-solid fa-plus"></i>
-                            Add</button>
+                            Tambah</button>
                     </div>
                 </div>
                 <!--begin::Card title-->
@@ -77,9 +77,9 @@
                                         </td>
                                         <td class="text-center">
                                             <?php if ($row['status'] == 'Y'): ?>
-                                                <span class="badge bg-success text-white">Active</span>
+                                                <span class="badge bg-success text-white">Aktif</span>
                                             <?php else: ?>
-                                                <span class="badge bg-danger text-white">Inactive</span>
+                                                <span class="badge bg-danger text-white">Tidak Aktif</span>
                                             <?php endif; ?>
                                         </td>
                                         <td class="text-center">
@@ -100,7 +100,7 @@
                         <?php else: ?>
                             <tbody>
                                 <tr>
-                                    <td colspan="6" class="text-center">No data found</td>
+                                    <td colspan="6" class="text-center">Tidak Ada Data</td>
                                 </tr>
                             </tbody>
                         <?php endif; ?>
@@ -134,13 +134,13 @@
 
     function btnDeleteMataKuliah(id) {
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Apakah anda yakin?',
+            text: "Anda tidak akan bisa membatalkan ini setelah dihapus!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Ya, hapus!'
         }).then((result) => {
             if (result.isConfirmed) {
                 window.location.href = '<?= base_url('admin/mata-kuliah/delete/') ?>' + id;

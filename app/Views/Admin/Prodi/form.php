@@ -6,7 +6,7 @@
             <div class="fv-row mb-8">
                 <div class="row align-items-center">
                     <div class="col-md-5">
-                        <label for="name" class="form-label">Name</label>
+                        <label for="name" class="form-label">Nama Prodi</label>
                     </div>
                     <div class="col-md-7">
                         <input type="text" class="form-control" id="nama_prodi" name="nama_prodi"
@@ -22,9 +22,8 @@
                         <label for="email" class="form-label">Deskripsi Singkat</label>
                     </div>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" id="deskripsi_singkat"
-                            name="deskripsi_singkat" placeholder="Masukkan Deskripsi Singkat"
-                            value="<?= $dtprodi['deskripsi_singkat'] ?? '' ?>">
+                        <input type="text" class="form-control" id="deskripsi_singkat" name="deskripsi_singkat"
+                            placeholder="Masukkan Deskripsi Singkat" value="<?= $dtprodi['deskripsi_singkat'] ?? '' ?>">
                     </div>
                 </div>
             </div>
@@ -36,9 +35,8 @@
                         <label for="email" class="form-label">Deskripsi Lengkap</label>
                     </div>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" id="deskripsi_lengkap"
-                            name="deskripsi_lengkap" placeholder="Masukkan Deskripsi Lengkap"
-                            value="<?= $dtprodi['deskripsi_lengkap'] ?? '' ?>">
+                        <input type="text" class="form-control" id="deskripsi_lengkap" name="deskripsi_lengkap"
+                            placeholder="Masukkan Deskripsi Lengkap" value="<?= $dtprodi['deskripsi_lengkap'] ?? '' ?>">
                     </div>
                 </div>
             </div>
@@ -53,16 +51,15 @@
                         <div class="image-input image-input-outline" data-kt-image-input="true"
                             style="background-image: url('<?= $dtprodi['pict'] ?? base_url('assets/media/svg/picts/blank.svg') ?>')">
                             <div class="image-input-wrapper w-125px h-125px"
-                                style="background-image: url('<?= $dtprodi['pict'] ?? base_url('assets/media/svg/picts/blank.svg') ?>')"></div>
-                            <label
-                                class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                style="background-image: url('<?= $dtprodi['pict'] ?? base_url('assets/media/svg/picts/blank.svg') ?>')">
+                            </div>
+                            <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                 data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change pict">
                                 <i class="ki-outline ki-pencil fs-7"></i>
                                 <input type="file" name="pict" accept=".png, .jpg, .jpeg" />
                                 <input type="hidden" name="pict_remove" />
                             </label>
-                            <span
-                                class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                 data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel pict">
                                 <i class="ki-outline ki-cross fs-2"></i>
                             </span>
@@ -75,10 +72,10 @@
     </div>
     <!--begin::Actions-->
     <div class="card-footer d-flex justify-content-end py-1 px-1 mt-1">
-        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" id="btnSave">Save Changes
-            <span class="spinner-border spinner-border-sm align-middle ms-2" role="status"
-                aria-hidden="true" style="display: none;"></span>
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+        <button type="submit" class="btn btn-primary" id="btnSave">Simpan
+            <span class="spinner-border spinner-border-sm align-middle ms-2" role="status" aria-hidden="true"
+                style="display: none;"></span>
             <span class="visually-hidden">Loading...</span>
         </button>
     </div>

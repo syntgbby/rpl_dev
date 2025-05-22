@@ -45,8 +45,8 @@
                         <thead>
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-15px">No</th>
-                                <th class="min-w-25px">Nama</th>
-                                <th class="min-w-85px">Program Study</th>
+                                <th class="min-w-25px">Nama Lengkap</th>
+                                <th class="min-w-85px">Program Studi</th>
                                 <th class="min-w-85px">Status</th>
                                 <th class="min-w-100px">Action</th>
                             </tr>
@@ -86,7 +86,7 @@
                         <?php else: ?>
                             <tbody>
                                 <tr>
-                                    <td colspan="5" class="text-center">No data found</td>
+                                    <td colspan="5" class="text-center">Tidak Ada Data</td>
                                 </tr>
                             </tbody>
                         <?php endif; ?>

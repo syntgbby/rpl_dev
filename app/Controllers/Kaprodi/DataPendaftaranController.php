@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Admin;
+namespace App\Controllers\Kaprodi;
 
 use App\Models\View\ViewDataPendaftaran;
 use App\Models\{UserModel, PelatihanModel};
@@ -15,7 +15,7 @@ class DataPendaftaranController extends BaseController
 
         $data['dtpendaftaran'] = $model->where('asesor_id', null)->findAll();
 
-        return $this->render('Admin/DataPendaftaran/index', $data);
+        return $this->render('Kaprodi/DataPendaftaran/index', $data);
     }
 
     public function viewDetail($id)
@@ -28,7 +28,7 @@ class DataPendaftaranController extends BaseController
         $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $id)->findAll();
         $data['asesor'] = $asesor->select('users.id, detail_asesor.nama_lengkap')->join('detail_asesor', 'detail_asesor.email = users.email')->where('role', 'asesor')->where('status', 'Y')->findAll();
 
-        return $this->render('Admin/DataPendaftaran/view-detail', $data);
+        return $this->render('Kaprodi/DataPendaftaran/view-detail', $data);
     }
 
     public function assignAsesor()
@@ -40,9 +40,9 @@ class DataPendaftaranController extends BaseController
         $assign = $model->where('pendaftaran_id', $id)->set(['asesor_id' => $asesor_id])->update();
 
         if ($assign) {
-            return redirect()->to('/admin/data-pendaftaran')->with('success', 'Assign Asesor berhasi!');
+            return redirect()->to('/kaprodi/data-pendaftaran')->with('success', 'Assign Asesor berhasi!');
         } else {
-            return redirect()->to('/admin/data-pendaftaran')->with('error', 'Assign Asesor gagal!');
+            return redirect()->to('/kaprodi/data-pendaftaran')->with('error', 'Assign Asesor gagal!');
         }
     }
 }
