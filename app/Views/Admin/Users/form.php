@@ -24,19 +24,21 @@
                     </div>
                     <?php endif; ?>
                     <div class="row">
+                        <?php if ($dtuser['role'] == 'asesor'): ?>
                         <div class="col-md-12">
                             <div class="fv-row mb-8">
                                 <div class="row align-items-center">
                                     <div class="col-md-5">
-                                        <label for="name" class="form-label">Name</label>
+                                        <label for="name" class="form-label">Nama Lengkap</label>
                                     </div>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control" id="username" name="username"
-                                            placeholder="Enter Name" value="<?= $dtuser['username'] ?? '' ?>">
+                                        <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap"
+                                            placeholder="Enter Name" value="<?= $dtasesor['nama_lengkap'] ?? '' ?>">
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <?php endif; ?>
                         <div class="col-md-12">
                             <div class="fv-row mb-8">
                                 <div class="row align-items-center">
@@ -91,21 +93,18 @@
                             <div class="fv-row mb-8">
                                 <div class="row align-items-center">
                                     <div class="col-md-5">
-                                        <label for="role" class="form-label">Role</label>
+                                        <label for="role" class="form-label">Peran</label>
                                     </div>
                                     <div class="col-md-7">
                                         <!--begin::Input-->
                                         <select name="role"
                                             class="form-select form-select-md form-select-solid text-sm h-40px"
                                             data-control="select2">
-                                            <option value="Admin" <?= (isset($dtuser) && $dtuser['role'] == 'Admin') ? 'selected' : '' ?>>
+                                            <option value="admin" <?= (isset($dtuser) && $dtuser['role'] == 'admin') ? 'selected' : '' ?>>
                                                 Admin
                                             </option>
-                                            <option value="Asesor" <?= (isset($dtuser) && $dtuser['role'] == 'Asesor') ? 'selected' : '' ?>>
+                                            <option value="asesor" <?= (isset($dtuser) && $dtuser['role'] == 'asesor') ? 'selected' : '' ?>>
                                                 Assessor
-                                            </option>
-                                            <option value="Aplikan" <?= (isset($dtuser) && $dtuser['role'] == 'Aplikan') ? 'selected' : '' ?>>
-                                                Aplikan
                                             </option>
                                         </select>
                                         <!--end::Input-->
@@ -138,7 +137,8 @@
                     <!--begin::Actions-->
                     <div class="card-footer d-flex justify-content-end py-6 px-9">
                         <button type="button" class="btn btn-light btn-active-light-primary me-2" onclick="window.history.back()">Close</button>
-                        <button type="submit" class="btn btn-primary" id="btnSave">Save Changes
+                        <button type="submit" class="btn btn-primary" id="btnSave">
+                            <?= (!empty($dtuser) && isset($dtuser['id'])) ? 'Update Data' : 'Simpan Data' ?>
                             <span class="spinner-border spinner-border-sm align-middle ms-2" role="status"
                                 aria-hidden="true" style="display: none;"></span>
                             <span class="visually-hidden">Loading...</span>

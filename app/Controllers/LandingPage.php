@@ -15,15 +15,15 @@ class LandingPage extends Controller
         $prodiModel = new ProdiModel();
 
         $data['gelombang'] = $gelombangModel->findAll();
-        $data['prodi'] = $prodiModel->where('type = 1')->findAll();
+        $data['prodi'] = $prodiModel->where('type', '1')->findAll();
 
         return view('LandingPage/template', $data);
     }
 
-    public function detailProdi($slug)
+    public function detailProdi($id)
     {
         $prodiModel = new ProdiModel();
-        $data['prodi'] = $prodiModel->where('slug', $slug)->first();
+        $data['prodi'] = $prodiModel->where('id', $id)->first();
 
         if (!$data['prodi']) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();

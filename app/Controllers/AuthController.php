@@ -1,8 +1,7 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\UserModel;
-use App\Models\PertanyaanModel;
+use App\Models\{UserModel, DetailAplikanModel, PertanyaanModel, ProdiModel};
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Controller;
 use App\Helpers\send_email;
@@ -12,7 +11,9 @@ class AuthController extends Controller
     public function register()
     {
         $pertanyaanModel = new PertanyaanModel();
+        $prodiModel = new ProdiModel();
         $data['pertanyaan'] = $pertanyaanModel->findAll();
+        $data['prodi'] = $prodiModel->where('type', '1')->findAll();
 
         return view('Auth/register', $data);
     }
@@ -20,41 +21,73 @@ class AuthController extends Controller
     public function registerProcess()
     {
         $users = new UserModel();
+        $detailAplikan = new DetailAplikanModel();
 
         $email = strtolower($this->request->getPost('email'));
 
+        //proses cek email (1 akun hanya bisa 1 email)
         $checkEmail = $users->where('email', $email)->first();
-
         if ($checkEmail) {
-            return redirect()->to('/register')->with('error', 'Email sudah terdaftar');
+            return redirect()->to('/register')->with('error', 'Email sudah terdaftar!');
         }
 
         $password = $this->request->getPost('password');
         $passHash = strtoupper(md5(strtoupper(md5($email)) . 'P@ssw0rd' . $password));
 
-        $addUser = $users->save([
-            'username' => ucwords($this->request->getPost('username')),
+        if (isset($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $email = $email;
+        } else {
+            return redirect()->to('/register')->with('error', 'Email tidak valid');
+        }
+
+        //save ke tabel users
+        $users->save([
             'email' => $email,
             'password' => $passHash,
-            'telepon' => '+62' . $this->request->getPost('telepon'),
             'role' => 'aplikan',
             'status' => 'Y',
+        ]);
+
+        //save ke tabel detail_aplikan
+        $insertDetailAplikan = $detailAplikan->save([
+            'email' => $email,
+            'nama_lengkap' => $this->request->getPost('nama_lengkap'),
+            'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
+            'tempat_lahir' => $this->request->getPost('tempat_lahir'),
+            'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
+            'alamat' => $this->request->getPost('alamat'),
+            'telepon' => '+62' . $this->request->getPost('telepon'),
+            'prodi_id' => $this->request->getPost('prodi_id'),
+            'pendidikan_terakhir' => $this->request->getPost('pendidikan_terakhir'),
+            'nama_asal_sekolah' => $this->request->getPost('nama_asal_sekolah'),
+            'tahun_lulus' => $this->request->getPost('tahun_lulus'),
+            'asal_informasi' => $this->request->getPost('asal_informasi'),
+            'asal_informasi_lainnya' => $this->request->getPost('asal_informasi_lainnya'),
             'pertanyaan_id' => $this->request->getPost('pertanyaan_id'),
             'jawaban' => $this->request->getPost('jawaban')
         ]);
 
-        $attributes = [
-            'to' => $email,
-            'subject' => 'Registrasi Berhasil',
-            'message' => 'Registrasi berhasil, silahkan login ke aplikasi'
-        ];
-        
-        kirimEmail($attributes);
+        //proses kirim email
+        if ($insertDetailAplikan) {
+            $attributes = [
+                'to' => $email,
+                'subject' => 'Registrasi Berhasil',
+                'message' => 'Registrasi berhasil, silahkan login ke aplikasi'
+            ];
 
-        if ($addUser) {
-            return redirect()->to('/login')->with('success', 'Registrasi berhasil');
+            try {
+                $sendEmail = kirimEmail($attributes);
+
+                if ($sendEmail) {
+                    return redirect()->to('/login')->with('success', 'Registrasi berhasil');
+                } else {
+                    return redirect()->to('/register')->with('error', 'Registrasi gagal!');
+                }
+            } catch (\Exception $e) {
+                return redirect()->to('/register')->with('error', 'Error: ' . $e->getMessage());
+            }
         } else {
-            return redirect()->to('/register')->with('error', 'Registrasi gagal');
+            return redirect()->to('/register')->with('error', 'Registrasi gagal dikirim!');
         }
     }
 
@@ -76,7 +109,6 @@ class AuthController extends Controller
             if ($user['password'] === $hashed) {
                 session()->set([
                     'user_id' => $user['id'],
-                    'name' => $user['username'],
                     'email' => $user['email'],
                     'role' => $user['role'],
                     'pict' => $user['pict'],

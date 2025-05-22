@@ -12,14 +12,14 @@
             <div class="card-header border-0 pt-6">
                 <!--begin::Card title-->
                 <div class="card-title">
-                    <h1>Users Management</h1>
+                    <h1>Data Pengguna</h1>
                 </div>
                 <div class="card-title">
                     <div class="d-flex align-items-center position-relative my-1">
                         <button type="button" class="btn btn-primary"
                             onclick="window.location.href='<?= base_url('admin/users/create') ?>'"><i
                                 class="fa-solid fa-plus"></i>
-                            Add</button>
+                            Tambah</button>
                     </div>
                 </div>
                 <!--begin::Card title-->
@@ -52,7 +52,6 @@
                         <thead>
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-15px">No</th>
-                                <th class="min-w-25px">Name</th>
                                 <th class="min-w-55px">Email</th>
                                 <th class="min-w-55px">Role</th>
                                 <th class="min-w-55px">Status</th>
@@ -66,9 +65,6 @@
                                     <tr>
                                         <td class="text-center">
                                             <?= $no++ ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?= $row['username'] ?>
                                         </td>
                                         <td>
                                             <?= $row['email'] ?>

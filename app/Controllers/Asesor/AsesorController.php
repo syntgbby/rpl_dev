@@ -22,16 +22,10 @@ class AsesorController extends Controller
         $rplData = $this->request->getPost('rpl'); // Array dari checkbox "Ya"
 
         if (empty($rplData) || empty($pendaftaranId)) {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'Tidak ada mata kuliah yang dipilih atau data pendaftaran tidak valid.'
-            ]);
+            return redirect()->to('/asesor/data-pendaftaran')->with('error', 'Tidak ada mata kuliah yang dipilih atau data pendaftaran tidak valid.');
         }
         if (empty($status)) {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'Status belum dimasukkan.'
-            ]);
+            return redirect()->to('/asesor/data-pendaftaran')->with('error', 'Status belum dimasukkan.');
         }
 
         $dataToInsert = [];
@@ -50,15 +44,9 @@ class AsesorController extends Controller
                 'type' => $type
             ]);
 
-            return $this->response->setJSON([
-                'status' => 'success',
-                'message' => 'Data RPL berhasil di approve.'
-            ]);
+            return redirect()->to('/asesor/data-pendaftaran')->with('success', 'Data RPL berhasil di approve.');
         } else {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'Data RPL gagal di-approve.'
-            ]);
+            return redirect()->to('/asesor/data-pendaftaran')->with('error', 'Data RPL gagal di-approve.');
         }
     }
 }

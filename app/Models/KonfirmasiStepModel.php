@@ -13,4 +13,11 @@ class KonfirmasiStepModel extends Model
     {
         return $this->findAll();
     }
+
+    public function updateKonfirmasiStep($pendaftaranId, $step, $data)
+    {
+        $pendaftaran = $this->where('pendaftaran_id', $pendaftaranId)->where('step', $step)->first();
+        $id = $pendaftaran['id'];
+        $this->update($id, ['status' => $data]);
+    }
 }

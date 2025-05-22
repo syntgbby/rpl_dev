@@ -68,7 +68,7 @@
                 <!--end::Logo-->
                 <!--begin::Toolbar-->
                 <div class="flex-equal text-end ms-1">
-                    <button class="btn btn-success" onclick="window.location.href='<?= base_url('login') ?>'">Sign In</button>
+                    <button class="btn btn-success" onclick="window.location.href='<?= base_url('login') ?>'">LOGIN</button>
                 </div>
                 <!--end::Toolbar-->
             </div>

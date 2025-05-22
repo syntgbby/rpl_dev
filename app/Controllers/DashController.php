@@ -85,18 +85,22 @@ class DashController extends BaseController
                 'aplikan' => $this->userModel->getAplikanByRole('aplikan'),
                 'sdhMendaftar' => $getSdhMendaftar,
                 'totalAplikan' => $totalAplikan,
-                'asesor' => $asesor,
-                // 'aplikan' => $this->aplikanModel->getAplikan(),
-                // 'aplikan2025' => $this->aplikanModel->getAplikanByYear(2025)
+                'asesor' => $asesor
             ];
             return $this->render('Dashboard/dashboard-admin', $data_admin);
         } else {
+            // Query untuk mendapatkan jumlah asesor aktif
+            $asesor = $this->userModel->where('role', 'asesor')
+                ->where('status', 'y')
+                ->countAllResults();
+
             $data_asesor = [
                 'title' => 'Dashboard',
                 'user' => $this->userModel->getUser(),
                 'dataUser' => $user,
                 'prodi' => $this->prodiModel->where('type =', 1)->findAll(),
                 'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),
+                'asesor' => $asesor
             ];
             return $this->render('Dashboard/dashboard-asesor', $data_asesor);
         }

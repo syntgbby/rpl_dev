@@ -54,7 +54,7 @@
                         <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="/login"
                             method="post">
                             <div class="text-center mb-11">
-                                <h1 class="text-gray-900 fw-bolder mb-3">Sign In</h1>
+                                <h1 class="text-gray-900 fw-bolder mb-3">Halaman Login</h1>
                             </div>
                             <?= csrf_field() ?>
 
@@ -70,19 +70,19 @@
 
                             <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
                                 <div></div>
-                                <a href="<?= base_url('forgot-password') ?>" class="link-primary">Forgot Password?</a>
+                                <a href="<?= base_url('forgot-password') ?>" class="link-primary">Lupa Password?</a>
                             </div>
 
                             <div class="d-grid mb-10">
                                 <button type="submit" id="kt_sign_in_submit" class="btn btn-primary" name="login">
-                                    <span class="indicator-label">Sign In</span>
-                                    <span class="indicator-progress">Please wait...
+                                    <span class="indicator-label">Masuk</span>
+                                    <span class="indicator-progress">Mohon tunggu...
                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                 </button>
                             </div>
 
-                            <div class="text-gray-500 text-center fw-semibold fs-6">Not a Member yet?
-                                <a href="<?= base_url('register') ?>" class="link-primary">Sign up</a>
+                            <div class="text-gray-500 text-center fw-semibold fs-6">Belum punya akun?
+                                <a href="<?= base_url('register') ?>" class="link-primary">Daftar Sekarang</a>
                             </div>
                         </form>
                     </div>
@@ -94,7 +94,8 @@
                 <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
                     <img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-5 mb-lg-10"
                         src="<?= base_url('assets/media/misc/auth-screens.png') ?>" alt="" />
-                    <h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center">Fast, Efficient and Productive
+                    <h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center">
+                        Cepat, Efisien dan Produktif
                     </h1>
                 </div>
             </div>

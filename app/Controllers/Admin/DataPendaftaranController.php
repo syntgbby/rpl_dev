@@ -3,7 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Models\View\ViewDataPendaftaran;
-use App\Models\UserModel;
+use App\Models\{UserModel, PelatihanModel};
 use App\Models\PendaftaranModel;
 use App\Controllers\BaseController;
 
@@ -21,9 +21,12 @@ class DataPendaftaranController extends BaseController
     public function viewDetail($id)
     {
         $model = new ViewDataPendaftaran();
+        $modelPelatihan = new PelatihanModel();
         $asesor = new UserModel();
+
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
-        $data['asesor'] = $asesor->where('role', 'asesor')->where('status', 'Y')->findAll();
+        $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $id)->findAll();
+        $data['asesor'] = $asesor->select('users.id, detail_asesor.nama_lengkap')->join('detail_asesor', 'detail_asesor.email = users.email')->where('role', 'asesor')->where('status', 'Y')->findAll();
 
         return $this->render('Admin/DataPendaftaran/view-detail', $data);
     }

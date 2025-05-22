@@ -2,83 +2,69 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
+use App\Models\{UserModel, DetailAplikanModel};
 
 class Profile extends BaseController
 {
     public function indexEdit()
     {
         $email = session()->get('email');
-        $users = new UserModel();
+        $role = session()->get('role');
+        $detailAplikan = new DetailAplikanModel();
 
-        // Ambil data user berdasarkan email
-        $query = $users->where('email', $email)->first();
+        if ($role == 'aplikan') {
+            // Ambil data user berdasarkan email
+            $query = $detailAplikan->where('email', $email)->first();
 
-        if (!$query) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException("User tidak ditemukan.");
+            if (!$query) {
+                throw new \CodeIgniter\Exceptions\PageNotFoundException("User tidak ditemukan.");
+            }
+            return $this->render('Aplikan/editprofile', ['get' => $query]);
+        } else if ($role == 'asesor') {
+            // Ambil data user berdasarkan email
+            $query = $detailAplikan->where('email', $email)->first();
+
+            if (!$query) {
+                throw new \CodeIgniter\Exceptions\PageNotFoundException("User tidak ditemukan.");
+            }
+            return $this->render('Asesor/editprofile', ['get' => $query]);
         }
-
-        return $this->render('Aplikan/editprofile', ['get' => $query]);
     }
 
     public function update()
     {
         try {
-            $users = new UserModel();
+            $detailAplikan = new DetailAplikanModel();
 
             $role = session()->get('role');
             $email = session()->get('email');
 
             // Ambil data user dulu
-            $user = $users->where('email', $email)->first();
+            $user = $detailAplikan->where('email', $email)->first();
             if (!$user) {
                 return redirect()->back()->with('error', 'User tidak ditemukan');
             }
 
-            // Data untuk update
-            $updateData = [
-                'username'       => $this->request->getPost('name'),
-                'tempat_lahir'   => $this->request->getPost('tempat_lahir'),
-                'tanggal_lahir'  => $this->request->getPost('tanggal_lahir'),
-                'telepon'        => $this->request->getPost('telepon'),
-                'jenis_kelamin'  => $this->request->getPost('jenis_kelamin'),
-                'agama'          => $this->request->getPost('agama'),
-            ];
+            if ($role == 'aplikan') {
+                // Data untuk update
+                $updateDataDetailAplikan = [
+                    'nama_lengkap'   => $this->request->getPost('nama_lengkap'),
+                    'tempat_lahir'   => $this->request->getPost('tempat_lahir'),
+                    'tanggal_lahir'  => $this->request->getPost('tanggal_lahir'),
+                    'telepon'        => $this->request->getPost('telepon'),
+                    'jenis_kelamin'  => $this->request->getPost('jenis_kelamin'),
+                    'agama'          => $this->request->getPost('agama'),
+                ];
 
-            // Handle file upload jika ada
-            $pict = $this->request->getFile('pict');
-            if ($pict && $pict->isValid() && !$pict->hasMoved()) {
-                $path = 'uploads/profile/' . $role;
+                $update = $detailAplikan->where('email', $email)->set($updateDataDetailAplikan)->update();
 
-                // Pastikan direktori ada
-                if (!is_dir(FCPATH . $path)) {
-                    mkdir(FCPATH . $path, 0777, true);
+                if ($update) {
+                    return redirect()->to('/dashboard')->with('success', 'Profile berhasil diupdate');
+                } else {
+                    return redirect()->back()->with('error', 'Profile gagal diupdate');
                 }
-
-                // Bikin nama file unik
-                $extension = $pict->getExtension();
-                $pict_name = $this->request->getPost('name') . '_' . time() . '.' . $extension;
-
-                $checkfoto = FCPATH . $path . '/' . $pict_name;
-                if (file_exists($checkfoto)) {
-                    unlink($checkfoto);
-                }
-                $pict->move(FCPATH . $path, $pict_name);
-
-                // Simpan URL pict
-                $updateData['pict'] = base_url($path . '/' . $pict_name);
-            } else {
-                // Jika tidak upload gambar, tetap pakai yang lama
-                $updateData['pict'] = $user['pict'];
-            }
-
-            // Update data
-            $update = $users->where('email', $email)->set($updateData)->update();
-
-            if ($update) {
-                return redirect()->to('/dashboard')->with('success', 'Profile berhasil diupdate');
-            } else {
-                return redirect()->back()->with('error', 'Profile gagal diupdate');
+            } else if ($role == 'asesor') {
+                return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk mengubah profile');
             }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());

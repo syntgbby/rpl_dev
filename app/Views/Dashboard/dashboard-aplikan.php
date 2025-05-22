@@ -7,37 +7,6 @@
 	<!--begin::Content-->
 	<div id="kt_app_content" class="app-content">
 		<!--begin::Row-->
-		<?php if ($dataUser['tempat_lahir'] == null || $dataUser['tanggal_lahir'] == null) : ?>
-			<div class="row g-10">
-				<!--begin::Col-->
-				<!--begin::Alert-->
-				<div class="alert alert-warning d-flex align-items-center p-5 mb-10">
-					<!--begin::Icon-->
-					<i class="ki-duotone ki-information-5 fs-2hx text-warning me-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-					<!--end::Icon-->
-
-					<!--begin::Wrapper-->
-					<div class="d-flex flex-column flex-grow-1">
-						<!--begin::Title-->
-						<h4 class="mb-1 text-warning">Biodata Belum Lengkap</h4>
-						<!--end::Title-->
-						<!--begin::Content-->
-						<span>Silahkan lengkapi biodata Anda terlebih dahulu sebelum melakukan pendaftaran.</span>
-						<!--end::Content-->
-					</div>
-					<!--end::Wrapper-->
-
-					<!--begin::Button-->
-					<div class="ms-4">
-						<a href="/editprofile" class="btn btn-sm btn-warning">Lengkapi Biodata</a>
-					</div>
-					<!--end::Button-->
-				</div>
-				<!--end::Alert-->
-				<!--end::Col-->
-			</div>
-		<?php endif; ?>
-
 		<?php if (session()->has('success')): ?>
 			<div class="alert alert-success">
 				<?= session()->getFlashdata('success') ?>
@@ -53,97 +22,89 @@
 			<!--begin::Row-->
 			<div class="row gx-5 gx-xl-12">
 				<!--begin::Col-->
-				<div class="col-xxl-12 mb-5 mb-xl-12">
-					<!--begin::Chart widget 28-->
-					<div class="card card-flush h-xl-200">
-						<!--begin::Header-->
-						<div class="card-header py-7">
-							<!--begin::Statistics-->
-							<div class="m-0">
+				<div class="col-md-6 mb-5 mb-xl-6">
+					<!--begin::Header-->
+					<div class="card-header py-7">
+						<!--begin::Statistics-->
+						<div class="m-0">
+							<!--begin::Timeline Widget-->
+							<div class="card card-flush">
+								<!--begin::Header-->
+								<div class="card-header">
+									<h3 class="card-title">Status Pendaftaran</h3>
+								</div>
+								<!--end::Header-->
 
-								<!--begin::Timeline Widget-->
-								<div class="card card-flush">
-									<!--begin::Header-->
-									<div class="card-header">
-										<h3 class="card-title">Status Pendaftaran</h3>
-									</div>
-									<!--end::Header-->
-
-									<!--begin::Body-->
-									<div class="card-body">
-										<!--begin::Timeline-->
-										<div class="timeline">
-											<?php foreach ($timeline as $item): ?>
-												<!--begin::Timeline item-->
-												<div class="timeline-item">
-													<div class="timeline-line"></div>
-													<div class="timeline-icon">
-														<i class="<?= $item['icon'] ?>"></i>
-													</div>
-													<div class="timeline-content">
-														<span class="fw-bold text-gray-800"><?= $item['status'] ?></span>
-														<p class="text-gray-600"><?= $item['keterangan'] ?></p>
-													</div>
+								<!--begin::Body-->
+								<div class="card-body">
+									<!--begin::Timeline-->
+									<div class="timeline">
+										<?php foreach ($timeline as $item): ?>
+											<!--begin::Timeline item-->
+											<div class="timeline-item">
+												<div class="timeline-line"></div>
+												<div class="timeline-icon">
+													<i class="<?= $item['icon'] ?>"></i>
 												</div>
-											<?php endforeach; ?>
-										</div>
-										<!--end::Timeline-->
-
-										<div class="d-flex justify-content-end align-items-center">
-											<button type="button" class="btn btn-sm btn-light-warning mt-2" data-bs-toggle="modal" data-bs-target="#detailPendaftaranModal">
-												Lihat Detail
-											</button>
-										</div>
-
+												<div class="timeline-content">
+													<span class="fw-bold text-gray-800"><?= $item['status'] ?></span>
+													<p class="text-gray-600"><?= $item['keterangan'] ?><br><?= date('d F Y H:i', strtotime($item['waktu'])) ?></p>
+												</div>
+											</div>
+										<?php endforeach; ?>
 									</div>
-									<!--end::Body-->
+									<!--end::Timeline-->
 								</div>
-								<!--end::Timeline Widget-->
-
-								<!--end::Row-->
+								<!--end::Body-->
 							</div>
-							<!--end::Content-->
-						</div>
-						<!--end::Content wrapper-->
-						<!--begin::Modal-->
-						<div class="modal fade" id="detailPendaftaranModal" tabindex="-1" aria-labelledby="detailPendaftaranLabel" aria-hidden="true">
-							<div class="modal-dialog modal-dialog-centered modal-md">
-								<div class="modal-content">
-									<!--begin::Header-->
-									<div class="modal-header">
-										<h5 class="modal-title" id="detailPendaftaranLabel">Detail Status Pendaftaran</h5>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-									</div>
-									<!--end::Header-->
+							<!--end::Timeline Widget-->
 
-									<!--begin::Body-->
-									<div class="modal-body">
-										<p><strong>Informasi:</strong> Hasil seleksi gelombang pertama telah diumumkan. Mahasiswa yang lolos seleksi dapat melanjutkan ke proses daftar ulang.</p>
-										<ul class="list-group mb-3">
-											<li class="list-group-item">Cek hasil seleksi melalui portal resmi.</li>
-											<li class="list-group-item">Gunakan ID pendaftaran dan tanggal lahir untuk login.</li>
-											<li class="list-group-item">Daftar ulang dibuka mulai 22 Juni 2025.</li>
-										</ul>
-										<a href="/myprofile" class="btn btn-sm btn-warning">Cek Hasil Sekarang</a>
-									</div>
-									<!--end::Body-->
-
-									<!--begin::Footer-->
-									<div class="modal-footer">
-										<button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
-									</div>
-									<!--end::Footer-->
-								</div>
-							</div>
+							<!--end::Row-->
 						</div>
-						<!--end::Modal-->
+						<!--end::Content-->
 					</div>
-					<!--end::Chart widget 28-->
+					<!--end::Content wrapper-->
+				</div>
+				<!--end::Col-->
+				<!--begin::Col-->
+				<div class="col-md-6 mb-5 mb-xl-6">
+					<!--begin::Header-->
+					<div class="card-header py-7">
+						<!--begin::Statistics-->
+						<div class="m-0">
+							<!--begin::Timeline Widget-->
+							<div class="card card-flush">
+								<!--begin::Header-->
+								<div class="card-header">
+									<h3 class="card-title">Detail Pendaftaran</h3>
+								</div>
+								<!--end::Header-->
+
+								<!--begin::Body-->
+								<div class="card-body">
+								</div>
+								<!--end::Body-->
+							</div>
+							<!--end::Timeline Widget-->
+
+							<!--end::Row-->
+						</div>
+						<!--end::Content-->
+					</div>
+					<!--end::Content wrapper-->
 				</div>
 				<!--end::Col-->
 			</div>
 			<!--end::Row-->
 		<?php else : ?>
+			<div class="row g-10">
+				<div class="card-header">
+					<h4 class="card-title text-center">Langkah - Langkah Pendaftaran</h4>
+				</div>
+				<div class="card-body">
+					<p>Langkah - Langkah Pendaftaran</p>
+				</div>
+			</div>
 			<div class="row g-10">
 				<div class="card-header">
 					<h4 class="card-title text-center">Program Studi</h4>

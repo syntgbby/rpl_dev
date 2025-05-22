@@ -11,7 +11,7 @@
             data-bs-target="#kt_account_profile_details" aria-expanded="true"
             aria-controls="kt_account_profile_details">
             <div class="card-title m-0">
-                <h3 class="fw-bold m-0">Step 4: Bukti Pendukung</h3>
+                <h3 class="fw-bold m-0">Data Bukti Pendukung</h3>
             </div>
         </div>
         <!--end::Card header-->

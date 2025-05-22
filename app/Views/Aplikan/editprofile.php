@@ -10,47 +10,41 @@
             data-bs-target="#kt_account_profile_details" aria-expanded="true"
             aria-controls="kt_account_profile_details">
             <div class="card-title m-0">
-                <h3 class="fw-bold m-0">Profile Details</h3>
+                <h3 class="fw-bold m-0">Detail Profile</h3>
             </div>
         </div>
         <!--end::Card header-->
         <!--begin::Content-->
         <div id="kt_account_settings_profile_details" class="collapse show">
+            <?php if (session()->getFlashdata('success')): ?>
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: '<?= session()->getFlashdata('success') ?>',
+                        confirmButtonColor: '#3085d6',
+                    });
+                </script>
+            <?php elseif (session()->getFlashdata('error')): ?>
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '<?= session()->getFlashdata('error') ?>',
+                        confirmButtonColor: '#d33',
+                    });
+                </script>
+            <?php endif; ?>
             <!--begin::Form-->
             <form id="frmProfile" class="form" action="<?= base_url('edit-profile') ?>" method="post" enctype="multipart/form-data">
                 <div class="card-body border-top p-9">
-                    <!--begin::Input group for pict-->
-                    <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label fw-semibold fs-6">Picture</label>
-                        <div class="col-lg-8">
-                            <div class="image-input image-input-outline" data-kt-image-input="true"
-                                style="background-image: url('<?= $get['pict'] ?? base_url('assets/media/svg/picts/blank.svg') ?>')">
-                                <div class="image-input-wrapper w-125px h-125px"
-                                    style="background-image: url('<?= $get['pict'] ?? base_url('assets/media/svg/picts/blank.svg') ?>')"></div>
-                                <label
-                                    class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change pict">
-                                    <i class="ki-outline ki-pencil fs-7"></i>
-                                    <input type="file" name="pict" id="pict" accept=".png, .jpg, .jpeg" />
-                                    <input type="hidden" name="pict_remove" />
-                                </label>
-                                <span
-                                    class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel pict">
-                                    <i class="ki-outline ki-cross fs-2"></i>
-                                </span>
-                            </div>
-                            <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
-                        </div>
-                    </div>
-                    <!--end::Input group for pict-->
                     <!--begin::Input group for Full Name-->
                     <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Full Name</label>
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Nama Lengkap</label>
                         <div class="col-lg-8">
-                            <input type="text" name="name" required
+                            <input type="text" name="nama_lengkap" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Full Name" value="<?= $get['username'] ? $get['username'] : '' ?>" />
+                                placeholder="Full Name" value="<?= $get['nama_lengkap'] ? $get['nama_lengkap'] : '' ?>" />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -127,11 +121,11 @@
                 </div>
                 <!--begin::Actions-->
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard</button>
-                    <button type="submit" class="btn btn-primary" id="btnSave">Save Changes
+                    <button type="reset" class="btn btn-light btn-active-light-primary me-2">Batal</button>
+                    <button type="submit" class="btn btn-primary" id="btnSave">Simpan Perubahan
                         <span class="spinner-border spinner-border-sm align-middle ms-2" role="status"
                             aria-hidden="true" style="display: none;"></span>
-                        <span class="visually-hidden">Loading...</span>
+                        <span class="visually-hidden">Memuat...</span>
                     </button>
                 </div>
                 <!--end::Actions-->

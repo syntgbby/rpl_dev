@@ -296,7 +296,8 @@
                                 <span class="ms-5 position-absolute translate-middle-y top-50 end-0">
                                     <i class="ki-outline ki-night-day theme-light-show fs-2"></i>
                                     <i class="ki-outline ki-moon theme-dark-show fs-2"></i>
-                                </span></span>
+                                </span>
+                            </span>
                         </div>
                         <!--begin::Menu-->
                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-gray-500 menu-active-bg menu-state-color fw-semibold py-4 fs-base w-150px"
@@ -344,45 +345,28 @@
                     <div class="cursor-pointer symbol symbol-35px symbol-md-45px"
                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                         data-kt-menu-placement="bottom-end">
-                        <img class="symbol symbol-circle symbol-35px symbol-md-45px" src="<?= $user['pict'] ?? base_url('assets/media/avatars/300-1.jpg') ?>"
-                            alt="user" style="object-fit: cover;" />
+                        <?php if ($user['role'] == 'aplikan') { ?>
+                            <img class="symbol symbol-circle symbol-35px symbol-md-45px" src="<?= base_url('assets/media/avatars/300-2.jpg') ?>"
+                                alt="user" style="object-fit: cover;" />
+                        <?php } else if ($user['role'] == 'asesor') { ?>
+                            <img class="symbol symbol-circle symbol-35px symbol-md-45px" src="<?= base_url('assets/media/avatars/300-1.jpg') ?>"
+                                alt="user" style="object-fit: cover;" />
+                        <?php } else { ?>
+                            <img class="symbol symbol-circle symbol-35px symbol-md-45px" src="<?= base_url('assets/media/avatars/300-3.jpg') ?>"
+                                alt="user" style="object-fit: cover;" />
+                        <?php } ?>
                     </div>
                     <!--begin::User account menu-->
                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
                         data-kt-menu="true">
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-3">
-                            <div class="menu-content d-flex align-items-center px-3">
-                                <!--begin::Username-->
-                                <div class="d-flex flex-column">
-                                    <div class="fw-bold d-flex align-items-center fs-5">
-                                        <?= $user['name'] ?>
-                                        <?php if ($user['role'] == 'asesor') {
-                                            $badge = 'success';
-                                        } else if ($user['role'] == 'admin') {
-                                            $badge = 'primary';
-                                        } else {
-                                            $badge = 'secondary';
-                                        } ?>
-                                        <span class="badge badge-light-<?= $badge ?> fw-bold fs-8 px-2 py-1 ms-2"><?= strtoupper($user['role']) ?></span>
-                                    </div>
-                                    <div class="text-muted text-hover-primary fs-7">
-                                        <?= $user['email'] ?>
-                                    </div>
-                                </div>
-                                <!--end::Username-->
-                            </div>
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu separator-->
-                        <div class="separator my-2"></div>
-                        <!--end::Menu separator-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-5">
-                            <a href="<?= base_url('editprofile') ?>" class="menu-link px-5">My
+                        <?php if ($user['role'] == 'aplikan' && $user['role'] == 'asesor') { ?>
+                            <!--begin::Menu item-->
+                            <div class="menu-item px-5">
+                                <a href="<?= base_url('editprofile') ?>" class="menu-link px-5">My
                                 Profile</a>
-                        </div>
-                        <!--end::Menu item-->
+                            </div>
+                            <!--end::Menu item-->
+                        <?php } ?>
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
                             <a href="<?= base_url('logout') ?>" class="menu-link px-5">Sign Out</a>

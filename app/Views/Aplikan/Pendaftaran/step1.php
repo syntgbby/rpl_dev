@@ -26,7 +26,7 @@
                         <div class="col-lg-8">
                             <input type="text" name="nama_lengkap" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Nama Lengkap" value="<?= $data['username'] ?>" />
+                                placeholder="Nama Lengkap" value="<?= $data['nama_lengkap'] ?>" readonly />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -46,7 +46,7 @@
                         <div class="col-lg-8">
                             <textarea name="alamat" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Alamat Rumah"></textarea>
+                                placeholder="Alamat Rumah" value="<?= $data['alamat'] ?>"><?= $data['alamat'] ?></textarea>
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -89,7 +89,7 @@
                                 >
                                 <option value="">Pilih Program Studi</option>
                                 <?php foreach ($prodi as $p): ?>
-                                    <option value="<?= $p['id'] ?>"><?= $p['nama_prodi'] ?></option>
+                                    <option value="<?= $data['prodi_id'] ?>" <?= ($data['prodi_id'] == $p['id']) ? 'selected' : '' ?>><?= $p['nama_prodi'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -99,10 +99,10 @@
                 <!--begin::Actions-->
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
                     <button type="cancel" class="btn btn-light btn-active-light-primary me-2" onclick="window.location.href='<?= base_url('dashboard') ?>'">Batal</button>
-                    <button type="submit" class="btn btn-primary" id="btnSave">Submit
+                    <button type="submit" class="btn btn-primary" id="btnSave">Simpan Biodata Diri
                         <span class="spinner-border spinner-border-sm align-middle ms-2" role="status"
                             aria-hidden="true" style="display: none;"></span>
-                        <span class="visually-hidden">Loading...</span>
+                        <span class="visually-hidden">Memuat...</span>
                     </button>
                 </div>
                 <!--end::Actions-->

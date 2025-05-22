@@ -2,13 +2,9 @@
 
 namespace App\Controllers\Asesor;
 
-use App\Models\View\ViewDataPendaftaran;
-use App\Models\View\ViewKurikulum;
-use App\Models\UserModel;
+use App\Models\View\{ViewDataPendaftaran, ViewKurikulum};
+use App\Models\{UserModel, KurikulumModel, PelatihanModel, PendaftaranModel, TahunAjarModel};
 use App\Controllers\BaseController;
-use App\Models\KurikulumModel;
-use App\Models\PendaftaranModel;
-use App\Models\TahunAjarModel;
 
 class DataPendaftaranController extends BaseController
 {
@@ -24,7 +20,7 @@ class DataPendaftaranController extends BaseController
             return redirect()->to('/asesor/login')->with('error', 'Anda tidak memiliki akses ke halaman ini');
         } else {
             $model = new ViewDataPendaftaran();
-            $dtPendaftaran = $model->where('asesor_id', $asesor['id'])->where('status', 'submitted')->findAll();
+            $dtPendaftaran = $model->where('asesor_id', $asesor['id'])->where('status', 'done')->findAll();
 
             if ($dtPendaftaran) {
                 $data['dtpendaftaran'] = $dtPendaftaran;
@@ -39,7 +35,9 @@ class DataPendaftaranController extends BaseController
     public function viewDetail($id)
     {
         $model = new ViewDataPendaftaran();
+        $modelPelatihan = new PelatihanModel();
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
+        $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $id)->findAll();
         return $this->render('Asesor/DataPendaftaran/view-detail', $data);
     }
 

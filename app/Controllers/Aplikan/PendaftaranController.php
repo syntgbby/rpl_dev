@@ -2,15 +2,7 @@
 
 namespace App\Controllers\Aplikan;
 
-use App\Models\PendaftaranModel;
-use App\Models\PelatihanModel;
-use App\Models\PengalamanKerjaModel;
-use App\Models\BuktiPendukungModel;
-use App\Models\TimelineModel;
-use App\Models\ProdiModel;
-use App\Models\UserModel;
-use App\Models\TahunAjarModel;
-use App\Models\KonfirmasiStepModel;
+use App\Models\{PendaftaranModel, PelatihanModel, PengalamanKerjaModel, BuktiPendukungModel, TimelineModel, ProdiModel, DetailAplikanModel, TahunAjarModel, KonfirmasiStepModel};
 use App\Controllers\BaseController;
 
 helper('text');
@@ -19,7 +11,7 @@ class PendaftaranController extends BaseController
 {
     protected $pendaftaranModel;
     protected $pelatihanModel;
-    protected $userModel;
+    protected $detailAplikanModel;
     protected $pengalamanKerjaModel;
     protected $buktiPendukungModel;
     protected $timelineModel;
@@ -31,7 +23,7 @@ class PendaftaranController extends BaseController
     {
         $this->pendaftaranModel = new PendaftaranModel();
         $this->pelatihanModel = new PelatihanModel();
-        $this->userModel = new UserModel();
+        $this->detailAplikanModel = new DetailAplikanModel();
         $this->pengalamanKerjaModel = new PengalamanKerjaModel();
         $this->buktiPendukungModel = new BuktiPendukungModel();
         $this->timelineModel = new TimelineModel();
@@ -49,8 +41,8 @@ class PendaftaranController extends BaseController
     {
         $email = session()->get('email'); // pastikan user sudah login
 
-        $dataUser = $this->userModel->where('email', $email)->first();
-        $prodi = $this->prodiModel->where('id !=', 1)->findAll();
+        $dataUser = $this->detailAplikanModel->where('email', $email)->first();
+        $prodi = $this->prodiModel->where('type', '1')->findAll();
 
         return $this->render('aplikan/pendaftaran/step1', ['data' => $dataUser, 'prodi' => $prodi]);
     }
@@ -60,10 +52,12 @@ class PendaftaranController extends BaseController
         $email = session()->get('email');
         $tahunAngkatan = date('Y');
         $formatTahun = date('Ym');
+        $tanggalLahir = $this->request->getPost('tanggal_lahir');
+        $formatTanggalLahir = date('ym', strtotime($tanggalLahir));
+        $tahunAjar = $this->tahunAjarModel->where('status', 'Y')->first();
+        $pendaftaranId = 'FRPL' . $formatTahun . random_string('numeric', 2) . $formatTanggalLahir;
 
-        $pendaftaranId = 'FRPL' . $formatTahun . random_string('numeric', 2);
-
-        $getUser = $this->userModel->where('email', $email)->first();
+        $getUser = $this->detailAplikanModel->where('email', $email)->first();
 
         $checkPendaftaran = $this->pendaftaranModel->where('email', $email)->first();
 
@@ -71,13 +65,12 @@ class PendaftaranController extends BaseController
             return redirect()->to('/aplikan/pendaftaran')->with('error', 'Anda sudah melakukan pendaftaran!');
         }
 
-        $tahunAjar = $this->tahunAjarModel->where('status', 'Y')->first();
 
         $data = [
             'pendaftaran_id' => $pendaftaranId,
             'tahun_angkatan' => $tahunAngkatan,
             'tahun_ajar_id' => $tahunAjar['id'],
-            'nama_lengkap' => $getUser['username'],
+            'nama_lengkap' => $getUser['nama_lengkap'],
             'nik' => $this->request->getPost('nik'),
             'program_study_id' => $this->request->getPost('program_studi'),
             'tempat_lahir' => $this->request->getPost('tempat_lahir'),
@@ -114,7 +107,7 @@ class PendaftaranController extends BaseController
 
         $this->konfirmasiStepModel->insertBatch($data_konfirmasi_step);
 
-        return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Pendaftaran RPL berhasil!');
+        return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Submit Biodata Diri berhasil!');
     }
 
     public function step2()
@@ -141,11 +134,6 @@ class PendaftaranController extends BaseController
         $pendaftaran = $this->pendaftaranModel->where('email', $email)->first();
         $pendaftaranId = $pendaftaran['pendaftaran_id'];
 
-        $where = [
-            'pendaftaran_id' => $pendaftaranId,
-            'step' => $step,
-        ];
-
         $data_konfirmasi_step = [
             'status' => 'Y',
         ];
@@ -158,26 +146,27 @@ class PendaftaranController extends BaseController
 
         $data_timeline = [
             'pendaftaran_id' => $pendaftaranId,
-            'icon' => 'ki-outline ki-check-warning fs-2 text-warning',
+            'icon' => 'ki-outline ki-minus-folder fs-2 text-warning',
             'status' => 'Konfirmasi ' . $langkah,
             'keterangan' => 'Konfirmasi pengisian data ' . $langkah,
         ];
 
-        $this->konfirmasiStepModel->update($where, $data_konfirmasi_step);
+        $this->konfirmasiStepModel->updateKonfirmasiStep($pendaftaranId, $step, $data_konfirmasi_step);
         $this->timelineModel->insert($data_timeline);
 
         if ($step == 'step2') {
             return redirect()->to('/aplikan/pendaftaran/step2');
         } else {
-            return redirect()->to('/aplikan/pendaftaran/step4');
+            return redirect()->to('/aplikan/pendaftaran/step3');
         }
     }
 
     public function saveStep2()
     {
         $email = session()->get('email');
+        $detailAplikan = $this->detailAplikanModel->where('email', $email)->first();
+        $nama = $detailAplikan['nama_lengkap'];
 
-        $nama = session()->get('name');
         $formatNama = str_replace(' ', '-', $nama);
 
         // Update validasi untuk hanya menerima PDF, JPG, JPEG, PNG
