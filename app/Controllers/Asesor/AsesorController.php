@@ -48,11 +48,19 @@ class AsesorController extends Controller
             $dtemail = $pendaftaranModel->where('pendaftaran_id', $pendaftaranId)->first();
             $email = $dtemail['email'];
 
-            $attributes = [
-                'to' => $email,
-                'subject' => 'Status Pendaftaran RPL ' . $dtemail['nama_lengkap'],
-                'message' => 'RPL anda telah berhasil di ' . $status . '!'
-            ];
+            if ($status == 'approved') {
+                $attributes = [
+                    'to' => $email,
+                    'subject' => 'Status Pendaftaran RPL ' . $dtemail['nama_lengkap'],
+                    'message' => 'RPL anda telah berhasil di ' . $status . '!'
+                ];
+            } else {
+                $attributes = [
+                    'to' => $email,
+                    'subject' => 'Status Pendaftaran RPL ' . $dtemail['nama_lengkap'],
+                    'message' => 'Maaf, RPL anda telah di ' . $status . '!'
+                ];
+            }
 
             kirimEmail($attributes);
 

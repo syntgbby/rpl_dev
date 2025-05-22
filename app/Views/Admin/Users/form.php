@@ -24,8 +24,7 @@
                     </div>
                     <?php endif; ?>
                     <div class="row">
-                        <?php if ($dtuser['role'] == 'asesor'): ?>
-                        <div class="col-md-12">
+                        <div class="col-md-12" id="namaLengkapField" style="display: none;">
                             <div class="fv-row mb-8">
                                 <div class="row align-items-center">
                                     <div class="col-md-5">
@@ -38,7 +37,6 @@
                                 </div>
                             </div>
                         </div>
-                        <?php endif; ?>
                         <div class="col-md-12">
                             <div class="fv-row mb-8">
                                 <div class="row align-items-center">
@@ -97,7 +95,7 @@
                                     </div>
                                     <div class="col-md-7">
                                         <!--begin::Input-->
-                                        <select name="role"
+                                        <select name="role" id="role"
                                             class="form-select form-select-md form-select-solid text-sm h-40px"
                                             data-control="select2">
                                             <option value="admin" <?= (isset($dtuser) && $dtuser['role'] == 'admin') ? 'selected' : '' ?>>
@@ -221,6 +219,21 @@
 <?php endif; ?>
 <script>
     $(document).ready(function() {
+        // Tampilkan nama_lengkap jika role asesor dipilih saat halaman dimuat
+        if ($('#role').val() === 'asesor') {
+            $('#namaLengkapField').show();
+        }
+
+        // Event handler untuk perubahan role
+        $('#role').on('change', function() {
+            if ($(this).val() === 'asesor') {
+                $('#namaLengkapField').show();
+            } else {
+                $('#namaLengkapField').hide();
+                $('#nama_lengkap').val(''); // Reset nilai nama_lengkap
+            }
+        });
+
         // Konfigurasi SweetAlert2
         const Toast = Swal.mixin({
             toast: true,
