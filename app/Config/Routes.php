@@ -136,7 +136,13 @@ $routes->group('asesor', ['namespace' => 'App\Controllers\Asesor', 'filter' => '
     $routes->get('approve-nilai', 'AsesorController::viewApprove');
 
     // Data Approved
-    $routes->get('data-approved', 'ApprovalController::index');
+    $routes->get('data-approved', 'DataApprovedController::index');
+    $routes->get('view-detail-approved/(:any)', 'DataApprovedController::viewDetail/$1');
+
+    // Data Not Approved
+    $routes->get('data-not-approved', 'DataNotApprovedController::index');
+    $routes->get('view-detail-not-approved/(:any)', 'DataNotApprovedController::viewDetail/$1');
+
 });
 
 $routes->get('unauthorized', function () {

@@ -188,24 +188,6 @@
                             <!--end:Menu sub-->
                         </div>
                         <!--end:Menu item-->
-
-                        <!--begin:Menu item-->
-                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-                            class="menu-item <?= (current_url() == base_url('admin/data-pendaftaran') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2"
-                            onclick="window.location.href='<?= base_url('admin/data-pendaftaran') ?>'">
-                            <!--begin:Menu link-->
-                            <span class="menu-link">
-                                <span class="menu-icon">
-                                    <i class="ki-duotone ki-teacher fs-2">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
-                                </span>
-                                <span class="menu-title">Assign Asesor</span>
-                            </span>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
                     <?php endif; ?>
 
                     <!-- menu asesor -->
@@ -236,7 +218,7 @@
                                             </i>
                                         </span>
                                         <span class="menu-title">
-                                            Data Not Approved
+                                            Belum Di Approve
                                         </span>
                                     </span>
                                     <!--end:Menu link-->
@@ -253,7 +235,25 @@
                                             <i class="ki-duotone ki-users"></i>
                                         </span>
                                         <span class="menu-title">
-                                            Data Approved
+                                            Sudah Di Approve
+                                        </span>
+                                        <!-- <span class="menu-arrow"></span> -->
+                                    </span>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('asesor/data-not-approved') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('asesor/data-not-approved') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-users"></i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Sudah Di Tolak
                                         </span>
                                         <!-- <span class="menu-arrow"></span> -->
                                     </span>
@@ -288,6 +288,12 @@
                             onclick="window.location.href='<?= base_url('kaprodi/kurikulum') ?>'">
                             <!--begin:Menu link-->
                             <span class="menu-link">
+                                <span class="menu-icon">
+                                    <i class="ki-duotone ki-questionnaire-tablet fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                </span>
                                 <span class="menu-title">Kurikulum</span>
                             </span>
                             <!--end:Menu link-->
@@ -299,6 +305,12 @@
                             onclick="window.location.href='<?= base_url('kaprodi/data-pendaftaran') ?>'">
                             <!--begin:Menu link-->
                             <span class="menu-link">
+                                <span class="menu-icon">
+                                    <i class="ki-duotone ki-teacher fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                </span>
                                 <span class="menu-title">Assign Asessor</span>
                             </span>
                             <!--end:Menu link-->

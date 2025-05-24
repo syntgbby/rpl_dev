@@ -40,39 +40,6 @@
 </div>
 
 <!-- Kolom Kanan - Informasi Pendaftaran & File -->
-<!-- Informasi Pendaftaran -->
-<div class="bg-light p-3 rounded mb-4">
-    <h5 class="text-dark mb-3 border-bottom pb-2">Informasi Pendaftaran</h5>
-    <div class="row g-3">
-        <div class="col-12">
-            <label class="text-muted d-block small">Skema Sertifikasi</label>
-            <span class="fw-bold d-block"><?= $dtpendaftaran['skema_sertifikasi'] ?? '-' ?></span>
-        </div>
-        <div class="col-12">
-            <label class="text-muted d-block small">TUK</label>
-            <span class="fw-bold d-block"><?= $dtpendaftaran['tuk'] ?? '-' ?></span>
-        </div>
-        <div class="col-12">
-            <label class="text-muted d-block small">Tanggal Pendaftaran</label>
-            <span class="fw-bold d-block"><?= $dtpendaftaran['tanggal_pendaftaran'] ?? '-' ?></span>
-        </div>
-        <div class="col-12">
-            <label class="text-muted d-block small">Status</label>
-            <?php if (isset($dtpendaftaran['status_pendaftaran'])): ?>
-                <?php if ($dtpendaftaran['status_pendaftaran'] == 'pending'): ?>
-                    <span class="badge bg-warning">Pending</span>
-                <?php elseif ($dtpendaftaran['status_pendaftaran'] == 'approved'): ?>
-                    <span class="badge bg-success">Disetujui</span>
-                <?php elseif ($dtpendaftaran['status_pendaftaran'] == 'rejected'): ?>
-                    <span class="badge bg-danger">Ditolak</span>
-                <?php endif; ?>
-            <?php else: ?>
-                <span class="text-muted">-</span>
-            <?php endif; ?>
-        </div>
-    </div>
-</div>
-
 <!-- File Bukti -->
 <div class="bg-light p-3 rounded">
     <h5 class="text-dark mb-3 border-bottom pb-2">File Bukti</h5>
@@ -139,14 +106,12 @@
     </div>
 </div>
 
-<div class="d-flex gap-2 mt-3 justify-content-end">
-    <?php // if (($dtpendaftaran['status'] ?? '') == 'submitted'): ?>
-    <a href="<?= base_url('asesor/approve-pendaftaran/' . ($dtpendaftaran['pendaftaran_id'] ?? '')) ?>"
-        class="btn btn-success btn-sm">
-        <i class="fas fa-check"></i> Approve
-    </a>
-    <?php // endif; ?>
-    <a href="<?= base_url('asesor/pendaftaran') ?>" class="btn btn-secondary btn-sm">
-        <i class="fas fa-times"></i> Close
-    </a>
-</div>
+<?php if ($dtpendaftaran['status'] == 'rejected'): ?>
+    <div class="bg-light p-3 rounded">
+        <h5 class="text-dark mb-3 border-bottom pb-2">Alasan Penolakan</h5>
+
+        <div class="col-12">
+            <span class="fw-bold d-block text-danger"><?= $dtpendaftaran['alasan_penolakan'] ?></span>
+        </div>
+    </div>
+<?php endif; ?>

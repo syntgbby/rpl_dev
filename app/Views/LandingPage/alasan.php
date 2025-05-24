@@ -3,9 +3,10 @@
     <!--begin::Container-->
     <div class="container">
         <!--begin::Heading-->
-        <div class="text-center mt-15 mb-18" id="flow" data-kt-scroll-offset="{default: 100, lg: 150}">
+        <div class="text-center mt-15 mb-18" id="alasan" data-kt-scroll-offset="{default: 100, lg: 150}">
             <!--begin::Title-->
-            <h3 class="fs-2hx text-white fw-bold mb-5">6 Alasan mengapa kita harus mengikuti rekognisi pembelajaran lampau</h3>
+            <h3 class="fs-2hx text-white fw-bold mb-5">6 Alasan mengapa kita harus mengikuti rekognisi pembelajaran
+                lampau</h3>
             <!--end::Title-->
         </div>
         <!--end::Heading-->
@@ -17,9 +18,12 @@
                 <!--begin::Publications post-->
                 <div class="card-xl-stretch me-md-6">
                     <!--begin::Overlay-->
-                    <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales" href="<?= base_url('assets/media/stock/600x400/img-73.jpg') ?>">
+                    <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales"
+                        href="<?= base_url('assets/media/stock/600x400/img-73.jpg') ?>">
                         <!--begin::Image-->
-                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url('<?= base_url('assets/media/stock/600x400/work-2.jpg') ?>')"></div>
+                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
+                            style="background-image:url('<?= base_url('assets/media/stock/600x400/work-2.jpg') ?>')">
+                        </div>
                         <!--end::Image-->
                         <!--begin::Action-->
                         <div class="overlay-layer bg-dark card-rounded bg-opacity-25">
@@ -32,12 +36,15 @@
                     <div class="m-0">
                         <div class="mb-5 text-center">
                             <!--begin::Title-->
-                            <a href="pages/user-profile/overview.html" class="fs-4 text-white fw-bold text-hover-primary text-white lh-base">Pengakuan atas Pengalaman dan Pembelajaran Sebelumnya</a>
+                            <a href="pages/user-profile/overview.html"
+                                class="fs-4 text-white fw-bold text-hover-primary text-white lh-base">Pengakuan atas
+                                Pengalaman dan Pembelajaran Sebelumnya</a>
                             <!--end::Title-->
                         </div>
                         <div class="mb-5">
                             <!--begin::Text-->
-                            <p class="mb-8 text-white text-justify">RPL memungkinkan kamu untuk mendapatkan pengakuan resmi atas keterampilan, pengetahuan, dan pengalaman kerja yang sudah dimiliki.</p>
+                            <p class="mb-8 text-white text-justify">RPL memungkinkan kamu untuk mendapatkan pengakuan
+                                resmi atas keterampilan, pengetahuan, dan pengalaman kerja yang sudah dimiliki.</p>
                             <!--end::Text-->
                         </div>
                         <!--begin::Content-->
@@ -55,9 +62,12 @@
                 <!--begin::Publications post-->
                 <div class="card-xl-stretch mx-md-3">
                     <!--begin::Overlay-->
-                    <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales" href="assets/media/stock/600x400/img-74.jpg">
+                    <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales"
+                        href="assets/media/stock/600x400/img-74.jpg">
                         <!--begin::Image-->
-                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url('<?= base_url('assets/media/stock/600x400/work-3.jpg') ?>')"></div>
+                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
+                            style="background-image:url('<?= base_url('assets/media/stock/600x400/work-3.jpg') ?>')">
+                        </div>
                         <!--end::Image-->
                         <!--begin::Action-->
                         <div class="overlay-layer bg-dark card-rounded bg-opacity-25">
@@ -70,12 +80,16 @@
                     <div class="m-0">
                         <div class="mb-5 text-center">
                             <!--begin::Title-->
-                            <a href="pages/user-profile/overview.html" class="fs-4 text-white fw-bold text-hover-primary text-white lh-base">Hemat Waktu dan Biaya Studi</a>
+                            <a href="pages/user-profile/overview.html"
+                                class="fs-4 text-white fw-bold text-hover-primary text-white lh-base">Hemat Waktu dan
+                                Biaya Studi</a>
                             <!--end::Title-->
                         </div>
                         <div class="mb-5">
                             <!--begin::Text-->
-                            <p class="mb-8 text-white text-justify">Dengan RPL, kamu bisa melewati beberapa mata kuliah yang sudah kamu kuasai, sehingga masa studi jadi lebih singkat dan biaya pun lebih rendah.</p>
+                            <p class="mb-8 text-white text-justify">Dengan RPL, kamu bisa melewati beberapa mata kuliah
+                                yang sudah kamu kuasai, sehingga masa studi jadi lebih singkat dan biaya pun lebih
+                                rendah.</p>
                             <!--end::Text-->
                         </div>
                         <!--begin::Content-->
@@ -93,9 +107,12 @@
                 <!--begin::Publications post-->
                 <div class="card-xl-stretch ms-md-6">
                     <!--begin::Overlay-->
-                    <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales" href="assets/media/stock/600x400/img-47.jpg">
+                    <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales"
+                        href="assets/media/stock/600x400/img-47.jpg">
                         <!--begin::Image-->
-                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url('<?= base_url('assets/media/stock/600x400/work-4.jpg') ?>')"></div>
+                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
+                            style="background-image:url('<?= base_url('assets/media/stock/600x400/work-4.jpg') ?>')">
+                        </div>
                         <!--end::Image-->
                         <!--begin::Action-->
                         <div class="overlay-layer bg-dark card-rounded bg-opacity-25">
@@ -108,12 +125,16 @@
                     <div class="m-0">
                         <div class="mb-5 text-center">
                             <!--begin::Title-->
-                            <a href="pages/user-profile/overview.html" class="fs-4 text-white fw-bold text-hover-primary text-white lh-base">Meningkatkan Kualifikasi Akademik Tanpa Mengulang</a>
+                            <a href="pages/user-profile/overview.html"
+                                class="fs-4 text-white fw-bold text-hover-primary text-white lh-base">Meningkatkan
+                                Kualifikasi Akademik Tanpa Mengulang</a>
                             <!--end::Title-->
                         </div>
                         <div class="mb-5">
                             <!--begin::Text-->
-                            <p class="mb-8 text-white text-justify">Tidak perlu mengulang pelajaran yang sudah kamu kuasai di tempat kerja atau pelatihan informal. Kamu bisa langsung lanjut ke materi yang baru.</p>
+                            <p class="mb-8 text-white text-justify">Tidak perlu mengulang pelajaran yang sudah kamu
+                                kuasai di tempat kerja atau pelatihan informal. Kamu bisa langsung lanjut ke materi yang
+                                baru.</p>
                             <!--end::Text-->
                         </div>
                         <!--begin::Content-->
@@ -131,9 +152,11 @@
                 <!--begin::Publications post-->
                 <div class="card-xl-stretch me-md-6">
                     <!--begin::Overlay-->
-                    <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales" href="assets/media/stock/600x400/img-73.jpg">
+                    <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales"
+                        href="assets/media/stock/600x400/img-73.jpg">
                         <!--begin::Image-->
-                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url('assets/media/stock/600x400/work-5.jpg')"></div>
+                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
+                            style="background-image:url('assets/media/stock/600x400/work-5.jpg')"></div>
                         <!--end::Image-->
                         <!--begin::Action-->
                         <div class="overlay-layer bg-dark card-rounded bg-opacity-25">
@@ -146,12 +169,15 @@
                     <div class="m-0">
                         <div class="mb-5 text-center">
                             <!--begin::Title-->
-                            <a href="pages/user-profile/overview.html" class="fs-4 text-white fw-bold text-hover-primary text-white lh-base">Akses Pendidikan Lebih Inklusif</a>
+                            <a href="pages/user-profile/overview.html"
+                                class="fs-4 text-white fw-bold text-hover-primary text-white lh-base">Akses Pendidikan
+                                Lebih Inklusif</a>
                             <!--end::Title-->
                         </div>
                         <div class="mb-5">
                             <!--begin::Text-->
-                            <p class="mb-8 text-white text-justify">Dengan gelar atau sertifikasi resmi dari hasil RPL, kamu bisa lebih unggul dalam pencarian kerja atau kenaikan jabata.</p>
+                            <p class="mb-8 text-white text-justify">Dengan gelar atau sertifikasi resmi dari hasil RPL,
+                                kamu bisa lebih unggul dalam pencarian kerja atau kenaikan jabata.</p>
                             <!--end::Text-->
                         </div>
                         <!--begin::Content-->
@@ -169,9 +195,11 @@
                 <!--begin::Publications post-->
                 <div class="card-xl-stretch mx-md-3">
                     <!--begin::Overlay-->
-                    <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales" href="assets/media/stock/600x400/img-74.jpg">
+                    <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales"
+                        href="assets/media/stock/600x400/img-74.jpg">
                         <!--begin::Image-->
-                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url('assets/media/stock/600x400/work-6.jpg')"></div>
+                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
+                            style="background-image:url('assets/media/stock/600x400/work-6.jpg')"></div>
                         <!--end::Image-->
                         <!--begin::Action-->
                         <div class="overlay-layer bg-dark card-rounded bg-opacity-25">
@@ -184,12 +212,15 @@
                     <div class="m-0">
                         <div class="mb-5 text-center">
                             <!--begin::Title-->
-                            <a href="pages/user-profile/overview.html" class="fs-4 text-white fw-bold text-hover-primary text-white lh-base">Meningkatkan Daya Saing di Dunia Kerja</a>
+                            <a href="pages/user-profile/overview.html"
+                                class="fs-4 text-white fw-bold text-hover-primary text-white lh-base">Meningkatkan Daya
+                                Saing di Dunia Kerja</a>
                             <!--end::Title-->
                         </div>
                         <div class="mb-5">
                             <!--begin::Text-->
-                            <p class="mb-8 text-white text-justify">RPL mendukung budaya belajar seumur hidup, di mana setiap pengalaman berharga bisa diakui dan dimanfaatkan untuk pengembangan diri.</p>
+                            <p class="mb-8 text-white text-justify">RPL mendukung budaya belajar seumur hidup, di mana
+                                setiap pengalaman berharga bisa diakui dan dimanfaatkan untuk pengembangan diri.</p>
                             <!--end::Text-->
                         </div>
                         <!--begin::Content-->
@@ -207,9 +238,11 @@
                 <!--begin::Publications post-->
                 <div class="card-xl-stretch ms-md-6">
                     <!--begin::Overlay-->
-                    <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales" href="assets/media/stock/600x400/img-47.jpg">
+                    <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales"
+                        href="assets/media/stock/600x400/img-47.jpg">
                         <!--begin::Image-->
-                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url('assets/media/stock/600x400/work-7.jpg')"></div>
+                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
+                            style="background-image:url('assets/media/stock/600x400/work-7.jpg')"></div>
                         <!--end::Image-->
                         <!--begin::Action-->
                         <div class="overlay-layer bg-dark card-rounded bg-opacity-25">
@@ -222,12 +255,16 @@
                     <div class="m-0">
                         <div class="mb-5 text-center">
                             <!--begin::Title-->
-                            <a href="pages/user-profile/overview.html" class="fs-4 text-white fw-bold text-hover-primary text-white lh-base">Mendorong Pembelajaran Sepanjang Hayat (Lifelong Learning)</a>
+                            <a href="pages/user-profile/overview.html"
+                                class="fs-4 text-white fw-bold text-hover-primary text-white lh-base">Mendorong
+                                Pembelajaran Sepanjang Hayat (Lifelong Learning)</a>
                             <!--end::Title-->
                         </div>
                         <div class="mb-5">
                             <!--begin::Text-->
-                            <p class="mb-8 text-white text-justify">Tidak perlu mengulang pelajaran yang sudah kamu kuasai di tempat kerja atau pelatihan informal. Kamu bisa langsung lanjut ke materi yang baru.</p>
+                            <p class="mb-8 text-white text-justify">Tidak perlu mengulang pelajaran yang sudah kamu
+                                kuasai di tempat kerja atau pelatihan informal. Kamu bisa langsung lanjut ke materi yang
+                                baru.</p>
                             <!--end::Text-->
                         </div>
                         <!--begin::Content-->

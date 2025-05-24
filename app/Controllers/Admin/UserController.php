@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\{UserModel, PendaftaranModel, BuktiPendukungModel, KonfirmasiStepModel, PelatihanModel, PengalamanKerjaModel, TimelineModel, DetailAsesorModel};
+use App\Models\{UserModel, DetailAplikanModel, PendaftaranModel, BuktiPendukungModel, KonfirmasiStepModel, PelatihanModel, PengalamanKerjaModel, TimelineModel};
 use App\Controllers\BaseController;
 
 class UserController extends BaseController
@@ -23,11 +23,11 @@ class UserController extends BaseController
     public function store()
     {
         $model = new UserModel();
-        $modelDetailAsesor = new DetailAsesorModel();
 
         $datas = $this->request->getPost();
 
         $email = strtolower($datas['email']);
+        $nama_lengkap = strtolower($datas['nama_lengkap']);
         $passHash = strtoupper(md5(strtoupper(md5($email)) . 'P@ssw0rd' . $datas['password']));
         $role = $datas['role'];
         $status = $datas['status'];
@@ -37,28 +37,13 @@ class UserController extends BaseController
         if ($checkEmail) {
             return redirect()->to('/admin/users/create')->with('error', 'Email sudah terdaftar!');
         } else {
-            if ($role == 'asesor') {
-                $username = ucwords($datas['nama_lengkap']);
-
-                $data = [
-                    'email' => $email,
-                    'password' => $passHash,
-                    'role' => $role,
-                    'status' => $status,
-                ];
-
-                $modelDetailAsesor->insert([
-                    'email' => $email,
-                    'nama_lengkap' => $username,
-                ]);
-            } else {
-                $data = [
-                    'email' => $email,
-                    'password' => $passHash,
-                    'role' => $role,
-                    'status' => $status,
-                ];
-            }
+            $data = [
+                'email' => $email,
+                'nama_lengkap' => $nama_lengkap,
+                'password' => $passHash,
+                'role' => $role,
+                'status' => $status,
+            ];
 
             $insert = $model->save($data);
 
@@ -73,10 +58,8 @@ class UserController extends BaseController
     public function edit($id)
     {
         $model = new UserModel();
-        $modelDetailAsesor = new DetailAsesorModel();
 
         $data['dtuser'] = $model->find($id);
-        $data['dtasesor'] = $modelDetailAsesor->where('email', $data['dtuser']['email'])->first();
 
         return $this->render('Admin/Users/form', $data);
     }
@@ -84,23 +67,19 @@ class UserController extends BaseController
     public function update($id)
     {
         $model = new UserModel();
-        $modelDetailAsesor = new DetailAsesorModel();
         $datas = $this->request->getPost();
 
+        $nama_lengkap = $datas['nama_lengkap'];
         $email = strtolower($datas['email']);
         $role = $datas['role'];
         $status = $datas['status'];
 
         $data = [
             'email' => $email,
+            'nama_lengkap' => $nama_lengkap,
             'role' => $role,
             'status' => $status,
         ];
-
-        if ($role == 'asesor') {
-            $nama = ucwords($datas['nama_lengkap']);
-            $modelDetailAsesor->updateAsesor($datas['email'], $nama);
-        }
 
         $update = $model->update($id, $data);
 
@@ -114,6 +93,7 @@ class UserController extends BaseController
     public function delete($id)
     {
         $model = new UserModel();
+        $modelDetailAplikan = new DetailAplikanModel();
         $modelPendaftaran = new PendaftaranModel();
         $modelBuktiPendukung = new BuktiPendukungModel();
         $modelKonfirmasiStep = new KonfirmasiStepModel();
@@ -132,6 +112,7 @@ class UserController extends BaseController
             $modelPengalamanKerja->where('pendaftaran_id', $idPendaftaran)->delete();
             $modelTimeline->where('pendaftaran_id', $idPendaftaran)->delete();
             $modelPendaftaran->delete($idPendaftaran);
+            $modelDetailAplikan->where('email', $email)->delete();
             $delete = $model->delete($id);
         } else {
             $delete = $model->delete($id);

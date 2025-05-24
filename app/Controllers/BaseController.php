@@ -73,7 +73,7 @@ abstract class BaseController extends Controller
     public function getUser()
     {
         $session = \config\Services::session();
-        $name = $session->get('name');
+        $name = $session->get('nama_lengkap');
         $email = $session->get('email');
         $role = $session->get('role');
         $pict = $session->get('pict');

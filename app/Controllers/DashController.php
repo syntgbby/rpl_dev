@@ -7,6 +7,8 @@ use App\Models\AplikanModel;
 use App\Models\ProdiModel;
 use App\Models\PendaftaranModel;
 use App\Models\TimelineModel;
+use App\Models\View\ViewDataPendaftaran;
+use CodeIgniter\Database\RawSql;
 
 class DashController extends BaseController
 {
@@ -15,6 +17,7 @@ class DashController extends BaseController
     protected $prodiModel;
     protected $pendaftaranModel;
     protected $timelineModel;
+    protected $viewPendaftaran;
 
     public function __construct()
     {
@@ -23,6 +26,7 @@ class DashController extends BaseController
         $this->prodiModel = new ProdiModel();
         $this->pendaftaranModel = new PendaftaranModel();
         $this->timelineModel = new TimelineModel();
+        $this->viewPendaftaran = new ViewDataPendaftaran();
     }
 
     public function index()
@@ -55,7 +59,7 @@ class DashController extends BaseController
                 'title' => 'Dashboard',
                 'user' => $this->userModel->getUser(),
                 'dataUser' => $user,
-                'prodi' => $this->prodiModel->where('type =', 1)->findAll(),
+                'prodi' => $this->prodiModel->findAll(),
                 'aplikan' => $this->userModel->getAplikanByRole('aplikan'),
                 'pendaftaran' => $pendaftaran,
                 'timeline' => $timeline
@@ -81,7 +85,7 @@ class DashController extends BaseController
                 'title' => 'Dashboard',
                 'user' => $this->userModel->getUser(),
                 'dataUser' => $user,
-                'prodi' => $this->prodiModel->where('type =', 1)->findAll(),
+                'prodi' => $this->prodiModel->findAll(),
                 'aplikan' => $this->userModel->getAplikanByRole('aplikan'),
                 'sdhMendaftar' => $getSdhMendaftar,
                 'totalAplikan' => $totalAplikan,
@@ -94,7 +98,7 @@ class DashController extends BaseController
                 ->where('status', 'y')
                 ->countAllResults();
 
-            $prodi = $this->prodiModel->where('type', '1')
+            $prodi = $this->prodiModel
                 ->countAllResults();
 
             $data_kaprodi = [
@@ -118,6 +122,10 @@ class DashController extends BaseController
                 'user' => $this->userModel->getUser(),
                 'dataUser' => $user,
                 'prodi' => $this->prodiModel->where('type =', 1)->findAll(),
+                'pendaftaran' => $this->pendaftaranModel->select('prodi.nama_prodi, pendaftaran_rpl.*')->join('prodi', 'prodi.id = pendaftaran_rpl.program_study_id', 'left')
+                    ->where('pendaftaran_rpl.created_at >=', new RawSql('DATE_SUB(NOW(), INTERVAL 60 DAY)'))
+                    ->orderBy('pendaftaran_rpl.created_at', 'desc')
+                    ->findAll(),
                 'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),
                 'asesor' => $asesor
             ];

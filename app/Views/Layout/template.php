@@ -16,6 +16,7 @@ License: For each use you must have a valid license purchased only from above li
 
 <head>
 	<base href="<?= base_url() ?>" />
+	<link rel="icon" href="<?= base_url('assets/media/logos/logoLP3I.png') ?>" type="image/png" />
 	<title>PLJ - KRAMAT</title>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 	<link href="<?= base_url('assets/plugins/global/plugins.bundle.css') ?>" rel="stylesheet" type="text/css" />
@@ -37,6 +38,9 @@ License: For each use you must have a valid license purchased only from above li
 	<script src="<?= base_url('assets/plugins/global/plugins.bundle.js') ?>"></script>
 	<!-- SweetAlert2 CSS -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.1/dist/sweetalert2.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 	<!-- SweetAlert2 JS -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.1/dist/sweetalert2.all.min.js"></script>
 
@@ -105,6 +109,9 @@ License: For each use you must have a valid license purchased only from above li
 	<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
 	<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
 	<script src="<?= base_url('assets/plugins/custom/datatables/datatables.bundle.js') ?>"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 	<!--end::Vendors Javascript-->
 
 	<!--begin::Custom Javascript(used for this page only)-->

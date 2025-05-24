@@ -12,7 +12,7 @@
             <div class="card-header border-0 pt-6">
                 <!--begin::Card title-->
                 <div class="card-title">
-                    <h1>Data Pendaftaran Disetujui</h1>
+                    <h1>Data Pendaftaran Ditolak</h1>
                 </div>
                 <!--begin::Card title-->
             </div>
@@ -46,7 +46,7 @@
                                             <?= $row['program_study'] ?>
                                         </td>
                                         <td class="text-center">
-                                            <span class="badge bg-success text-white">Disetujui</span>
+                                            <span class="badge bg-danger text-white">Ditolak</span>
                                         </td>
                                         <td class="text-center">
                                             <div class="d-flex align-items-center justify-content-center gap-2">
@@ -78,7 +78,7 @@
 <script>
     function btnViewDetail(id) {
         $('#modaltitle').html('View Detail');
-        $('#modalbody').load("<?= base_url('asesor/view-detail-approved/') ?>" + id);
+        $('#modalbody').load("<?= base_url('asesor/view-detail-not-approved/') ?>" + id);
         $('#modal').data('rowid', 0);
         $('#modal').modal('show');
     }

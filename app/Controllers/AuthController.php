@@ -12,7 +12,7 @@ class AuthController extends Controller
         $pertanyaanModel = new PertanyaanModel();
         $prodiModel = new ProdiModel();
         $data['pertanyaan'] = $pertanyaanModel->findAll();
-        $data['prodi'] = $prodiModel->where('type', '1')->findAll();
+        $data['prodi'] = $prodiModel->findAll();
 
         return view('Auth/register', $data);
     }
@@ -42,6 +42,7 @@ class AuthController extends Controller
         //save ke tabel users
         $users->save([
             'email' => $email,
+            'nama_lengkap' => $this->request->getPost('nama_lengkap'),
             'password' => $passHash,
             'role' => 'aplikan',
             'status' => 'Y',
@@ -50,7 +51,6 @@ class AuthController extends Controller
         //save ke tabel detail_aplikan
         $insertDetailAplikan = $detailAplikan->save([
             'email' => $email,
-            'nama_lengkap' => $this->request->getPost('nama_lengkap'),
             'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
             'tempat_lahir' => $this->request->getPost('tempat_lahir'),
             'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
@@ -109,6 +109,7 @@ class AuthController extends Controller
                 session()->set([
                     'user_id' => $user['id'],
                     'email' => $user['email'],
+                    'nama_lengkap' => $user['nama_lengkap'],
                     'role' => $user['role'],
                     'pict' => $user['pict'],
                     'isLoggedIn' => true

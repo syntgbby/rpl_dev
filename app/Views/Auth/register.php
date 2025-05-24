@@ -3,6 +3,7 @@
 
 <head>
     <base href="<?= base_url() ?>" />
+    <link rel="icon" href="<?= base_url('assets/media/logos/logoLP3I.png') ?>" type="image/png" />
     <title>RPL - Admin by RPL</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -32,7 +33,8 @@
             <div class="d-flex flex-column flex-md-row-fluid w-md-50">
                 <div class="landing">
                     <!--begin::Header-->
-                    <div class="landing-header bg-dark" data-kt-sticky="true" data-kt-sticky-name="landing-header" data-kt-sticky-offset="{default: '200px', lg: '300px'}">
+                    <div class="landing-header bg-dark" data-kt-sticky="true" data-kt-sticky-name="landing-header"
+                        data-kt-sticky-offset="{default: '200px', lg: '300px'}">
                         <!--begin::Container-->
                         <div class="container">
                             <!--begin::Wrapper-->
@@ -46,15 +48,18 @@
                                     <!--end::Mobile menu toggle-->
                                     <!--begin::Logo image-->
                                     <span href="landing.html">
-                                        <img alt="Logo" src="<?= base_url('assets/media/logos/logo.svg') ?>" class="logo-default h-35px h-lg-40px" />
-                                        <img alt="Logo" src="<?= base_url('assets/media/logos/logo.svg') ?>" class="logo-sticky h-35px h-lg-40px" />
+                                        <img alt="Logo" src="<?= base_url('assets/media/logos/logo.svg') ?>"
+                                            class="logo-default h-35px h-lg-40px" />
+                                        <img alt="Logo" src="<?= base_url('assets/media/logos/logo.svg') ?>"
+                                            class="logo-sticky h-35px h-lg-40px" />
                                     </span>
                                     <!--end::Logo image-->
                                 </div>
                                 <!--end::Logo-->
                                 <!--begin::Toolbar-->
                                 <div class="flex-equal text-end ms-1">
-                                    <button class="btn btn-success" onclick="window.location.href='<?= base_url('login') ?>'">LOGIN</button>
+                                    <button class="btn btn-success"
+                                        onclick="window.location.href='<?= base_url('login') ?>'">LOGIN</button>
                                 </div>
                                 <!--end::Toolbar-->
                             </div>
@@ -94,8 +99,8 @@
 
                                 <div class="fv-row mb-5">
                                     <div class="input-group input-group-lg">
-                                        <input type="text" placeholder="Nama Lengkap" name="nama_lengkap" id="nama_lengkap"
-                                            class="form-control" required />
+                                        <input type="text" placeholder="Nama Lengkap" name="nama_lengkap"
+                                            id="nama_lengkap" class="form-control" required />
                                     </div>
                                 </div>
                                 <div class="fv-row mb-5">
@@ -109,12 +114,8 @@
                                         <div class="col-md-12">
                                             <div class="input-group input-group-lg mb-2">
                                                 <span class="input-group-text">+62</span>
-                                                <input type="number"
-                                                    name="telepon"
-                                                    id="telepon"
-                                                    class="form-control"
-                                                    placeholder="Nomor Telepon"
-                                                    required />
+                                                <input type="number" name="telepon" id="telepon" class="form-control"
+                                                    placeholder="Nomor Telepon" required />
                                             </div>
                                             <small class="form-text text-muted mt-1 p-2">
                                                 <i class="fas fa-info-circle me-1"></i>
@@ -126,26 +127,19 @@
                                 <div class="fv-row mb-5">
                                     <div class="row align-items-center">
                                         <div class="col-md-6 mb-3">
-                                            <input type="text"
-                                                name="tempat_lahir"
-                                                id="tempat_lahir"
-                                                class="form-control"
-                                                placeholder="Tempat Lahir"
-                                                required />
+                                            <input type="text" name="tempat_lahir" id="tempat_lahir"
+                                                class="form-control" placeholder="Tempat Lahir" required />
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="date"
-                                                name="tanggal_lahir"
-                                                id="tanggal_lahir"
-                                                class="form-control"
-                                                placeholder="Tanggal Lahir"
-                                                required />
+                                            <input type="date" name="tanggal_lahir" id="tanggal_lahir"
+                                                class="form-control" placeholder="Tanggal Lahir" required />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="fv-row mb-5">
                                     <select name="prodi_id" id="prodi_id" data-control="select2"
-                                        class="form-control form-control-lg" data-placeholder="Pilih Program Studi" required>
+                                        class="form-control form-control-lg" data-placeholder="Pilih Program Studi"
+                                        required>
                                         <option value="" disabled selected>Pilih Program Studi</option>
                                         <?php foreach ($prodi as $p): ?>
                                             <option value="<?= $p['id'] ?>"><?= $p['nama_prodi'] ?></option>
@@ -159,19 +153,14 @@
                                 <div class="fv-row mb-5">
                                     <div class="row align-items-center">
                                         <div class="col-md-6 mb-3">
-                                            <input type="number"
-                                                name="tahun_lulus"
-                                                id="tahun_lulus"
-                                                min="1900"
-                                                max="<?= date('Y') ?>"
-                                                class="form-control"
-                                                placeholder="Tahun Kelulusan"
-                                                required />
+                                            <input type="number" name="tahun_lulus" id="tahun_lulus" min="1900"
+                                                max="<?= date('Y') ?>" class="form-control"
+                                                placeholder="Tahun Kelulusan" required />
                                         </div>
                                         <div class="col-md-6">
                                             <select name="jenis_kelamin" id="jenis_kelamin" data-control="select2"
-                                                class="form-control form-control-lg" data-placeholder="Pilih Jenis Kelamin"
-                                                required>
+                                                class="form-control form-control-lg"
+                                                data-placeholder="Pilih Jenis Kelamin" required>
                                                 <option value="" disabled selected>Pilih Jenis Kelamin</option>
                                                 <option value="L">Laki-laki</option>
                                                 <option value="P">Perempuan</option>
@@ -183,14 +172,9 @@
                                     <div class="row g-3">
                                         <div class="col-md-6 mb-3">
                                             <div class="input-group input-group-lg mb-2">
-                                                <input type="password"
-                                                    name="password"
-                                                    id="password"
-                                                    class="form-control"
-                                                    placeholder="Password"
-                                                    required />
-                                                <button class="btn btn-icon btn-light-primary"
-                                                    type="button"
+                                                <input type="password" name="password" id="password"
+                                                    class="form-control" placeholder="Password" required />
+                                                <button class="btn btn-icon btn-light-primary" type="button"
                                                     id="togglePassword">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
@@ -202,14 +186,9 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="input-group input-group-lg">
-                                                <input type="password"
-                                                    name="confirm_password"
-                                                    id="confirm_password"
-                                                    class="form-control"
-                                                    placeholder="Konfirmasi Password"
-                                                    required />
-                                                <button class="btn btn-icon btn-light-primary"
-                                                    type="button"
+                                                <input type="password" name="confirm_password" id="confirm_password"
+                                                    class="form-control" placeholder="Konfirmasi Password" required />
+                                                <button class="btn btn-icon btn-light-primary" type="button"
                                                     id="toggleConfirmPassword">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
@@ -220,9 +199,9 @@
                                 <div class="fv-row mb-5">
                                     <div class="row align-items-center">
                                         <div class="col-md-6 mb-3">
-                                            <select name="pendidikan_terakhir" id="pendidikan_terakhir" data-control="select2"
-                                                class="form-control form-control-lg" data-placeholder="Pilih Pendidikan Terakhir"
-                                                required>
+                                            <select name="pendidikan_terakhir" id="pendidikan_terakhir"
+                                                data-control="select2" class="form-control form-control-lg"
+                                                data-placeholder="Pilih Pendidikan Terakhir" required>
                                                 <option value="" disabled selected>Pilih Pendidikan Terakhir</option>
                                                 <option value="SMA">SMA</option>
                                                 <option value="SMK">SMK</option>
@@ -231,7 +210,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <input type="text" name="nama_asal_sekolah" id="nama_asal_sekolah"
-                                                class="form-control" placeholder="Nama Institusi/Sekolah Terakhir" required />
+                                                class="form-control" placeholder="Nama Institusi/Sekolah Terakhir"
+                                                required />
                                         </div>
                                     </div>
                                 </div>
@@ -239,7 +219,8 @@
                                     <div class="row align-items-center">
                                         <div class="col-md-6 mb-3">
                                             <select name="pertanyaan_id" id="pertanyaan_id"
-                                                class="form-control form-control-lg" data-control="select2" data-placeholder="Pilih Pertanyaan Keamanan" required>
+                                                class="form-control form-control-lg" data-control="select2"
+                                                data-placeholder="Pilih Pertanyaan Keamanan" required>
                                                 <option value="" disabled selected>Pilih Pertanyaan Keamanan</option>
                                                 <?php foreach ($pertanyaan as $p): ?>
                                                     <option value="<?= $p['id'] ?>"><?= $p['pertanyaan'] ?></option>
@@ -254,8 +235,10 @@
                                 </div>
                                 <div class="fv-row mb-5">
                                     <select name="asal_informasi" id="asal_informasi"
-                                        class="form-control form-control-lg mb-5" data-control="select2" data-placeholder="Dari mana anda mengetahui tentang RPL LP3I?" required>
-                                        <option value="" disabled selected>Dari mana anda mengetahui tentang RPL LP3I?</option>
+                                        class="form-control form-control-lg mb-5" data-control="select2"
+                                        data-placeholder="Dari mana anda mengetahui tentang RPL LP3I?" required>
+                                        <option value="" disabled selected>Dari mana anda mengetahui tentang RPL LP3I?
+                                        </option>
                                         <option value="Alumni">Mengetahui dari Alumni</option>
                                         <option value="Keluarga/Teman">Mengetahui dari Keluarga/Teman</option>
                                         <option value="Website">Mengetahui dari Website</option>
@@ -265,7 +248,9 @@
                                         <option value="Lainnya" id="lainnya">Lainnya</option>
                                     </select>
                                     <input type="text" name="asal_informasi_lainnya" id="asal_informasi_lainnya"
-                                        class="form-control form-control-lg" placeholder="Sebutkan dari mana anda mengetahui tentang RPL LP3I" style="display: none;" />
+                                        class="form-control form-control-lg"
+                                        placeholder="Sebutkan dari mana anda mengetahui tentang RPL LP3I"
+                                        style="display: none;" />
                                 </div>
                                 <div class="d-grid mb-5">
                                     <button type="submit" id="kt_sign_up_submit" class="btn btn-primary">
@@ -283,7 +268,9 @@
                         <!--begin::Curve top-->
                         <div class="landing-curve landing-dark-color">
                             <svg viewBox="15 -1 1470 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1 48C4.93573 47.6644 8.85984 47.3311 12.7725 47H1489.16C1493.1 47.3311 1497.04 47.6644 1501 48V47H1489.16C914.668 -1.34764 587.282 -1.61174 12.7725 47H1V48Z" fill="currentColor"></path>
+                                <path
+                                    d="M1 48C4.93573 47.6644 8.85984 47.3311 12.7725 47H1489.16C1493.1 47.3311 1497.04 47.6644 1501 48V47H1489.16C914.668 -1.34764 587.282 -1.61174 12.7725 47H1V48Z"
+                                    fill="currentColor"></path>
                             </svg>
                         </div>
                         <!--end::Curve top-->
@@ -297,18 +284,22 @@
                                     <div class="d-flex align-items-center order-2 order-md-1">
                                         <!--begin::Logo-->
                                         <span href="landing.html">
-                                            <img alt="Logo" src="<?= base_url('assets/media/logos/logo.svg') ?>" class="h-35px h-md-40px" />
+                                            <img alt="Logo" src="<?= base_url('assets/media/logos/logo.svg') ?>"
+                                                class="h-35px h-md-40px" />
                                         </span>
                                         <!--end::Logo image-->
                                         <!--begin::Logo image-->
-                                        <span class="mx-5 fs-6 fw-semibold text-gray-600 pt-1">&copy; <?= date('Y') ?> PLJ - KRAMAT</span>
+                                        <span class="mx-5 fs-6 fw-semibold text-gray-600 pt-1">&copy; <?= date('Y') ?>
+                                            PLJ - KRAMAT</span>
                                         <!--end::Logo image-->
                                     </div>
                                     <!--end::Copyright-->
                                     <!--begin::Menu-->
-                                    <ul class="menu menu-gray-600 menu-hover-primary fw-semibold fs-6 fs-md-5 order-1 mb-5 mb-md-0">
+                                    <ul
+                                        class="menu menu-gray-600 menu-hover-primary fw-semibold fs-6 fs-md-5 order-1 mb-5 mb-md-0">
                                         <li class="menu-item">
-                                            <a href="https://www.lp3ijkt.ac.id" target="_blank" class="menu-link px-2">Tentang LP3I</a>
+                                            <a href="https://www.lp3ijkt.ac.id" target="_blank"
+                                                class="menu-link px-2">Tentang LP3I</a>
                                         </li>
                                     </ul>
                                     <!--end::Menu-->
@@ -332,7 +323,7 @@
 
     <script>
         // Validasi nomor telepon
-        document.getElementById('telepon').addEventListener('input', function(e) {
+        document.getElementById('telepon').addEventListener('input', function (e) {
             const telepon = this.value;
             if (telepon.startsWith('0')) {
                 Swal.fire({
@@ -345,7 +336,7 @@
             }
         });
 
-        $('#kt_sign_up_form').on('submit', function(e) {
+        $('#kt_sign_up_form').on('submit', function (e) {
             const password = $('#password').val();
             const confirmPassword = $('#confirm_password').val();
             const $submitBtn = $('#kt_sign_up_submit');
@@ -386,7 +377,7 @@
         });
 
         // Password toggle functionality
-        document.getElementById('togglePassword').addEventListener('click', function() {
+        document.getElementById('togglePassword').addEventListener('click', function () {
             const passwordInput = document.getElementById('password');
             const icon = this.querySelector('i');
 
@@ -401,7 +392,7 @@
             }
         });
 
-        document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+        document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
             const confirmPasswordInput = document.getElementById('confirm_password');
             const icon = this.querySelector('i');
 
@@ -416,7 +407,7 @@
             }
         });
 
-        document.getElementById('asal_informasi').addEventListener('change', function() {
+        document.getElementById('asal_informasi').addEventListener('change', function () {
             const asalInformasi = this.value;
             const lainnyaInput = document.getElementById('asal_informasi_lainnya');
 
@@ -431,8 +422,8 @@
             dropdownParent: $('.select2').parent()
         });
 
-        $(document).ready(function() {
-            $('#asal_informasi').on('change', function() {
+        $(document).ready(function () {
+            $('#asal_informasi').on('change', function () {
                 if ($(this).val() === 'Lainnya') {
                     $('#asal_informasi_lainnya').show().attr('required', true);
                 } else {

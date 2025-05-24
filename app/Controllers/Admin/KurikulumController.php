@@ -28,7 +28,7 @@ class KurikulumController extends BaseController
         $tahunAjar = new TahunAjarModel();
         $mataKuliah = new MataKuliahModel();
 
-        $data['prodi'] = $prodi->where('type', '1')->findAll();
+        $data['prodi'] = $prodi->findAll();
         $data['tahun_ajar'] = $tahunAjar->where('status', 'Y')->findAll();
         $data['mata_kuliah'] = $mataKuliah->where('status', 'Y')->findAll();
 
@@ -75,7 +75,7 @@ class KurikulumController extends BaseController
         $tahunAjar = new TahunAjarModel();
         $mataKuliah = new MataKuliahModel();
 
-        $data['prodi'] = $prodi->where('type', '1')->findAll();
+        $data['prodi'] = $prodi->findAll();
         $data['tahun_ajar'] = $tahunAjar->where('status', 'Y')->findAll();
         $data['mata_kuliah'] = $mataKuliah->where('status', 'Y')->findAll();
 

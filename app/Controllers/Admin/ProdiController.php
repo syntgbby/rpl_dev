@@ -31,29 +31,29 @@ class ProdiController extends BaseController
             return redirect()->to('/admin/prodi')->with('error', 'Program Studi sudah ada');
         }
 
+        $kategori = $this->request->getPost('kategori');
+
         $data = [
             'nama_prodi' => $this->request->getPost('nama_prodi'),
             'deskripsi_singkat' => $this->request->getPost('deskripsi_singkat'),
+            'jenjang_pendidikan' => $this->request->getPost('jenjang_pendidikan'),
+            'kategori' => $kategori,
             'type' => '1',
             'deskripsi_lengkap' => $this->request->getPost('deskripsi_lengkap'),
             'jenjang_karir' => $this->request->getPost('jenjang_karir'),
             'status' => $this->request->getPost('status'),
         ];
 
-        $pict = $this->request->getFile('pict');
-
-        if ($pict && $pict->isValid()) {
-            $extension = $pict->getExtension();
-            $pict_name = $this->request->getPost('nama_prodi') . '.' . $extension;
-
-            $checkfoto = FCPATH . 'uploads/prodi/' . $pict_name;
-            if (file_exists($checkfoto)) {
-                unlink($checkfoto);
-            }
-
-            $pict->move(FCPATH . 'uploads/prodi/', $pict_name);
-
-            $data['pict'] = base_url('uploads/prodi/' . $pict_name);
+        if ($kategori == "Business") {
+            $data['pict'] = "assets/img/business.png";
+        } else if ($kategori == "Communication") {
+            $data['pict'] = "assets/img/communication.png";
+        } else if ($kategori == "Business") {
+            $data['pict'] = "assets/img/business.png";
+        } else if ($kategori == "Finance") {
+            $data['pict'] = "assets/img/finance.png";
+        } else {
+            $data['pict'] = "assets/img/technology.png";
         }
 
         $insert = $model->save($data);
@@ -76,32 +76,28 @@ class ProdiController extends BaseController
     public function update($id)
     {
         $model = new ProdiModel();
+        $kategori = $this->request->getPost('kategori');
 
         $data = [
             'nama_prodi' => $this->request->getPost('nama_prodi'),
+            'jenjang_pendidikan' => $this->request->getPost('jenjang_pendidikan'),
+            'kategori' => $kategori,
             'deskripsi_singkat' => $this->request->getPost('deskripsi_singkat'),
             'deskripsi_lengkap' => $this->request->getPost('deskripsi_lengkap'),
             'jenjang_karir' => $this->request->getPost('jenjang_karir'),
             'status' => $this->request->getPost('status'),
         ];
 
-        $pict = $this->request->getFile('pict');
-
-        if (!empty($pict)) {
-            if ($pict && $pict->isValid()) {
-                $extension = $pict->getExtension();
-                $pict_name = $this->request->getPost('nama_prodi') . '.' . $extension;
-
-                $checkfoto = FCPATH . 'uploads/prodi/' . $pict_name;
-                if (file_exists($checkfoto)) {
-                    unlink($checkfoto);
-                }
-                $pict->move(FCPATH . 'uploads/prodi/', $pict_name);
-
-                $data['pict'] = base_url('uploads/prodi/' . $pict_name);
-            }
+        if ($kategori == "Business") {
+            $data['pict'] = "assets/img/business.png";
+        } else if ($kategori == "Communication") {
+            $data['pict'] = "assets/img/communication.png";
+        } else if ($kategori == "Business") {
+            $data['pict'] = "assets/img/business.png";
+        } else if ($kategori == "Finance") {
+            $data['pict'] = "assets/img/finance.png";
         } else {
-            unset($data['pict']);
+            $data['pict'] = "assets/img/technology.png";
         }
 
         $update = $model->update($id, $data);

@@ -42,7 +42,7 @@ class PendaftaranController extends BaseController
         $email = session()->get('email'); // pastikan user sudah login
 
         $dataUser = $this->detailAplikanModel->where('email', $email)->first();
-        $prodi = $this->prodiModel->where('type', '1')->findAll();
+        $prodi = $this->prodiModel->findAll();
 
         return $this->render('aplikan/pendaftaran/step1', ['data' => $dataUser, 'prodi' => $prodi]);
     }

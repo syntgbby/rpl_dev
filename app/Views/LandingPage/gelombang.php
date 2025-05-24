@@ -11,10 +11,8 @@
         <!--end::Heading-->
         <!--begin::Statistics-->
         <?php if ($gelombang): ?>
-            <div class="d-flex flex-center justify-content-center">
-                    <?php foreach ($gelombang as $g): ?>
-                    <!--begin::Items-->
-                <div class="d-flex flex-wrap flex-center mb-15 mx-auto w-100 max-w-900px">
+            <div class="d-flex flex-wrap justify-content-center mb-15 mx-auto w-100" style="max-width: 900px;">
+                <?php foreach ($gelombang as $g): ?>
                     <!--begin::Item-->
                     <div class="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain p-5 text-center"
                         style="background-image: url('assets/media/svg/misc/octagon.svg'); background-size: cover;">
@@ -29,12 +27,10 @@
                         <!--end::Info-->
                     </div>
                     <!--end::Item-->
-                </div>
-                <!--end::Items-->
-            <?php endforeach ?>
-        </div>
-        <!--end::Statistics-->
+                <?php endforeach ?>
+            </div>
         <?php endif ?>
+
     </div>
     <!--end::Container-->
 </div>

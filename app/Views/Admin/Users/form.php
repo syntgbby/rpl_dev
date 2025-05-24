@@ -26,7 +26,7 @@
                         </div>
                     <?php endif; ?>
                     <div class="row">
-                        <div class="col-md-12" id="namaLengkapField" style="display: none;">
+                        <div class="col-md-12">
                             <div class="fv-row mb-8">
                                 <div class="row align-items-center">
                                     <div class="col-md-5">
@@ -34,7 +34,7 @@
                                     </div>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap"
-                                            placeholder="Enter Name" value="<?= $dtasesor['nama_lengkap'] ?? '' ?>">
+                                            placeholder="Enter Name" value="<?= $dtuser['nama_lengkap'] ?? '' ?>">
                                     </div>
                                 </div>
                             </div>
@@ -231,23 +231,6 @@
 <?php endif; ?>
 <script>
     $(document).ready(function () {
-        // Tampilkan nama_lengkap jika role asesor dipilih saat halaman dimuat
-        if ($('#role').val() === 'asesor') {
-            $('#namaLengkapField').show();
-        } else {
-            $('#namaLengkapField').hide();
-        }
-
-        // Event handler untuk perubahan role
-        $('#role').on('change', function () {
-            if ($(this).val() === 'asesor') {
-                $('#namaLengkapField').show();
-            } else {
-                $('#namaLengkapField').hide();
-                $('#nama_lengkap').val(''); // Reset nilai nama_lengkap
-            }
-        });
-
         // Konfigurasi SweetAlert2
         const Toast = Swal.mixin({
             toast: true,

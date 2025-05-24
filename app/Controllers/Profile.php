@@ -2,7 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Models\{UserModel, DetailAplikanModel};
+use App\Models\{UserModel, DetailAplikanModel, DetailAsesorModel};
+use App\Models\View\ViewAplikan;
 
 class Profile extends BaseController
 {
@@ -10,7 +11,8 @@ class Profile extends BaseController
     {
         $email = session()->get('email');
         $role = session()->get('role');
-        $detailAplikan = new DetailAplikanModel();
+        $detailAplikan = new ViewAplikan();
+        $detailAsesor = new DetailAsesorModel();
 
         if ($role == 'aplikan') {
             // Ambil data user berdasarkan email
@@ -22,7 +24,7 @@ class Profile extends BaseController
             return $this->render('Aplikan/editprofile', ['get' => $query]);
         } else if ($role == 'asesor') {
             // Ambil data user berdasarkan email
-            $query = $detailAplikan->where('email', $email)->first();
+            $query = $detailAsesor->where('email', $email)->first();
 
             if (!$query) {
                 throw new \CodeIgniter\Exceptions\PageNotFoundException("User tidak ditemukan.");
@@ -35,6 +37,7 @@ class Profile extends BaseController
     {
         try {
             $detailAplikan = new DetailAplikanModel();
+            $user = new userModel();
 
             $role = session()->get('role');
             $email = session()->get('email');
@@ -48,17 +51,22 @@ class Profile extends BaseController
             if ($role == 'aplikan') {
                 // Data untuk update
                 $updateDataDetailAplikan = [
-                    'nama_lengkap'   => $this->request->getPost('nama_lengkap'),
-                    'tempat_lahir'   => $this->request->getPost('tempat_lahir'),
-                    'tanggal_lahir'  => $this->request->getPost('tanggal_lahir'),
-                    'telepon'        => $this->request->getPost('telepon'),
-                    'jenis_kelamin'  => $this->request->getPost('jenis_kelamin'),
-                    'agama'          => $this->request->getPost('agama'),
+                    'tempat_lahir' => $this->request->getPost('tempat_lahir'),
+                    'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
+                    'telepon' => $this->request->getPost('telepon'),
+                    'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
+                    'agama' => $this->request->getPost('agama'),
                 ];
 
                 $update = $detailAplikan->where('email', $email)->set($updateDataDetailAplikan)->update();
 
                 if ($update) {
+                    $updateUser = [
+                        'nama_lengkap' => $this->request->getPost('nama_lengkap'),
+                    ];
+
+                    $update = $detailAplikan->where('email', $email)->set($updateDataDetailAplikan)->update();
+
                     return redirect()->to('/dashboard')->with('success', 'Profile berhasil diupdate');
                 } else {
                     return redirect()->back()->with('error', 'Profile gagal diupdate');

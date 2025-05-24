@@ -15,7 +15,7 @@ class LandingPage extends Controller
         $prodiModel = new ProdiModel();
 
         $data['gelombang'] = $gelombangModel->findAll();
-        $data['prodi'] = $prodiModel->where('type', '1')->findAll();
+        $data['prodi'] = $prodiModel->findAll();
 
         return view('LandingPage/template', $data);
     }

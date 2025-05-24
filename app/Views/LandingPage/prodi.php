@@ -6,52 +6,38 @@
         <div class="card-body p-lg-20">
             <!--begin::Heading-->
             <div class="text-center mb-5 mb-lg-10">
-                <!--begin::Title-->
-                <h3 class="fs-2hx text-gray-900 mb-5" id="prodi" data-kt-scroll-offset="{default: 100, lg: 250}">Daftar
-                    Prodi</h3>
-                <!--end::Title-->
+                <h3 class="fs-2hx text-gray-900 mb-5" id="prodi">Daftar Prodi</h3>
             </div>
             <!--end::Heading-->
+
             <!--begin::Tabs content-->
             <div class="tab-content">
                 <!--begin::Row-->
-                <div class="row g-10">
+                <div class="row g-4">
                     <?php if ($prodi): ?>
                         <?php foreach ($prodi as $p): ?>
-                            <!--begin::Col-->
-                            <div class="col-xl-4">
-                                <div class="d-flex h-100 align-items-center">
-                                    <!--begin::Option-->
-                                    <div class="w-100 d-flex flex-column flex-center rounded-3 bg-body py-15 px-10">
-                                        <!--begin::Heading-->
-                                        <div class="mb-7 text-center">
-                                            <?php if ($p['pict'] != null): ?>
-                                                <img src="<?= $p['pict'] ?>" alt="<?= $p['nama_prodi'] ?>"
-                                                    class="img-fluid mb-5">
-                                            <?php endif; ?>
-                                            <!--begin::Title-->
-                                            <h1 class="text-gray-900 mb-5 fw-boldest text-white">
-                                                <?= $p['nama_prodi'] ?>
-                                            </h1>
-                                            <!--end::Title-->
-                                            <!--begin::Description-->
-                                            <div class="text-gray-500 fw-semibold mb-5">
-                                                <?= $p['deskripsi_singkat'] ?>
-                                            </div>
-                                            <!--end::Description-->
-                                        </div>
-                                        <!--end::Heading-->
-                                        <!--begin::Select-->
-                                        <div class="text-center">
-                                            <button href="#" class="btn btn-primary" id="detailProdi">
-                                                Baca Selengkapnya</button>
-                                        </div>
-                                        <!--end::Select-->
+                            <div class="col-xl-3 col-md-6">
+                                <div class="d-flex flex-column h-100 justify-content-between rounded-3 bg-body p-5 shadow-sm">
+                                    <!-- Gambar -->
+                                    <?php if ($p['pict'] != null): ?>
+                                        <img src="<?= base_url($p['pict']) ?>" alt="<?= $p['nama_prodi'] ?>"
+                                            class="img-fluid mb-4 rounded mx-auto d-block"
+                                            style="max-height: 150px; object-fit: contain;">
+                                    <?php endif; ?>
+
+                                    <!-- Nama Prodi -->
+                                    <h5 class="text-gray-900 text-center fw-bold mb-2"><?= $p['nama_prodi'] ?></h5>
+                                    <!-- Tombol -->
+                                    <div class="text-center mt-auto">
+                                        <button class="btn btn-primary w-100 detailProdiBtn" data-nama="<?= $p['nama_prodi'] ?>"
+                                            data-singkat="<?= $p['deskripsi_singkat'] ?>"
+                                            data-lengkap="<?= $p['deskripsi_lengkap'] ?>"
+                                            data-karir="<?= $p['jenjang_karir'] ?>" data-pict="<?= base_url($p['pict']) ?>">
+                                            Baca Selengkapnya
+                                        </button>
                                     </div>
-                                    <!--end::Option-->
                                 </div>
                             </div>
-                            <!--end::Col-->
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
@@ -65,69 +51,51 @@
 </div>
 <!--end::Container-->
 
+<!-- Modal -->
 <div class="modal fade" id="detailProdiModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detailProdiTitle">Detail <?= $p['nama_prodi'] ?></h5>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <?php if ($p['pict'] != null): ?>
-                                    <img src="<?= $p['pict'] ?>" alt="<?= $p['nama_prodi'] ?>"
-                                        class="img-fluid rounded-3"
-                                        style="width: 100%; height: 100%; object-fit: cover;">
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h5 class="modal-title"><?= $p['nama_prodi'] ?></h5>
-                            </div>
-                            <div class="col-md-12">
-                                <p class="modal-description"><?= $p['deskripsi_singkat'] ?></p>
-                            </div>
-                            <div class="col-md-12">
-                                <p class="modal-description"><?= $p['deskripsi_lengkap'] ?></p>
-                                <p class="modal-description"><?= $p['jenjang_karir'] ?></p>
-                            </div>
-                        </div>
-                    </div>
+                <h5 class="modal-title" id="detailProdiTitle">Detail Prodi</h5>
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <i class="ki-outline ki-cross fs-1"></i>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" id="minatProdi">
-                    Minat
-                </button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <div class="modal-body">
+                <div class="row align-items-center">
+                    <div class="col-md-4 text-center">
+                        <img id="modalPict" src="" alt="Logo" class="img-fluid"
+                            style="max-height: 180px; object-fit: contain;">
+                    </div>
+                    <div class="col-md-8">
+                        <h5 id="modalNamaProdi" class="fw-bold mb-3"></h5>
+                        <p id="modalSingkat" class="mb-2"></p>
+                        <p id="modalLengkap" class="mb-2"></p>
+                        <p id="modalKarir" class="mb-0"></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('#detailProdi').click(function() {
-            $('#detailProdiModal').modal('show');
-        });
+    // Event saat klik tombol detail prodi
+    $(document).ready(function () {
+        $('.detailProdiBtn').on('click', function () {
+            const nama = $(this).data('nama');
+            const singkat = $(this).data('singkat');
+            const lengkap = $(this).data('lengkap');
+            const karir = $(this).data('karir');
+            const pict = $(this).data('pict');
 
-        $('#minatProdi').click(function() {
-            Swal.fire({
-                title: 'Minat',
-                text: 'Apakah anda yakin ingin menjadi mahasiswa <?= $p['nama_prodi'] ?>?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '<?= base_url('login') ?>';
-                }
-            });
+            $('#modalNamaProdi').text(nama);
+            $('#modalSingkat').text(singkat);
+            $('#modalLengkap').text(lengkap);
+            $('#modalKarir').text(karir);
+            $('#modalPict').attr('src', pict);
+
+            $('#detailProdiModal').modal('show');
         });
     });
 </script>

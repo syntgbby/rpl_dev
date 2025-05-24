@@ -3,6 +3,7 @@
 
 <head>
     <base href="<?= base_url() ?>" />
+    <link rel="icon" href="<?= base_url('assets/media/logos/logoLP3I.png') ?>" type="image/png" />
     <title>PLJ - KRAMAT</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -103,7 +104,7 @@
     </div>
 
     <script>
-        $('#kt_sign_in_form').on('submit', function(e) {
+        $('#kt_sign_in_form').on('submit', function (e) {
             const email = $('#email').val().trim();
             const password = $('#password').val().trim();
             const $submitBtn = $('#kt_sign_in_submit');
