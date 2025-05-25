@@ -104,6 +104,9 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan', 'filter' =>
 
     //update konfirmasi step
     $routes->get('update-konfirmasi-step/(:segment)', 'PendaftaranController::updateKonfirmasiStep/$1');
+
+    //tentang RPL
+    $routes->get('tentang-rpl', 'TentangRPL::index');
 });
 
 // Bagian Kaprodi

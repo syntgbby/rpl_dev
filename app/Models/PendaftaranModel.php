@@ -9,8 +9,23 @@ class PendaftaranModel extends Model
     protected $table = 'pendaftaran_rpl';
     protected $primaryKey = 'id';
     protected $allowedFields = [
-        'pendaftaran_id', 'asesor_id', 'user_id', 'nama_lengkap', 'nik', 'tempat_lahir', 'tanggal_lahir',
-        'jenis_kelamin', 'alamat', 'no_hp', 'email', 'status_pendaftaran', 'program_study_id', 'tahun_angkatan', 'tahun_ajar_id', 'status_pendaftaran'
+        'pendaftaran_id',
+        'asesor_id',
+        'user_id',
+        'nama_lengkap',
+        'nik',
+        'tempat_lahir',
+        'tanggal_lahir',
+        'jenis_kelamin',
+        'alamat',
+        'no_hp',
+        'email',
+        'status_pendaftaran',
+        'program_study_id',
+        'tahun_angkatan',
+        'tahun_ajar_id',
+        'alasan_penolakan',
+        'surat_pernyataan'
     ];
 
     public function getPendaftaran()
@@ -32,6 +47,16 @@ class PendaftaranModel extends Model
 
     public function assignAsesor($pendaftaranId, $asesorId)
     {
-        $this->update('pendaftaran_rpl', ['asesor_id' => $asesorId], ['pendaftaran_id' => $pendaftaranId]);
+        $pendaftaran = $this->where('pendaftaran_id', $pendaftaranId)->first();
+        $id = $pendaftaran['id'];
+
+        $this->update($id, ['asesor_id' => $asesorId]);
+    }
+
+    public function updateSuratPernyataan($pendaftaranId, $surat)
+    {
+        $pendaftaran = $this->where('pendaftaran_id', $pendaftaranId)->first();
+        $id = $pendaftaran['id'];
+        $this->update($id, ['surat_pernyataan' => $surat]);
     }
 }

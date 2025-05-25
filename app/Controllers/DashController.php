@@ -98,8 +98,7 @@ class DashController extends BaseController
                 ->where('status', 'y')
                 ->countAllResults();
 
-            $prodi = $this->prodiModel
-                ->countAllResults();
+            $prodi = $this->prodiModel->countAllResults();
 
             $data_kaprodi = [
                 'title' => 'Dashboard',
@@ -121,7 +120,7 @@ class DashController extends BaseController
                 'title' => 'Dashboard',
                 'user' => $this->userModel->getUser(),
                 'dataUser' => $user,
-                'prodi' => $this->prodiModel->where('type =', 1)->findAll(),
+                'prodi' => $this->prodiModel->findAll(),
                 'pendaftaran' => $this->pendaftaranModel->select('prodi.nama_prodi, pendaftaran_rpl.*')->join('prodi', 'prodi.id = pendaftaran_rpl.program_study_id', 'left')
                     ->where('pendaftaran_rpl.created_at >=', new RawSql('DATE_SUB(NOW(), INTERVAL 60 DAY)'))
                     ->orderBy('pendaftaran_rpl.created_at', 'desc')

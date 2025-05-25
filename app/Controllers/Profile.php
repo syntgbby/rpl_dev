@@ -37,39 +37,67 @@ class Profile extends BaseController
     {
         try {
             $detailAplikan = new DetailAplikanModel();
-            $user = new userModel();
+            $userModel = new userModel();
 
             $role = session()->get('role');
             $email = session()->get('email');
 
             // Ambil data user dulu
-            $user = $detailAplikan->where('email', $email)->first();
+            $user = $userModel->where('email', $email)->first();
             if (!$user) {
                 return redirect()->back()->with('error', 'User tidak ditemukan');
             }
 
             if ($role == 'aplikan') {
-                // Data untuk update
-                $updateDataDetailAplikan = [
-                    'tempat_lahir' => $this->request->getPost('tempat_lahir'),
-                    'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
-                    'telepon' => $this->request->getPost('telepon'),
-                    'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
-                    'agama' => $this->request->getPost('agama'),
-                ];
+                $cekDetail = $detailAplikan->where('email', $email)->first();
 
-                $update = $detailAplikan->where('email', $email)->set($updateDataDetailAplikan)->update();
-
-                if ($update) {
-                    $updateUser = [
-                        'nama_lengkap' => $this->request->getPost('nama_lengkap'),
+                if ($cekDetail) {
+                    // Data untuk update
+                    $updateDataDetailAplikan = [
+                        'tempat_lahir' => $this->request->getPost('tempat_lahir'),
+                        'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
+                        'telepon' => $this->request->getPost('telepon'),
+                        'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
+                        'agama' => $this->request->getPost('agama'),
                     ];
 
                     $update = $detailAplikan->where('email', $email)->set($updateDataDetailAplikan)->update();
 
-                    return redirect()->to('/dashboard')->with('success', 'Profile berhasil diupdate');
+                    if ($update) {
+                        $updateUser = [
+                            'nama_lengkap' => $this->request->getPost('nama_lengkap'),
+                        ];
+
+                        $userModel->where('email', $email)->set($updateUser)->update();
+
+                        return redirect()->to('/dashboard')->with('success', 'Profile berhasil diupdate');
+                    } else {
+                        return redirect()->back()->with('error', 'Profile gagal diupdate');
+                    }
                 } else {
-                    return redirect()->back()->with('error', 'Profile gagal diupdate');
+                    // Data untuk update
+                    $insertDataDetailAplikan = [
+                        'email' => $email,
+                        'tempat_lahir' => $this->request->getPost('tempat_lahir'),
+                        'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
+                        'telepon' => $this->request->getPost('telepon'),
+                        'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
+                        'agama' => $this->request->getPost('agama'),
+                    ];
+
+                    $insert = $detailAplikan->save($insertDataDetailAplikan);
+
+                    if ($insert) {
+                        $updateUser = [
+                            'nama_lengkap' => $this->request->getPost('nama_lengkap'),
+                        ];
+
+                        $userModel->where('email', $email)->update($updateUser);
+
+                        return redirect()->to('/dashboard')->with('success', 'Profile berhasil diupdate');
+                    } else {
+                        return redirect()->back()->with('error', 'Profile gagal diupdate');
+                    }
                 }
             } else if ($role == 'asesor') {
                 return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk mengubah profile');

@@ -17,7 +17,8 @@
                 <h5 class="card-title mt-5">Data Kurikulum</h5>
                 <div class="row g-3 align-items-center mb-5">
                     <div class="col-md-6">
-                        <select class="form-select form-select-md" data-control="select2" data-placeholder="Pilih Tahun Kurikulum" id="tahunSelect">
+                        <select class="form-select form-select-lg h-100" data-control="select2"
+                            data-placeholder="Pilih Tahun Kurikulum" id="tahunSelect">
                             <option value="" selected disabled>Pilih Tahun Kurikulum</option>
                             <?php foreach ($dtkurikulum as $row): ?>
                                 <option value="<?= $row['id'] ?>"><?= $row['tahun'] ?></option>
@@ -52,26 +53,29 @@
                             </tbody>
                         </table>
                         <div class="row my-3">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6">
                                 <label class="form-label fw-bold">Tipe RPL</label>
-                                <select class="form-select form-select-md" data-control="select2" data-placeholder="Pilih Tipe RPL" name="type">
+                                <select class="form-select form-select-lg h-100" data-control="select2"
+                                    data-placeholder="Pilih Tipe RPL" name="type">
                                     <option value="" selected disabled>Pilih Tipe RPL</option>
                                     <option value="A">Type A</option>
                                     <option value="B">Type B</option>
                                     <option value="C">Type C</option>
                                 </select>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6">
                                 <label class="form-label fw-bold">Status Approval</label>
-                                <select class="form-select form-select-md" data-control="select2" data-placeholder="Pilih Status Approval" name="status">
+                                <select class="form-select form-select-lg h-100" data-control="select2"
+                                    data-placeholder="Pilih Status Approval" name="status">
                                     <option value="" selected disabled>Pilih Status Approval</option>
                                     <option value="approved">Approved</option>
                                     <option value="rejected">Rejected</option>
                                 </select>
                             </div>
                             <div class="col d-flex align-items-end justify-content-end ">
-                                <button type="submit" class="btn btn-danger" id="submitBtn">Approve</button>
-                                <button type="button" class="btn btn-secondary ms-3" onclick="window.history.back()">Kembali</button>
+                                <button type="submit" class="btn btn-success" id="submitBtn">Approve</button>
+                                <button type="button" class="btn btn-secondary ms-3"
+                                    onclick="window.history.back()">Kembali</button>
                             </div>
                         </div>
                     </div>
@@ -83,7 +87,7 @@
 
 <script>
     // Load data mata kuliah
-    $('#cariBtn').click(function() {
+    $('#cariBtn').click(function () {
         var tahun = $('#tahunSelect').val();
         if (tahun) {
             $.ajax({
@@ -93,13 +97,13 @@
                     tahun: tahun
                 },
                 dataType: 'json',
-                success: function(response) {
+                success: function (response) {
                     var tbody = $('#tabelRplBody');
                     $('#tahunApprove').val(tahun); //simpan data pilihan tahun kurikulum
                     tbody.empty();
 
                     if (response.status === 'success' && response.data.length > 0) {
-                        $.each(response.data, function(index, matkul) {
+                        $.each(response.data, function (index, matkul) {
                             var row = '<tr>' +
                                 '<td>' + (index + 1) + '</td>' +
                                 '<td>' + matkul.kode_matkul + '</td>' +
@@ -116,20 +120,20 @@
                     }
 
                     // Tambahkan logika checkbox saling eksklusif
-                    $('.yes-check').on('change', function() {
+                    $('.yes-check').on('change', function () {
                         var noCheck = $(this).closest('tr').find('.no-check');
                         if ($(this).is(':checked')) {
                             noCheck.prop('checked', false);
                         }
                     });
-                    $('.no-check').on('change', function() {
+                    $('.no-check').on('change', function () {
                         var yesCheck = $(this).closest('tr').find('.yes-check');
                         if ($(this).is(':checked')) {
                             yesCheck.prop('checked', false);
                         }
                     });
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error('Error:', error);
                     alert('Terjadi kesalahan saat mengambil data.');
                     $('#matkulContainer').hide();

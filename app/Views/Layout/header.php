@@ -270,9 +270,16 @@
                     <?php if ($user['role'] == 'aplikan'): ?>
                         <!--begin:Menu item-->
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-                            class="menu-item <?= (current_url() == base_url('aplikan/tentang-rpl') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+                            class="menu-item <?= (current_url() == base_url('aplikan/tentang-rpl') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2"
+                            onclick="window.location.href='<?= base_url('aplikan/tentang-rpl') ?>'">
                             <!--begin:Menu link-->
                             <span class="menu-link">
+                                <span class="menu-icon">
+                                    <i class="ki-duotone ki-save-2 fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                </span>
                                 <span class="menu-title">Tentang RPL</span>
                             </span>
                             <!--end:Menu link-->
@@ -400,14 +407,12 @@
                     <!--begin::User account menu-->
                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
                         data-kt-menu="true">
-                        <?php if ($user['role'] == 'aplikan' && $user['role'] == 'asesor') { ?>
-                            <!--begin::Menu item-->
-                            <div class="menu-item px-5">
-                                <a href="<?= base_url('editprofile') ?>" class="menu-link px-5">My
-                                    Profile</a>
-                            </div>
-                            <!--end::Menu item-->
-                        <?php } ?>
+                        <!--begin::Menu item-->
+                        <div class="menu-item px-5">
+                            <a href="<?= base_url('editprofile') ?>" class="menu-link px-5">My
+                                Profile</a>
+                        </div>
+                        <!--end::Menu item-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
                             <a href="<?= base_url('logout') ?>" class="menu-link px-5">Sign Out</a>

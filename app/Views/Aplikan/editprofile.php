@@ -36,7 +36,8 @@
                 </script>
             <?php endif; ?>
             <!--begin::Form-->
-            <form id="frmProfile" class="form" action="<?= base_url('edit-profile') ?>" method="post" enctype="multipart/form-data">
+            <form id="frmProfile" class="form" action="<?= base_url('edit-profile') ?>" method="post"
+                enctype="multipart/form-data">
                 <div class="card-body border-top p-9">
                     <!--begin::Input group for Full Name-->
                     <div class="row mb-6">
@@ -44,7 +45,8 @@
                         <div class="col-lg-8">
                             <input type="text" name="nama_lengkap" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Full Name" value="<?= $get['nama_lengkap'] ? $get['nama_lengkap'] : '' ?>" />
+                                placeholder="Full Name"
+                                value="<?= $get['nama_lengkap'] ? $get['nama_lengkap'] : '' ?>" />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -121,7 +123,8 @@
                 </div>
                 <!--begin::Actions-->
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <button type="reset" class="btn btn-light btn-active-light-primary me-2">Batal</button>
+                    <button type="reset" class="btn btn-light btn-active-light-primary me-2"
+                        onclick="window.history.back()">Batal</button>
                     <button type="submit" class="btn btn-primary" id="btnSave">Simpan Perubahan
                         <span class="spinner-border spinner-border-sm align-middle ms-2" role="status"
                             aria-hidden="true" style="display: none;"></span>

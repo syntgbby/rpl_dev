@@ -4,8 +4,12 @@ namespace App\Controllers\Asesor;
 
 use CodeIgniter\Controller;
 use App\Models\{ApprovalRplModel, FinalApprovalModel};
+use App\Models\View\ViewDataPendaftaran;
 use App\Models\PendaftaranModel;
 use App\Controllers\BaseController;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+helper('url');
 
 class AsesorController extends Controller
 {
@@ -13,6 +17,7 @@ class AsesorController extends Controller
     {
         $approvalModel = new ApprovalRplModel();
         $pendaftaranModel = new PendaftaranModel();
+        $viewPendaftaranModel = new ViewDataPendaftaran();
         $finalApprovalModel = new FinalApprovalModel();
 
         $pendaftaranId = $this->request->getPost('pendaftaran_id');
@@ -36,24 +41,66 @@ class AsesorController extends Controller
         ];
 
         if (!empty($dataToInsert)) {
-            $approvalModel->insertBatch($dataToInsert);
+            // $approvalModel->insertBatch($dataToInsert);
             // Update status pendaftaran menggunakan method yang benar
-            $pendaftaranModel->updateStatusPendaftaran($pendaftaranId, $status);
-            $finalApprovalModel->insert([
-                'pendaftaran_id' => $pendaftaranId,
-                'status' => $status,
-                'type' => $type
-            ]);
+            // $pendaftaranModel->updateStatusPendaftaran($pendaftaranId, $status);
+            // $finalApprovalModel->insert([
+            //     'pendaftaran_id' => $pendaftaranId,
+            //     'status' => $status,
+            //     'type' => $type
+            // ]);
 
-            $dtemail = $pendaftaranModel->where('pendaftaran_id', $pendaftaranId)->first();
+
+            $dtemail = $viewPendaftaranModel->where('pendaftaran_id', $pendaftaranId)->first();
             $email = $dtemail['email'];
 
             if ($status == 'approved') {
+                if (!empty($dtemail['tahun_ajar'])) {
+                    $parts = explode(' ', $dtemail['tahun_ajar']);
+
+                    if (count($parts) == 2) {
+                        $semester = $parts[1]; // 'genap' atau 'ganjil'
+
+                        if ($semester == 'genap') {
+                            $sms = "Genap";
+                        } else {
+                            $sms = "Ganjil";
+                        }
+                    }
+                }
+                // Data untuk isi surat keputusan
+                $dataSurat = [
+                    'nama' => $dtemail['nama_lengkap'],
+                    'email' => $email,
+                    'tanggal' => date('d F Y'),
+                    'prodi' => $dtemail['program_study'],
+                    'type' => $dtemail['type'],
+                    'semester' => $sms
+                    // tambahkan data lain sesuai view surat_keputusan
+                ];
+
+                $filename = 'SK_RPL_' . $pendaftaranId . '_' . time() . '.pdf';
+                $filePath = $this->generateSuratKeputusan($dataSurat, $filename);
+                // dd($filePath);
+                $link = base_url('surat_keputusan/' . $filename);
+
+
+                $dataEmail = [
+                    'pendaftaran_id' => $pendaftaranId,
+                    'nama' => $dtemail['nama_lengkap'],
+                    'link' => $link
+                ];
+
+                helper('url');
+                $htmlEmail = view('ContentEmail/status_rpl', $dataEmail);
+
+                $pendaftaranModel->updateSuratPernyataan($pendaftaranId, $filePath);
                 $attributes = [
                     'to' => $email,
                     'subject' => 'Status Pendaftaran RPL ' . $dtemail['nama_lengkap'],
-                    'message' => 'RPL anda telah berhasil di ' . $status . '!'
+                    'message' => $htmlEmail
                 ];
+
             } else {
                 $attributes = [
                     'to' => $email,
@@ -69,4 +116,39 @@ class AsesorController extends Controller
             return redirect()->to('/asesor/data-pendaftaran')->with('error', 'Data RPL gagal di-approve.');
         }
     }
+
+    private function generateSuratKeputusan($data, $filename)
+    {
+        set_time_limit(0); // supaya script ini nggak dibatasi waktunya
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+        $dompdf = new Dompdf($options);
+
+        // Buat tampilan HTML surat keputusan
+        $html = view('aplikan/surat_keputusan', $data);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        // Simpan file di writable
+        $writableFolder = WRITEPATH . 'surat_keputusan/';
+        if (!is_dir($writableFolder)) {
+            mkdir($writableFolder, 0777, true);
+        }
+        $writablePath = $writableFolder . $filename;
+        file_put_contents($writablePath, $dompdf->output());
+
+        // Salin juga ke folder public supaya bisa diakses lewat browser
+        $publicFolder = FCPATH . 'surat_keputusan/';
+        if (!is_dir($publicFolder)) {
+            mkdir($publicFolder, 0777, true);
+        }
+        $publicPath = $publicFolder . $filename;
+        copy($writablePath, $publicPath);
+
+        // Kembalikan URL akses file di browser
+        return base_url('surat_keputusan/' . $filename);
+    }
+
 }
