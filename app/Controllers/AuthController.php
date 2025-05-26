@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\{UserModel, DetailAplikanModel, PertanyaanModel, ProdiModel};
+use App\Models\{UserModel, DetailAplikanModel, PertanyaanModel, ProdiModel, AsesorModel};
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Controller;
 
@@ -125,5 +125,29 @@ class AuthController extends Controller
     {
         session()->destroy();
         return redirect()->to('/')->with('success', 'Logout berhasil');
+    }
+
+    public function viewForgotPassword()
+    {
+        $pertanyaanModel = new PertanyaanModel();
+        $data['pertanyaan'] = $pertanyaanModel->findAll();
+        return view('Auth/forgot-password', $data);
+    }
+
+    public function forgotPassword()
+    {
+        $users = new UserModel();
+        $email = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
+        $user = $users->where('email', $email)->first();
+
+        $pertanyaan = $this->request->getPost('pertanyaan');
+        $jawaban = $this->request->getPost('jawaban');
+
+        if ($user) {
+            $hashed = strtoupper(md5(strtoupper(md5($email)) . 'P@ssw0rd' . $password));
+        }
+        
+        
     }
 }

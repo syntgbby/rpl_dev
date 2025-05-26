@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Surat Keputusan RPL</title>
+    <title>Surat Keputusan RPL <?= $prodi ?></title>
     <style>
         body {
             font-family: 'Times New Roman', Times, serif;
@@ -70,7 +70,7 @@
             <h5 class="text-center">NOMOR: ................................................</h5>
             <h5 class="text-center mt-2">TENTANG</h5>
             <h5 class="text-center fw-bold">PENGAKUAN KELULUSAN MATA KULIAH PROSES ASESMEN</h5>
-            <h5 class="text-center fw-bold">PROGRAM REKOGNISI PEMBELAJARAN LAMPAU PROGRAM STUDI MANAJEMEN INFORMATIKA
+            <h5 class="text-center fw-bold">PROGRAM REKOGNISI PEMBELAJARAN LAMPAU <br>PROGRAM STUDI <?= strtoupper($prodi) ?>
             </h5>
             <h5 class="text-center">TAHUN AKADEMIK <?= $tahunAkademik ?></h5>
 
@@ -79,11 +79,11 @@
             <p><strong>Menimbang:</strong></p>
             <ol type="a">
                 <li>bahwa berdasarkan pelaksanaan asesmen pemohon pada Program Rekognisi Pembelajaran Lampau Program
-                    Manajemen Informatika Perguruan Tinggi Politeknik LP3I Jakarta perlu menetapkan hasil/nilai asesmen
+                    <?= $prodi ?> Perguruan Tinggi Politeknik LP3I Jakarta perlu menetapkan hasil/nilai asesmen
                     rekognisi pembelajaran lampau Tahun Akademik <?= $tahunAkademik ?></li>
                 <li>bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Keputusan
                     Pimpinan Perguruan Tinggi Politeknik LP3I Jakarta tentang Pengakuan Kelulusan Mata Kuliah Proses
-                    Asesmen Program Rekognisi Pembelajaran Lampau Program Studi Manajemen Informatika Perguruan Tinggi
+                    Asesmen Program Rekognisi Pembelajaran Lampau Program Studi <?= $prodi ?> Perguruan Tinggi
                     Politeknik LP3I Jakarta Tahun Akademik <?= $tahunAkademik ?></li>
             </ol>
 
@@ -107,7 +107,7 @@
                 Tinggi Politeknik LP3I Jakarta maka calon
                 mahasiswa yang namanya terdapat pada lajur 2 dinyatakan lulus untuk
                 mata kuliah seperti yang didiskripsikan pada lajur 4 sebagaimana
-                Pedoman RPL Tipe <?= $type ?> Prodi <?= $prodi ?> – 2023 11
+                Pedoman RPL Tipe <?= $type ?> Prodi <?= $prodi ?> – <?= $tahunAkademik ?>
                 tercantum dalam Lampiran yang merupakan bagian tidak terpisahkan
                 dari Keputusan Pimpinan Perguruan Tinggi Politeknik LP3I Jakarta ini.</p>
             <p><strong>Kedua:</strong> Calon mahasiswa sebagaimana dimaksud dalam Diktum KESATU

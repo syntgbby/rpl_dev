@@ -40,8 +40,8 @@
     </div>
 
     <!-- Kolom Kanan - Informasi Pendaftaran & File -->
-        <!-- Informasi Pelatihan -->
-        <div class="bg-light p-3 rounded mb-4">
+    <!-- Informasi Pelatihan -->
+    <div class="bg-light p-3 rounded mb-4">
         <h5 class="text-dark mb-3 border-bottom pb-2">Informasi Pelatihan</h5>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
@@ -56,7 +56,8 @@
                 </thead>
                 <tbody>
                     <?php if ($dtpelatihan): ?>
-                        <?php $no = 1; foreach ($dtpelatihan as $row): ?>
+                        <?php $no = 1;
+                        foreach ($dtpelatihan as $row): ?>
                             <tr>
                                 <td class="text-center"><?= $no++ ?></td>
                                 <td><?= $row['nama_pelatihan'] ?></td>
@@ -153,12 +154,14 @@
     </div>
 
     <div class="d-flex gap-2 mt-3 justify-content-end">
-        <?php // if (($dtpendaftaran['status'] ?? '') == 'submitted'): ?>
-            <a href="<?= base_url('asesor/approve-pendaftaran/' . ($dtpendaftaran['pendaftaran_id'] ?? '')) ?>"
-                class="btn btn-success btn-sm">
-                <i class="fas fa-check"></i> Approve
-            </a>
-        <?php // endif; ?>
+        <?php // if (($dtpendaftaran['status'] ?? '') == 'submitted'): 
+        ?>
+        <a href="<?= base_url('asesor/approve-pendaftaran/' . ($dtpendaftaran['pendaftaran_id'] ?? '')) ?>"
+            class="btn btn-success btn-sm">
+            <i class="fas fa-check"></i> Approve
+        </a>
+        <?php // endif; 
+        ?>
         <a href="<?= base_url('asesor/pendaftaran') ?>" class="btn btn-secondary btn-sm">
             <i class="fas fa-times"></i> Close
         </a>

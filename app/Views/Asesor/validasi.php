@@ -13,6 +13,47 @@
                     </div>
                 </div>
                 <!-- END Data Mahasiswa Readonly -->
+                <!-- Informasi Pelatihan -->
+                <h5 class="text-dark mb-3 border-bottom pb-2">Informasi Pelatihan</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="text-center" style="width: 50px">No</th>
+                                <th>Nama Pelatihan</th>
+                                <th>Penyelenggara</th>
+                                <th class="text-center">Tahun</th>
+                                <th class="text-center">Bukti</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($dtpelatihan): ?>
+                                <?php $no = 1;
+                                foreach ($dtpelatihan as $row): ?>
+                                    <tr>
+                                        <td class="text-center"><?= $no++ ?></td>
+                                        <td><?= $row['nama_pelatihan'] ?></td>
+                                        <td><?= $row['penyelenggara'] ?></td>
+                                        <td class="text-center"><?= $row['tahun'] ?></td>
+                                        <td class="text-center">
+                                            <?php if ($row['file_bukti']): ?>
+                                                <a href="<?= $row['file_bukti'] ?>" target="_blank" class="btn btn-sm btn-primary">
+                                                    <i class="fas fa-file-pdf me-1"></i> Lihat Bukti
+                                                </a>
+                                            <?php else: ?>
+                                                <span class="text-muted">-</span>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="5" class="text-center">Tidak ada data pelatihan</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
                 <!-- Select Tahun Kurikulum -->
                 <h5 class="card-title mt-5">Data Kurikulum</h5>
                 <div class="row g-3 align-items-center mb-5">
@@ -87,7 +128,7 @@
 
 <script>
     // Load data mata kuliah
-    $('#cariBtn').click(function () {
+    $('#cariBtn').click(function() {
         var tahun = $('#tahunSelect').val();
         if (tahun) {
             $.ajax({
@@ -97,13 +138,13 @@
                     tahun: tahun
                 },
                 dataType: 'json',
-                success: function (response) {
+                success: function(response) {
                     var tbody = $('#tabelRplBody');
                     $('#tahunApprove').val(tahun); //simpan data pilihan tahun kurikulum
                     tbody.empty();
 
                     if (response.status === 'success' && response.data.length > 0) {
-                        $.each(response.data, function (index, matkul) {
+                        $.each(response.data, function(index, matkul) {
                             var row = '<tr>' +
                                 '<td>' + (index + 1) + '</td>' +
                                 '<td>' + matkul.kode_matkul + '</td>' +
@@ -120,20 +161,20 @@
                     }
 
                     // Tambahkan logika checkbox saling eksklusif
-                    $('.yes-check').on('change', function () {
+                    $('.yes-check').on('change', function() {
                         var noCheck = $(this).closest('tr').find('.no-check');
                         if ($(this).is(':checked')) {
                             noCheck.prop('checked', false);
                         }
                     });
-                    $('.no-check').on('change', function () {
+                    $('.no-check').on('change', function() {
                         var yesCheck = $(this).closest('tr').find('.yes-check');
                         if ($(this).is(':checked')) {
                             yesCheck.prop('checked', false);
                         }
                     });
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     console.error('Error:', error);
                     alert('Terjadi kesalahan saat mengambil data.');
                     $('#matkulContainer').hide();

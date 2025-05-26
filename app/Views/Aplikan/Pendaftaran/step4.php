@@ -53,6 +53,17 @@
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
+                    <!--begin::Input group for Full Name-->
+                    <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Upload Foto Diri</label>
+                        <div class="col-lg-8">
+                            <input type="file" name="file_foto" accept=".jpg, .jpeg, .png" required
+                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                placeholder="Upload Bukti" />
+                            <span class="text-danger">*Format file: .jpg, .jpeg, .png</span>
+                        </div>
+                    </div>
+                    <!--end::Input group for Full Name-->
                 </div>
                 <!--begin::Actions-->
                 <div class="card-footer d-flex justify-content-end py-6 px-9">

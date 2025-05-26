@@ -44,8 +44,10 @@ class DataPendaftaranController extends BaseController
     public function approvePendaftaran($id)
     {
         $model = new ViewDataPendaftaran();
+        $model_pelatihan = new PelatihanModel();
         $model_kurikulum = new TahunAjarModel();
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
+        $data['dtpelatihan'] = $model_pelatihan->where('pendaftaran_id', $id)->findAll();
         $data['dtkurikulum'] = $model_kurikulum->getTahunAjar();
         return $this->render('Asesor/validasi', $data);
     }

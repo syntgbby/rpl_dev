@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <base href="<?= base_url() ?>" />
     <title>PLJ - KRAMAT</title>
@@ -11,8 +12,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link href="<?= base_url('assets/plugins/global/plugins.bundle.css') ?>" rel="stylesheet" type="text/css" />
     <link href="<?= base_url('assets/css/style.bundle.css') ?>" rel="stylesheet" type="text/css" />
-    <script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking)
-        if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
+    <script>
+        // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking)
+        if (window.top != window.self) {
+            window.top.location.replace(window.self.location.href);
+        }
     </script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -20,6 +24,7 @@
     <script src="<?= base_url('assets/plugins/global/plugins.bundle.js') ?>"></script>
     <script src="<?= base_url('assets/js/scripts.bundle.js') ?>"></script>
 </head>
+
 <body id="kt_body" class="app-blank">
     <div class="d-flex flex-column flex-root" id="kt_app_root">
         <div class="d-flex flex-column flex-md-row flex-column-fluid">
@@ -27,43 +32,57 @@
                 <div class="d-flex flex-center flex-column flex-md-row-fluid">
                     <div class="w-md-500px">
 
-                    <?php if (session()->getFlashdata('alert')): ?>
-                        <div class="alert alert-danger">
-                            <?= session()->getFlashdata('alert') ?>
-                        </div>
-                    <?php endif; ?>
+                        <?php if (session()->getFlashdata('success')): ?>
+                            <script>
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success!',
+                                    text: '<?= session()->getFlashdata('success') ?>',
+                                    confirmButtonColor: '#3085d6',
+                                });
+                            </script>
+                        <?php elseif (session()->getFlashdata('error')): ?>
+                            <script>
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: '<?= session()->getFlashdata('error') ?>',
+                                    confirmButtonColor: '#d33',
+                                });
+                            </script>
+                        <?php endif; ?>
 
-                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form">
+                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="/forgot-password" method="post">
                             <div class="text-center mb-11">
                                 <h1 class="text-gray-900 fw-bolder mb-3">Reset Password</h1>
                             </div>
                             <?= csrf_field() ?>
 
                             <div class="fv-row mb-8">
-                                <input type="text" placeholder="Enter your email" name="email" id="email" autocomplete="on" class="form-control bg-transparent" required />
+                                <input type="text" placeholder="Masukkan Email" name="email" id="email" autocomplete="on" class="form-control bg-transparent" required />
                             </div>
 
                             <div class="fv-row mb-8">
-                                <select name="question" id="question" class="form-select form-control bg-transparent" required>
-                                    <option value="" disabled selected>Select Question</option>
-                                    <option value="q1">What is your mother's maiden name?</option>
-                                    <option value="q2">What was the name of your first pet?</option>
-                                    <option value="q3">What is your favorite book?</option>
-                                </select>                            
+                                <select name="question" id="question" class="form-select form-control bg-transparent" data-control="select2" data-placeholder="Pilih Pertanyaan" required>
+                                    <option value="" disabled selected>Pilih Pertanyaan</option>
+                                    <?php foreach ($pertanyaan as $p): ?>
+                                        <option value="<?= $p['id'] ?>"><?= $p['pertanyaan'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
 
                             <div class="fv-row mb-8">
-                                <input type="text" placeholder="Enter your answer" name="answer" id="answer" autocomplete="on" class="form-control bg-transparent" required />
+                                <input type="text" placeholder="Masukkan Jawaban" name="answer" id="answer" autocomplete="on" class="form-control bg-transparent" required />
                             </div>
 
                             <div class="d-grid mb-10">
                                 <button type="submit" id="kt_sign_in_submit" class="btn btn-primary" name="login">
                                     <span class="indicator-label">Reset Password</span>
-                                    <span class="indicator-progress">Please wait... 
-                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    <span class="indicator-progress">Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                 </button>
                             </div>
-                            
+
                         </form>
                     </div>
                 </div>
@@ -79,6 +98,7 @@
     </div>
 
 </body>
+
 </html>
 
 <script type="text/javascript">
@@ -130,5 +150,4 @@
             }
         });
     });
-
 </script>

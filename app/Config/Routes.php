@@ -15,11 +15,8 @@ $routes->post('register', 'AuthController::registerProcess');
 $routes->get('login', 'AuthController::login');
 $routes->post('login', 'AuthController::loginProcess');
 $routes->get('logout', 'AuthController::logout');
-
-// Register
-$routes->get('/register', 'RegisterController::index');
-$routes->post('register/register', 'RegisterController::register');
-$routes->get('/forgot-password', 'RegisterController::viewFPass');
+$routes->get('forgot-password', 'AuthController::viewForgotPassword');
+$routes->post('forgot-password', 'AuthController::forgotPassword');
 
 // Dashboard
 $routes->get('/dashboard', 'DashController::index');
@@ -103,10 +100,13 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan', 'filter' =>
     $routes->post('pendaftaran/saveStep4', 'PendaftaranController::saveStep4');
 
     //update konfirmasi step
-    $routes->get('update-konfirmasi-step/(:segment)', 'PendaftaranController::updateKonfirmasiStep/$1');
+    $routes->get('update-konfirmasi-step/(:segment)/(:any)', 'PendaftaranController::updateKonfirmasiStep/$1/$2');
 
     //tentang RPL
     $routes->get('tentang-rpl', 'TentangRPL::index');
+
+    //check pendaftaran
+    $routes->get('check-pendaftaran', 'PendaftaranController::checkPendaftaran');
 });
 
 // Bagian Kaprodi

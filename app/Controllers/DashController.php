@@ -47,7 +47,7 @@ class DashController extends BaseController
         $user = $this->userModel->where($where)->first();
 
         if ($dataUser['role'] === "aplikan") {
-            $pendaftaran = $this->pendaftaranModel->where('email', $email)->first();
+            $pendaftaran = $this->viewPendaftaran->where('email', $email)->first();
 
             if ($pendaftaran) {
                 $timeline = $this->timelineModel->where('pendaftaran_id', $pendaftaran['pendaftaran_id'])->findAll();

@@ -17,7 +17,7 @@
         <!--end::Card header-->
         <!--begin::Content-->
         <div id="kt_account_settings_profile_details" class="collapse show">
-            <?php if ($konfirmasi_step['status'] == 'N'): ?>
+            <?php if ($konfirmasi_step['status'] == null): ?>
                 <!--begin::Alert-->
                 <div class="alert alert-warning d-flex align-items-center p-5 mb-10">
                     <!--begin::Icon-->
@@ -38,9 +38,8 @@
 
                     <!--begin::Button-->
                     <div class="ms-4">
-                        <a href="/aplikan/update-konfirmasi-step/step2" class="btn btn-sm btn-primary me-2">Ya</a>
-                        <a href="/aplikan/pendaftaran/step3" class="btn btn-sm btn-light">Lanjutkan ke Data Riwayat
-                            Kerja</a>
+                        <a href="/aplikan/update-konfirmasi-step/step2/Y" class="btn btn-sm btn-primary me-2">Ya</a>
+                        <a href="/aplikan/update-konfirmasi-step/step2/N" class="btn btn-sm btn-light">Tidak</a>
                     </div>
                     <!--end::Button-->
                 </div>

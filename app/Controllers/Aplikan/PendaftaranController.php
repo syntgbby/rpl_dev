@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Aplikan;
 
-use App\Models\{PendaftaranModel, PelatihanModel, PengalamanKerjaModel, BuktiPendukungModel, TimelineModel, ProdiModel, DetailAplikanModel, TahunAjarModel, KonfirmasiStepModel};
+use App\Models\{UserModel, PendaftaranModel, PelatihanModel, PengalamanKerjaModel, BuktiPendukungModel, TimelineModel, ProdiModel, DetailAplikanModel, TahunAjarModel, KonfirmasiStepModel};
 use App\Controllers\BaseController;
 
 helper('text');
@@ -18,9 +18,11 @@ class PendaftaranController extends BaseController
     protected $prodiModel;
     protected $tahunAjarModel;
     protected $konfirmasiStepModel;
+    protected $userModel;
 
     public function __construct()
     {
+        $this->userModel = new UserModel();
         $this->pendaftaranModel = new PendaftaranModel();
         $this->pelatihanModel = new PelatihanModel();
         $this->detailAplikanModel = new DetailAplikanModel();
@@ -40,11 +42,22 @@ class PendaftaranController extends BaseController
     public function step1()
     {
         $email = session()->get('email'); // pastikan user sudah login
+        $nama_lengkap = session()->get('name');
+        $user = $this->userModel->where('email', $email)->first();
 
         $dataUser = $this->detailAplikanModel->where('email', $email)->first();
-        $prodi = $this->prodiModel->findAll();
 
-        return $this->render('aplikan/pendaftaran/step1', ['data' => $dataUser, 'prodi' => $prodi]);
+        if ($dataUser) {
+            $dataUser['nama_lengkap'] = $user['nama_lengkap'];
+            $prodi = $this->prodiModel->findAll();
+    
+            return $this->render('aplikan/pendaftaran/step1', ['data' => $dataUser, 'prodi' => $prodi]);
+        } else {
+            $dataUser['nama_lengkap'] = $nama_lengkap;
+            $prodi = $this->prodiModel->findAll();
+
+            return redirect()->to('/dashboard')->with('error', 'Lengkapi Biodata Diri Terlebih Dahulu Dengan Benar!');
+        }
     }
 
     public function saveStep1()
@@ -65,12 +78,11 @@ class PendaftaranController extends BaseController
             return redirect()->to('/aplikan/pendaftaran')->with('error', 'Anda sudah melakukan pendaftaran!');
         }
 
-
         $data = [
             'pendaftaran_id' => $pendaftaranId,
             'tahun_angkatan' => $tahunAngkatan,
             'tahun_ajar_id' => $tahunAjar['id'],
-            'nama_lengkap' => $getUser['nama_lengkap'],
+            'nama_lengkap' => $this->request->getPost('nama_lengkap'),
             'nik' => $this->request->getPost('nik'),
             'program_study_id' => $this->request->getPost('program_studi'),
             'tempat_lahir' => $this->request->getPost('tempat_lahir'),
@@ -96,16 +108,17 @@ class PendaftaranController extends BaseController
             [
                 'pendaftaran_id' => $pendaftaranId,
                 'step' => 'step2',
-                'status' => 'N',
+                'status' => null,
             ],
             [
                 'pendaftaran_id' => $pendaftaranId,
                 'step' => 'step3',
-                'status' => 'N',
+                'status' => null,
             ]
         ];
 
         $this->konfirmasiStepModel->insertBatch($data_konfirmasi_step);
+        $this->pendaftaranModel->updateStatusPendaftaran($pendaftaranId, 'draft');
 
         return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Submit Biodata Diri berhasil!');
     }
@@ -128,14 +141,14 @@ class PendaftaranController extends BaseController
         return $this->render('aplikan/pendaftaran/step2', ['pelatihan' => $pelatihans, 'konfirmasi_step' => $konfirmasi_step]);
     }
 
-    public function updateKonfirmasiStep($step)
+    public function updateKonfirmasiStep($step, $status)
     {
         $email = session()->get('email');
         $pendaftaran = $this->pendaftaranModel->where('email', $email)->first();
         $pendaftaranId = $pendaftaran['pendaftaran_id'];
 
         $data_konfirmasi_step = [
-            'status' => 'Y',
+            'status' => $status,
         ];
 
         if ($step == 'step2') {
@@ -154,18 +167,22 @@ class PendaftaranController extends BaseController
         $this->konfirmasiStepModel->updateKonfirmasiStep($pendaftaranId, $step, $data_konfirmasi_step);
         $this->timelineModel->insert($data_timeline);
 
-        if ($step == 'step2') {
+        if ($step == 'step2' && $status == 'Y') {
             return redirect()->to('/aplikan/pendaftaran/step2');
-        } else {
+        } else if ($step == 'step3' && $status == 'Y') {
             return redirect()->to('/aplikan/pendaftaran/step3');
+        } else if ($step == 'step2' && $status == 'N') {
+            return redirect()->to('/aplikan/pendaftaran/step3');
+        } else {
+            return redirect()->to('/aplikan/pendaftaran/step4');
         }
     }
 
     public function saveStep2()
     {
         $email = session()->get('email');
-        $detailAplikan = $this->detailAplikanModel->where('email', $email)->first();
-        $nama = $detailAplikan['nama_lengkap'];
+        $user = $this->userModel->where('email', $email)->first();
+        $nama = $user['nama_lengkap'];
 
         $formatNama = str_replace(' ', '-', $nama);
 
@@ -226,6 +243,8 @@ class PendaftaranController extends BaseController
 
                     $this->timelineModel->insert($data_timeline);
                 }
+
+                $this->pendaftaranModel->updateStatusPendaftaran($getPendaftaran['pendaftaran_id'], 'draft');
 
                 // Redirect ke halaman step 2 dengan pesan sukses
                 return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Data pelatihan berhasil disimpan');
@@ -319,6 +338,7 @@ class PendaftaranController extends BaseController
                     'keterangan' => 'Pengalaman kerja berhasil diupload',
                 ];
 
+                $this->pendaftaranModel->updateStatusPendaftaran($getPendaftaran['pendaftaran_id'], 'draft');
                 $insert = $this->timelineModel->insert($data_timeline);
                 // Redirect ke halaman step 2 dengan pesan sukses
                 if ($insert) {
@@ -363,7 +383,10 @@ class PendaftaranController extends BaseController
                 'label' => 'File SKL',
                 'rules' => 'uploaded[file_ijazah]|ext_in[file_ijazah,pdf,jpg,jpeg,png]|max_size[file_ijazah,2048]',
             ],
-
+            'file_foto' => [
+                'label' => 'File Foto Diri',
+                'rules' => 'uploaded[file_foto]|ext_in[file_foto,jpg,jpeg,png]|max_size[file_foto,2048]',
+            ],
         ];
 
         // Validasi input
@@ -375,12 +398,14 @@ class PendaftaranController extends BaseController
         $fileKtp = $this->request->getFile('file_ktp');
         $fileKk = $this->request->getFile('file_kk');
         $fileIjazah = $this->request->getFile('file_ijazah');
+        $fileFoto = $this->request->getFile('file_foto');
 
-        if ($fileKtp->isValid() && !$fileKtp->hasMoved() && $fileKk->isValid() && !$fileKk->hasMoved() && $fileIjazah->isValid() && !$fileIjazah->hasMoved()) {
+        if ($fileKtp->isValid() && !$fileKtp->hasMoved() && $fileKk->isValid() && !$fileKk->hasMoved() && $fileIjazah->isValid() && !$fileIjazah->hasMoved() && $fileFoto->isValid() && !$fileFoto->hasMoved()) {
             // Generate nama acak untuk file
             $fileNameKtp = $fileKtp->getRandomName();
             $fileNameKk = $fileKk->getRandomName();
             $fileNameIjazah = $fileIjazah->getRandomName();
+            $fileNameFoto = $fileFoto->getRandomName();
             $path = FCPATH . 'uploads/bukti-pendukung/' . $formatNama;
 
             // Pastikan direktori sudah ada
@@ -393,11 +418,13 @@ class PendaftaranController extends BaseController
                 $fileKtp->move($path, $fileNameKtp);
                 $fileKk->move($path, $fileNameKk);
                 $fileIjazah->move($path, $fileNameIjazah);
+                $fileFoto->move($path, $fileNameFoto);
 
                 // Buat URL file
                 $fileUrlKtp = base_url('uploads/bukti-pendukung/' . $formatNama . '/' . $fileNameKtp);
                 $fileUrlKk = base_url('uploads/bukti-pendukung/' . $formatNama . '/' . $fileNameKk);
                 $fileUrlIjazah = base_url('uploads/bukti-pendukung/' . $formatNama . '/' . $fileNameIjazah);
+                $fileUrlFoto = base_url('uploads/bukti-pendukung/' . $formatNama . '/' . $fileNameFoto);
 
                 // Insert data pelatihan ke database
                 $this->buktiPendukungModel->insert([
@@ -405,6 +432,7 @@ class PendaftaranController extends BaseController
                     'file_ktp' => $fileUrlKtp,
                     'file_kk' => $fileUrlKk,
                     'file_ijazah' => $fileUrlIjazah,
+                    'file_foto' => $fileUrlFoto,
                 ]);
 
                 $this->pendaftaranModel->updateStatusPendaftaran($getPendaftaran['pendaftaran_id'], 'done');
