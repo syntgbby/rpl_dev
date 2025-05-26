@@ -111,7 +111,7 @@ class UserController extends BaseController
             $modelPelatihan->where('pendaftaran_id', $idPendaftaran)->delete();
             $modelPengalamanKerja->where('pendaftaran_id', $idPendaftaran)->delete();
             $modelTimeline->where('pendaftaran_id', $idPendaftaran)->delete();
-            $modelPendaftaran->delete($idPendaftaran);
+            $modelPendaftaran->where('email', $email)->delete();
             $modelDetailAplikan->where('email', $email)->delete();
             $delete = $model->delete($id);
         } else {
