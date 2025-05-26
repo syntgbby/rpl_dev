@@ -102,18 +102,9 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        $('#btnAddTahunAjar').click(function () {
-            $('#modaltitle').html('Tambah Tahun Ajar');
-            $('#modalbody').load("<?= base_url('admin/tahun-ajar/create') ?>");
-            $('#modal').data('rowid', 0);
-            $('#modal').modal('show');
-        });
-    });
-
     function btnAssignAsesor(id) {
         $('#modaltitle').html('Assign Asesor');
-        $('#modalbody').load("<?= base_url('admin/data-pendaftaran/detail/') ?>" + id);
+        $('#modalbody').load("<?= base_url('kaprodi/data-pendaftaran/detail/') ?>" + id);
         $('#modal').data('rowid', 0);
         $('#modal').modal('show');
     }
