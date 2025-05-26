@@ -140,7 +140,7 @@
 <!-- Assign Asesor -->
 <div class="bg-light p-3 rounded">
     <h5 class="text-dark mb-3 border-bottom pb-2">Assign Asesor</h5>
-    <form action="<?= base_url('admin/data-pendaftaran/assign-asesor') ?>" method="post">
+    <form action="<?= base_url('kaprodi/data-pendaftaran/assign-asesor') ?>" method="post">
         <div class="row g-3 align-items-center">
             <input type="hidden" name="pendaftaran_id" value="<?= $dtpendaftaran['pendaftaran_id'] ?>">
             <div class="col-md-8">

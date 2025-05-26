@@ -38,6 +38,7 @@ class DataPendaftaranController extends BaseController
 
         $model = new PendaftaranModel();
         $assign = $model->where('pendaftaran_id', $id)->set(['asesor_id' => $asesor_id])->update();
+        $model->updateStatusPendaftaran($id, 'submitted');
 
         if ($assign) {
             return redirect()->to('/kaprodi/data-pendaftaran')->with('success', 'Assign Asesor berhasi!');
