@@ -75,6 +75,14 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'au
     $routes->get('kurikulum/edit/(:num)', 'KurikulumController::edit/$1');
     $routes->post('kurikulum/update/(:num)', 'KurikulumController::update/$1');
     $routes->get('kurikulum/delete/(:num)', 'KurikulumController::delete/$1');
+
+    // Asesmen
+    $routes->get('capaian-rpl', 'CapaianRPLController::index');
+    $routes->get('capaian-rpl/create', 'CapaianRPLController::create');
+    $routes->post('capaian-rpl/store', 'CapaianRPLController::store');
+    $routes->get('capaian-rpl/edit/(:num)', 'CapaianRPLController::edit/$1');
+    $routes->post('capaian-rpl/update/(:num)', 'CapaianRPLController::update/$1');
+    $routes->get('capaian-rpl/delete/(:num)', 'CapaianRPLController::delete/$1');
 });
 
 // Bagian Aplikan
@@ -113,12 +121,6 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan', 'filter' =>
 $routes->group('kaprodi', ['namespace' => 'App\Controllers\Kaprodi', 'filter' => 'auth'], function ($routes) {
     //View Kurikulum
     $routes->get('kurikulum', 'KurikulumController::index');
-    // $routes->get('kurikulum/create', 'KurikulumController::create');
-    // $routes->post('kurikulum/store', 'KurikulumController::store');
-    // $routes->get('kurikulum/edit/(:num)', 'KurikulumController::edit/$1');
-    // $routes->post('kurikulum/update/(:num)', 'KurikulumController::update/$1');
-    // $routes->get('kurikulum/delete/(:num)', 'KurikulumController::delete/$1');
-
     // Assign Asesor
     $routes->get('data-pendaftaran', 'DataPendaftaranController::index');
     $routes->get('data-pendaftaran/detail/(:any)', 'DataPendaftaranController::viewDetail/$1');

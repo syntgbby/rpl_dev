@@ -184,6 +184,27 @@
                                     <!--end:Menu link-->
                                 </div>
                                 <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0"
+                                    class="menu-item <?= (current_url() == base_url('admin/capaian-rpl') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                                    onclick="window.location.href='<?= base_url('admin/capaian-rpl') ?>'">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-questionnaire-tablet fs-2">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                        </span>
+                                        <span class="menu-title">
+                                            Data Capaian (Asesmen)
+                                        </span>
+                                        <!-- <span class="menu-arrow"></span> -->
+                                    </span>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
                             </div>
                             <!--end:Menu sub-->
                         </div>
