@@ -285,6 +285,23 @@
                             <!--end:Menu sub-->
                         </div>
                         <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
+                            class="menu-item <?= (current_url() == base_url('asesor/laporan-rpl') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2"
+                            onclick="window.location.href='<?= base_url('asesor/laporan-rpl') ?>'">
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+                                <span class="menu-icon">
+                                    <i class="ki-duotone ki-save-2 fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                </span>
+                                <span class="menu-title">Laporan RPL</span>
+                            </span>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
                     <?php endif; ?>
 
                     <!-- menu aplikan -->

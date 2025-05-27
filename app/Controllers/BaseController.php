@@ -84,7 +84,6 @@ abstract class BaseController extends Controller
             'role' => $role,
             'pict' => $pict
         ];
-
         return $data;
     }
     // You can add more global variables here like user information, etc.

@@ -150,6 +150,10 @@ $routes->group('asesor', ['namespace' => 'App\Controllers\Asesor', 'filter' => '
     // Data Not Approved
     $routes->get('data-not-approved', 'DataNotApprovedController::index');
     $routes->get('view-detail-not-approved/(:any)', 'DataNotApprovedController::viewDetail/$1');
+    
+    // Laporan
+    $routes->get('laporan-rpl', 'DataLaporanRplController::index');
+
 
 });
 
