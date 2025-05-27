@@ -79,10 +79,10 @@
                         <table class="table table-bordered text-center" id="matkulTable">
                             <thead style="background-color: #b3e0ff; text-align: center; vertical-align: middle;">
                                 <tr>
-                                    <th rowspan="2" style="width: 10%;">No</th>
-                                    <th rowspan="2" style="width: 20%;">Kode Mata Kuliah</th>
-                                    <th rowspan="2" style="width: 40%;">Nama Mata Kuliah</th>
-                                    <th colspan="2" style="width: 30%;">Mengajukan RPL</th>
+                                    <th rowspan="2" style="width: 5%;">No</th>
+                                    <th rowspan="2" style="width: 10%;">Kode Mata Kuliah</th>
+                                    <th rowspan="2" style="width: 25%;">Nama Mata Kuliah</th>
+                                    <th colspan="2" style="width: 5%;">Mengajukan RPL</th>
                                     <th rowspan="2" style="width: 30%;">Asesmen</th>
                                 </tr>
                                 <tr>
@@ -97,8 +97,8 @@
                         <div class="row my-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Status Approval</label>
-                                <select class="form-select form-select-lg h-100" id="status"
-                                    data-control="select2" data-placeholder="Pilih Status Approval" name="status">
+                                <select class="form-select form-select-lg h-100" id="status" data-control="select2"
+                                    data-placeholder="Pilih Status Approval" name="status">
                                     <option value="" selected disabled>Pilih Status Approval</option>
                                     <option value="approved" id="approved">Approved</option>
                                     <option value="rejected" id="rejected">Rejected</option>
@@ -131,9 +131,11 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     // Load data mata kuliah
-    $('#cariBtn').click(function() {
+    $('#cariBtn').click(function () {
         var tahun = $('#tahunSelect').val();
         if (tahun) {
             $.ajax({
@@ -143,13 +145,13 @@
                     tahun: tahun
                 },
                 dataType: 'json',
-                success: function(response) {
+                success: function (response) {
                     var tbody = $('#tabelRplBody');
                     $('#tahunApprove').val(tahun); //simpan data pilihan tahun kurikulum
                     tbody.empty();
 
                     if (response.status === 'success' && response.data.length > 0) {
-                        $.each(response.data, function(index, matkul) {
+                        $.each(response.data, function (index, matkul) {
                             var row = '<tr>' +
                                 '<td>' + (index + 1) + '</td>' +
                                 '<td>' + matkul.kode_matkul + '</td>' +
@@ -167,20 +169,20 @@
                     }
 
                     // Tambahkan logika checkbox saling eksklusif
-                    $('.yes-check').on('change', function() {
+                    $('.yes-check').on('change', function () {
                         var noCheck = $(this).closest('tr').find('.no-check');
                         if ($(this).is(':checked')) {
                             noCheck.prop('checked', false);
                         }
                     });
-                    $('.no-check').on('change', function() {
+                    $('.no-check').on('change', function () {
                         var yesCheck = $(this).closest('tr').find('.yes-check');
                         if ($(this).is(':checked')) {
                             yesCheck.prop('checked', false);
                         }
                     });
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error('Error:', error);
                     alert('Terjadi kesalahan saat mengambil data.');
                     $('#matkulContainer').hide();
@@ -192,8 +194,8 @@
         }
     });
 
-    $(document).ready(function() {
-        $('#status').change(function() {
+    $(document).ready(function () {
+        $('#status').change(function () {
             const status = $(this).val();
             if (status === 'approved') {
                 $('#tipeRplContainer').show();
@@ -206,9 +208,28 @@
                 $('#alasanContainer').hide();
             }
         });
-        
+
         $('#tipeRplContainer').hide();
         $('#alasanContainer').hide();
+    });
+
+    $('#approveRplForm').submit(function (e) {
+        e.preventDefault(); // Stop form dari auto-submit
+
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Data pendaftaran ini akan di-approved dan dicetak!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#198754', // warna btn-success
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Lanjutkan!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.submit(); // submit form jika user yakin
+            }
+        });
     });
 
 </script>

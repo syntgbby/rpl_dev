@@ -3,8 +3,8 @@
 namespace App\Controllers\Asesor;
 
 use CodeIgniter\Controller;
-use App\Models\{ApprovalRplModel, FinalApprovalModel};
-use App\Models\View\ViewDataPendaftaran;
+use App\Models\{ApprovalRplModel, FinalApprovalModel, CapaianRPL, CapaianDtl};
+use App\Models\View\{ViewDataPendaftaran, ViewCapaian};
 use App\Models\PendaftaranModel;
 use App\Controllers\BaseController;
 use Dompdf\Dompdf;
@@ -19,31 +19,61 @@ class AsesorController extends Controller
         $pendaftaranModel = new PendaftaranModel();
         $viewPendaftaranModel = new ViewDataPendaftaran();
         $finalApprovalModel = new FinalApprovalModel();
+        $capaianModel = new CapaianRPL();
+        $capaianDtlModel = new CapaianDtl();
 
         $pendaftaranId = $this->request->getPost('pendaftaran_id');
         $tahunajarId = $this->request->getPost('tahunSelectApprove');
         $status = $this->request->getPost('status');
         $type = $this->request->getPost('type');
-        
-        $rplData = $this->request->getPost('rpl'); // Array dari checkbox "Ya"
-        
-        if (empty($rplData) || empty($pendaftaranId)) {
-            return redirect()->to('/asesor/data-pendaftaran')->with('error', 'Tidak ada mata kuliah yang dipilih atau data pendaftaran tidak valid.');
+        $alasan = $this->request->getPost('alasan');
+
+        $rplArray = $this->request->getPost('rpl'); // checkbox "Ya", key = kode matkul
+        $asesmenArray = $this->request->getPost('asesmen');
+        // dd($this->request->getPost());
+
+        if (!$pendaftaranId || !$rplArray || !$asesmenArray || !$status) {
+            return redirect()->to('/asesor/data-pendaftaran')->with('error', 'Data tidak lengkap.');
         }
-        if (empty($status)) {
-            return redirect()->to('/asesor/data-pendaftaran')->with('error', 'Status belum dimasukkan.');
+
+        if ($status === 'rejected' && empty($alasan)) {
+            return redirect()->to('/asesor/data-pendaftaran')->with('error', 'Alasan penolakan wajib diisi.');
         }
 
         $dataToInsert = [];
-        $dataToInsert[] = [
-            'pendaftaran_id' => $pendaftaranId,
-            'kurikulum_id' => $tahunajarId
-        ];
+        foreach ($rplArray as $kurikulumId => $value) {
+            $dataToInsert[] = [
+                'pendaftaran_id' => $pendaftaranId,
+                'kurikulum_id' => $kurikulumId
+            ];
+        }
 
         if (!empty($dataToInsert)) {
+            //save approval kurikulum
             $approvalModel->insertBatch($dataToInsert);
+
+
+            // save approval asesmen
+            $dataToInsertAsesmen = [];
+            foreach ($asesmenArray as $kurikulumIdA => $value) {
+                $capaianList = $capaianModel->where('kurikulum_id', $kurikulumIdA)->findAll();
+                if (!empty($capaianList)) {
+                    foreach ($capaianList as $capaian) {
+                        $capaianId = $capaian['id'];
+                        $dataToInsertAsesmen[] = [
+                            'pendaftaran_id' => $pendaftaranId,
+                            'capaian_id' => $capaianId,
+                            'status' => $value
+                        ];
+                    }
+                }
+            }
+
+            $capaianDtlModel->insertBatch($dataToInsertAsesmen);
+
             // Update status pendaftaran menggunakan method yang benar
             $pendaftaranModel->updateStatusPendaftaran($pendaftaranId, $status);
+
             $finalApprovalModel->insert([
                 'pendaftaran_id' => $pendaftaranId,
                 'status' => $status,
@@ -94,6 +124,7 @@ class AsesorController extends Controller
                 $htmlEmail = view('ContentEmail/status_rpl', $dataEmail);
 
                 $pendaftaranModel->updateSuratPernyataan($pendaftaranId, $filePath);
+
                 $attributes = [
                     'to' => $email,
                     'subject' => 'Status Pendaftaran RPL ' . $dtemail['nama_lengkap'],
@@ -101,8 +132,6 @@ class AsesorController extends Controller
                 ];
 
             } else {
-                $alasan = $this->request->getPost('alasan');
-
                 $pendaftaranModel->updateAlasanPernyataan($pendaftaranId, $alasan);
 
                 $attributes = [
@@ -154,4 +183,52 @@ class AsesorController extends Controller
         return base_url('surat_keputusan/' . $filename);
     }
 
+    private function generateSuratAsesmenPerMatkul($pendaftaranId, $rplArray, $dtemail)
+    {
+        $viewCapaian = new ViewCapaian();
+        $capaianModel = new CapaianRPL();
+
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+        $dompdf = new Dompdf($options);
+
+        $folder = WRITEPATH . 'surat_asesmen/';
+        if (!is_dir($folder)) {
+            mkdir($folder, 0777, true);
+        }
+
+        $folderPublic = FCPATH . 'surat_asesmen/';
+        if (!is_dir($folderPublic)) {
+            mkdir($folderPublic, 0777, true);
+        }
+
+        foreach ($rplArray as $kurikulumId => $v) {
+            $listCapaian = $viewCapaian->where('pendaftaran_id', $pendaftaranId)
+                ->where('kurikulum_id', $kurikulumId)
+                ->findAll();
+
+            if (empty($listCapaian)) {
+                continue; // skip kalau nggak ada data capaian
+            }
+
+            $dataView = [
+                'nama' => $dtemail['nama_lengkap'],
+                'prodi' => $dtemail['program_study'],
+                'semester' => $dtemail['tahun_ajar'],
+                'mata_kuliah' => $listCapaian[0]['nama_matkul'],
+                'capaian_list' => $listCapaian,
+                'tanggal' => date('d F Y')
+            ];
+
+            $html = view('aplikan/surat_asesmen_matkul', $dataView);
+            $dompdf->loadHtml($html);
+            $dompdf->setPaper('A4', 'portrait');
+            $dompdf->render();
+
+            $filename = 'Surat_Asesmen_' . $kurikulumId . '_' . time() . '.pdf';
+
+            file_put_contents($folder . $filename, $dompdf->output());
+            copy($folder . $filename, $folderPublic . $filename);
+        }
+    }
 }
