@@ -76,6 +76,7 @@
                                 <th class="min-w-55px">Mata Kuliah</th>
                                 <th class="min-w-55px">SKS</th>
                                 <th class="min-w-55px">Status</th>
+                                <th class="min-w-55px">Aksi</th>
                             </tr>
                         </thead>
                         <?php if ($kurikulum): ?>
@@ -96,6 +97,9 @@
                                                 <span class="badge bg-danger text-white">Tidak Aktif</span>
                                             <?php endif; ?>
                                         </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-primary" onclick="lihatAsesmen('<?= $row['kode_matkul'] ?>')">Lihat Asesmen</button>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -113,4 +117,11 @@
     </div>
 </div>
 
+<script>
+    function lihatAsesmen(kode_matkul) {
+        $('#modaltitle').html('Detail Asesmen');
+        $('#modalbody').load("<?= base_url('kaprodi/get-asesmen/') ?>" + kode_matkul);
+        $('#modal').modal('show');
+    }
+</script>
 <?= $this->endSection() ?>

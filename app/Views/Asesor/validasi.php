@@ -83,6 +83,7 @@
                                     <th rowspan="2" style="width: 20%;">Kode Mata Kuliah</th>
                                     <th rowspan="2" style="width: 40%;">Nama Mata Kuliah</th>
                                     <th colspan="2" style="width: 30%;">Mengajukan RPL</th>
+                                    <th rowspan="2" style="width: 30%;">Asesmen</th>
                                 </tr>
                                 <tr>
                                     <th style="width: 15%;">Ya</th>
@@ -95,6 +96,15 @@
                         </table>
                         <div class="row my-3">
                             <div class="col-md-6">
+                                <label class="form-label fw-bold">Status Approval</label>
+                                <select class="form-select form-select-lg h-100" id="status"
+                                    data-control="select2" data-placeholder="Pilih Status Approval" name="status">
+                                    <option value="" selected disabled>Pilih Status Approval</option>
+                                    <option value="approved" id="approved">Approved</option>
+                                    <option value="rejected" id="rejected">Rejected</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6" style="display: none;" id="tipeRplContainer">
                                 <label class="form-label fw-bold">Tipe RPL</label>
                                 <select class="form-select form-select-lg h-100" data-control="select2"
                                     data-placeholder="Pilih Tipe RPL" name="type">
@@ -104,21 +114,16 @@
                                     <option value="C">Type C</option>
                                 </select>
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-bold">Status Approval</label>
-                                <select class="form-select form-select-lg h-100" data-control="select2"
-                                    data-placeholder="Pilih Status Approval" name="status">
-                                    <option value="" selected disabled>Pilih Status Approval</option>
-                                    <option value="approved">Approved</option>
-                                    <option value="rejected">Rejected</option>
-                                </select>
-                            </div>
-                            <div class="col d-flex align-items-end justify-content-end ">
-                                <button type="submit" class="btn btn-success" id="submitBtn">Approve</button>
-                                <button type="button" class="btn btn-secondary ms-3"
-                                    onclick="window.history.back()">Kembali</button>
+                            <div class="col-md-6" style="display: none;" id="alasanContainer">
+                                <label class="form-label fw-bold">Alasan Penolakan</label>
+                                <textarea class="form-control" name="alasan" id="alasan" rows="3"></textarea>
                             </div>
                         </div>
+                    </div>
+                    <div class="col d-flex align-items-end justify-content-end mt-5">
+                        <button type="submit" class="btn btn-success" id="submitBtn">Approve</button>
+                        <button type="button" class="btn btn-secondary ms-3"
+                            onclick="window.history.back()">Kembali</button>
                     </div>
                 </form>
             </div>
@@ -151,6 +156,7 @@
                                 '<td>' + matkul.nama_matkul + '</td>' +
                                 '<td><input type="checkbox" class="yes-check" name="rpl[' + matkul.id + ']" value="1" checked></td>' +
                                 '<td><input type="checkbox" class="no-check" name="rpl[' + matkul.id + ']" value="0"></td>' +
+                                '<td><select class="form-select form-select-lg h-100 w-100" data-control="select2" data-placeholder="Pilih Nilai Asesmen" name="asesmen[' + matkul.id + ']"><option value="" selected disabled>Pilih Nilai Asesmen</option><option value="Baik">Baik</option><option value="Cukup">Cukup</option><option value="Sangat Baik">Sangat Baik</option></select></td>' +
                                 '</tr>';
                             tbody.append(row);
                         });
@@ -185,6 +191,26 @@
             $('#matkulContainer').hide();
         }
     });
+
+    $(document).ready(function() {
+        $('#status').change(function() {
+            const status = $(this).val();
+            if (status === 'approved') {
+                $('#tipeRplContainer').show();
+                $('#alasanContainer').hide();
+            } else if (status === 'rejected') {
+                $('#alasanContainer').show();
+                $('#tipeRplContainer').hide();
+            } else {
+                $('#tipeRplContainer').hide();
+                $('#alasanContainer').hide();
+            }
+        });
+        
+        $('#tipeRplContainer').hide();
+        $('#alasanContainer').hide();
+    });
+
 </script>
 
 <?= $this->endSection(); ?>

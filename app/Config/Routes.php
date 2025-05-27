@@ -128,6 +128,9 @@ $routes->group('kaprodi', ['namespace' => 'App\Controllers\Kaprodi', 'filter' =>
 
     // Data Approved
     $routes->get('data-approved', 'ApprovalController::index');
+
+    // Asesmen
+    $routes->get('get-asesmen/(:any)', 'KurikulumController::getAsesmen/$1');
 });
 
 // Bagian Asesor

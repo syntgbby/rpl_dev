@@ -59,4 +59,11 @@ class PendaftaranModel extends Model
         $id = $pendaftaran['id'];
         $this->update($id, ['surat_pernyataan' => $surat]);
     }
+
+    public function updateAlasanPernyataan($pendaftaranId, $alasan)
+    {
+        $pendaftaran = $this->where('pendaftaran_id', $pendaftaranId)->first();
+        $id = $pendaftaran['id'];
+        $this->update($id, ['alasan_penolakan' => $alasan]);
+    }
 }

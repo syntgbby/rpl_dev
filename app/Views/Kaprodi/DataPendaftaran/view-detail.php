@@ -167,45 +167,6 @@
 <script>
     $(document).ready(function () {
         $('#asesor_id').select2();
-
-        $('#btnAssign').click(function () {
-            var asesorId = $('#asesor_id').val();
-            var pendaftaranId = $('#pendaftaran_id').val();
-            if (asesorId == '') {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Pilih Asesor terlebih dahulu',
-                    confirmButtonColor: '#3085d6'
-                });
-                return false;
-            }
-
-            $.ajax({
-                url: '<?= base_url('kaprodi/data-pendaftaran/assign-asesor') ?>',
-                type: 'POST',
-                data: {
-                    asesor_id: asesorId,
-                    pendaftaran_id: pendaftaranId
-                },
-                success: function (response) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil',
-                        text: 'Asesor berhasil diassign',
-                        confirmButtonColor: '#3085d6'
-                    });
-                },
-                error: function (xhr, status, error) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Gagal Asign Asesor',
-                        confirmButtonColor: '#3085d6'
-                    });
-                }
-            });
-        });
     });
 </script>
 </div>

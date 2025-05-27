@@ -24,9 +24,9 @@ class AsesorController extends Controller
         $tahunajarId = $this->request->getPost('tahunSelectApprove');
         $status = $this->request->getPost('status');
         $type = $this->request->getPost('type');
-
+        
         $rplData = $this->request->getPost('rpl'); // Array dari checkbox "Ya"
-
+        
         if (empty($rplData) || empty($pendaftaranId)) {
             return redirect()->to('/asesor/data-pendaftaran')->with('error', 'Tidak ada mata kuliah yang dipilih atau data pendaftaran tidak valid.');
         }
@@ -41,15 +41,14 @@ class AsesorController extends Controller
         ];
 
         if (!empty($dataToInsert)) {
-            // $approvalModel->insertBatch($dataToInsert);
+            $approvalModel->insertBatch($dataToInsert);
             // Update status pendaftaran menggunakan method yang benar
-            // $pendaftaranModel->updateStatusPendaftaran($pendaftaranId, $status);
-            // $finalApprovalModel->insert([
-            //     'pendaftaran_id' => $pendaftaranId,
-            //     'status' => $status,
-            //     'type' => $type
-            // ]);
-
+            $pendaftaranModel->updateStatusPendaftaran($pendaftaranId, $status);
+            $finalApprovalModel->insert([
+                'pendaftaran_id' => $pendaftaranId,
+                'status' => $status,
+                'type' => $type
+            ]);
 
             $dtemail = $viewPendaftaranModel->where('pendaftaran_id', $pendaftaranId)->first();
             $email = $dtemail['email'];
@@ -102,10 +101,14 @@ class AsesorController extends Controller
                 ];
 
             } else {
+                $alasan = $this->request->getPost('alasan');
+
+                $pendaftaranModel->updateAlasanPernyataan($pendaftaranId, $alasan);
+
                 $attributes = [
                     'to' => $email,
                     'subject' => 'Status Pendaftaran RPL ' . $dtemail['nama_lengkap'],
-                    'message' => 'Maaf, RPL anda telah di ' . $status . '!'
+                    'message' => 'Maaf, RPL anda telah di ' . $status . '!' . ' Alasan: ' . $alasan
                 ];
             }
 
