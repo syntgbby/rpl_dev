@@ -73,7 +73,8 @@
 
                 <!-- Tabel RPL -->
                 <form id="approveRplForm" method="post" action="<?= base_url('asesor/approve-rpl') ?>">
-                    <input type="hidden" name="pendaftaran_id" value="<?= esc($dtpendaftaran['pendaftaran_id']) ?>">
+                    <input type="hidden" name="pendaftaran_id" id="pendaftaran_id"
+                        value="<?= esc($dtpendaftaran['pendaftaran_id']) ?>">
                     <input type="hidden" name="tahunSelectApprove" id="tahunApprove">
                     <div class="table-responsive" id="matkulContainer" style="display:none;">
                         <table class="table table-bordered text-center" id="matkulTable">
@@ -137,12 +138,14 @@
     // Load data mata kuliah
     $('#cariBtn').click(function () {
         var tahun = $('#tahunSelect').val();
+        var id = $('#pendaftaran_id').val();
         if (tahun) {
             $.ajax({
-                url: '<?= base_url('asesor/get-matkul') ?>/' + tahun,
+                url: '<?= base_url('asesor/get-matkul') ?>',
                 type: 'GET',
                 data: {
-                    tahun: tahun
+                    tahun: tahun,
+                    pendaftaran_id: id
                 },
                 dataType: 'json',
                 success: function (response) {
@@ -156,8 +159,8 @@
                                 '<td>' + (index + 1) + '</td>' +
                                 '<td>' + matkul.kode_matkul + '</td>' +
                                 '<td>' + matkul.nama_matkul + '</td>' +
-                                '<td><input type="checkbox" class="yes-check" name="rpl[' + matkul.id + ']" value="1" checked></td>' +
-                                '<td><input type="checkbox" class="no-check" name="rpl[' + matkul.id + ']" value="0"></td>' +
+                                '<td><input type="checkbox" class="yes-check" name="rpl[' + matkul.id + ']" value="Y" checked></td>' +
+                                '<td><input type="checkbox" class="no-check" name="rpl[' + matkul.id + ']" value="N"></td>' +
                                 '<td><select class="form-select form-select-lg h-100 w-100" data-control="select2" data-placeholder="Pilih Nilai Asesmen" name="asesmen[' + matkul.id + ']"><option value="" selected disabled>Pilih Nilai Asesmen</option><option value="Baik">Baik</option><option value="Cukup">Cukup</option><option value="Sangat Baik">Sangat Baik</option></select></td>' +
                                 '</tr>';
                             tbody.append(row);
@@ -170,17 +173,29 @@
 
                     // Tambahkan logika checkbox saling eksklusif
                     $('.yes-check').on('change', function () {
-                        var noCheck = $(this).closest('tr').find('.no-check');
+                        var tr = $(this).closest('tr');
+                        var noCheck = tr.find('.no-check');
+                        var asesmenSelect = tr.find('select');
+
                         if ($(this).is(':checked')) {
                             noCheck.prop('checked', false);
+                            asesmenSelect.prop('disabled', false);
                         }
                     });
+
                     $('.no-check').on('change', function () {
-                        var yesCheck = $(this).closest('tr').find('.yes-check');
+                        var tr = $(this).closest('tr');
+                        var yesCheck = tr.find('.yes-check');
+                        var asesmenSelect = tr.find('select');
+
                         if ($(this).is(':checked')) {
                             yesCheck.prop('checked', false);
+                            asesmenSelect.val('').prop('disabled', true); // reset + disable
+                        } else {
+                            asesmenSelect.prop('disabled', false);
                         }
                     });
+
                 },
                 error: function (xhr, status, error) {
                     console.error('Error:', error);

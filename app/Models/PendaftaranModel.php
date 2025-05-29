@@ -21,6 +21,7 @@ class PendaftaranModel extends Model
         'no_hp',
         'email',
         'status_pendaftaran',
+        'type_rpl',
         'program_study_id',
         'tahun_angkatan',
         'tahun_ajar_id',
@@ -65,5 +66,12 @@ class PendaftaranModel extends Model
         $pendaftaran = $this->where('pendaftaran_id', $pendaftaranId)->first();
         $id = $pendaftaran['id'];
         $this->update($id, ['alasan_penolakan' => $alasan]);
+    }
+
+    public function updateType($pendaftaranId, $type)
+    {
+        $pendaftaran = $this->where('pendaftaran_id', $pendaftaranId)->first();
+        $id = $pendaftaran['id'];
+        $this->update($id, ['type_rpl' => $type]);
     }
 }

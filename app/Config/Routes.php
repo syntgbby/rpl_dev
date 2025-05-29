@@ -139,7 +139,7 @@ $routes->group('asesor', ['namespace' => 'App\Controllers\Asesor', 'filter' => '
     $routes->get('data-pendaftaran', 'DataPendaftaranController::index');
     $routes->get('view-detail-pendaftaran/(:any)', 'DataPendaftaranController::viewDetail/$1');
     $routes->get('approve-pendaftaran/(:any)', 'DataPendaftaranController::approvePendaftaran/$1');
-    $routes->get('get-matkul/(:any)', 'DataPendaftaranController::getMatkulByTahun/$1');
+    $routes->get('get-matkul', 'DataPendaftaranController::getMatkulByTahun');
     $routes->post('approve-rpl', 'AsesorController::approveRpl');
     $routes->get('approve-nilai', 'AsesorController::viewApprove');
 
@@ -150,7 +150,7 @@ $routes->group('asesor', ['namespace' => 'App\Controllers\Asesor', 'filter' => '
     // Data Not Approved
     $routes->get('data-not-approved', 'DataNotApprovedController::index');
     $routes->get('view-detail-not-approved/(:any)', 'DataNotApprovedController::viewDetail/$1');
-    
+
     // Laporan
     $routes->get('laporan-rpl', 'DataLaporanRplController::index');
 

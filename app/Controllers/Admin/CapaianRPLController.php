@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\View\ViewCapaian;
+use App\Models\View\{ViewCapaian, ViewKurikulum};
 use App\Models\CapaianRPL;
 use App\Models\MataKuliahModel;
 use App\Controllers\BaseController;
@@ -22,7 +22,7 @@ class CapaianRPLController extends BaseController
     // Tampilan Form Tambah Asesmen
     public function create()
     {
-        $mataKuliah = new MataKuliahModel();
+        $mataKuliah = new ViewKurikulum();
 
         $data['mata_kuliah'] = $mataKuliah->where('status', 'Y')->findAll();
 
@@ -43,8 +43,9 @@ class CapaianRPLController extends BaseController
 
         $data = [
             'deskripsi' => $this->request->getPost('deskripsi'),
-            'kode_matkul' => $this->request->getPost('kode_matkul'),
+            'kurikulum_id' => $this->request->getPost('kurikulum_id'),
         ];
+        // dd($data);
 
         $insert = $model->save($data);
 
@@ -61,7 +62,7 @@ class CapaianRPLController extends BaseController
         $model = new CapaianRPL();
         $data['dtasesmen'] = $model->find($id);
 
-        $mataKuliah = new MataKuliahModel();
+        $mataKuliah = new ViewKurikulum();
         $data['mata_kuliah'] = $mataKuliah->where('status', 'Y')->findAll();
 
         return $this->render('Admin/CapaianRPL/form', $data);
@@ -74,7 +75,7 @@ class CapaianRPLController extends BaseController
 
         $data = [
             'deskripsi' => $this->request->getPost('deskripsi'),
-            'kode_matkul' => $this->request->getPost('kode_matkul'),
+            'kurikulum_id' => $this->request->getPost('kurikulum_id'),
         ];
 
         $update = $model->update($id, $data);

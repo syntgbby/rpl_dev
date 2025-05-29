@@ -52,8 +52,11 @@ class DataPendaftaranController extends BaseController
         return $this->render('Asesor/validasi', $data);
     }
 
-    public function getMatkulByTahun($tahun)
+    public function getMatkulByTahun()
     {
+        $tahun = $this->request->getGet('tahun');
+        $pendaftaran_id = $this->request->getGet('pendaftaran_id');
+
         if (!$tahun) {
             return $this->response->setJSON([
                 'status' => 'error',
@@ -62,9 +65,13 @@ class DataPendaftaranController extends BaseController
         }
 
         $kurikulumModel = new KurikulumModel();
+        $pendaftaranModel = new PendaftaranModel();
+
+        $pendaftaran = $pendaftaranModel->where('pendaftaran_id', $pendaftaran_id)->first();
+        $prodi = $pendaftaran['program_study_id']; // Jika model return array
 
         // Asumsi kamu punya method getMatkulByTahun di KurikulumModel
-        $data = $kurikulumModel->getMatkulByTahun($tahun);
+        $data = $kurikulumModel->getMatkulByTahun($tahun, $prodi);
 
         if ($data) {
             return $this->response->setJSON([

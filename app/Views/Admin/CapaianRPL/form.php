@@ -13,11 +13,11 @@
                     </div>
                     <div class="col-md-7">
                         <select class="form-control form-control-solid form-control-lg" data-control="select2"
-                            id="kode_matkul" name="kode_matkul" placeholder="Pilih Mata Kuliah" required>
+                            id="kurikulum_id" name="kurikulum_id" placeholder="Pilih Mata Kuliah" required>
                             <option value="" disabled selected>Pilih Mata Kuliah</option>
                             <?php foreach ($mata_kuliah as $mrow): ?>
-                                <option value="<?= $mrow['kode_matkul'] ?>" <?= (isset($dtasesmen) && $dtasesmen['kode_matkul'] == $mrow['kode_matkul']) ? 'selected' : '' ?>>
-                                    <?= $mrow['kode_matkul'] ?> - <?= $mrow['nama_matkul'] ?>
+                                <option value="<?= $mrow['id'] ?>" <?= (isset($dtasesmen) && $dtasesmen['kurikulum_id'] == $mrow['id']) ? 'selected' : '' ?>>
+                                    (<?= $mrow['nama_prodi'] ?>) <?= $mrow['kode_matkul'] ?> - <?= $mrow['nama_matkul'] ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>

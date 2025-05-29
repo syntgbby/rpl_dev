@@ -53,7 +53,6 @@
                                 <th class="min-w-25px">Nama Program Studi</th>
                                 <th class="min-w-25px">Jenjang Pendidikan</th>
                                 <th class="min-w-25px">Kategori</th>
-                                <th class="min-w-85px">Desc</th>
                                 <th class="min-w-100px">Action</th>
                             </tr>
                         </thead>
@@ -73,9 +72,6 @@
                                         </td>
                                         <td>
                                             <?= $row['kategori'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $row['deskripsi_singkat'] ?>
                                         </td>
                                         <td class="text-center">
                                             <div class="d-flex align-items-center justify-content-center gap-2">

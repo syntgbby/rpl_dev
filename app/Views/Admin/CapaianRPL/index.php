@@ -51,10 +51,11 @@
                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_prodi">
                         <thead>
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
-                                <th class="min-w-10px">No</th>
-                                <th class="min-w-55px">Kode Mata Kuliah</th>
-                                <th class="min-w-55px">Mata Kuliah</th>
-                                <th class="min-w-55px">Deskripsi</th>
+                                <th class="min-w-5px">No</th>
+                                <th class="min-w-25px">Program Studi</th>
+                                <th class="min-w-25px">Kode Mata Kuliah</th>
+                                <th class="min-w-25px">Mata Kuliah</th>
+                                <th class="min-w-55px">Asesmen</th>
                                 <th class="min-w-100px">Action</th>
                             </tr>
                         </thead>
@@ -65,6 +66,9 @@
                                     <tr>
                                         <td class="text-center">
                                             <?= $no++ ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?= $row['nama_prodi'] ?>
                                         </td>
                                         <td class="text-center">
                                             <?= $row['kode_matkul'] ?>

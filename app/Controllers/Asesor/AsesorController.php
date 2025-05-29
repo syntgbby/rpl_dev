@@ -3,8 +3,8 @@
 namespace App\Controllers\Asesor;
 
 use CodeIgniter\Controller;
-use App\Models\{ApprovalRplModel, FinalApprovalModel, CapaianRPL, CapaianDtl};
-use App\Models\View\{ViewDataPendaftaran, ViewCapaian};
+use App\Models\{ApprovalRplModel, CapaianRPL, CapaianDtl};
+use App\Models\View\{ViewAplikan, ViewDataPendaftaran, ViewCapaian, ViewApproval};
 use App\Models\PendaftaranModel;
 use App\Controllers\BaseController;
 use Dompdf\Dompdf;
@@ -18,12 +18,11 @@ class AsesorController extends Controller
         $approvalModel = new ApprovalRplModel();
         $pendaftaranModel = new PendaftaranModel();
         $viewPendaftaranModel = new ViewDataPendaftaran();
-        $finalApprovalModel = new FinalApprovalModel();
         $capaianModel = new CapaianRPL();
         $capaianDtlModel = new CapaianDtl();
+        $viewApprovalModel = new ViewApproval();
 
         $pendaftaranId = $this->request->getPost('pendaftaran_id');
-        $tahunajarId = $this->request->getPost('tahunSelectApprove');
         $status = $this->request->getPost('status');
         $type = $this->request->getPost('type');
         $alasan = $this->request->getPost('alasan');
@@ -44,14 +43,14 @@ class AsesorController extends Controller
         foreach ($rplArray as $kurikulumId => $value) {
             $dataToInsert[] = [
                 'pendaftaran_id' => $pendaftaranId,
-                'kurikulum_id' => $kurikulumId
+                'kurikulum_id' => $kurikulumId,
+                'status' => $value
             ];
         }
 
         if (!empty($dataToInsert)) {
             //save approval kurikulum
             $approvalModel->insertBatch($dataToInsert);
-
 
             // save approval asesmen
             $dataToInsertAsesmen = [];
@@ -71,17 +70,15 @@ class AsesorController extends Controller
 
             $capaianDtlModel->insertBatch($dataToInsertAsesmen);
 
-            // Update status pendaftaran menggunakan method yang benar
-            $pendaftaranModel->updateStatusPendaftaran($pendaftaranId, $status);
-
-            $finalApprovalModel->insert([
-                'pendaftaran_id' => $pendaftaranId,
-                'status' => $status,
-                'type' => $type
-            ]);
-
             $dtemail = $viewPendaftaranModel->where('pendaftaran_id', $pendaftaranId)->first();
             $email = $dtemail['email'];
+
+            // Update status pendaftaran menggunakan method yang benar
+            $pendaftaranModel->updateStatusPendaftaran($pendaftaranId, $status);
+            $pendaftaranModel->updateType($pendaftaranId, $type);
+
+            // Tambahkan ini:
+            // $this->generateSuratAsesmenPerMatkul($pendaftaranId, $rplArray, $dtemail);
 
             if ($status == 'approved') {
                 if (!empty($dtemail['tahun_ajar'])) {
@@ -104,7 +101,8 @@ class AsesorController extends Controller
                     'tanggal' => date('d F Y'),
                     'prodi' => $dtemail['program_study'],
                     'type' => $dtemail['type'],
-                    'semester' => $sms
+                    'semester' => $sms,
+                    'rplMatkul' => $viewApprovalModel->where('pendaftaran_id', $pendaftaranId)->get()->getResultArray()
                     // tambahkan data lain sesuai view surat_keputusan
                 ];
 

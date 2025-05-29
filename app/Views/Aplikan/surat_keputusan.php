@@ -70,7 +70,8 @@
             <h5 class="text-center">NOMOR: ................................................</h5>
             <h5 class="text-center mt-2">TENTANG</h5>
             <h5 class="text-center fw-bold">PENGAKUAN KELULUSAN MATA KULIAH PROSES ASESMEN</h5>
-            <h5 class="text-center fw-bold">PROGRAM REKOGNISI PEMBELAJARAN LAMPAU <br>PROGRAM STUDI <?= strtoupper($prodi) ?>
+            <h5 class="text-center fw-bold">PROGRAM REKOGNISI PEMBELAJARAN LAMPAU <br>PROGRAM STUDI
+                <?= strtoupper($prodi) ?>
             </h5>
             <h5 class="text-center">TAHUN AKADEMIK <?= $tahunAkademik ?></h5>
 
@@ -80,7 +81,8 @@
             <ol type="a">
                 <li>bahwa berdasarkan pelaksanaan asesmen pemohon pada Program Rekognisi Pembelajaran Lampau Program
                     <?= $prodi ?> Perguruan Tinggi Politeknik LP3I Jakarta perlu menetapkan hasil/nilai asesmen
-                    rekognisi pembelajaran lampau Tahun Akademik <?= $tahunAkademik ?></li>
+                    rekognisi pembelajaran lampau Tahun Akademik <?= $tahunAkademik ?>
+                </li>
                 <li>bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Keputusan
                     Pimpinan Perguruan Tinggi Politeknik LP3I Jakarta tentang Pengakuan Kelulusan Mata Kuliah Proses
                     Asesmen Program Rekognisi Pembelajaran Lampau Program Studi <?= $prodi ?> Perguruan Tinggi
@@ -114,7 +116,51 @@
                 diwajibkan melakukan registrasi untuk pendidikan selanjutnya dan
                 mengikuti semua ketentuan peraturan perundang-undangan</p>
             <p><strong>Ketiga:</strong> Keputusan Pimpinan Perguruan Tinggi Politeknik LP3I Jakarta ini mulai
-                berlaku pada semester <?= $semester ?> Tahun Akademik <?= $tahunAkademik ?></p>
+                berlaku pada semester <?= $semester ?> Tahun Akademik <?= $tahunAkademik ?></p> <br>
+
+            <h5 class="text-dark mb-3 border-bottom pb-2">Daftar Mata Kuliah Pengajuan RPL</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered text-center">
+                    <thead style="background-color: #e2eafc;">
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Mata Kuliah</th>
+                            <th>Mengajukan RPL</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($rplMatkul)): ?>
+                            <?php $no = 1;
+                            foreach ($rplMatkul as $row): ?>
+                                <tr>
+                                    <td><?= $no++ ?></td>
+                                    <td class="text-start"><?= esc($row['nama_matkul']) ?></td>
+                                    <td>
+                                        <?php if ($row['status'] === 'Y'): ?>
+                                            <span class="badge bg-success">Ya</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-danger">Tidak</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <?php if ($row['status'] === 'Y'): ?>
+                                            <span class="text-success fw-bold">Disetujui</span>
+                                        <?php else: ?>
+                                            <span class="text-muted">Tidak diajukan</span>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="6" class="text-center">Tidak ada data pengajuan RPL</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+
 
 
             <p class="mt-4 text-right">Jakarta, <?= tanggal_indo(date('Y-m-d')) ?><br>
