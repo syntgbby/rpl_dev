@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Kaprodi;
 
-use App\Models\View\ViewKurikulum;
+use App\Models\View\{ViewKurikulum, ViewCapaian};
 use App\Models\MataKuliahModel;
 use App\Models\KurikulumModel;
 use App\Models\ProdiModel;
@@ -49,7 +49,7 @@ class KurikulumController extends BaseController
 
     public function getAsesmen($kode_matkul)
     {
-        $asesmenModel = new CapaianRPL();
+        $asesmenModel = new ViewCapaian();
         $asesmen = $asesmenModel->where('kode_matkul', $kode_matkul)->findAll();
         return $this->render('Kaprodi/DataKurikulum/asesmen', ['asesmen' => $asesmen]);
     }

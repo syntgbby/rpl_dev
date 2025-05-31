@@ -52,7 +52,8 @@
                                     } ?>
                                     <div class="<?= $col ?>">
                                         <input type="text" class="form-control" id="email" name="email"
-                                            placeholder="Enter Email" value="<?= $dtuser['email'] ?? '' ?>">
+                                            placeholder="Enter Email" value="<?= $dtuser['email'] ?? '' ?>"
+                                            <?= (!empty($dtuser['email'])) ? 'readonly' : '' ?>>
                                     </div>
                                     <?php if (isset($dtuser['email'])): ?>
                                         <div class="col-md-2">

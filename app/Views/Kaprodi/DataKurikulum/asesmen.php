@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_prodi">
+    <table class="table align-middle table-row-dashed table-border fs-6 gy-5" id="kt_table_prodi">
         <thead>
             <tr>
                 <th>No</th>
