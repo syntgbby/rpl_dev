@@ -153,6 +153,11 @@ $routes->group('asesor', ['namespace' => 'App\Controllers\Asesor', 'filter' => '
 
     // Laporan
     $routes->get('laporan-rpl', 'DataLaporanRplController::index');
+    $routes->get('filter', 'DataLaporanRplController::filterData');
+    $routes->get('laporan-hasil-approve/(:any)', 'DataLaporanRplController::viewDetail/$1');
+
+     // Asesmen
+    $routes->get('get-asesmen/(:any)', 'DataLaporanRplController::getAsesmen/$1');
 
 
 });

@@ -20,7 +20,7 @@
 
 					<!--begin::Action-->
 					<div class="mb-3">
-						<a href='#' class="btn btn-danger fw-semibold me-2" data-bs-toggle="modal"
+						<a href='<?= base_url('/editprofile') ?>' class="btn btn-danger fw-semibold me-2" data-bs-toggle=""
 							data-bs-target="#kt_modal_upgrade_plan">
 							Lengkapi Biodata Asesor
 						</a>

@@ -18,4 +18,11 @@ class ViewDataPendaftaran extends Model
     {
         return $this->where('pendaftaran_id', $id)->first();
     }
+
+    public function getDataByFilter($startDate, $endDate)
+    {
+        return $this->where('updated_at >=', $startDate)
+                    ->where('updated_at <=', $endDate)
+                    ->findAll();
+    }
 }

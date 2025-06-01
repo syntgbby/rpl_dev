@@ -160,4 +160,8 @@ class Profile extends BaseController
             ]);
         }
     }
+    public function updateAsesor()
+    {
+        
+    }
 }
