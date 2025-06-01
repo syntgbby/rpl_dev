@@ -50,7 +50,7 @@ class PendaftaranController extends BaseController
         if ($dataUser) {
             $dataUser['nama_lengkap'] = $user['nama_lengkap'];
             $prodi = $this->prodiModel->findAll();
-    
+
             return $this->render('aplikan/pendaftaran/step1', ['data' => $dataUser, 'prodi' => $prodi]);
         } else {
             $dataUser['nama_lengkap'] = $nama_lengkap;
@@ -472,34 +472,35 @@ class PendaftaranController extends BaseController
     }
 
 
-public function cekStep() {
-    $email = session()->get('email');
+    public function cekStep()
+    {
+        $email = session()->get('email');
 
-    // if (!$email) {
-    //     return redirect()->to('/aplika‌n/login')->with('error', 'Email tidak ditemukan di session.');
-    // }
+        // if (!$email) {
+        //     return redirect()->to('/aplika‌n/login')->with('error', 'Email tidak ditemukan di session.');
+        // }
 
-    // Ambil data pendaftaran berdasarkan email
-    $getPendaftaran = $this->pendaftaranModel->where('email', $email)->first();
+        // Ambil data pendaftaran berdasarkan email
+        $getPendaftaran = $this->pendaftaranModel->where('email', $email)->first();
 
-    // if (!$getPendaftaran) {
-    //     return redirect()->to('/aplika‌n/login')->with('error', 'Data pendaftaran tidak ditemukan.');
-    // }
+        // if (!$getPendaftaran) {
+        //     return redirect()->to('/aplika‌n/login')->with('error', 'Data pendaftaran tidak ditemukan.');
+        // }
 
-    // Cari step yang belum diselesaikan (status NULL)
-    $nextStep = $this->konfirmasiStepModel
-        ->where('pendaftaran_id', $getPendaftaran['pendaftaran_id'])
-        ->where('status', null)
-        ->orderBy('step', 'asc')
-        ->first();
+        // Cari step yang belum diselesaikan (status NULL)
+        $nextStep = $this->konfirmasiStepModel
+            ->where('pendaftaran_id', $getPendaftaran['pendaftaran_id'])
+            ->where('status', null)
+            ->orderBy('step', 'asc')
+            ->first();
 
-    if ($nextStep) {
-        // Redirect langsung ke step yang ditemukan
-        return redirect()->to('/aplika‌n/pendaftaran/' . $nextStep['step']);
+        if ($nextStep) {
+            // Redirect langsung ke step yang ditemukan
+            return redirect()->to('/aplikan/pendaftaran/' . $nextStep['step']);
+        }
+
+        // Kalau semua step selesai dan kamu nggak mau redirect ke mana-mana
+        // Bisa juga tampilkan error atau diamkan
+        return redirect()->back()->with('message', 'Semua step telah diselesaikan.');
     }
-
-    // Kalau semua step selesai dan kamu nggak mau redirect ke mana-mana
-    // Bisa juga tampilkan error atau diamkan
-    return redirect()->back()->with('message', 'Semua step telah diselesaikan.');
-}
 }
