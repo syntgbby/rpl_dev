@@ -89,7 +89,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'au
 $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan', 'filter' => 'auth:aplikan'], function ($routes) {
     // Status Pendaftaran
     $routes->get('status-pendaftaran', 'PendaftaranController::statusPendaftaran');
-
+    $routes->get('cek-step', 'PendaftaranController::cekStep');
     //step 1
     $routes->get('pendaftaran/step1', 'PendaftaranController::step1');
     $routes->post('pendaftaran/saveStep1', 'PendaftaranController::saveStep1');
