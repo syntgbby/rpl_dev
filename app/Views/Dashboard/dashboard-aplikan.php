@@ -69,14 +69,13 @@
 										<?php endforeach; ?>
 									</div>
 									<!--end::Timeline-->
-									<!--start::Button-->
 									<?php if ($pendaftaran['status'] == 'draft'): ?>
-										<div class="d-flex justify-content-end align-items-center">
-											<a href="/aplikan/check-pendaftaran"
-												class="btn btn-primary justify-content-end text-end">Lanjutkan Pendaftaran</a>
-										</div>
-									<?php endif; ?>
-									<!--end::Button-->
+    <div class="d-flex justify-content-between mt-5">
+        <a href="/aplikan/pendaftaran/step1" class="btn btn-light-primary">Back Pendaftaran</a>
+        <a href="/aplikan/check-pendaftaran" class="btn btn-primary">Lanjutkan Pendaftaran</a>
+    </div>
+<?php endif; ?>
+
 								</div>
 								<!--end::Body-->
 

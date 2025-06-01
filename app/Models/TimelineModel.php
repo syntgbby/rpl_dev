@@ -13,4 +13,12 @@ class TimelineModel extends Model
     {
         return $this->findAll();
     }
+
+    // Fungsi cek status konfirmasi
+    public function getStatusKonfirmasiByPendaftaranId($pendaftaran_id)
+    {
+        return $this->where('pendaftaran_id', $pendaftaran_id)
+                    ->where('status', 'konfirmasi') // sesuaikan nilai 'konfirmasi' dengan data sebenarnya
+                    ->first();
+    }
 }
