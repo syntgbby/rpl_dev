@@ -3,7 +3,7 @@
 namespace App\Controllers\Asesor;
 
 use App\Controllers\BaseController;
-use App\Models\View\ViewDataPendaftaran;
+use App\Models\View\{ViewDataPendaftaran, ViewAsesmenKurikulum};
 use App\Models\{ApprovalRplModel, CapaianDtl, UserModel, KurikulumModel, PelatihanModel, PendaftaranModel, PengalamanKerjaModel, TahunAjarModel};
 
 class DataLaporanRplController extends BaseController
@@ -62,7 +62,7 @@ class DataLaporanRplController extends BaseController
         $modelPekerjaan = new PengalamanKerjaModel();
         $approvalModel = new ApprovalRplModel(); 
 
-        $data['dtpendaftaran'] = $model->getDataPendaftaran($id);
+        $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
         $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $id)->findAll();
         $data['dtpekerjaan'] = $modelPekerjaan->getPengalamanKerja($id);
         $data['approvalWithKurikulum'] = $approvalModel->getApprovalWithKurikulum($id);
@@ -70,10 +70,11 @@ class DataLaporanRplController extends BaseController
         return $this->render('Asesor/DataLaporan/view-detail', $data);
     }
 
-    public function getAsesmen($kode_matkul)
+    public function getViewAsesmenKurikulum($kode_matkul)
     {
-        $capaianDtlModel = new CapaianDtl();
-        $data['asesmen'] = $capaianDtlModel->getAsesmenWithCapaian();
-        return $this->render('Asesor/DataLaporan/asasmen', $data);
+        
+        $asesmenModel = new ViewAsesmenKurikulum();
+        $asesmen = $asesmenModel->where('kode_matkul', $kode_matkul)->findAll();
+        return $this->render('Asesor/DataLaporan/asesmen', ['asesmen' => $asesmen]);
     }
 }

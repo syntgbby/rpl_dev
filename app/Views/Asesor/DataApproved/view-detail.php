@@ -30,7 +30,7 @@
         </div>
         <div class="col-md-6">
             <label class="text-muted d-block small">No. Telepon</label>
-            <span class="fw-bold d-block"><?= $dtpendaftaran['no_telepon'] ?? '-' ?></span>
+            <span class="fw-bold d-block"><?= $dtpendaftaran['no_hp'] ?? '-' ?></span>
         </div>
         <div class="col-md-6">
             <label class="text-muted d-block small">Email</label>
