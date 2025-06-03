@@ -3,7 +3,7 @@
 namespace App\Controllers\Asesor;
 
 use App\Models\View\{ViewDataPendaftaran, ViewKurikulum};
-use App\Models\{UserModel, KurikulumModel, PelatihanModel, PendaftaranModel, TahunAjarModel};
+use App\Models\{UserModel, KurikulumModel, PelatihanModel, PendaftaranModel, TahunAjarModel, PengalamanKerjaModel};
 use App\Controllers\BaseController;
 
 class DataPendaftaranController extends BaseController
@@ -46,6 +46,10 @@ class DataPendaftaranController extends BaseController
         $model = new ViewDataPendaftaran();
         $model_pelatihan = new PelatihanModel();
         $model_kurikulum = new TahunAjarModel();
+        $model = new ViewDataPendaftaran();
+        $modelPekerjaan = new PengalamanKerjaModel();
+
+        $data['dtpekerjaan'] = $modelPekerjaan->getPengalamanKerja($id);
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
         $data['dtpelatihan'] = $model_pelatihan->where('pendaftaran_id', $id)->findAll();
         $data['dtkurikulum'] = $model_kurikulum->getTahunAjar();

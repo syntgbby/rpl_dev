@@ -104,22 +104,14 @@
             <div class="pb-5 fs-6">
                 <h3 class="text-dark mb-3 border-bottom pb-2">Data Riwayat Pekerjaan</h3>
 
-                <!-- Informasi Pelatihan -->
+                <!-- Informasi Riwayat Pekerjaan -->
                 <div style="margin-top:30px;">
                     <?php if ($dtpekerjaan && count($dtpekerjaan) > 0): ?>
                         <?php foreach ($dtpekerjaan as $row): ?>
                             <table style="width:100%; border:1px solid #000; border-collapse:collapse; margin-bottom:20px;">
                                 <tr>
                                     <th style="border:1px solid #000; padding:6px; width:35%;">Nama Perusahaan</th>
-                                    <td style="border:1px solid #000; padding:6px;"><?= $row['nama_pelatihan'] ?></td>
-                                    <th style="border:1px solid #000; padding:6px; width:25%;" rowspan="3">File Bukti</th>
-                                    <td style="border:1px solid #000; padding:6px;" rowspan="3" align="center" valign="middle">
-                                        <?php if ($row['file_bukti']): ?>
-                                            <a href="<?= $row['file_bukti'] ?>">Lihat Bukti</a>
-                                        <?php else: ?>
-                                            <span>-</span>
-                                        <?php endif; ?>
-                                    </td>
+                                    <td style="border:1px solid #000; padding:6px;"><?= $row['nama_perusahaan'] ?></td>
                                 </tr>
                                 <tr>
                                     <th style="border:1px solid #000; padding:6px;">Deskripsi Pekerjaan</th>

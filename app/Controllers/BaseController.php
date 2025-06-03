@@ -57,13 +57,6 @@ abstract class BaseController extends Controller
         // E.g.: $this->session = service('session');
     }
 
-    public function getMenu()
-    {
-        $db = \Config\Database::connect();
-        $query = $db->table("master_menu")->where("status", "Y")->get()->getResultArray();
-        return $query;
-    }
-
     public function getYear()
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -76,13 +69,11 @@ abstract class BaseController extends Controller
         $name = $session->get('nama_lengkap');
         $email = $session->get('email');
         $role = $session->get('role');
-        $pict = $session->get('pict');
-
+        
         $data = [
             'name' => $name,
             'email' => $email,
             'role' => $role,
-            'pict' => $pict
         ];
         return $data;
     }

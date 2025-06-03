@@ -114,13 +114,14 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan', 'filter' =>
     $routes->get('tentang-rpl', 'TentangRPL::index');
 
     //check pendaftaran
-    $routes->get('check-pendaftaran', 'PendaftaranController::checkPendaftaran');
+    $routes->get('cek-step', 'PendaftaranController::cekStep');
 });
 
 // Bagian Kaprodi
-$routes->group('kaprodi', ['namespace' => 'App\Controllers\Kaprodi', 'filter' => 'auth'], function ($routes) {
+$routes->group('kaprodi', ['namespace' => 'App\Controllers\Kaprodi', 'filter' => 'auth:kaprodi'], function ($routes) {
     //View Kurikulum
     $routes->get('kurikulum', 'KurikulumController::index');
+
     // Assign Asesor
     $routes->get('data-pendaftaran', 'DataPendaftaranController::index');
     $routes->get('data-pendaftaran/detail/(:any)', 'DataPendaftaranController::viewDetail/$1');
@@ -134,7 +135,7 @@ $routes->group('kaprodi', ['namespace' => 'App\Controllers\Kaprodi', 'filter' =>
 });
 
 // Bagian Asesor
-$routes->group('asesor', ['namespace' => 'App\Controllers\Asesor', 'filter' => 'auth'], function ($routes) {
+$routes->group('asesor', ['namespace' => 'App\Controllers\Asesor', 'filter' => 'auth:asesor'], function ($routes) {
     // Data Pendaftaran
     $routes->get('data-pendaftaran', 'DataPendaftaranController::index');
     $routes->get('view-detail-pendaftaran/(:any)', 'DataPendaftaranController::viewDetail/$1');
@@ -143,24 +144,14 @@ $routes->group('asesor', ['namespace' => 'App\Controllers\Asesor', 'filter' => '
     $routes->post('approve-rpl', 'AsesorController::approveRpl');
     $routes->get('approve-nilai', 'AsesorController::viewApprove');
 
-    // Data Approved
-    $routes->get('data-approved', 'DataApprovedController::index');
-    $routes->get('view-detail-approved/(:any)', 'DataApprovedController::viewDetail/$1');
-
-    // Data Not Approved
-    $routes->get('data-not-approved', 'DataNotApprovedController::index');
-    $routes->get('view-detail-not-approved/(:any)', 'DataNotApprovedController::viewDetail/$1');
-
     // Laporan
     $routes->get('laporan-rpl', 'DataLaporanRplController::index');
     $routes->get('filter', 'DataLaporanRplController::filterData');
     $routes->get('laporan-hasil-approve/(:any)', 'DataLaporanRplController::viewDetail/$1');
 
-     // Asesmen
+    // Asesmen
     $routes->get('get-asesmen/(:any)', 'DataLaporanRplController::getViewAsesmenKurikulum/$1');
     $routes->get('generate-pdf/(:any)', 'DataLaporanRplController::getViewAsesmenPdf/$1');
-
-
 });
 
 $routes->get('unauthorized', function () {

@@ -47,13 +47,23 @@
             <!--begin::Form-->
             <form action="<?= base_url('aplikan/pendaftaran/saveStep3') ?>" method="post" enctype="multipart/form-data">
                 <div class="card-body border-top p-9">
+                    <?php if ($konfirmasi_step['status'] == 'N'): ?>
+                        <div class="alert alert-info d-flex align-items-center p-5 mb-10">
+                            <i class="ki-duotone ki-information fs-2hx text-info me-4"><span class="path1"></span><span class="path2"></span></i>
+                            <div class="d-flex flex-column">
+                                <h4 class="mb-1 text-info">Informasi</h4>
+                                <span>Anda memilih untuk tidak mengisi data riwayat kerja. Jika ingin mengisi, silahkan hubungi admin untuk mengubah konfirmasi.</span>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                     <!--begin::Input group for Full Name-->
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">Nama Perusahaan</label>
                         <div class="col-lg-8">
                             <input type="text" name="nama_perusahaan" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Nama Perusahaan" />
+                                placeholder="Nama Perusahaan" 
+                                <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -63,7 +73,8 @@
                         <div class="col-lg-8">
                             <input type="text" name="deskripsi_pekerjaan" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Deskripsi Pekerjaan" />
+                                placeholder="Deskripsi Pekerjaan" 
+                                <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -73,7 +84,8 @@
                         <div class="col-lg-8">
                             <input type="text" name="posisi" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Jabatan / Posisi" />
+                                placeholder="Jabatan / Posisi" 
+                                <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -84,7 +96,8 @@
                         <div class="col-lg-8">
                             <input type="file" name="file_bukti" accept=".pdf" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Upload Bukti" />
+                                placeholder="Upload Bukti" 
+                                <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
                             <span class="text-danger">*Format file: .pdf</span>
                         </div>
                     </div>
@@ -94,7 +107,12 @@
                         <div class="col-md-6">
                             <label class="col-lg-4 col-form-label required fw-semibold fs-6">Tahun Mulai</label>
                             <div class="col-lg-8">
-                                <select name="tahun_mulai" required class="form-select form-select-solid" data-control="select2" data-placeholder="Pilih Tahun Mulai">
+                                <select name="tahun_mulai" required 
+                                    class="form-select form-select-lg form-select-solid" 
+                                    data-control="select2" 
+                                    data-placeholder="Pilih Tahun Mulai"
+                                    style="width: 100%; height: 48px;"
+                                    <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?>>
                                     <option></option>
                                     <?php 
                                     $currentYear = date('Y');
@@ -108,7 +126,12 @@
                         <div class="col-md-6">
                             <label class="col-lg-4 col-form-label required fw-semibold fs-6">Tahun Selesai</label>
                             <div class="col-lg-8">
-                                <select name="tahun_selesai" class="form-select form-select-solid" data-control="select2" data-placeholder="Pilih Tahun Selesai">
+                                <select name="tahun_selesai" 
+                                    class="form-select form-select-lg form-select-solid" 
+                                    data-control="select2" 
+                                    data-placeholder="Pilih Tahun Selesai"
+                                    style="width: 100%; height: 48px;"
+                                    <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?>>
                                     <option></option>
                                     <?php 
                                     $currentYear = date('Y');
@@ -125,7 +148,8 @@
                 <!--begin::Actions-->
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
                     <button type="cancel" class="btn btn-light btn-active-light-primary me-2" onclick="window.location.href='<?= base_url('dashboard') ?>'">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan
+                    <button type="submit" class="btn btn-primary" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?>>
+                        Simpan
                     </button>
                 </div>
                 <!--end::Actions-->
@@ -146,8 +170,19 @@
         // Inisialisasi Select2 untuk semua select
         $('[data-control="select2"]').select2({
             minimumResultsForSearch: -1,
-            width: '100%'
+            width: '100%',
+            dropdownParent: $('body'),
+            templateResult: formatState,
+            templateSelection: formatState
         });
+
+        // Fungsi untuk memformat tampilan select2
+        function formatState(opt) {
+            if (!opt.id) {
+                return opt.text;
+            }
+            return $('<span style="font-size: 14px; line-height: 1.5;">' + opt.text + '</span>');
+        }
     });
 </script>
 

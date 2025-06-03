@@ -5,55 +5,238 @@
     <div id="kt_app_content" class="app-content">
         <div class="card">
             <div class="card-body">
-                <!-- Data Mahasiswa Readonly -->
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Nama</label>
-                    <div>
-                        <?= esc($dtpendaftaran['nama_lengkap']) ?>
+                <!-- Start Informasi Biodata -->
+                <div class="card mb-5">
+                    <!--begin::Details content-->
+                    <div class="card-body">
+                        <div class="pb-5 fs-6">
+                            <h3 class="text-dark mb-3 border-bottom pb-2">Informasi Biodata</h3>
+                            <div class="fw-bold mt-5">Nama Lengkap</div>
+                            <div class="text-gray-600"><?= $dtpendaftaran['nama_lengkap'] ?? '-' ?></div>
+
+                            <div class="fw-bold mt-5">Email</div>
+                            <div class="text-gray-600"><?= $dtpendaftaran['email'] ?? '-' ?></div>
+
+                            <div class="fw-bold mt-5">N I K</div>
+                            <div class="text-gray-600"><?= $dtpendaftaran['nik'] ?? '-' ?></div>
+
+                            <div class="fw-bold mt-5">Tempat dan Tanggal lahir</div>
+                            <div class="text-gray-600"><?= $dtpendaftaran['tempat_lahir'] ?? '-' ?>, <?= $dtpendaftaran['tanggal_lahir'] ?? '-' ?></div>
+
+                            <div class="fw-bold mt-5">No Hp</div>
+                            <div class="text-gray-600"><?= $dtpendaftaran['no_hp'] ?? '-' ?></div>
+
+                            <div class="fw-bold mt-5">Alamat</div>
+                            <div class="text-gray-600"><?= $dtpendaftaran['alamat'] ?? '-' ?></div>
+                        </div>
                     </div>
+                    <!--end::Details content-->
                 </div>
-                <!-- END Data Mahasiswa Readonly -->
-                <!-- Informasi Pelatihan -->
-                <h5 class="text-dark mb-3 border-bottom pb-2">Informasi Pelatihan</h5>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-light">
-                            <tr>
-                                <th class="text-center" style="width: 50px">No</th>
-                                <th>Nama Pelatihan</th>
-                                <th>Penyelenggara</th>
-                                <th class="text-center">Tahun</th>
-                                <th class="text-center">Bukti</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if ($dtpelatihan): ?>
-                                <?php $no = 1;
-                                foreach ($dtpelatihan as $row): ?>
-                                    <tr>
-                                        <td class="text-center"><?= $no++ ?></td>
-                                        <td><?= $row['nama_pelatihan'] ?></td>
-                                        <td><?= $row['penyelenggara'] ?></td>
-                                        <td class="text-center"><?= $row['tahun'] ?></td>
-                                        <td class="text-center">
-                                            <?php if ($row['file_bukti']): ?>
-                                                <a href="<?= $row['file_bukti'] ?>" target="_blank" class="btn btn-sm btn-primary">
-                                                    <i class="fas fa-file-pdf me-1"></i> Lihat Bukti
+                <!-- End Informasi Biodata -->
+                <!-- Start Informasi Pelatihan -->
+                <div class="card mb-5">
+                    <!--begin::Details content-->
+                    <div class="card-body">
+                        <div class="pb-5 fs-6">
+                            <!--begin::Details item-->
+                            <h3 class="text-dark mb-3 border-bottom pb-2">Informasi Pelatihan</h3>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="text-center" style="width: 50px">No</th>
+                                            <th>Nama Pelatihan</th>
+                                            <th>Penyelenggara</th>
+                                            <th class="text-center">Tahun</th>
+                                            <th class="text-center">Bukti</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php if ($dtpelatihan): ?>
+                                            <?php $no = 1;
+                                            foreach ($dtpelatihan as $row): ?>
+                                                <tr>
+                                                    <td class="text-center"><?= $no++ ?></td>
+                                                    <td><?= $row['nama_pelatihan'] ?></td>
+                                                    <td><?= $row['penyelenggara'] ?></td>
+                                                    <td class="text-center"><?= $row['tahun'] ?></td>
+                                                    <td class="text-center">
+                                                        <?php if ($row['file_bukti']): ?>
+                                                            <a href="<?= $row['file_bukti'] ?>" target="_blank" class="btn btn-sm btn-primary">
+                                                                <i class="fas fa-file-pdf me-1"></i> Lihat Bukti
+                                                            </a>
+                                                        <?php else: ?>
+                                                            <span class="text-muted">-</span>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="5" class="text-center">Tidak ada data pelatihan</td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Details content-->
+                </div>
+                <!-- End Informasi Pelatihan -->
+                <!-- Start Informasi Pengalaman Kerja -->
+                <div class="card mb-5">
+                    <!--begin::Details content-->
+                    <div class="card-body">
+                        <div class="pb-5 fs-6">
+                            <!--begin::Details item-->
+                            <h3 class="text-dark mb-3 border-bottom pb-2">Informasi Pengalaman Kerja</h3>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="text-center" style="width: 50px">No</th>
+                                            <th>Nama Perusahaan</th>
+                                            <th>Deskripsi Pekerjaan</th>
+                                            <th class="text-center">Posisi</th>
+                                            <th class="text-center">Bukti</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php if ($dtpekerjaan): ?>
+                                            <?php $no = 1;
+                                            foreach ($dtpekerjaan as $row): ?>
+                                                <tr>
+                                                    <td class="text-center"><?= $no++ ?></td>
+                                                    <td><?= $row['nama_perusahaan'] ?></td>
+                                                    <td><?= $row['deskripsi_pekerjaan'] ?></td>
+                                                    <td class="text-center"><?= $row['posisi'] ?></td>
+                                                    <td class="text-center">
+                                                        <?php if ($row['file_bukti']): ?>
+                                                            <a href="<?= $row['file_bukti'] ?>" target="_blank" class="btn btn-sm btn-primary">
+                                                                <i class="fas fa-file-pdf me-1"></i> Lihat Bukti
+                                                            </a>
+                                                        <?php else: ?>
+                                                            <span class="text-muted">-</span>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="5" class="text-center">Aplikan tidak mengisi riwayat kerja</td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Details content-->
+                </div>
+                <!-- End Informasi Pengalaman Kerja -->
+                <!-- Start Informasi Data Pendukung -->
+                <div class="card mb-5">
+                    <!--begin::Details content-->
+                    <div class="card-body">
+                        <div class="pb-5 fs-6">
+                            <h3 class="text-dark mb-3 border-bottom pb-2">File Pendukung</h3>
+                            
+                            <div class="row">
+                                <!-- Foto KTP -->
+                                <div class="col-md-3 mb-5">
+                                    <div class="card card-custom h-100">
+                                        <div class="card-header">
+                                            <div class="card-title">
+                                                <h3 class="fw-bold fs-6 m-0">Foto KTP</h3>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <?php if (!empty($dtpendaftaran['file_ktp'])): ?>
+                                                <a href="<?= $dtpendaftaran['file_ktp'] ?>"
+                                                    class="btn btn-danger btn-sm btn-active-light-danger w-100"
+                                                    target="_blank">
+                                                    <i class="fas fa-file-pdf me-1"></i> Lihat KTP
                                                 </a>
                                             <?php else: ?>
-                                                <span class="text-muted">-</span>
+                                                <span class="text-muted small">File tidak tersedia</span>
                                             <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <tr>
-                                    <td colspan="5" class="text-center">Tidak ada data pelatihan</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Bukti Kerja -->
+                                <div class="col-md-3 mb-5">
+                                    <div class="card card-custom h-100">
+                                        <div class="card-header">
+                                            <div class="card-title">
+                                                <h3 class="fw-bold fs-6 m-0">Bukti Kerja</h3>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <?php if (!empty($dtpendaftaran['bukti_kerja'])): ?>
+                                                <a href="<?= $dtpendaftaran['bukti_kerja'] ?>"
+                                                    class="btn btn-danger btn-sm btn-active-light-danger w-100"
+                                                    target="_blank">
+                                                    <i class="fas fa-file-pdf me-1"></i> Lihat Bukti Kerja
+                                                </a>
+                                            <?php else: ?>
+                                                <span class="text-muted small">File tidak tersedia</span>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Ijazah -->
+                                <div class="col-md-3 mb-5">
+                                    <div class="card card-custom h-100">
+                                        <div class="card-header">
+                                            <div class="card-title">
+                                                <h3 class="fw-bold fs-6 m-0">Ijazah</h3>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <?php if (!empty($dtpendaftaran['file_ijazah'])): ?>
+                                                <a href="<?= $dtpendaftaran['file_ijazah'] ?>"
+                                                    class="btn btn-danger btn-sm btn-active-light-danger w-100"
+                                                    target="_blank">
+                                                    <i class="fas fa-file-pdf me-1"></i> Lihat Ijazah
+                                                </a>
+                                            <?php else: ?>
+                                                <span class="text-muted small">File tidak tersedia</span>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Bukti Pelatihan -->
+                                <div class="col-md-3 mb-5">
+                                    <div class="card card-custom h-100">
+                                        <div class="card-header">
+                                            <div class="card-title">
+                                                <h3 class="fw-bold fs-6 m-0">Bukti Pelatihan</h3>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <?php if (!empty($dtpendaftaran['bukti_pelatihan'])): ?>
+                                                <a href="<?= $dtpendaftaran['bukti_pelatihan'] ?>"
+                                                    class="btn btn-danger btn-sm btn-active-light-danger w-100"
+                                                    target="_blank">
+                                                    <i class="fas fa-file-pdf me-1"></i> Lihat Bukti Pelatihan
+                                                </a>
+                                            <?php else: ?>
+                                                <span class="text-muted small">File tidak tersedia</span>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Details content-->
                 </div>
+                <!-- End Informasi Data Pendukung -->
+
                 <!-- Select Tahun Kurikulum -->
                 <h5 class="card-title mt-5">Data Kurikulum</h5>
                 <div class="row g-3 align-items-center mb-5">
@@ -70,7 +253,7 @@
                         <button class="btn btn-primary" id="cariBtn">Cari</button>
                     </div>
                 </div>
-
+                
                 <!-- Tabel RPL -->
                 <form id="approveRplForm" method="post" action="<?= base_url('asesor/approve-rpl') ?>">
                     <input type="hidden" name="pendaftaran_id" id="pendaftaran_id"
@@ -136,7 +319,7 @@
 
 <script>
     // Load data mata kuliah
-    $('#cariBtn').click(function () {
+    $('#cariBtn').click(function() {
         var tahun = $('#tahunSelect').val();
         var id = $('#pendaftaran_id').val();
         if (tahun) {
@@ -148,13 +331,13 @@
                     pendaftaran_id: id
                 },
                 dataType: 'json',
-                success: function (response) {
+                success: function(response) {
                     var tbody = $('#tabelRplBody');
                     $('#tahunApprove').val(tahun); //simpan data pilihan tahun kurikulum
                     tbody.empty();
 
                     if (response.status === 'success' && response.data.length > 0) {
-                        $.each(response.data, function (index, matkul) {
+                        $.each(response.data, function(index, matkul) {
                             var row = '<tr>' +
                                 '<td>' + (index + 1) + '</td>' +
                                 '<td>' + matkul.kode_matkul + '</td>' +
@@ -172,7 +355,7 @@
                     }
 
                     // Tambahkan logika checkbox saling eksklusif
-                    $('.yes-check').on('change', function () {
+                    $('.yes-check').on('change', function() {
                         var tr = $(this).closest('tr');
                         var noCheck = tr.find('.no-check');
                         var asesmenSelect = tr.find('select');
@@ -183,7 +366,7 @@
                         }
                     });
 
-                    $('.no-check').on('change', function () {
+                    $('.no-check').on('change', function() {
                         var tr = $(this).closest('tr');
                         var yesCheck = tr.find('.yes-check');
                         var asesmenSelect = tr.find('select');
@@ -197,7 +380,7 @@
                     });
 
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     console.error('Error:', error);
                     alert('Terjadi kesalahan saat mengambil data.');
                     $('#matkulContainer').hide();
@@ -209,8 +392,8 @@
         }
     });
 
-    $(document).ready(function () {
-        $('#status').change(function () {
+    $(document).ready(function() {
+        $('#status').change(function() {
             const status = $(this).val();
             if (status === 'approved') {
                 $('#tipeRplContainer').show();
@@ -228,7 +411,7 @@
         $('#alasanContainer').hide();
     });
 
-    $('#approveRplForm').submit(function (e) {
+    $('#approveRplForm').submit(function(e) {
         e.preventDefault(); // Stop form dari auto-submit
 
         Swal.fire({
@@ -246,7 +429,6 @@
             }
         });
     });
-
 </script>
 
 <?= $this->endSection(); ?>

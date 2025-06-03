@@ -27,13 +27,14 @@ class KurikulumController extends BaseController
         if ($filterProdi && $filterTahun) {
             $kurikulum = $kurikulumModel->where('prodi_id', $filterProdi)
                 ->where('tahun', $filterTahun)
+                ->orderBy('nama_matkul', 'ASC')
                 ->findAll();
         } elseif ($filterProdi) {
-            $kurikulum = $kurikulumModel->where('prodi_id', $filterProdi)->findAll();
+            $kurikulum = $kurikulumModel->where('prodi_id', $filterProdi)->orderBy('nama_matkul', 'ASC')->findAll();
         } elseif ($filterTahun) {
-            $kurikulum = $kurikulumModel->where('tahun', $filterTahun)->findAll();
+            $kurikulum = $kurikulumModel->where('tahun', $filterTahun)->orderBy('nama_matkul', 'ASC')->findAll();
         } else {
-            $kurikulum = $kurikulumModel->findAll();
+            $kurikulum = $kurikulumModel->orderBy('nama_matkul', 'ASC')->findAll();
         }
 
         $data = [

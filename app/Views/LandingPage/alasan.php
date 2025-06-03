@@ -17,9 +17,10 @@
             <div class="col-md-4">
                 <!--begin::Publications post-->
                 <div class="card-xl-stretch me-md-6">
+                    <?php helper('url'); ?>
                     <!--begin::Overlay-->
                     <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales"
-                        href="<?= base_url('assets/media/stock/600x400/img-73.jpg') ?>">
+                        href="<?= base_url('assets/media/stock/600x400/work-2.jpg') ?>">
                         <!--begin::Image-->
                         <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
                             style="background-image:url('<?= base_url('assets/media/stock/600x400/work-2.jpg') ?>')">

@@ -10,6 +10,8 @@ use App\Models\TimelineModel;
 use App\Models\View\ViewDataPendaftaran;
 use CodeIgniter\Database\RawSql;
 
+helper('url');
+
 class DashController extends BaseController
 {
     protected $userModel;
@@ -122,7 +124,7 @@ class DashController extends BaseController
                 'dataUser' => $user,
                 'prodi' => $this->prodiModel->findAll(),
                 'pendaftaran' => $this->pendaftaranModel->select('prodi.nama_prodi, pendaftaran_rpl.*')->join('prodi', 'prodi.id = pendaftaran_rpl.program_study_id', 'left')
-                    ->where('pendaftaran_rpl.created_at >=', new RawSql('DATE_SUB(NOW(), INTERVAL 60 DAY)'))
+                    ->where('pendaftaran_rpl.created_at >=', new RawSql('DATE_SUB(NOW(), INTERVAL 7 DAY)'))
                     ->orderBy('pendaftaran_rpl.created_at', 'desc')
                     ->findAll(),
                 'aplikan' => $this->userModel->getAplikanByRole($dataUser['role']),

@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\{UserModel, DetailAplikanModel, PendaftaranModel, BuktiPendukungModel, KonfirmasiStepModel, PelatihanModel, PengalamanKerjaModel, TimelineModel};
+use App\Models\{UserModel, DetailAplikanModel, PendaftaranModel, BuktiPendukungModel, KonfirmasiStepModel, PelatihanModel, PengalamanKerjaModel, TimelineModel, ApprovalRplModel, CapaianDtl};
 use App\Controllers\BaseController;
 
 class UserController extends BaseController
@@ -93,6 +93,8 @@ class UserController extends BaseController
     public function delete($id)
     {
         $model = new UserModel();
+        $modelApproval = new ApprovalRplModel();
+        $modelCapaianDtl = new CapaianDtl();
         $modelDetailAplikan = new DetailAplikanModel();
         $modelPendaftaran = new PendaftaranModel();
         $modelBuktiPendukung = new BuktiPendukungModel();
@@ -100,25 +102,41 @@ class UserController extends BaseController
         $modelPelatihan = new PelatihanModel();
         $modelPengalamanKerja = new PengalamanKerjaModel();
         $modelTimeline = new TimelineModel();
-        $email = $model->find($id)['email'];
+        $user = $model->find($id);
+        
+        $email = $user['email'];
+        $nama = $user['nama_lengkap'];
+        $nama_lengkap = str_replace(' ', '-', $nama);
 
         $checkPendaftaran = $modelPendaftaran->where('email', $email)->first();
 
         if ($checkPendaftaran) {
             $idPendaftaran = $checkPendaftaran['pendaftaran_id'];
+            $modelApproval->where('pendaftaran_id', $idPendaftaran)->delete();
+            $modelCapaianDtl->where('pendaftaran_id', $idPendaftaran)->delete();
             $modelBuktiPendukung->where('pendaftaran_id', $idPendaftaran)->delete();
             $modelKonfirmasiStep->where('pendaftaran_id', $idPendaftaran)->delete();
             $modelPelatihan->where('pendaftaran_id', $idPendaftaran)->delete();
             $modelPengalamanKerja->where('pendaftaran_id', $idPendaftaran)->delete();
             $modelTimeline->where('pendaftaran_id', $idPendaftaran)->delete();
-            $modelPendaftaran->where('email', $email)->delete();
-            $modelDetailAplikan->where('email', $email)->delete();
+            $modelPendaftaran->where('email', $nama_lengkap)->delete();
+            $modelDetailAplikan->where('email', $nama_lengkap)->delete();
             $delete = $model->delete($id);
         } else {
             $delete = $model->delete($id);
         }
 
         if ($delete) {
+            // Hapus folder berdasarkan nama_lengkap
+            $folders = [
+                FCPATH . 'uploads/bukti-pelatihan/' . $nama_lengkap,
+                FCPATH . 'uploads/bukti-pendukung/' . $nama_lengkap,
+                FCPATH . 'uploads/bukti-pengalaman-kerja/' . $nama_lengkap,
+            ];
+            foreach ($folders as $folder) {
+                deleteFolder($folder);
+            }
+
             return redirect()->to('/admin/users')->with('success', 'User berhasil dihapus!');
         } else {
             return redirect()->to('/admin/users')->with('error', 'User gagal dihapus!');
@@ -137,4 +155,15 @@ class UserController extends BaseController
             return redirect()->to('/admin/users')->with('error', 'User gagal dinonaktifkan!');
         }
     }
+}
+
+function deleteFolder($dir)
+{
+    if (!file_exists($dir)) return;
+    if (!is_dir($dir)) return unlink($dir);
+    foreach (scandir($dir) as $item) {
+        if ($item == '.' || $item == '..') continue;
+        deleteFolder($dir . DIRECTORY_SEPARATOR . $item);
+    }
+    rmdir($dir);
 }

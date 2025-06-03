@@ -71,7 +71,7 @@ class AuthController extends Controller
             $attributes = [
                 'to' => $email,
                 'subject' => 'Registrasi Berhasil',
-                'message' => 'Registrasi berhasil, silahkan login ke aplikasi'
+                'message' => 'Registrasi berhasil, silahkan login ke Web RPL'
             ];
 
             try {
@@ -111,7 +111,7 @@ class AuthController extends Controller
                     'email' => $user['email'],
                     'nama_lengkap' => $user['nama_lengkap'],
                     'role' => $user['role'],
-                    'pict' => $user['pict'],
+                    // 'pict' => $user['pict'],
                     'isLoggedIn' => true
                 ]);
                 return redirect()->to('/dashboard');

@@ -25,7 +25,7 @@
 					<!--end::Header-->
 					<!--begin::Body-->
 					<div class="card-body d-flex flex-column ps-4 pe-4 pb-4">
-						<canvas id="aplikanChart" style="width: 50%; height: 50%;"></canvas>
+						<canvas id="aplikanChart" style="width: 400px; height: 300px;" class="w-100 h-auto"></canvas>
 					</div>
 					<!--end::Body-->
 				</div>

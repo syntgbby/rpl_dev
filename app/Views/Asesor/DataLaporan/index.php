@@ -11,15 +11,15 @@
             <div class="card-header border-0 pt-6">
                 <!--begin::Card title-->
                 <div class="card-title">
-                   <form action="<?= base_url('asesor/filter') ?>" method="GET">
+                    <form action="<?= base_url('asesor/filter') ?>" method="GET">
                         <div class="row">
                             <div class="col mt-6">
-                                <input type="date" name="start_date" 
+                                <input type="date" name="start_date"
                                     class="form-control form-control-lg form-control-solid"
                                     value="<?= isset($start_date) ? substr($start_date, 0, 10) : '' ?>" />
                             </div>
                             <div class="col mt-6">
-                                <input type="date" name="end_date" 
+                                <input type="date" name="end_date"
                                     class="form-control form-control-lg form-control-solid"
                                     value="<?= isset($end_date) ? substr($end_date, 0, 10) : '' ?>" />
                             </div>
@@ -56,7 +56,7 @@
                                             <?= $no++ ?>
                                         </td>
                                         <td class="text-center">
-                                            <?= $row['updated_at'] ?>
+                                            <?= format_tanggal($row['updated_at']) ?>
                                         </td>
                                         <td class="text-center">
                                             <?= $row['nama_lengkap'] ?>
@@ -64,24 +64,25 @@
                                         <td class="text-center">
                                             <?= $row['program_study'] ?>
                                         </td>
-                                <?php foreach ($dtpendaftaran as $row): ?>
-                                    <td class="text-center">
-                                        <div class="d-flex align-items-center justify-content-center gap-2">
-                                            <a href="<?= base_url('asesor/laporan-hasil-approve/' . ($row['pendaftaran_id'] ?? '')) ?>"
-                                                class="btn btn-primary btn-sm btn-active-light-primary">
-                                                <i class="fa-solid fa-eye"></i>View
-                                            </a>
-                                            <a href="<?= base_url('asesor/generate-pdf/' . ($row['pendaftaran_id'] ?? '')) ?>"
-                                                class="btn btn-danger btn-sm btn-active-light-danger" target="_blank">
-                                                <i class="fa-solid fa-file-export"></i>Pdf
-                                            </a>
-                                        </div>
-                                    </td>
+                                        <td class="text-center">
+                                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                                <a href="<?= base_url('asesor/laporan-hasil-approve/' . ($row['pendaftaran_id'] ?? '')) ?>"
+                                                    class="btn btn-primary btn-sm btn-active-light-primary">
+                                                    <i class="fa-solid fa-eye"></i>View
+                                                </a>
+                                                <a href="<?= base_url('asesor/generate-pdf/' . ($row['pendaftaran_id'] ?? '')) ?>"
+                                                    class="btn btn-danger btn-sm btn-active-light-danger" target="_blank">
+                                                    <i class="fa-solid fa-file-export"></i>Pdf
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 <?php endforeach; ?>
-                            </tr>
-                            <?php endforeach; ?>
                             <?php else: ?>
-                                <?php endif; ?>
+                                <tr>
+                                    <td colspan="5" class="text-center">Tidak ada data</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>

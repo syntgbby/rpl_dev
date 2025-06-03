@@ -50,7 +50,7 @@ class PendaftaranController extends BaseController
         if ($dataUser) {
             $dataUser['nama_lengkap'] = $user['nama_lengkap'];
             $prodi = $this->prodiModel->findAll();
-    
+
             return $this->render('aplikan/pendaftaran/step1', ['data' => $dataUser, 'prodi' => $prodi]);
         } else {
             $dataUser['nama_lengkap'] = $nama_lengkap;
@@ -469,5 +469,29 @@ class PendaftaranController extends BaseController
 
         // Jika file tidak valid atau gagal diupload
         return redirect()->back()->withInput()->with('error', 'File tidak valid atau gagal diupload');
+    }
+
+    public function cekStep()
+    {
+        $email = session()->get('email');
+
+        // Ambil data pendaftaran berdasarkan email
+        $getPendaftaran = $this->pendaftaranModel->where('email', $email)->first();
+
+        // Cari step yang belum diselesaikan (status NULL)
+        $nextStep = $this->konfirmasiStepModel
+            ->where('pendaftaran_id', $getPendaftaran['pendaftaran_id'])
+            ->where('status', null)
+            ->orderBy('step', 'asc')
+            ->first();
+
+        if ($nextStep) {
+            // Redirect langsung ke step yang ditemukan
+            return redirect()->to('/aplikan/pendaftaran/' . $nextStep['step']);
+        }
+
+        // Kalau semua step selesai dan kamu nggak mau redirect ke mana-mana
+        // Bisa juga tampilkan error atau diamkan
+        return redirect()->back()->with('message', 'Semua step telah diselesaikan.');
     }
 }

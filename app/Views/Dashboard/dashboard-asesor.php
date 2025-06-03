@@ -65,7 +65,7 @@
 					<div class="card-body">
 						<?php foreach ($prodi as $p): ?>
 							<!--begin::PRODI MI-->
-							<div class="d-flex flex-stack">
+							<div class="d-flex flex-stack mb-3">
 								<!--begin::Wrapper-->
 								<div class="d-flex align-items-center me-3">
 									<!--begin::Logo-->

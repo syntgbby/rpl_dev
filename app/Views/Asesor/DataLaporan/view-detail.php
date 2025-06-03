@@ -133,6 +133,107 @@
             <!--end::Details content-->
         </div>
         <!-- End Informasi Pengalaman Kerja -->
+        <!-- Start Informasi Data Pendukung -->
+        <div class="card mb-5">
+            <!--begin::Details content-->
+            <div class="card-body">
+                <div class="pb-5 fs-6">
+                    <h3 class="text-dark mb-3 border-bottom pb-2">File Pendukung</h3>
+
+                    <div class="row">
+                        <!-- Foto KTP -->
+                        <div class="col-md-3 mb-5">
+                            <div class="card card-custom h-100">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h3 class="fw-bold fs-6 m-0">Foto KTP</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <?php if (!empty($dtpendaftaran['file_ktp'])): ?>
+                                        <a href="<?= $dtpendaftaran['file_ktp'] ?>"
+                                            class="btn btn-danger btn-sm btn-active-light-danger w-100"
+                                            target="_blank">
+                                            <i class="fas fa-file-pdf me-1"></i> Lihat KTP
+                                        </a>
+                                    <?php else: ?>
+                                        <span class="text-muted small">File tidak tersedia</span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bukti Kerja -->
+                        <div class="col-md-3 mb-5">
+                            <div class="card card-custom h-100">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h3 class="fw-bold fs-6 m-0">Bukti Kerja</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <?php if (!empty($dtpendaftaran['bukti_kerja'])): ?>
+                                        <a href="<?= $dtpendaftaran['bukti_kerja'] ?>"
+                                            class="btn btn-danger btn-sm btn-active-light-danger w-100"
+                                            target="_blank">
+                                            <i class="fas fa-file-pdf me-1"></i> Lihat Bukti Kerja
+                                        </a>
+                                    <?php else: ?>
+                                        <span class="text-muted small">File tidak tersedia</span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ijazah -->
+                        <div class="col-md-3 mb-5">
+                            <div class="card card-custom h-100">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h3 class="fw-bold fs-6 m-0">Ijazah</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <?php if (!empty($dtpendaftaran['file_ijazah'])): ?>
+                                        <a href="<?= $dtpendaftaran['file_ijazah'] ?>"
+                                            class="btn btn-danger btn-sm btn-active-light-danger w-100"
+                                            target="_blank">
+                                            <i class="fas fa-file-pdf me-1"></i> Lihat Ijazah
+                                        </a>
+                                    <?php else: ?>
+                                        <span class="text-muted small">File tidak tersedia</span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bukti Pelatihan -->
+                        <div class="col-md-3 mb-5">
+                            <div class="card card-custom h-100">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h3 class="fw-bold fs-6 m-0">Bukti Pelatihan</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <?php if (!empty($dtpendaftaran['bukti_pelatihan'])): ?>
+                                        <a href="<?= $dtpendaftaran['bukti_pelatihan'] ?>"
+                                            class="btn btn-danger btn-sm btn-active-light-danger w-100"
+                                            target="_blank">
+                                            <i class="fas fa-file-pdf me-1"></i> Lihat Bukti Pelatihan
+                                        </a>
+                                    <?php else: ?>
+                                        <span class="text-muted small">File tidak tersedia</span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Details content-->
+        </div>
+        <!-- End Informasi Data Pendukung -->
         <!-- Start Informasi Hasil Aproval -->
         <div class="card mb-5">
             <!--begin::Details content-->
@@ -188,69 +289,6 @@
             <!--end::Details content-->
         </div>
         <!-- End Informasi Hasil Aproval -->
-        <!-- Start Informasi Data Pendukung -->
-        <div class="card mb-5">
-            <!--begin::Details content-->
-            <div class="card-body">
-                <div class="pb-5 fs-6">
-                    <h3 class="text-dark mb-3 border-bottom pb-2">File Pendukung</h3>
-                    <div class="fw-bold my-5">Foto KTP</div>
-                    <div class="text-gray-600 pb-2">
-                        <?php if (!empty($dtpendaftaran['file_ktp'])): ?>
-                        <a href="<?= $dtpendaftaran['file_ktp'] ?>"
-                            class="btn btn-danger btn-sm btn-active-light-danger w-10"
-                            target="_blank">
-                            <i class="fas fa-file-pdf me-1"></i> Lihat KTP
-                        </a>
-                    <?php else: ?>
-                        <span class="text-muted small">File tidak tersedia</span>
-                    <?php endif; ?>
-                    </div>
-
-                    <div class="fw-bold my-5">Bukti Kerja</div>
-                    <div class="text-gray-600 pb-2">
-                        <?php if (!empty($dtpendaftaran['bukti_kerja'])): ?>
-                        <a href="<?= $dtpendaftaran['bukti_kerja'] ?>"
-                            class="btn btn-danger btn-sm btn-active-light-danger w-10"
-                            target="_blank">
-                            <i class="fas fa-file-pdf me-1"></i> Lihat Bukti Kerja
-                        </a>
-                    <?php else: ?>
-                        <span class="text-muted small">File tidak tersedia</span>
-                    <?php endif; ?>
-                    </div>
-
-                    <div class="fw-bold my-5">Ijazah</div>
-                    <div class="text-gray-600 pb-2">
-                        <?php if (!empty($dtpendaftaran['file_ijazah'])): ?>
-                        <a href="<?= $dtpendaftaran['file_ijazah'] ?>"
-                            class="btn btn-danger btn-sm btn-active-light-danger w-10"
-                            target="_blank">
-                            <i class="fas fa-file-pdf me-1"></i> Lihat Ijazah
-                        </a>
-                    <?php else: ?>
-                        <span class="text-muted small">File tidak tersedia</span>
-                    <?php endif; ?>
-                    </div>
-
-                    <div class="fw-bold my-5">Bukti Pelatihan</div>
-                    <div class="text-gray-600 pb-2">
-                        <?php if (!empty($dtpendaftaran['bukti_pelatihan'])): ?>
-                        <a href="<?= $dtpendaftaran['bukti_pelatihan'] ?>"
-                            class="btn btn-danger btn-sm btn-active-light-danger w-10"
-                            target="_blank">
-                            <i class="fas fa-file-pdf me-1"></i> Lihat Bukti Pelatihan
-                        </a>
-                    <?php else: ?>
-                        <span class="text-muted small">File tidak tersedia</span>
-                    <?php endif; ?>
-                    </div>
-
-                </div>
-            </div>
-            <!--end::Details content-->
-        </div>
-        <!-- End Informasi Data Pendukung -->
     </div>
 </div>
 

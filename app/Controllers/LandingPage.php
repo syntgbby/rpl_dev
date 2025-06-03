@@ -7,6 +7,8 @@ use CodeIgniter\Controller;
 use App\Models\ProdiModel;
 use App\Models\GelombangModel;
 
+helper('url');
+
 class LandingPage extends Controller
 {
     public function index()
@@ -16,6 +18,8 @@ class LandingPage extends Controller
 
         $data['gelombang'] = $gelombangModel->findAll();
         $data['prodi'] = $prodiModel->findAll();
+
+        $data['baseURL'] = "http://localhost:8080/";
 
         return view('LandingPage/template', $data);
     }

@@ -101,7 +101,7 @@
                                         <!--begin::Input-->
                                         <select name="role" id="role"
                                             class="form-select form-select-md form-select-solid text-sm h-40px"
-                                            data-control="select2">
+                                            data-control="select2" <?= (isset($dtuser['role']) && $dtuser['role'] == 'aplikan') ? 'disabled' : '' ?>>
                                             <option value="admin" <?= (isset($dtuser) && $dtuser['role'] == 'admin') ? 'selected' : '' ?>>
                                                 Admin
                                             </option>
@@ -111,6 +111,11 @@
                                             <option value="asesor" <?= (isset($dtuser) && $dtuser['role'] == 'asesor') ? 'selected' : '' ?>>
                                                 Assessor
                                             </option>
+                                            <?php if (isset($dtuser['role']) && $dtuser['role'] == 'aplikan'): ?>
+                                                <option value="aplikan" <?= (isset($dtuser) && $dtuser['role'] == 'aplikan') ? 'selected' : '' ?>>
+                                                    Aplikan
+                                                </option>
+                                            <?php endif; ?>
                                         </select>
                                         <!--end::Input-->
                                     </div>
