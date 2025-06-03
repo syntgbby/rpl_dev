@@ -16,5 +16,22 @@ class Detailpendaftarann extends BaseController
     {
         return $this->render('Aplikan/Detailpendaftarann/index');
     }
-    
+    public function viewDetail($id)
+    {
+        $model = new ViewDataPendaftaran();
+        $modelPelatihan = new PelatihanModel();
+        $modelPekerjaan = new PengalamanKerjaModel();
+        $approvalModel = new ApprovalRplModel();
+
+        $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
+        $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $id)->findAll();
+        $data['dtpekerjaan'] = $modelPekerjaan->getPengalamanKerja($id);
+        $data['approvalWithKurikulum'] = $approvalModel->getApprovalWithKurikulum($id);
+
+        if (!$data['dtpendaftaran']) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Data pendaftaran tidak ditemukan.");
+        }
+
+        return view('Aplikan/Detailpendaftarann/index', $data);
+    }
 }
