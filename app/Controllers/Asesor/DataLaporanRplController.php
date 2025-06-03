@@ -5,6 +5,9 @@ namespace App\Controllers\Asesor;
 use App\Controllers\BaseController;
 use App\Models\View\{ViewDataPendaftaran, ViewAsesmenKurikulum};
 use App\Models\{ApprovalRplModel, CapaianDtl, UserModel, KurikulumModel, PelatihanModel, PendaftaranModel, PengalamanKerjaModel, TahunAjarModel};
+use Dompdf\Dompdf;
+use Dompdf\Options;
+helper('url');
 
 class DataLaporanRplController extends BaseController
 {
@@ -72,9 +75,40 @@ class DataLaporanRplController extends BaseController
 
     public function getViewAsesmenKurikulum($kode_matkul)
     {
-        
         $asesmenModel = new ViewAsesmenKurikulum();
         $asesmen = $asesmenModel->where('kode_matkul', $kode_matkul)->findAll();
         return $this->render('Asesor/DataLaporan/asesmen', ['asesmen' => $asesmen]);
     }
+
+    public function getViewAsesmenPdf($id)
+    {
+        // Load model dan data
+        $model = new ViewDataPendaftaran();
+        $modelPelatihan = new PelatihanModel(); 
+        $modelPekerjaan = new PengalamanKerjaModel();
+        $approvalModel = new ApprovalRplModel(); 
+
+        $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
+        $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $id)->findAll();
+        $data['dtpekerjaan'] = $modelPekerjaan->getPengalamanKerja($id);
+        $data['approvalWithKurikulum'] = $approvalModel->getApprovalWithKurikulum($id);
+
+        // Load library DomPDF
+        $dompdf = new Dompdf();
+
+        // Render view khusus PDF
+        $html = view('asesor/DataLaporan/pdf_template', $data);
+        $dompdf->loadHtml($html);
+
+        // Setup kertas
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render PDF
+        $dompdf->render();
+
+        // Output PDF
+        $dompdf->stream("laporan.pdf", array("Attachment" => false));
+    }
+
+
 }

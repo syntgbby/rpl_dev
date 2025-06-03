@@ -158,6 +158,7 @@ $routes->group('asesor', ['namespace' => 'App\Controllers\Asesor', 'filter' => '
 
      // Asesmen
     $routes->get('get-asesmen/(:any)', 'DataLaporanRplController::getViewAsesmenKurikulum/$1');
+    $routes->get('generate-pdf/(:any)', 'DataLaporanRplController::getViewAsesmenPdf/$1');
 
 
 });

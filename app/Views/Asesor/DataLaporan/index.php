@@ -71,8 +71,8 @@
                                                 class="btn btn-primary btn-sm btn-active-light-primary">
                                                 <i class="fa-solid fa-eye"></i>View
                                             </a>
-                                            <a href=""
-                                                class="btn btn-danger btn-sm btn-active-light-danger">
+                                            <a href="<?= base_url('asesor/generate-pdf/' . ($row['pendaftaran_id'] ?? '')) ?>"
+                                                class="btn btn-danger btn-sm btn-active-light-danger" target="_blank">
                                                 <i class="fa-solid fa-file-export"></i>Pdf
                                             </a>
                                         </div>
