@@ -113,6 +113,9 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan', 'filter' =>
     //tentang RPL
     $routes->get('tentang-rpl', 'TentangRPL::index');
 
+    //detail pendaftaran RPL
+$routes->get('detail-pendaftaran', 'Detailpendaftaran::index');
+
     //check pendaftaran
     $routes->get('check-pendaftaran', 'PendaftaranController::checkPendaftaran');
 });

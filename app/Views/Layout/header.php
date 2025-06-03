@@ -318,9 +318,12 @@
                                         <span class="path2"></span>
                                     </i>
                                 </span>
-                                <span class="menu-title">Tentang RPL</span>
+                                <span class="menu-title">Detail Pendaftaran</span>
                             </span>
                             <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                       
                         </div>
                         <!--end:Menu item-->
                     <?php endif; ?>
