@@ -111,10 +111,10 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan', 'filter' =>
     $routes->get('update-konfirmasi-step/(:segment)/(:any)', 'PendaftaranController::updateKonfirmasiStep/$1/$2');
 
     //tentang RPL
-    $routes->get('tentang-rpl', 'TentangRPL::index');
-
+    $routes->get('detail-pendaftaran', 'Detailpendaftarann::index');
+    
     //detail pendaftaran RPL
-$routes->get('detail-pendaftaran', 'Detailpendaftaran::index');
+    $routes->get('tentang-rpl', 'TentangRpl::index');
 
     //check pendaftaran
     $routes->get('check-pendaftaran', 'PendaftaranController::checkPendaftaran');

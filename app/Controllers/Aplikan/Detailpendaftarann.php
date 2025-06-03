@@ -9,12 +9,12 @@ use App\Models\ProdiModel;
 use App\Models\TahunAjarModel;
 use App\Controllers\BaseController;
 
-class Detailpendaftaran extends BaseController
+class Detailpendaftarann extends BaseController
 {
     // Tampilan Index
     public function index()
     {
-        return $this->render('Aplikan/Detailpendaftaran/index');
+        return $this->render('Aplikan/Detailpendaftarann/index');
     }
-
+    
 }

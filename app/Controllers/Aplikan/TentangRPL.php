@@ -9,12 +9,12 @@ use App\Models\ProdiModel;
 use App\Models\TahunAjarModel;
 use App\Controllers\BaseController;
 
-class TentangRPL extends BaseController
+class TentangRpl extends BaseController
 {
     // Tampilan Index
     public function index()
     {
-        return $this->render('Aplikan/TentangRPL/index');
+        return $this->render('Aplikan/TentangRpl/index');
     }
 
 }
