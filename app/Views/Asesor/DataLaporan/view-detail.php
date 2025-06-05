@@ -142,7 +142,7 @@
 
                     <div class="row">
                         <!-- Foto KTP -->
-                        <div class="col-md-3 mb-5">
+                        <div class="col-md-4 mb-5">
                             <div class="card card-custom h-100">
                                 <div class="card-header">
                                     <div class="card-title">
@@ -164,7 +164,7 @@
                         </div>
 
                         <!-- Bukti Kerja -->
-                        <div class="col-md-3 mb-5">
+                        <div class="col-md-4 mb-5">
                             <div class="card card-custom h-100">
                                 <div class="card-header">
                                     <div class="card-title">
@@ -186,7 +186,7 @@
                         </div>
 
                         <!-- Ijazah -->
-                        <div class="col-md-3 mb-5">
+                        <div class="col-md-4 mb-5">
                             <div class="card card-custom h-100">
                                 <div class="card-header">
                                     <div class="card-title">
@@ -199,28 +199,6 @@
                                             class="btn btn-danger btn-sm btn-active-light-danger w-100"
                                             target="_blank">
                                             <i class="fas fa-file-pdf me-1"></i> Lihat Ijazah
-                                        </a>
-                                    <?php else: ?>
-                                        <span class="text-muted small">File tidak tersedia</span>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Bukti Pelatihan -->
-                        <div class="col-md-3 mb-5">
-                            <div class="card card-custom h-100">
-                                <div class="card-header">
-                                    <div class="card-title">
-                                        <h3 class="fw-bold fs-6 m-0">Bukti Pelatihan</h3>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <?php if (!empty($dtpendaftaran['bukti_pelatihan'])): ?>
-                                        <a href="<?= $dtpendaftaran['bukti_pelatihan'] ?>"
-                                            class="btn btn-danger btn-sm btn-active-light-danger w-100"
-                                            target="_blank">
-                                            <i class="fas fa-file-pdf me-1"></i> Lihat Bukti Pelatihan
                                         </a>
                                     <?php else: ?>
                                         <span class="text-muted small">File tidak tersedia</span>

@@ -87,11 +87,38 @@ class DataLaporanRplController extends BaseController
         $modelPelatihan = new PelatihanModel(); 
         $modelPekerjaan = new PengalamanKerjaModel();
         $approvalModel = new ApprovalRplModel(); 
+        $asesmenModel = new ViewAsesmenKurikulum(); 
 
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
         $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $id)->findAll();
         $data['dtpekerjaan'] = $modelPekerjaan->getPengalamanKerja($id);
+        // Hitung total lama bekerja
+        $totalLamaBekerja = 0;
+        if (!empty($data['dtpekerjaan'])) {
+            foreach ($data['dtpekerjaan'] as $pekerjaan) {
+                if (!empty($pekerjaan['tahun_mulai']) && !empty($pekerjaan['tahun_selesai'])) {
+                    $totalLamaBekerja += (int)$pekerjaan['tahun_selesai'] - (int)$pekerjaan['tahun_mulai'];
+                }
+            }
+        }
+        $data['totalLamaBekerja'] = $totalLamaBekerja; // Kirim ke view
         $data['approvalWithKurikulum'] = $approvalModel->getApprovalWithKurikulum($id);
+
+        
+        // Ambil data asesmen untuk SEMUA mata kuliah (tanpa filter status)
+        $asesmenData = [];
+        if (!empty($data['approvalWithKurikulum'])) {
+            foreach ($data['approvalWithKurikulum'] as $kurikulum) {
+                // Hapus kondisi if($kurikulum['status'] == 'Y') agar mengambil semua status
+                $asesmen = $asesmenModel->where('kode_matkul', $kurikulum['kode_matkul'])->findAll();
+                $asesmenData[$kurikulum['kode_matkul']] = [
+                    'nama_matkul' => $kurikulum['nama_matkul'],
+                    'status_approval' => $kurikulum['status'], // Tambahkan status approval
+                    'asesmen' => $asesmen
+                ];
+            }
+        }
+        $data['asesmenData'] = $asesmenData;
 
         // Load library DomPDF
         $dompdf = new Dompdf();
