@@ -142,7 +142,7 @@
 
                     <div class="row">
                         <!-- Foto KTP -->
-                        <div class="col-md-4 mb-5">
+                        <div class="col-md-3 mb-5">
                             <div class="card card-custom h-100">
                                 <div class="card-header">
                                     <div class="card-title">
@@ -164,7 +164,7 @@
                         </div>
 
                         <!-- Bukti Kerja -->
-                        <div class="col-md-4 mb-5">
+                        <div class="col-md-3 mb-5">
                             <div class="card card-custom h-100">
                                 <div class="card-header">
                                     <div class="card-title">
@@ -186,7 +186,7 @@
                         </div>
 
                         <!-- Ijazah -->
-                        <div class="col-md-4 mb-5">
+                        <div class="col-md-3 mb-5">
                             <div class="card card-custom h-100">
                                 <div class="card-header">
                                     <div class="card-title">
@@ -206,6 +206,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <!-- Bukti Pelatihan -->
                         <div class="col-md-3 mb-5">
                             <div class="card card-custom h-100">
@@ -294,7 +295,7 @@
 <script>
     function lihatAsesmen(kode_matkul) {
         $('#modaltitle').html('Detail Hasil Asesmen');
-        $('#modalbody').load("<?= base_url('asesor/get-asesmen/') ?>" + kode_matkul);
+        $('#modalbody').load("<?= base_url('aplikan/get-asesmen/') ?>" + kode_matkul);
         $('#modal').modal('show');
     }
 </script>
