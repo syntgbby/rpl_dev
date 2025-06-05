@@ -295,7 +295,7 @@
 <script>
     function lihatAsesmen(kode_matkul) {
         $('#modaltitle').html('Detail Hasil Asesmen');
-        $('#modalbody').load("<?= base_url('asesor/get-asesmen/') ?>" + kode_matkul);
+        $('#modalbody').load("<?= base_url('aplikan/get-asesmen/') ?>" + kode_matkul);
         $('#modal').modal('show');
     }
 </script>

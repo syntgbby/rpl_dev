@@ -9,6 +9,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use App\Models\UserModel;
+use App\Models\View\ViewDataPendaftaran;
 
 /**
  * Class BaseController
@@ -69,12 +70,23 @@ abstract class BaseController extends Controller
         $name = $session->get('nama_lengkap');
         $email = $session->get('email');
         $role = $session->get('role');
+
+        $model = new ViewDataPendaftaran();
+        $dtpendaftaran = $model->where('email', $email)->first();
+
+        if ($dtpendaftaran) {
+            $pendaftaran_id = $dtpendaftaran['pendaftaran_id'];
+        } else {
+            $pendaftaran_id = null;
+        }
         
         $data = [
             'name' => $name,
             'email' => $email,
             'role' => $role,
+            'pendaftaran_id' => $pendaftaran_id
         ];
+
         return $data;
     }
     // You can add more global variables here like user information, etc.

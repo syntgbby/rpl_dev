@@ -252,6 +252,25 @@
 
                     <!-- menu aplikan -->
                     <?php if ($user['role'] == 'aplikan'): ?>
+                        <?php if ($user['pendaftaran_id']): ?>
+                        <!--begin:Menu item-->
+                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
+                            class="menu-item <?= (current_url() == base_url('aplikan/detail-pendaftaran') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2"
+                            onclick="window.location.href='<?= base_url('aplikan/detail-pendaftaran') ?>'">
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+                                <span class="menu-icon">
+                                    <i class="ki-duotone ki-save-2 fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                </span>
+                                <span class="menu-title">Detail Pendaftaran</span>
+                            </span>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <?php endif; ?>
                         <!--begin:Menu item-->
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
                             class="menu-item <?= (current_url() == base_url('aplikan/tentang-rpl') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2"
