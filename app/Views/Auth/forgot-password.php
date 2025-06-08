@@ -52,18 +52,21 @@
                             </script>
                         <?php endif; ?>
 
-                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="/forgot-password" method="post">
+                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="/forgot-password"
+                            method="post">
                             <div class="text-center mb-11">
                                 <h1 class="text-gray-900 fw-bolder mb-3">Reset Password</h1>
                             </div>
                             <?= csrf_field() ?>
 
                             <div class="fv-row mb-8">
-                                <input type="text" placeholder="Masukkan Email" name="email" id="email" autocomplete="on" class="form-control bg-transparent" required />
+                                <input type="text" placeholder="Masukkan Email" name="email" id="email"
+                                    autocomplete="on" class="form-control bg-transparent" required />
                             </div>
 
                             <div class="fv-row mb-8">
-                                <select name="question" id="question" class="form-select form-control bg-transparent" data-control="select2" data-placeholder="Pilih Pertanyaan" required>
+                                <select name="question" id="question" class="form-select form-control bg-transparent"
+                                    data-control="select2" data-placeholder="Pilih Pertanyaan" required>
                                     <option value="" disabled selected>Pilih Pertanyaan</option>
                                     <?php foreach ($pertanyaan as $p): ?>
                                         <option value="<?= $p['id'] ?>"><?= $p['pertanyaan'] ?></option>
@@ -72,7 +75,8 @@
                             </div>
 
                             <div class="fv-row mb-8">
-                                <input type="text" placeholder="Masukkan Jawaban" name="answer" id="answer" autocomplete="on" class="form-control bg-transparent" required />
+                                <input type="text" placeholder="Masukkan Jawaban" name="answer" id="answer"
+                                    autocomplete="on" class="form-control bg-transparent" required />
                             </div>
 
                             <div class="d-grid mb-10">
@@ -88,12 +92,47 @@
                 </div>
             </div>
 
-            <div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-2" style="background-image: url(<?= base_url('assets/media/misc/auth-bg.png') ?>)">
+            <div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-2"
+                style="background-image: url(<?= base_url('assets/media/misc/auth-bg.png') ?>)">
                 <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
-                    <img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-5 mb-lg-10" src="<?= base_url('assets/media/misc/auth-screens.png') ?>" alt="" />
-                    <h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center">Fast, Efficient and Productive</h1>
+                    <img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-5 mb-lg-10"
+                        src="<?= base_url('assets/media/misc/auth-screens.png') ?>" alt="" />
+                    <h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center">Fast, Efficient and Productive
+                    </h1>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal Reset Password -->
+    <div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="/reset-password" method="post">
+                <?= csrf_field() ?>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ganti Password Baru</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group mb-3">
+                            <input type="email" name="email" class="form-control" placeholder="Konfirmasi Email"
+                                required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <input type="password" name="new_password" class="form-control" placeholder="Password baru"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="confirm_password" class="form-control"
+                                placeholder="Ulangi password" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -101,53 +140,10 @@
 
 </html>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#kt_sign_in_submit').on('click', function(e) {
-            e.preventDefault();
-            var email = $('#email').val();
-            var password = $('#password').val();
-
-            // Check if email or password is empty
-            if (email == "" || password == "") {
-                e.preventDefault(); // Prevent the form from submitting
-
-                // Show SweetAlert2 if fields are empty
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Warning',
-                    text: 'Email and Password must be filled!'
-                });
-            } else {
-                // Show the indicator and spinner
-                $('.indicator-label').hide();
-                $('.indicator-progress').show();
-
-                // If fields are not empty, submit the form
-                $('#kt_sign_in_form').submit();
-                $('#kt_sign_in_submit').prop('disabled', true);
-
-                var formData = new FormData();
-                formData.append('email', email);
-                formData.append('password', password);
-
-                var actionUrl = '<?= base_url('login/authenticate') ?>'; // Ganti dengan URL yang sesuai
-
-                // Kirim request AJAX
-                $.ajax({
-                    url: actionUrl,
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        // console.log(response);
-                    },
-                    error: function(xhr, status, error) {
-                        toastr.error('An error occurred while sending the request.');
-                    }
-                });
-            }
+<?php if (session()->getFlashdata('show_reset_modal')): ?>
+    <script>
+        $(document).ready(function () {
+            $('#resetPasswordModal').modal('show');
         });
-    });
-</script>
+    </script>
+<?php endif; ?>

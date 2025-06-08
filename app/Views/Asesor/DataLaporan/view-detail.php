@@ -19,7 +19,9 @@
                     <div class="text-gray-600"><?= $dtpendaftaran['nik'] ?? '-' ?></div>
 
                     <div class="fw-bold mt-5">Tempat dan Tanggal lahir</div>
-                    <div class="text-gray-600"><?= $dtpendaftaran['tempat_lahir'] ?? '-' ?>, <?= $dtpendaftaran['tanggal_lahir'] ?? '-' ?></div>
+                    <div class="text-gray-600"><?= $dtpendaftaran['tempat_lahir'] ?? '-' ?>,
+                        <?= $dtpendaftaran['tanggal_lahir'] ?? '-' ?>
+                    </div>
 
                     <div class="fw-bold mt-5">No Hp</div>
                     <div class="text-gray-600"><?= $dtpendaftaran['no_hp'] ?? '-' ?></div>
@@ -60,7 +62,8 @@
                                             <td class="text-center"><?= $row['tahun'] ?></td>
                                             <td class="text-center">
                                                 <?php if ($row['file_bukti']): ?>
-                                                    <a href="<?= $row['file_bukti'] ?>" target="_blank" class="btn btn-sm btn-primary">
+                                                    <a href="<?= $row['file_bukti'] ?>" target="_blank"
+                                                        class="btn btn-sm btn-primary">
                                                         <i class="fas fa-file-pdf me-1"></i> Lihat Bukti
                                                     </a>
                                                 <?php else: ?>
@@ -111,7 +114,8 @@
                                             <td class="text-center"><?= $row['posisi'] ?></td>
                                             <td class="text-center">
                                                 <?php if ($row['file_bukti']): ?>
-                                                    <a href="<?= $row['file_bukti'] ?>" target="_blank" class="btn btn-sm btn-primary">
+                                                    <a href="<?= $row['file_bukti'] ?>" target="_blank"
+                                                        class="btn btn-sm btn-primary">
                                                         <i class="fas fa-file-pdf me-1"></i> Lihat Bukti
                                                     </a>
                                                 <?php else: ?>
@@ -142,7 +146,7 @@
 
                     <div class="row">
                         <!-- Foto KTP -->
-                        <div class="col-md-4 mb-5">
+                        <div class="col-md-3 mb-5">
                             <div class="card card-custom h-100">
                                 <div class="card-header">
                                     <div class="card-title">
@@ -152,8 +156,7 @@
                                 <div class="card-body">
                                     <?php if (!empty($dtpendaftaran['file_ktp'])): ?>
                                         <a href="<?= $dtpendaftaran['file_ktp'] ?>"
-                                            class="btn btn-primary btn-sm btn-active-light-primary w-100"
-                                            target="_blank">
+                                            class="btn btn-primary btn-sm btn-active-light-primary w-100" target="_blank">
                                             <i class="fas fa-file-pdf me-1"></i> Lihat KTP
                                         </a>
                                     <?php else: ?>
@@ -164,7 +167,7 @@
                         </div>
 
                         <!-- Bukti Kerja -->
-                        <div class="col-md-4 mb-5">
+                        <div class="col-md-3 mb-5">
                             <div class="card card-custom h-100">
                                 <div class="card-header">
                                     <div class="card-title">
@@ -174,8 +177,7 @@
                                 <div class="card-body">
                                     <?php if (!empty($dtpendaftaran['bukti_kerja'])): ?>
                                         <a href="<?= $dtpendaftaran['bukti_kerja'] ?>"
-                                            class="btn btn-primary btn-sm btn-active-light-primary w-100"
-                                            target="_blank">
+                                            class="btn btn-primary btn-sm btn-active-light-primary w-100" target="_blank">
                                             <i class="fas fa-file-pdf me-1"></i> Lihat Bukti Kerja
                                         </a>
                                     <?php else: ?>
@@ -186,7 +188,7 @@
                         </div>
 
                         <!-- Ijazah -->
-                        <div class="col-md-4 mb-5">
+                        <div class="col-md-3 mb-5">
                             <div class="card card-custom h-100">
                                 <div class="card-header">
                                     <div class="card-title">
@@ -196,8 +198,7 @@
                                 <div class="card-body">
                                     <?php if (!empty($dtpendaftaran['file_ijazah'])): ?>
                                         <a href="<?= $dtpendaftaran['file_ijazah'] ?>"
-                                            class="btn btn-primary btn-sm btn-active-light-primary w-100"
-                                            target="_blank">
+                                            class="btn btn-primary btn-sm btn-active-light-primary w-100" target="_blank">
                                             <i class="fas fa-file-pdf me-1"></i> Lihat Ijazah
                                         </a>
                                     <?php else: ?>
@@ -217,8 +218,7 @@
                                 <div class="card-body">
                                     <?php if (!empty($dtpendaftaran['bukti_pelatihan'])): ?>
                                         <a href="<?= $dtpendaftaran['bukti_pelatihan'] ?>"
-                                            class="btn btn-primary btn-sm btn-active-light-primary w-100"
-                                            target="_blank">
+                                            class="btn btn-primary btn-sm btn-active-light-primary w-100" target="_blank">
                                             <i class="fas fa-file-pdf me-1"></i> Lihat Bukti Pelatihan
                                         </a>
                                     <?php else: ?>
@@ -271,7 +271,8 @@
                                                 <?php endif; ?>
                                             </td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-primary" onclick="lihatAsesmen('<?= $row['kode_matkul'] ?>')">Lihat Asesmen</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="lihatAsesmen('<?= $row['kode_matkul'] ?>')">Lihat Asesmen</button>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

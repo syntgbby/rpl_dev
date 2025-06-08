@@ -11,7 +11,7 @@ class ProdiController extends BaseController
     {
         $model = new ProdiModel();
 
-        $data['prodi'] = $model->findAll();
+        $data['prodi'] = $model->orderBy('nama_prodi', 'ASC')->findAll();
 
         return $this->render('Admin/Prodi/index', $data);
     }

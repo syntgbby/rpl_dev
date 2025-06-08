@@ -15,7 +15,7 @@ class MataKuliahController extends BaseController
     {
         $mataKuliah = new MataKuliahModel();
 
-        $data['mata_kuliah'] = $mataKuliah->findAll();
+        $data['mata_kuliah'] = $mataKuliah->orderBy('nama_matkul', 'ASC')->findAll();
 
         return $this->render('Admin/MataKuliah/index', $data);
     }

@@ -5,6 +5,17 @@
 <!--begin::Content wrapper-->
 <div class="d-flex flex-column flex-column-fluid">
 	<div id="kt_app_content" class="app-content">
+		<!--begin::Row-->
+		<?php if (session()->has('success')): ?>
+			<div class="alert alert-success">
+				<?= session()->getFlashdata('success') ?>
+			</div>
+		<?php endif; ?>
+		<?php if (session()->has('error')): ?>
+			<div class="alert alert-danger">
+				<?= session()->getFlashdata('error') ?>
+			</div>
+		<?php endif; ?>
 		<div class="card border-transparent my-10" data-bs-theme="light" style="background-color:rgb(28, 49, 94);">
 			<!--begin::Body-->
 			<div class="card-body d-flex ps-xl-15">
@@ -20,8 +31,8 @@
 
 					<!--begin::Action-->
 					<div class="mb-3">
-						<a href='<?= base_url('/editprofile') ?>' class="btn btn-danger fw-semibold me-2" data-bs-toggle=""
-							data-bs-target="#kt_modal_upgrade_plan">
+						<a href='<?= base_url('/editprofile') ?>' class="btn btn-danger fw-semibold me-2"
+							data-bs-toggle="" data-bs-target="#kt_modal_upgrade_plan">
 							Lengkapi Biodata Asesor
 						</a>
 					</div>

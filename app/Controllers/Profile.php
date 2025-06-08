@@ -29,6 +29,7 @@ class Profile extends BaseController
             if (!$query) {
                 throw new \CodeIgniter\Exceptions\PageNotFoundException("User tidak ditemukan.");
             }
+            // dd($query);
             return $this->render('Asesor/editprofile', ['get' => $query]);
         }
     }
@@ -219,5 +220,7 @@ class Profile extends BaseController
         }
     }
 
-    public function updatePassword() {}
+    public function updatePassword()
+    {
+    }
 }

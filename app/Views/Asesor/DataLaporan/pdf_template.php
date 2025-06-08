@@ -9,19 +9,22 @@ if (file_exists($logoPath)) {
 }
 ?>
 <html>
+
 <head>
     <style>
         @page {
-            margin-top: 110px;
+            margin-top: 50px;
             margin-bottom: 40px;
             margin-left: 50px;
             margin-right: 50px;
         }
+
         body {
             font-family: Arial, sans-serif;
             font-size: 12px;
             margin: 0;
         }
+
         header {
             position: fixed;
             top: -90px;
@@ -32,31 +35,37 @@ if (file_exists($logoPath)) {
             padding: 10px 0 5px 0;
             background: #fff;
         }
+
         .header-table {
             width: 80%;
             margin: 0 auto;
-            
+
         }
+
         .header-table td {
             vertical-align: middle;
         }
+
         .header-title {
             color: #003366;
             font-size: 20px;
             font-weight: bold;
             text-align: center;
             padding-bottom: 4px;
-            letter-spacing:1px;
+            letter-spacing: 1px;
         }
+
         .header-desc {
             font-size: 12px;
             text-align: center;
             color: #003366;
         }
+
         .header-link {
             color: #003366;
             text-decoration: underline;
         }
+
         .card {
             border: 1px solid #ddd;
             padding: 18px 15px;
@@ -65,7 +74,9 @@ if (file_exists($logoPath)) {
             background: #fff;
             page-break-inside: avoid;
         }
-        .card h3, .card h4 {
+
+        .card h3,
+        .card h4 {
             margin: 0 0 12px 0;
             color: #2c3e50;
             font-size: 15px;
@@ -73,22 +84,28 @@ if (file_exists($logoPath)) {
             border-bottom: 2px solid #333;
             padding-bottom: 6px;
         }
+
         .fw-bold {
             font-weight: bold;
         }
+
         .text-gray-600 {
             color: #666;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 10px;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid #bfc3c9;
             padding: 8px 6px;
             font-size: 12px;
         }
+
         th {
             background: #1976d2;
             color: #fff;
@@ -96,9 +113,11 @@ if (file_exists($logoPath)) {
             letter-spacing: 1px;
             text-align: center;
         }
+
         tr:nth-child(even) td {
             background: #f6f8fa;
         }
+
         .status-badge {
             display: inline-block;
             min-width: 70px;
@@ -110,24 +129,19 @@ if (file_exists($logoPath)) {
         }
     </style>
 </head>
+
 <body>
-    <header>
-        <table class="header-table">
-            <tr>
-                <td style="width:90px;">
-                    <img src="<?= FCPATH . 'assets/media/logos/logoLP3I.png' ?>" alt="Logo LP3I" style="width:80px;">
-                </td>
-                <td>
-                    <div class="header-title">Politeknik LP3I Jakarta</div>
-                    <div class="header-desc">
-                        Direktorat: Gedung Sentra Kramat Blok A Jl. Kramat Raya No. 7-9, Jakarta,<br>
-                        Phone: (021) 3190-5498, Fax (021) 3190-5499. Website:
-                        <span class="">www.lp3i.ac.id</span>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </header>
+    <!-- Tambahkan gambar di sini -->
+    <?php helper('url'); ?>
+    <?php
+    $imgPath = FCPATH . 'assets/img/lp3itugasta.jpeg';
+    $type = pathinfo($imgPath, PATHINFO_EXTENSION);
+    $data = file_get_contents($imgPath);
+    $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+    ?>
+    <div class="text-center">
+        <img src="<?= $base64 ?>" style="width: 700px; height:auto;">
+    </div>
 
     <!-- Informasi Biodata -->
     <div class="card">
@@ -172,7 +186,7 @@ if (file_exists($logoPath)) {
                     <tr>
                         <th style="width:25%; text-align:left;">Nama Pelatihan</th>
                         <td><?= $row['nama_pelatihan'] ?></td>
-                        
+
                     </tr>
                     <tr>
                         <th style="text-align:left;">Penyelenggara</th>
@@ -225,7 +239,7 @@ if (file_exists($logoPath)) {
             <thead>
                 <tr>
                     <th style="width:40px;">No</th>
-                    <th style="width:120px;">Kode Mata Kuliah</th>
+                    <th style="width:100px;">Kode Mata Kuliah</th>
                     <th>Mata Kuliah</th>
                     <th style="width:100px;">Tahun Ajaran</th>
                     <th style="width:40px;">SKS</th>
@@ -234,7 +248,8 @@ if (file_exists($logoPath)) {
             </thead>
             <tbody>
                 <?php if ($approvalWithKurikulum && count($approvalWithKurikulum) > 0): ?>
-                    <?php $no = 1; foreach ($approvalWithKurikulum as $row): ?>
+                    <?php $no = 1;
+                    foreach ($approvalWithKurikulum as $row): ?>
                         <tr>
                             <td style="text-align:center;"><?= $no++ ?></td>
                             <td><?= $row['kode_matkul'] ?></td>
@@ -276,7 +291,8 @@ if (file_exists($logoPath)) {
                     </thead>
                     <tbody>
                         <?php if (!empty($data_asesmen['asesmen'])): ?>
-                            <?php $no = 1; foreach ($data_asesmen['asesmen'] as $asesmen): ?>
+                            <?php $no = 1;
+                            foreach ($data_asesmen['asesmen'] as $asesmen): ?>
                                 <tr>
                                     <td style="text-align:center;"><?= $no++ ?></td>
                                     <td><?= $asesmen['deskripsi'] ?></td>
@@ -312,4 +328,5 @@ if (file_exists($logoPath)) {
         <?php endforeach; ?>
     <?php endif; ?>
 </body>
+
 </html>

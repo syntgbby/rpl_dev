@@ -28,9 +28,9 @@ class KurikulumController extends BaseController
         $tahunAjar = new TahunAjarModel();
         $mataKuliah = new MataKuliahModel();
 
-        $data['prodi'] = $prodi->findAll();
+        $data['prodi'] = $prodi->orderBy('nama_prodi', 'ASC')->findAll();
         $data['tahun_ajar'] = $tahunAjar->where('status', 'Y')->findAll();
-        $data['mata_kuliah'] = $mataKuliah->where('status', 'Y')->findAll();
+        $data['mata_kuliah'] = $mataKuliah->where('status', 'Y')->orderBy('nama_matkul', 'ASC')->findAll();
 
         return $this->render('Admin/Kurikulum/form', $data);
     }

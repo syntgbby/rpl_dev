@@ -10,7 +10,9 @@ class UserController extends BaseController
     public function index()
     {
         $model = new UserModel();
-        $data['users'] = $model->findAll();
+        $data['users'] = $model
+            ->whereIn('role', ['kaprodi', 'asesor'])
+            ->findAll();
 
         return $this->render('Admin/Users/index', $data);
     }
@@ -103,7 +105,7 @@ class UserController extends BaseController
         $modelPengalamanKerja = new PengalamanKerjaModel();
         $modelTimeline = new TimelineModel();
         $user = $model->find($id);
-        
+
         $email = $user['email'];
         $nama = $user['nama_lengkap'];
         $nama_lengkap = str_replace(' ', '-', $nama);
@@ -159,10 +161,13 @@ class UserController extends BaseController
 
 function deleteFolder($dir)
 {
-    if (!file_exists($dir)) return;
-    if (!is_dir($dir)) return unlink($dir);
+    if (!file_exists($dir))
+        return;
+    if (!is_dir($dir))
+        return unlink($dir);
     foreach (scandir($dir) as $item) {
-        if ($item == '.' || $item == '..') continue;
+        if ($item == '.' || $item == '..')
+            continue;
         deleteFolder($dir . DIRECTORY_SEPARATOR . $item);
     }
     rmdir($dir);

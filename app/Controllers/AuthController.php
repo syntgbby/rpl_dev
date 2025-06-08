@@ -124,7 +124,7 @@ class AuthController extends Controller
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/')->with('success', 'Logout berhasil');
+        return redirect()->to('/login')->with('success', 'Anda telah logout!');
     }
 
     public function viewForgotPassword()
@@ -137,17 +137,51 @@ class AuthController extends Controller
     public function forgotPassword()
     {
         $users = new UserModel();
+        $dtl = new DetailAplikanModel();
         $email = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
+        $pertanyaan = $this->request->getPost('question');
+        $jawaban = $this->request->getPost('answer');
+
+        $user = $users->where('email', $email)->first();
+        $dtl_data = $dtl->where('email', $email)->first();
+
+        if (!$user || !$dtl_data) {
+            return redirect()->to('/forgot-password')->with('error', 'Email tidak terdaftar!');
+        }
+
+        // Cek pertanyaan dan jawaban keamanan
+        if ($dtl_data['pertanyaan_id'] != $pertanyaan || strtolower($dtl_data['jawaban']) != strtolower($jawaban)) {
+            return redirect()->to('/forgot-password')->with('error', 'Pertanyaan atau jawaban salah!');
+        }
+
+        // Kalau valid, arahkan ke halaman untuk reset password atau lakukan reset langsung di sini
+        return redirect()->to('/forgot-password')->with('show_reset_modal', true)->with('success', 'Verifikasi berhasil, silakan buat password baru.');
+    }
+
+    public function resetPassword()
+    {
+        $email = $this->request->getPost('email');
+        $newPassword = $this->request->getPost('new_password');
+        $confirmPassword = $this->request->getPost('confirm_password');
+
+        if ($newPassword !== $confirmPassword) {
+            return redirect()->to('/forgot-password')->with('error', 'Password tidak cocok!')->with('show_reset_modal', true);
+        }
+
+        $users = new UserModel();
         $user = $users->where('email', $email)->first();
 
-        $pertanyaan = $this->request->getPost('pertanyaan');
-        $jawaban = $this->request->getPost('jawaban');
-
-        if ($user) {
-            $hashed = strtoupper(md5(strtoupper(md5($email)) . 'P@ssw0rd' . $password));
+        if (!$user) {
+            return redirect()->to('/forgot-password')->with('error', 'User tidak ditemukan!');
         }
-        
-        
+
+        $hashed = strtoupper(md5(strtoupper(md5($email)) . 'P@ssw0rd' . $newPassword));
+
+        $users->update($user['id'], [
+            'password' => $hashed
+        ]);
+
+        return redirect()->to('/login')->with('success', 'Password berhasil diubah! Silakan login.');
     }
+
 }

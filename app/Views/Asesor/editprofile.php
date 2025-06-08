@@ -36,7 +36,8 @@
                 </script>
             <?php endif; ?>
             <!--begin::Form-->
-            <form id="frmProfile" class="form" action="<?= base_url('edit-profile') ?>" method="post" enctype="multipart/form-data">
+            <form id="frmProfile" class="form" action="<?= base_url('edit-profile') ?>" method="post"
+                enctype="multipart/form-data">
                 <div class="card-body border-top p-9">
                     <!--begin::Input group for NIP-->
                     <div class="row mb-6">
@@ -55,7 +56,8 @@
                         <div class="col-lg-8">
                             <input type="text" name="nama_lengkap" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Nama Lengkap" value="<?= $get['nama_lengkap'] ? $get['nama_lengkap'] : '' ?>" />
+                                placeholder="Nama Lengkap"
+                                value="<?= $get['nama_lengkap'] ? $get['nama_lengkap'] : '' ?>" />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -88,7 +90,8 @@
                         <div class="col-lg-8">
                             <input type="text" name="pangkat_golongan" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Golongan" value="<?= $get['pangkat_golongan'] ? $get['pangkat_golongan'] : '' ?>" />
+                                placeholder="Golongan"
+                                value="<?= $get['pangkat_golongan'] ? $get['pangkat_golongan'] : '' ?>" />
                         </div>
                     </div>
                     <!--end::Input group for Golongan-->
@@ -110,7 +113,8 @@
                         <div class="col-lg-8">
                             <input type="text" name="bidang_ilmu_keahlian" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Bidang Keahlian" value="<?= $get['bidang_ilmu_keahlian'] ? $get['bidang_ilmu_keahlian'] : '' ?>" />
+                                placeholder="Bidang Keahlian"
+                                value="<?= $get['bidang_ilmu_keahlian'] ? $get['bidang_ilmu_keahlian'] : '' ?>" />
                         </div>
                     </div>
                     <!--end::Input group for Bidang Keahlian-->
@@ -121,7 +125,8 @@
                         <div class="col-lg-8">
                             <input type="text" name="pendidikan_terakhir" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Pendidikan Terakhir" value="<?= $get['pendidikan_terakhir'] ? $get['pendidikan_terakhir'] : '' ?>" />
+                                placeholder="Pendidikan Terakhir"
+                                value="<?= $get['pendidikan_terakhir'] ? $get['pendidikan_terakhir'] : '' ?>" />
                         </div>
                     </div>
                     <!--end::Input group for Pendidikan Terakhir-->
@@ -131,8 +136,8 @@
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">No Telepon</label>
                         <div class="col-lg-8">
                             <input type="text" name="telepon" required
-                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="No HP" value="<?= $get['telepon'] ? $get['telepon'] : '' ?>" />
+                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" placeholder="No HP"
+                                value="<?= $get['telepon'] ? $get['telepon'] : '' ?>" />
                         </div>
                     </div>
                     <!--end::Input group for No Telepon-->
@@ -143,10 +148,9 @@
                         <div class="col-lg-8">
                             <textarea name="alamat" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Alamat" value="<?= $get['alamat'] ? $get['alamat'] : '' ?>"></textarea>
+                                placeholder="Alamat"><?= $get['alamat'] ? $get['alamat'] : '' ?></textarea>
                         </div>
                     </div>
-                    <!--end::Input group for Pendidikan Terakhir-->
 
                 </div>
                 <!--begin::Actions-->

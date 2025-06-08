@@ -15,8 +15,10 @@ $routes->post('register', 'AuthController::registerProcess');
 $routes->get('login', 'AuthController::login');
 $routes->post('login', 'AuthController::loginProcess');
 $routes->get('logout', 'AuthController::logout');
+
 $routes->get('forgot-password', 'AuthController::viewForgotPassword');
 $routes->post('forgot-password', 'AuthController::forgotPassword');
+$routes->post('reset-password', 'AuthController::resetPassword');
 
 // Dashboard
 $routes->get('/dashboard', 'DashController::index');

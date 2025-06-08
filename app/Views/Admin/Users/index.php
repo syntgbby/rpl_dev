@@ -85,23 +85,12 @@
                                         </td>
                                         <td class="text-center">
                                             <div class="d-flex align-items-center justify-content-center gap-2">
+
                                                 <button type="button"
-                                                    class="btn btn-light btn-sm btn-icon btn-active-light-primary"
-                                                    onClick="window.location.href='<?= base_url('admin/users/edit/') . $row['id'] ?>'"><i
-                                                        class="fa-solid fa-pen-to-square"></i></button>
-                                                <?php if ($row['role'] == 'asesor' || $row['role'] == 'admin' && $row['status'] == 'Y'): ?>
-                                                    <button type="button"
-                                                        class="btn btn-light btn-sm btn-icon btn-active-light-warning"
-                                                        onclick="confirmDeactivate('<?= base_url('admin/users/deactivate/') . $row['id'] ?>')">
-                                                        <i class="fa-solid fa-user-slash"></i>
-                                                    </button>
-                                                <?php else: ?>
-                                                    <button type="button"
-                                                        class="btn btn-light btn-sm btn-icon btn-active-light-danger"
-                                                        onclick="confirmDelete('<?= base_url('admin/users/delete/') . $row['id'] ?>')">
-                                                        <i class="fa-solid fa-trash"></i>
-                                                    </button>
-                                                <?php endif; ?>
+                                                    class="btn btn-light btn-sm btn-icon btn-active-light-danger"
+                                                    onclick="confirmDelete('<?= base_url('admin/users/delete/') . $row['id'] ?>')">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
 
                                             </div>
                                         </td>

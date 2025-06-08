@@ -133,6 +133,20 @@
                 <?php endif; ?>
             </div>
         </div>
+        <!-- Foto -->
+        <div class="col-md-6">
+            <div class="border rounded p-2">
+                <label class="text-muted d-block small mb-2">Pas Foto</label>
+                <?php if (!empty($dtpendaftaran['file_foto'])): ?>
+                    <a href="<?= $dtpendaftaran['file_foto'] ?>" class="btn btn-sm btn-outline-primary w-100"
+                        target="_blank">
+                        <i class="fas fa-file-pdf me-1"></i> Lihat Pas Foto
+                    </a>
+                <?php else: ?>
+                    <span class="text-muted small">File tidak tersedia</span>
+                <?php endif; ?>
+            </div>
+        </div>
 
     </div>
 </div>

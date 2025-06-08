@@ -12,34 +12,34 @@ helper('url');
 class DataLaporanRplController extends BaseController
 {
     public function index()
-    {
-        {
-        $email = session()->get('email');
-        $id = session()->get('user_id');
+    { {
+            $email = session()->get('email');
+            $id = session()->get('user_id');
 
-        $user = new UserModel();
-        $asesor = $user->where('email', $email)->first();
+            $user = new UserModel();
+            $asesor = $user->where('email', $email)->first();
 
-        if ($asesor['id'] != $id) {
-            return redirect()->to('/asesor/login')->with('error', 'Anda tidak memiliki akses ke halaman ini');
-        } else {
-            $model = new ViewDataPendaftaran();
-            $dtPendaftaran = $model->where('asesor_id', $asesor['id'])->where('status', 'approved')->findAll();
-
-            if ($dtPendaftaran) {
-                $data['dtpendaftaran'] = $dtPendaftaran;
+            if ($asesor['id'] != $id) {
+                return redirect()->to('/asesor/login')->with('error', 'Anda tidak memiliki akses ke halaman ini');
             } else {
-                $data['dtpendaftaran'] = [];
-            }
+                $model = new ViewDataPendaftaran();
+                $dtPendaftaran = $model->where('asesor_id', $asesor['id'])->where('status', 'approved')->findAll();
 
-            return $this->render('Asesor/DataLaporan/index', $data);
+                if ($dtPendaftaran) {
+                    $data['dtpendaftaran'] = $dtPendaftaran;
+                } else {
+                    $data['dtpendaftaran'] = [];
+                }
+
+                return $this->render('Asesor/DataLaporan/index', $data);
+            }
         }
-    }}
+    }
 
     public function filterData()
     {
         $model = new ViewDataPendaftaran();
-        
+
         // Ambil parameter tanggal dari input GET
         $startDate = $this->request->getGet('start_date'); // 2025-05-02
         $endDate = $this->request->getGet('end_date');     // 2025-05-05
@@ -57,13 +57,13 @@ class DataLaporanRplController extends BaseController
         return $this->render('Asesor/DataLaporan/index', $data);
     }
 
-    
+
     public function viewDetail($id)
     {
         $model = new ViewDataPendaftaran();
         $modelPelatihan = new PelatihanModel();
         $modelPekerjaan = new PengalamanKerjaModel();
-        $approvalModel = new ApprovalRplModel(); 
+        $approvalModel = new ApprovalRplModel();
 
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
         $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $id)->findAll();
@@ -84,10 +84,10 @@ class DataLaporanRplController extends BaseController
     {
         // Load model dan data
         $model = new ViewDataPendaftaran();
-        $modelPelatihan = new PelatihanModel(); 
+        $modelPelatihan = new PelatihanModel();
         $modelPekerjaan = new PengalamanKerjaModel();
-        $approvalModel = new ApprovalRplModel(); 
-        $asesmenModel = new ViewAsesmenKurikulum(); 
+        $approvalModel = new ApprovalRplModel();
+        $asesmenModel = new ViewAsesmenKurikulum();
 
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
         $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $id)->findAll();
@@ -97,14 +97,14 @@ class DataLaporanRplController extends BaseController
         if (!empty($data['dtpekerjaan'])) {
             foreach ($data['dtpekerjaan'] as $pekerjaan) {
                 if (!empty($pekerjaan['tahun_mulai']) && !empty($pekerjaan['tahun_selesai'])) {
-                    $totalLamaBekerja += (int)$pekerjaan['tahun_selesai'] - (int)$pekerjaan['tahun_mulai'];
+                    $totalLamaBekerja += (int) $pekerjaan['tahun_selesai'] - (int) $pekerjaan['tahun_mulai'];
                 }
             }
         }
         $data['totalLamaBekerja'] = $totalLamaBekerja; // Kirim ke view
         $data['approvalWithKurikulum'] = $approvalModel->getApprovalWithKurikulum($id);
 
-        
+
         // Ambil data asesmen untuk SEMUA mata kuliah (tanpa filter status)
         $asesmenData = [];
         if (!empty($data['approvalWithKurikulum'])) {

@@ -12,9 +12,9 @@
                         <label for="name" class="form-label">Program Studi</label>
                     </div>
                     <div class="col-md-7">
-                        <select class="form-control form-control-solid" data-control="select2" id="prodi_id"
-                            name="prodi_id" placeholder="Pilih Program Studi" required>
-                            <option value="" disabled selected>Pilih Program Studi</option>
+                        <select class="form-control form-control-solid form-control-lg" data-control="select2"
+                            id="prodi_id" name="prodi_id" data-placeholder="Pilih Program Studi" required>
+                            <!-- <option value="" disabled selected>Pilih Program Studi</option> -->
                             <?php foreach ($prodi as $prow): ?>
                                 <option value="<?= $prow['id'] ?>" <?= (isset($dtkurikulum) && $dtkurikulum['prodi_id'] == $prow['id']) ? 'selected' : '' ?>><?= $prow['nama_prodi'] ?>
                                 </option>
@@ -31,8 +31,8 @@
                         <label for="name" class="form-label">Tahun Ajaran</label>
                     </div>
                     <div class="col-md-7">
-                        <select class="form-control form-control-solid" data-control="select2" id="tahun_ajar_id"
-                            name="tahun_ajar_id" placeholder="Pilih Tahun Ajar" required>
+                        <select class="form-control form-control-solid form-control-lg" data-control="select2"
+                            id="tahun_ajar_id" name="tahun_ajar_id" placeholder="Pilih Tahun Ajar" required>
                             <option value="" disabled selected>Pilih Tahun Ajar</option>
                             <?php foreach ($tahun_ajar as $trow): ?>
                                 <option value="<?= $trow['id'] ?>" <?= (isset($dtkurikulum) && $dtkurikulum['tahun_ajar_id'] == $trow['id']) ? 'selected' : '' ?>><?= $trow['tahun'] ?>
@@ -50,8 +50,8 @@
                         <label for="email" class="form-label">Mata Kuliah</label>
                     </div>
                     <div class="col-md-7">
-                        <select class="form-control form-control-solid" data-control="select2" id="kode_matkul"
-                            name="kode_matkul" placeholder="Pilih Mata Kuliah" required>
+                        <select class="form-control form-control-solid form-control-lg" data-control="select2"
+                            id="kode_matkul" name="kode_matkul" placeholder="Pilih Mata Kuliah" required>
                             <option value="" disabled selected>Pilih Mata Kuliah</option>
                             <?php foreach ($mata_kuliah as $mrow): ?>
                                 <option value="<?= $mrow['kode_matkul'] ?>" <?= (isset($dtkurikulum) && $dtkurikulum['kode_matkul'] == $mrow['kode_matkul']) ? 'selected' : '' ?>>
@@ -96,3 +96,19 @@
     </div>
     <!--end::Actions-->
 </form>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<!-- Inisialisasi -->
+<script>
+    $(document).ready(function () {
+        $('[data-control="select2"]').select2({
+            width: '100%'
+        });
+    });
+</script>

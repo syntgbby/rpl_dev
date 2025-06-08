@@ -23,6 +23,7 @@ class ApprovalRplModel extends Model
             view_kurikulum.tahun')
             ->join('view_kurikulum', 'approval_rpl.kurikulum_id = view_kurikulum.id')
             ->where('approval_rpl.pendaftaran_id', $pendaftaran_id)
+            ->orderBy('view_kurikulum.nama_matkul', 'ASC')
             ->findAll();
     }
 }
