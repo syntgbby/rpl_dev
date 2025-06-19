@@ -19,11 +19,11 @@ class DetailPendaftaranController extends BaseController
 
         $modelPelatihan = new PelatihanModel();
         $modelPekerjaan = new PengalamanKerjaModel();
-        $approvalModel = new ApprovalRplModel(); 
+        $approvalModel = new ApprovalRplModel();
 
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($pendaftaran_id);
         $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $pendaftaran_id)->findAll();
-        $data['dtpekerjaan'] = $modelPekerjaan->getPengalamanKerja($pendaftaran_id);
+        $data['dtpekerjaan'] = $modelPekerjaan->where('pendaftaran_id', $pendaftaran_id)->findAll();
         $data['approvalWithKurikulum'] = $approvalModel->getApprovalWithKurikulum($pendaftaran_id);
 
         return $this->render('Aplikan/DetailPendaftaran/index', $data);

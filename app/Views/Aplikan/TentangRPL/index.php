@@ -20,7 +20,7 @@
                             <div class="mb-8">
                                 <!--end::Info-->
                                 <!--begin::Title-->
-                                <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold">Rekognisi Pembelajaran
+                                <div class="text-gray-900 text-hover-primary fs-2 fw-bold">Rekognisi Pembelajaran
                                     Lampau - LP3I Kramat
                                     <!--end::Title-->
                                     <!--begin::Container-->
@@ -32,6 +32,7 @@
                                         <!--end::Image-->
                                     </div>
                                     <!--end::Container-->
+                                </div>
                             </div>
                             <!--end::Wrapper-->
                             <!--begin::Description-->
