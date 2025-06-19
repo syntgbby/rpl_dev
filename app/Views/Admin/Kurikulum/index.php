@@ -16,7 +16,8 @@
                 </div>
                 <div class="card-title">
                     <div class="d-flex align-items-center position-relative my-1">
-                        <button type="button" class="btn btn-primary" id="btnAddKurikulum"><i
+                        <button type="button" class="btn btn-primary"
+                            onclick="window.location.href='<?= base_url('admin/kurikulum/create') ?>'"><i
                                 class="fa-solid fa-plus"></i>
                             Tambah</button>
                     </div>
@@ -26,6 +27,10 @@
             <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body py-4">
+                <div class="mb-5">
+                    <input type="text" data-kt-filter="search" class="form-control form-control-solid w-250px"
+                        placeholder="Search..." />
+                </div>
                 <?php if (session()->getFlashdata('success')): ?>
                     <script>
                         Swal.fire({
@@ -48,7 +53,7 @@
 
                 <!--begin::Table-->
                 <div class="table-responsive">
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_prodi">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="tblKurikulum">
                         <thead>
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-10px">No</th>
@@ -61,58 +66,8 @@
                                 <th class="min-w-100px">Action</th>
                             </tr>
                         </thead>
-                        <?php if ($kurikulum): ?>
-                            <tbody class="text-gray-600 fw-semibold">
-                                <?php $no = 1; ?>
-                                <?php foreach ($kurikulum as $row): ?>
-                                    <tr>
-                                        <td class="text-center">
-                                            <?= $no++ ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?= $row['kode_matkul'] ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?= $row['nama_prodi'] ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?= $row['tahun'] ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?= $row['nama_matkul'] ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?= $row['sks'] ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?php if ($row['status'] == 'Y'): ?>
-                                                <span class="badge bg-success text-white">Aktif</span>
-                                            <?php else: ?>
-                                                <span class="badge bg-danger text-white">Tidak Aktif</span>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="d-flex align-items-center justify-content-center gap-2">
-                                                <button type="button"
-                                                    class="btn btn-light btn-sm btn-icon btn-active-light-primary"
-                                                    onClick="btnEditKurikulum(<?= $row['id'] ?>)"><i
-                                                        class="fa-solid fa-pen-to-square"></i></button>
-                                                <button type="button"
-                                                    class="btn btn-light btn-sm btn-icon btn-active-light-danger"
-                                                    onClick="btnDeleteKurikulum(<?= $row['id'] ?>)"><i
-                                                        class="fa-solid fa-trash"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        <?php else: ?>
-                            <tbody>
-                                <tr>
-                                    <td colspan="8" class="text-center">Tidak Ada Data</td>
-                                </tr>
-                            </tbody>
-                        <?php endif; ?>
+                        <tbody class="text-gray-600 fw-semibold">
+                        </tbody>
                     </table>
                 </div>
                 <!--end::Table-->
@@ -126,20 +81,56 @@
 
 <script>
     $(document).ready(function () {
-        $('#btnAddKurikulum').click(function () {
-            $('#modaltitle').html('Tambah Kurikulum');
-            $('#modalbody').load("<?= base_url('admin/kurikulum/create') ?>");
-            $('#modal').data('rowid', 0);
-            $('#modal').modal('show');
+        $('#tblKurikulum').DataTable({
+            serverSide: true,
+            processing: true,
+            ajax: "<?= base_url('admin/kurikulum/table') ?>",
+            columns: [
+                {
+                    data: null,
+                    className: 'text-center',
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                { data: 'kode_matkul', className: 'text-center' },
+                { data: 'nama_prodi', className: 'text-center' },
+                { data: 'tahun', className: 'text-center' },
+                { data: 'nama_matkul', className: 'text-center' },
+                { data: 'sks', className: 'text-center' },
+                {
+                    data: 'status',
+                    className: 'text-center',
+                    render: function (data) {
+                        if (data === 'y') {
+                            return `<span class="badge badge-success">Aktif</span>`;
+                        } else {
+                            return `<span class="badge badge-danger">Tidak Aktif</span>`;
+                        }
+                    }
+                },
+                {
+                    data: 'id',
+                    className: 'text-center',
+                    orderable: false,
+                    searchable: false,
+                    render: function (data) {
+                        return `
+                    <a href="<?= base_url('admin/kurikulum/edit/') ?>${data}" 
+                       class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                    <button onclick="btnDeleteCapaian(${data})" 
+                            class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                `;
+                    }
+                }
+            ]
+        });
+
+
+        document.querySelector('[data-kt-filter="search"]').addEventListener('keyup', function () {
+            $('#tblCapaian').DataTable().search(this.value).draw();
         });
     });
-
-    function btnEditKurikulum(id) {
-        $('#modaltitle').html('Edit Kurikulum');
-        $('#modalbody').load("<?= base_url('admin/kurikulum/edit/') ?>" + id);
-        $('#modal').data('rowid', 0);
-        $('#modal').modal('show');
-    }
 
     function btnDeleteKurikulum(id) {
         Swal.fire({

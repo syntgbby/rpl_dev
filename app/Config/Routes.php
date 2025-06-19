@@ -72,6 +72,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'au
 
     // Kurikulum
     $routes->get('kurikulum', 'KurikulumController::index');
+    $routes->get('kurikulum/table', 'KurikulumController::getTable');
     $routes->get('kurikulum/create', 'KurikulumController::create');
     $routes->post('kurikulum/store', 'KurikulumController::store');
     $routes->get('kurikulum/edit/(:num)', 'KurikulumController::edit/$1');
@@ -80,6 +81,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'au
 
     // Asesmen
     $routes->get('capaian-rpl', 'CapaianRPLController::index');
+    $routes->get('capaian-rpl/table', 'CapaianRPLController::getTable');
     $routes->get('capaian-rpl/create', 'CapaianRPLController::create');
     $routes->post('capaian-rpl/store', 'CapaianRPLController::store');
     $routes->get('capaian-rpl/edit/(:num)', 'CapaianRPLController::edit/$1');

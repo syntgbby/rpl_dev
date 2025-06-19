@@ -21,6 +21,52 @@ class KurikulumController extends BaseController
         return $this->render('Admin/Kurikulum/index', $data);
     }
 
+    // Get Table 
+    public function getTable()
+    {
+        $request = service('request');
+        $db = \Config\Database::connect();
+        $builder = $db->table('view_kurikulum'); // view dari ViewCapaian.php
+
+        // Total data sebelum filter
+        $total = $builder->countAllResults(false);
+
+        // Search
+        $search = $request->getGet('search')['value'];
+        if (!empty($search)) {
+            $builder->groupStart()
+                ->like('nama_prodi', $search)
+                ->orLike('kode_matkul', $search)
+                ->orLike('tahun', $search)
+                ->orLike('nama_matkul', $search)
+                ->orLike('sks', $search)
+                ->groupEnd();
+        }
+
+        $filtered = $builder->countAllResults(false);
+
+        // Pagination & ordering
+        $start = $request->getGet('start');
+        $length = $request->getGet('length');
+        $builder->limit($length, $start);
+
+        $orderColumnIndex = $request->getGet('order')[0]['column'];
+        $orderDirection = $request->getGet('order')[0]['dir'];
+        $columns = ['id', 'nama_prodi', 'kode_matkul', 'nama_matkul', 'tahun', 'sks', 'status'];
+        $builder->orderBy($columns[$orderColumnIndex] ?? 'id', $orderDirection);
+
+        // Get data
+        $data = $builder->get()->getResultArray();
+
+        // Response sesuai format DataTables
+        return $this->response->setJSON([
+            'draw' => intval($request->getGet('draw')),
+            'recordsTotal' => $total,
+            'recordsFiltered' => $filtered,
+            'data' => $data
+        ]);
+    }
+
     // Tampilan Form Tambah Kurikulum
     public function create()
     {

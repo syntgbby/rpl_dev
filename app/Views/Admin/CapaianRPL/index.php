@@ -16,16 +16,20 @@
                 </div>
                 <div class="card-title">
                     <div class="d-flex align-items-center position-relative my-1">
-                        <button type="button" class="btn btn-primary" id="btnAddCapaian"><i
+                        <button type="button" class="btn btn-primary"
+                            onclick="window.location.href='<?= base_url('admin/capaian-rpl/create') ?>'"><i
                                 class="fa-solid fa-plus"></i>
                             Tambah</button>
                     </div>
                 </div>
-                <!--begin::Card title-->
             </div>
             <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body py-4">
+                <div class="mb-5">
+                    <input type="text" data-kt-filter="search" class="form-control form-control-solid w-250px"
+                        placeholder="Search..." />
+                </div>
                 <?php if (session()->getFlashdata('success')): ?>
                     <script>
                         Swal.fire({
@@ -48,7 +52,7 @@
 
                 <!--begin::Table-->
                 <div class="table-responsive">
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_prodi">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="tblCapaian">
                         <thead>
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-5px">No</th>
@@ -59,48 +63,7 @@
                                 <th class="min-w-100px">Action</th>
                             </tr>
                         </thead>
-                        <?php if ($capaian): ?>
-                            <tbody class="text-gray-600 fw-semibold">
-                                <?php $no = 1; ?>
-                                <?php foreach ($capaian as $row): ?>
-                                    <tr>
-                                        <td class="text-center">
-                                            <?= $no++ ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?= $row['nama_prodi'] ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?= $row['kode_matkul'] ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?= $row['nama_matkul'] ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?= $row['deskripsi'] ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="d-flex align-items-center justify-content-center gap-2">
-                                                <button type="button"
-                                                    class="btn btn-light btn-sm btn-icon btn-active-light-primary"
-                                                    onClick="btnEditCapaian(<?= $row['id'] ?>)"><i
-                                                        class="fa-solid fa-pen-to-square"></i></button>
-                                                <button type="button"
-                                                    class="btn btn-light btn-sm btn-icon btn-active-light-danger"
-                                                    onClick="btnDeleteCapaian(<?= $row['id'] ?>)"><i
-                                                        class="fa-solid fa-trash"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        <?php else: ?>
-                            <tbody>
-                                <tr>
-                                    <td colspan="8" class="text-center">Tidak Ada Data</td>
-                                </tr>
-                            </tbody>
-                        <?php endif; ?>
+                        <tbody></tbody>
                     </table>
                 </div>
                 <!--end::Table-->
@@ -114,20 +77,44 @@
 
 <script>
     $(document).ready(function () {
-        $('#btnAddCapaian').click(function () {
-            $('#modaltitle').html('Tambah Capaian');
-            $('#modalbody').load("<?= base_url('admin/capaian-rpl/create') ?>");
-            $('#modal').data('rowid', 0);
-            $('#modal').modal('show');
+        $('#tblCapaian').DataTable({
+            serverSide: true,
+            processing: true,
+            ajax: "<?= base_url('admin/capaian-rpl/table') ?>",
+            columns: [
+                {
+                    data: null,
+                    className: 'text-center',
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                { data: 'nama_prodi', className: 'text-center' },
+                { data: 'kode_matkul', className: 'text-center' },
+                { data: 'nama_matkul', className: 'text-center' },
+                { data: 'deskripsi', className: 'text-center' },
+                {
+                    data: 'id',
+                    className: 'text-center',
+                    orderable: false,
+                    searchable: false,
+                    render: function (data) {
+                        return `
+                    <a href="<?= base_url('admin/capaian-rpl/edit/') ?>${data}" 
+                       class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                    <button onclick="btnDeleteCapaian(${data})" 
+                            class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                `;
+                    }
+                }
+            ]
+        });
+
+
+        document.querySelector('[data-kt-filter="search"]').addEventListener('keyup', function () {
+            $('#tblCapaian').DataTable().search(this.value).draw();
         });
     });
-
-    function btnEditCapaian(id) {
-        $('#modaltitle').html('Edit Capaian');
-        $('#modalbody').load("<?= base_url('admin/capaian-rpl/edit/') ?>" + id);
-        $('#modal').data('rowid', 0);
-        $('#modal').modal('show');
-    }
 
     function btnDeleteCapaian(id) {
         Swal.fire({

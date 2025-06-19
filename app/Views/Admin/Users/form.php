@@ -109,7 +109,7 @@
                                                 Kaprodi
                                             </option>
                                             <option value="asesor" <?= (isset($dtuser) && $dtuser['role'] == 'asesor') ? 'selected' : '' ?>>
-                                                Assessor
+                                                Asesor
                                             </option>
                                             <?php if (isset($dtuser['role']) && $dtuser['role'] == 'aplikan'): ?>
                                                 <option value="aplikan" <?= (isset($dtuser) && $dtuser['role'] == 'aplikan') ? 'selected' : '' ?>>

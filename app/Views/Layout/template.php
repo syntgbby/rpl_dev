@@ -30,10 +30,9 @@ License: For each use you must have a valid license purchased only from above li
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
 	<script src="<?= base_url('assets/plugins/global/plugins.bundle.js') ?>"></script>
 	<script src="<?= base_url('assets/js/scripts.bundle.js') ?>"></script>
-	<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
-	<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
 	<link href="<?= base_url('assets/plugins/custom/datatables/datatables.bundle.css') ?>" rel="stylesheet"
 		type="text/css" />
+	<script src="<?= base_url('assets/plugins/custom/datatables/datatables.bundle.js') ?>"></script>
 	<link href="<?= base_url('assets/plugins/global/plugins.bundle.css') ?>" rel="stylesheet" type="text/css" />
 	<script src="<?= base_url('assets/plugins/global/plugins.bundle.js') ?>"></script>
 	<!-- SweetAlert2 CSS -->

@@ -12,12 +12,52 @@ class CapaianRPLController extends BaseController
     // Tampilan Index
     public function index()
     {
-        $capaian = new ViewCapaian();
-
-        $data['capaian'] = $capaian->getViewcapaian();
-
-        return $this->render('Admin/CapaianRPL/index', $data);
+        return $this->render('Admin/CapaianRPL/index');
     }
+
+    public function getTable()
+{
+    $request = service('request');
+    $db = \Config\Database::connect();
+    $builder = $db->table('view_capaian'); // view dari ViewCapaian.php
+
+    // Total data sebelum filter
+    $total = $builder->countAllResults(false);
+
+    // Search
+    $search = $request->getGet('search')['value'];
+    if (!empty($search)) {
+        $builder->groupStart()
+            ->like('nama_prodi', $search)
+            ->orLike('kode_matkul', $search)
+            ->orLike('nama_matkul', $search)
+            ->orLike('deskripsi', $search)
+            ->groupEnd();
+    }
+
+    $filtered = $builder->countAllResults(false);
+
+    // Pagination & ordering
+    $start = $request->getGet('start');
+    $length = $request->getGet('length');
+    $builder->limit($length, $start);
+
+    $orderColumnIndex = $request->getGet('order')[0]['column'];
+    $orderDirection = $request->getGet('order')[0]['dir'];
+    $columns = ['id', 'nama_prodi', 'kode_matkul', 'nama_matkul', 'deskripsi'];
+    $builder->orderBy($columns[$orderColumnIndex] ?? 'id', $orderDirection);
+
+    // Get data
+    $data = $builder->get()->getResultArray();
+
+    // Response sesuai format DataTables
+    return $this->response->setJSON([
+        'draw' => intval($request->getGet('draw')),
+        'recordsTotal' => $total,
+        'recordsFiltered' => $filtered,
+        'data' => $data
+    ]);
+}
 
     // Tampilan Form Tambah Asesmen
     public function create()
