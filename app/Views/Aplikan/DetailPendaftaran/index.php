@@ -3,6 +3,12 @@
 <?= $this->section('content') ?>
 <div class="d-flex flex-column flex-column-fluid">
     <div id="kt_app_content" class="app-content">
+        <div class="mb-4 d-flex justify-content-end">
+            <a href="<?= base_url('aplikan/generate-pdf') ?>" class="btn btn-danger" target="_blank">
+                <i class="fas fa-file-pdf me-2"></i> Export to PDF
+            </a>
+        </div>
+
         <!-- Start Informasi Biodata -->
         <div class="card mb-5">
             <!--begin::Details content-->

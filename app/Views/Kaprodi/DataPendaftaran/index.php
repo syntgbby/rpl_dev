@@ -19,6 +19,10 @@
             <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body py-4">
+                <div class="mb-5">
+                    <input type="text" data-kt-filter="search" class="form-control form-control-solid w-250px"
+                        placeholder="Search..." />
+                </div>
                 <?php if (session()->getFlashdata('success')): ?>
                     <script>
                         Swal.fire({
@@ -41,7 +45,7 @@
 
                 <!--begin::Table-->
                 <div class="table-responsive">
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_prodi">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="tblDataPendaftaran">
                         <thead>
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-15px">No</th>
@@ -51,45 +55,8 @@
                                 <th class="min-w-100px">Action</th>
                             </tr>
                         </thead>
-                        <?php if ($dtpendaftaran): ?>
-                            <tbody class="text-gray-600 fw-semibold">
-                                <?php $no = 1; ?>
-                                <?php foreach ($dtpendaftaran as $row): ?>
-                                    <tr>
-                                        <td class="text-center">
-                                            <?= $no++ ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?= $row['nama_lengkap'] ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?= $row['program_study'] ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?php if ($row['status'] == 'Draft'): ?>
-                                                <span class="badge bg-warning text-white">Draft</span>
-                                            <?php else: ?>
-                                                <span class="badge bg-success text-white">Submitted</span>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="d-flex align-items-center justify-content-center gap-2">
-                                                <button type="button"
-                                                    class="btn btn-light btn-sm btn-icon btn-active-light-primary"
-                                                    onClick="btnAssignAsesor('<?= $row['pendaftaran_id'] ?>')"><i
-                                                        class="fa-solid fa-user-pen"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        <?php else: ?>
-                            <tbody>
-                                <tr>
-                                    <td colspan="5" class="text-center">Tidak Ada Data</td>
-                                </tr>
-                            </tbody>
-                        <?php endif; ?>
+                        <tbody>
+                        </tbody>
                     </table>
                 </div>
                 <!--end::Table-->
@@ -102,8 +69,55 @@
 </div>
 
 <script>
+    $(document).ready(function () {
+        $('#tblDataPendaftaran').DataTable({
+            serverSide: true,
+            processing: true,
+            ajax: "<?= base_url('kaprodi/data-pendaftaran/table') ?>",
+            columns: [
+                {
+                    data: null,
+                    className: 'text-center',
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                { data: 'nama_lengkap', className: 'text-center' },
+                { data: 'program_study', className: 'text-center' },
+                {
+                    data: 'status',
+                    className: 'text-center',
+                    render: function (data) {
+                        if (data === 'Draft') {
+                            return `<span class="badge badge-warning">Draft</span>`;
+                        } else {
+                            return `<span class="badge badge-success">Submitted</span>`;
+                        }
+                    }
+                },
+                {
+                    data: 'pendaftaran_id',
+                    className: 'text-center',
+                    orderable: false,
+                    searchable: false,
+                    render: function (data) {
+                        return `
+                        <button onclick="btnAssignAsesor('${data}')"
+                       class="btn btn-sm btn-primary"><i class="fa-solid fa-user-pen"></i></button>
+                `;
+                    }
+                }
+            ]
+        });
+
+
+        document.querySelector('[data-kt-filter="search"]').addEventListener('keyup', function () {
+            $('#tblDataPendaftaran').DataTable().search(this.value).draw();
+        });
+    });
+
     function btnAssignAsesor(id) {
-        $('#modaltitle').html('Assign Asesor');
+        $('#modaltitle').html('Assign Asesor ' + '(' + id + ')');
         $('#modalbody').load("<?= base_url('kaprodi/data-pendaftaran/detail/') ?>" + id);
         $('#modal').data('rowid', 0);
         $('#modal').modal('show');

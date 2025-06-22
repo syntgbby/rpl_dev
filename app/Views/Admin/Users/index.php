@@ -27,6 +27,10 @@
             <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body py-4">
+                <div class="mb-5">
+                    <input type="text" data-kt-filter="search" class="form-control form-control-solid w-250px"
+                        placeholder="Search..." />
+                </div>
                 <?php if (session()->getFlashdata('success')): ?>
                     <script>
                         Swal.fire({
@@ -48,62 +52,19 @@
                 <?php endif; ?>
                 <!--begin::Table-->
                 <div class="table-responsive">
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="tblUsers">
                         <thead>
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-15px">No</th>
+                                <th class="min-w-55px">Nama</th>
                                 <th class="min-w-55px">Email</th>
                                 <th class="min-w-55px">Peran</th>
                                 <th class="min-w-55px">Status</th>
                                 <th class="min-w-100px">Action</th>
                             </tr>
                         </thead>
-                        <?php if ($users): ?>
-                            <tbody class="text-gray-600 fw-semibold">
-                                <?php $no = 1; ?>
-                                <?php foreach ($users as $row): ?>
-                                    <tr>
-                                        <td class="text-center">
-                                            <?= $no++ ?>
-                                        </td>
-                                        <td>
-                                            <?= $row['email'] ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?php if ($row['role'] == 'admin'): ?>
-                                                <span class="badge bg-info text-white">Admin</span>
-                                            <?php elseif ($row['role'] == 'aplikan'): ?>
-                                                <span class="badge bg-primary text-white">Aplikan</span>
-                                            <?php elseif ($row['role'] == 'kaprodi'): ?>
-                                                <span class="badge bg-warning text-white">Kaprodi</span>
-                                            <?php elseif ($row['role'] == 'asesor'): ?>
-                                                <span class="badge bg-dark text-white">Asesor</span>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?= ($row['status'] == 'Y') ? '<span class="badge bg-success text-white">Aktif</span>' : '<span class="badge bg-danger text-white">Tidak Aktif</span>' ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="d-flex align-items-center justify-content-center gap-2">
-
-                                                <button type="button"
-                                                    class="btn btn-light btn-sm btn-icon btn-active-light-danger"
-                                                    onclick="confirmDelete('<?= base_url('admin/users/delete/') . $row['id'] ?>')">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        <?php else: ?>
-                            <tbody>
-                                <tr>
-                                    <td colspan="6" class="text-center">Tidak Ada Data</td>
-                                </tr>
-                            </tbody>
-                        <?php endif; ?>
+                        <tbody class="text-gray-600 fw-semibold">
+                        </tbody>
                     </table>
                 </div>
                 <!--end::Table-->
@@ -117,7 +78,66 @@
 <!--end::Content wrapper-->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function confirmDelete(deleteUrl) {
+    $(document).ready(function () {
+        $('#tblUsers').DataTable({
+            serverSide: true,
+            processing: true,
+            ajax: "<?= base_url('admin/users/table') ?>",
+            columns: [
+                {
+                    data: null,
+                    className: 'text-center',
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                { data: 'nama_lengkap', className: 'text-center' },
+                { data: 'email', className: 'text-center' },
+                {
+                    data: 'role',
+                    className: 'text-center',
+                    render: function (role) {
+                        let badgeClass = 'badge-secondary';
+                        if (role === 'admin') badgeClass = 'badge-primary';
+                        else if (role === 'kaprodi') badgeClass = 'badge-success';
+                        else if (role === 'asesor') badgeClass = 'badge-info'; // purple nggak default, kita atur manual
+
+                        return `<span class="badge ${badgeClass} text-capitalize">${role}</span>`;
+                    }
+                },
+                {
+                    data: 'status',
+                    className: 'text-center',
+                    render: function (data) {
+                        if (data === 'Y') {
+                            return `<span class="badge badge-primary">Aktif</span>`;
+                        } else {
+                            return `<span class="badge badge-danger">Tidak Aktif</span>`;
+                        }
+                    }
+                },
+                {
+                    data: 'id',
+                    className: 'text-center',
+                    orderable: false,
+                    searchable: false,
+                    render: function (data) {
+                        return `
+                    <button onclick="confirmDelete(${data})" 
+                            class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                `;
+                    }
+                }
+            ]
+        });
+
+
+        document.querySelector('[data-kt-filter="search"]').addEventListener('keyup', function () {
+            $('#tblUsers').DataTable().search(this.value).draw();
+        });
+    });
+
+    function confirmDelete(id) {
         Swal.fire({
             title: 'Apakah Anda yakin?',
             text: "Menghapus data ini sekaligus menghapus semua data yang bersangkutan.",
@@ -129,27 +149,7 @@
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                $.ajax({
-                    url: deleteUrl,
-                    type: 'GET',
-                    success: function (response) {
-                        Swal.fire({
-                            title: 'Berhasil!',
-                            text: 'Data berhasil dihapus',
-                            icon: 'success'
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        Swal.fire({
-                            title: 'Gagal!',
-                            text: 'Data gagal dihapus',
-                            icon: 'error'
-                        });
-                    },
-                    complete: function () {
-                        window.location.href = '/admin/users';
-                    }
-                });
+                window.location.href = '<?= base_url('admin/users/delete/') ?>' + id;
             }
         });
     }

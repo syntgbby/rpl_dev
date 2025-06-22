@@ -17,6 +17,7 @@ $routes->post('login', 'AuthController::loginProcess');
 $routes->get('logout', 'AuthController::logout');
 
 $routes->get('forgot-password', 'AuthController::viewForgotPassword');
+// $routes->get('cek-role-by-email', 'AuthController::cekRoleByEmail');
 $routes->post('forgot-password', 'AuthController::forgotPassword');
 $routes->post('reset-password', 'AuthController::resetPassword');
 
@@ -39,6 +40,7 @@ $routes->post('/edit-password', 'Profile::updatePassword');
 $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'auth:admin'], function ($routes) {
     // Users
     $routes->get('users', 'UserController::index');
+    $routes->get('users/table', 'UserController::getTable');
     $routes->get('users/create', 'UserController::create');
     $routes->post('users/store', 'UserController::store');
     $routes->get('users/edit/(:num)', 'UserController::edit/$1');
@@ -48,6 +50,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'au
 
     // Prodi
     $routes->get('prodi', 'ProdiController::index');
+    $routes->get('prodi/table', 'ProdiController::getTable');
     $routes->get('prodi/create', 'ProdiController::create');
     $routes->post('prodi/store', 'ProdiController::store');
     $routes->get('prodi/edit/(:num)', 'ProdiController::edit/$1');
@@ -64,6 +67,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'au
 
     // Mata Kuliah
     $routes->get('mata-kuliah', 'MataKuliahController::index');
+    $routes->get('mata-kuliah/table', 'MataKuliahController::getTable');
     $routes->get('mata-kuliah/create', 'MataKuliahController::create');
     $routes->post('mata-kuliah/store', 'MataKuliahController::store');
     $routes->get('mata-kuliah/edit/(:num)', 'MataKuliahController::edit/$1');
@@ -123,6 +127,8 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan', 'filter' =>
 
     //check pendaftaran
     $routes->get('cek-step', 'PendaftaranController::cekStep');
+
+    $routes->get('generate-pdf', 'DetailPendaftaranController::getViewAsesmenPdf');
 });
 
 // Bagian Kaprodi
@@ -132,6 +138,7 @@ $routes->group('kaprodi', ['namespace' => 'App\Controllers\Kaprodi', 'filter' =>
 
     // Assign Asesor
     $routes->get('data-pendaftaran', 'DataPendaftaranController::index');
+    $routes->get('data-pendaftaran/table', 'DataPendaftaranController::getTable');
     $routes->get('data-pendaftaran/detail/(:any)', 'DataPendaftaranController::viewDetail/$1');
     $routes->post('data-pendaftaran/assign-asesor', 'DataPendaftaranController::assignAsesor');
 

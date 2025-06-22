@@ -21,7 +21,9 @@
                             <div class="text-gray-600"><?= $dtpendaftaran['nik'] ?? '-' ?></div>
 
                             <div class="fw-bold mt-5">Tempat dan Tanggal lahir</div>
-                            <div class="text-gray-600"><?= $dtpendaftaran['tempat_lahir'] ?? '-' ?>, <?= $dtpendaftaran['tanggal_lahir'] ?? '-' ?></div>
+                            <div class="text-gray-600"><?= $dtpendaftaran['tempat_lahir'] ?? '-' ?>,
+                                <?= $dtpendaftaran['tanggal_lahir'] ?? '-' ?>
+                            </div>
 
                             <div class="fw-bold mt-5">No Hp</div>
                             <div class="text-gray-600"><?= $dtpendaftaran['no_hp'] ?? '-' ?></div>
@@ -62,7 +64,8 @@
                                                     <td class="text-center"><?= $row['tahun'] ?></td>
                                                     <td class="text-center">
                                                         <?php if ($row['file_bukti']): ?>
-                                                            <a href="<?= $row['file_bukti'] ?>" target="_blank" class="btn btn-sm btn-primary">
+                                                            <a href="<?= $row['file_bukti'] ?>" target="_blank"
+                                                                class="btn btn-sm btn-primary">
                                                                 <i class="fas fa-file-pdf me-1"></i> Lihat Bukti
                                                             </a>
                                                         <?php else: ?>
@@ -113,7 +116,8 @@
                                                     <td class="text-center"><?= $row['posisi'] ?></td>
                                                     <td class="text-center">
                                                         <?php if ($row['file_bukti']): ?>
-                                                            <a href="<?= $row['file_bukti'] ?>" target="_blank" class="btn btn-sm btn-primary">
+                                                            <a href="<?= $row['file_bukti'] ?>" target="_blank"
+                                                                class="btn btn-sm btn-primary">
                                                                 <i class="fas fa-file-pdf me-1"></i> Lihat Bukti
                                                             </a>
                                                         <?php else: ?>
@@ -141,7 +145,7 @@
                     <div class="card-body">
                         <div class="pb-5 fs-6">
                             <h3 class="text-dark mb-3 border-bottom pb-2">File Pendukung</h3>
-                            
+
                             <div class="row">
                                 <!-- Foto KTP -->
                                 <div class="col-md-3 mb-5">
@@ -165,20 +169,20 @@
                                     </div>
                                 </div>
 
-                                <!-- Bukti Kerja -->
+                                <!-- Kartu Keluarga -->
                                 <div class="col-md-3 mb-5">
                                     <div class="card card-custom h-100">
                                         <div class="card-header">
                                             <div class="card-title">
-                                                <h3 class="fw-bold fs-6 m-0">Bukti Kerja</h3>
+                                                <h3 class="fw-bold fs-6 m-0">Kartu Keluarga</h3>
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <?php if (!empty($dtpendaftaran['bukti_kerja'])): ?>
-                                                <a href="<?= $dtpendaftaran['bukti_kerja'] ?>"
+                                            <?php if (!empty($dtpendaftaran['file_kk'])): ?>
+                                                <a href="<?= $dtpendaftaran['file_kk'] ?>"
                                                     class="btn btn-danger btn-sm btn-active-light-danger w-100"
                                                     target="_blank">
-                                                    <i class="fas fa-file-pdf me-1"></i> Lihat Bukti Kerja
+                                                    <i class="fas fa-file-pdf me-1"></i> Lihat Kartu Keluarga
                                                 </a>
                                             <?php else: ?>
                                                 <span class="text-muted small">File tidak tersedia</span>
@@ -209,20 +213,20 @@
                                     </div>
                                 </div>
 
-                                <!-- Bukti Pelatihan -->
+                                <!-- Pas Foto -->
                                 <div class="col-md-3 mb-5">
                                     <div class="card card-custom h-100">
                                         <div class="card-header">
                                             <div class="card-title">
-                                                <h3 class="fw-bold fs-6 m-0">Bukti Pelatihan</h3>
+                                                <h3 class="fw-bold fs-6 m-0">Pas Foto</h3>
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <?php if (!empty($dtpendaftaran['bukti_pelatihan'])): ?>
-                                                <a href="<?= $dtpendaftaran['bukti_pelatihan'] ?>"
+                                            <?php if (!empty($dtpendaftaran['file_foto'])): ?>
+                                                <a href="<?= $dtpendaftaran['file_foto'] ?>"
                                                     class="btn btn-danger btn-sm btn-active-light-danger w-100"
                                                     target="_blank">
-                                                    <i class="fas fa-file-pdf me-1"></i> Lihat Bukti Pelatihan
+                                                    <i class="fas fa-file-pdf me-1"></i> Lihat Pas Foto
                                                 </a>
                                             <?php else: ?>
                                                 <span class="text-muted small">File tidak tersedia</span>
@@ -253,7 +257,7 @@
                         <button class="btn btn-primary" id="cariBtn">Cari</button>
                     </div>
                 </div>
-                
+
                 <!-- Tabel RPL -->
                 <form id="approveRplForm" method="post" action="<?= base_url('asesor/approve-rpl') ?>">
                     <input type="hidden" name="pendaftaran_id" id="pendaftaran_id"
@@ -319,7 +323,7 @@
 
 <script>
     // Load data mata kuliah
-    $('#cariBtn').click(function() {
+    $('#cariBtn').click(function () {
         var tahun = $('#tahunSelect').val();
         var id = $('#pendaftaran_id').val();
         if (tahun) {
@@ -331,13 +335,13 @@
                     pendaftaran_id: id
                 },
                 dataType: 'json',
-                success: function(response) {
+                success: function (response) {
                     var tbody = $('#tabelRplBody');
                     $('#tahunApprove').val(tahun); //simpan data pilihan tahun kurikulum
                     tbody.empty();
 
                     if (response.status === 'success' && response.data.length > 0) {
-                        $.each(response.data, function(index, matkul) {
+                        $.each(response.data, function (index, matkul) {
                             var row = '<tr>' +
                                 '<td>' + (index + 1) + '</td>' +
                                 '<td>' + matkul.kode_matkul + '</td>' +
@@ -355,7 +359,7 @@
                     }
 
                     // Tambahkan logika checkbox saling eksklusif
-                    $('.yes-check').on('change', function() {
+                    $('.yes-check').on('change', function () {
                         var tr = $(this).closest('tr');
                         var noCheck = tr.find('.no-check');
                         var asesmenSelect = tr.find('select');
@@ -366,7 +370,7 @@
                         }
                     });
 
-                    $('.no-check').on('change', function() {
+                    $('.no-check').on('change', function () {
                         var tr = $(this).closest('tr');
                         var yesCheck = tr.find('.yes-check');
                         var asesmenSelect = tr.find('select');
@@ -380,7 +384,7 @@
                     });
 
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error('Error:', error);
                     alert('Terjadi kesalahan saat mengambil data.');
                     $('#matkulContainer').hide();
@@ -392,8 +396,8 @@
         }
     });
 
-    $(document).ready(function() {
-        $('#status').change(function() {
+    $(document).ready(function () {
+        $('#status').change(function () {
             const status = $(this).val();
             if (status === 'approved') {
                 $('#tipeRplContainer').show();
@@ -411,7 +415,7 @@
         $('#alasanContainer').hide();
     });
 
-    $('#approveRplForm').submit(function(e) {
+    $('#approveRplForm').submit(function (e) {
         e.preventDefault(); // Stop form dari auto-submit
 
         Swal.fire({

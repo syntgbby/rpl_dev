@@ -6,7 +6,6 @@ use App\Controllers\BaseController;
 use App\Models\View\{ViewDataPendaftaran, ViewAsesmenKurikulum};
 use App\Models\{ApprovalRplModel, CapaianDtl, UserModel, KurikulumModel, PelatihanModel, PendaftaranModel, PengalamanKerjaModel, TahunAjarModel};
 use Dompdf\Dompdf;
-use Dompdf\Options;
 helper('url');
 
 class DataLaporanRplController extends BaseController
@@ -67,7 +66,7 @@ class DataLaporanRplController extends BaseController
 
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
         $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $id)->findAll();
-        $data['dtpekerjaan'] = $modelPekerjaan->getPengalamanKerja($id);
+        $data['dtpekerjaan'] = $modelPekerjaan->where('pendaftaran_id', $id)->findAll();
         $data['approvalWithKurikulum'] = $approvalModel->getApprovalWithKurikulum($id);
 
         return $this->render('Asesor/DataLaporan/view-detail', $data);
@@ -91,7 +90,7 @@ class DataLaporanRplController extends BaseController
 
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
         $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $id)->findAll();
-        $data['dtpekerjaan'] = $modelPekerjaan->getPengalamanKerja($id);
+        $data['dtpekerjaan'] = $modelPekerjaan->where('pendaftaran_id', $id)->findAll();
         // Hitung total lama bekerja
         $totalLamaBekerja = 0;
         if (!empty($data['dtpekerjaan'])) {
@@ -136,6 +135,4 @@ class DataLaporanRplController extends BaseController
         // Output PDF
         $dompdf->stream("laporan.pdf", array("Attachment" => false));
     }
-
-
 }

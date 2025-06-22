@@ -26,6 +26,10 @@
             <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body py-4">
+                <div class="mb-5">
+                    <input type="text" data-kt-filter="search" class="form-control form-control-solid w-250px"
+                        placeholder="Search..." />
+                </div>
                 <?php if (session()->getFlashdata('success')): ?>
                     <script>
                         Swal.fire({
@@ -47,7 +51,7 @@
                 <?php endif; ?>
                 <!--begin::Table-->
                 <div class="table-responsive">
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_prodi">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="tblMatkul">
                         <thead>
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-15px">No</th>
@@ -58,52 +62,8 @@
                                 <th class="min-w-100px">Action</th>
                             </tr>
                         </thead>
-                        <?php if ($mata_kuliah): ?>
-                            <tbody class="text-gray-600 fw-semibold">
-                                <?php $no = 1; ?>
-                                <?php foreach ($mata_kuliah as $row): ?>
-                                    <tr>
-                                        <td class="text-center">
-                                            <?= $no++ ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?= $row['kode_matkul'] ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?= $row['nama_matkul'] ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?= $row['sks'] ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?php if ($row['status'] == 'Y'): ?>
-                                                <span class="badge bg-success text-white">Aktif</span>
-                                            <?php else: ?>
-                                                <span class="badge bg-danger text-white">Tidak Aktif</span>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="d-flex align-items-center justify-content-center gap-2">
-                                                <button type="button"
-                                                    class="btn btn-light btn-sm btn-icon btn-active-light-primary"
-                                                    onClick="btnEditMataKuliah(<?= $row['id'] ?>)"><i
-                                                        class="fa-solid fa-pen-to-square"></i></button>
-                                                <button type="button"
-                                                    class="btn btn-light btn-sm btn-icon btn-active-light-danger"
-                                                    onClick="btnDeleteMataKuliah(<?= $row['id'] ?>)"><i
-                                                        class="fa-solid fa-trash"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        <?php else: ?>
-                            <tbody>
-                                <tr>
-                                    <td colspan="6" class="text-center">Tidak Ada Data</td>
-                                </tr>
-                            </tbody>
-                        <?php endif; ?>
+                        <tbody>
+                        </tbody>
                     </table>
                 </div>
                 <!--end::Table-->
@@ -122,6 +82,54 @@
             $('#modalbody').load("<?= base_url('admin/mata-kuliah/create') ?>");
             $('#modal').data('rowid', 0);
             $('#modal').modal('show');
+        });
+
+        $('#tblMatkul').DataTable({
+            serverSide: true,
+            processing: true,
+            ajax: "<?= base_url('admin/mata-kuliah/table') ?>",
+            columns: [
+                {
+                    data: null,
+                    className: 'text-center',
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                { data: 'kode_matkul', className: 'text-center' },
+                { data: 'nama_matkul', className: 'text-center' },
+                { data: 'sks', className: 'text-center' },
+                {
+                    data: 'status',
+                    className: 'text-center',
+                    render: function (data) {
+                        if (data === 'Y') {
+                            return `<span class="badge badge-success">Aktif</span>`;
+                        } else {
+                            return `<span class="badge badge-danger">Tidak Aktif</span>`;
+                        }
+                    }
+                },
+                {
+                    data: 'id',
+                    className: 'text-center',
+                    orderable: false,
+                    searchable: false,
+                    render: function (data) {
+                        return `
+                    <button onclick="btnEditMataKuliah(${data})" 
+                       class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></button>
+                    <button onclick="btnDeleteMataKuliah(${data})" 
+                            class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                `;
+                    }
+                }
+            ]
+        });
+
+
+        document.querySelector('[data-kt-filter="search"]').addEventListener('keyup', function () {
+            $('#tblMatkul').DataTable().search(this.value).draw();
         });
     });
 

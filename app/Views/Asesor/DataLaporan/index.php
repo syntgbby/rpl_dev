@@ -13,12 +13,15 @@
                 <div class="card-title">
                     <form action="<?= base_url('asesor/filter') ?>" method="GET">
                         <div class="row">
-                            <div class="col mt-6">
+                            <div class="col mt-4">
                                 <input type="date" name="start_date"
                                     class="form-control form-control-lg form-control-solid"
                                     value="<?= isset($start_date) ? substr($start_date, 0, 10) : '' ?>" />
                             </div>
-                            <div class="col mt-6">
+                            <div class="col mt-4">
+                                <p class="mt-4">To</p>
+                            </div>
+                            <div class="col mt-4">
                                 <input type="date" name="end_date"
                                     class="form-control form-control-lg form-control-solid"
                                     value="<?= isset($end_date) ? substr($end_date, 0, 10) : '' ?>" />
@@ -72,7 +75,7 @@
                                                 </a>
                                                 <a href="<?= base_url('asesor/generate-pdf/' . ($row['pendaftaran_id'] ?? '')) ?>"
                                                     class="btn btn-danger btn-sm btn-active-light-danger" target="_blank">
-                                                    <i class="fa-solid fa-file-export"></i>Pdf
+                                                    <i class="fa-solid fa-file-export"></i>PDF
                                                 </a>
                                             </div>
                                         </td>

@@ -25,23 +25,30 @@ class TahunAjarController extends BaseController
         $model = new TahunAjarModel();
 
         $checkTahunAjar = $model->where('tahun', $this->request->getPost('tahun'))->findAll();
-
         if ($checkTahunAjar) {
             return redirect()->to('/admin/tahun-ajar')->with('error', 'Tahun Ajaran sudah ada');
         }
 
+        $status = $this->request->getPost('status');
+
+        // Cek apakah sudah ada data aktif
+        if ($status === 'Y') {
+            $isActiveExist = $model->where('status', 'Y')->first();
+            if ($isActiveExist) {
+                return redirect()->to('/admin/tahun-ajar')->with('error', 'Sudah ada tahun ajar aktif!');
+            }
+        }
+
         $data = [
             'tahun' => $this->request->getPost('tahun'),
-            'status' => $this->request->getPost('status'),
+            'status' => $status,
         ];
 
-        $insert = $model->save($data);
-
-        if ($insert) {
+        if ($model->save($data)) {
             return redirect()->to('/admin/tahun-ajar')->with('success', 'Tahun Ajaran berhasil ditambahkan!');
-        } else {
-            return redirect()->to('/admin/tahun-ajar')->with('error', 'Tahun Ajaran gagal ditambahkan!');
         }
+
+        return redirect()->to('/admin/tahun-ajar')->with('error', 'Tahun Ajaran gagal ditambahkan!');
     }
 
     public function edit($id)
@@ -55,19 +62,26 @@ class TahunAjarController extends BaseController
     public function update($id)
     {
         $model = new TahunAjarModel();
+        $status = $this->request->getPost('status');
+
+        // Cek status Y, dan pastikan tidak ada data Y lain selain data yang sedang diupdate
+        if ($status === 'Y') {
+            $activeExist = $model->where('status', 'Y')->where('id !=', $id)->first();
+            if ($activeExist) {
+                return redirect()->to('/admin/tahun-ajar')->with('error', 'Sudah ada tahun ajar aktif!');
+            }
+        }
 
         $data = [
             'tahun' => $this->request->getPost('tahun'),
-            'status' => $this->request->getPost('status'),
+            'status' => $status,
         ];
 
-        $update = $model->update($id, $data);
-
-        if ($update) {
+        if ($model->update($id, $data)) {
             return redirect()->to('/admin/tahun-ajar')->with('success', 'Tahun Ajaran berhasil diubah!');
-        } else {
-            return redirect()->to('/admin/tahun-ajar')->with('error', 'Tahun Ajaran gagal diubah!');
         }
+
+        return redirect()->to('/admin/tahun-ajar')->with('error', 'Tahun Ajaran gagal diubah!');
     }
 
     public function delete($id)

@@ -9,11 +9,50 @@ class ProdiController extends BaseController
 {
     public function index()
     {
-        $model = new ProdiModel();
+        return $this->render('Admin/Prodi/index');
+    }
 
-        $data['prodi'] = $model->orderBy('nama_prodi', 'ASC')->findAll();
+    public function getTable()
+    {
+        $request = service('request');
+        $db = \Config\Database::connect();
+        $builder = $db->table('prodi')->orderBy('nama_prodi', 'ASC'); // view dari ViewCapaian.php
 
-        return $this->render('Admin/Prodi/index', $data);
+        // Total data sebelum filter
+        $total = $builder->countAllResults(false);
+
+        // Search
+        $search = $request->getGet('search')['value'];
+        if (!empty($search)) {
+            $builder->groupStart()
+                ->like('nama_prodi', $search)
+                ->orLike('jenjang_pendidikan', $search)
+                ->orLike('kategori', $search)
+                ->groupEnd();
+        }
+
+        $filtered = $builder->countAllResults(false);
+
+        // Pagination & ordering
+        $start = $request->getGet('start');
+        $length = $request->getGet('length');
+        $builder->limit($length, $start);
+
+        $orderColumnIndex = $request->getGet('order')[0]['column'];
+        $orderDirection = $request->getGet('order')[0]['dir'];
+        $columns = ['id', 'nama_prodi', 'jenjang_pendidikan', 'kategori', 'status'];
+        $builder->orderBy($columns[$orderColumnIndex] ?? 'id', $orderDirection);
+
+        // Get data
+        $data = $builder->get()->getResultArray();
+
+        // Response sesuai format DataTables
+        return $this->response->setJSON([
+            'draw' => intval($request->getGet('draw')),
+            'recordsTotal' => $total,
+            'recordsFiltered' => $filtered,
+            'data' => $data
+        ]);
     }
 
     public function create()
@@ -28,7 +67,7 @@ class ProdiController extends BaseController
         $checkProdi = $model->where('nama_prodi', $this->request->getPost('nama_prodi'))->findAll();
 
         if ($checkProdi) {
-            return redirect()->to('/admin/prodi')->with('error', 'Program Studi sudah ada');
+            return redirect()->to('/admin/prodi')->with('error', 'Program Studi sudah ada!');
         }
 
         $kategori = $this->request->getPost('kategori');
@@ -76,6 +115,13 @@ class ProdiController extends BaseController
     public function update($id)
     {
         $model = new ProdiModel();
+
+        $checkProdi = $model->where('nama_prodi', $this->request->getPost('nama_prodi'))->findAll();
+
+        if ($checkProdi) {
+            return redirect()->to('/admin/prodi')->with('error', 'Program Studi sudah ada!');
+        }
+
         $kategori = $this->request->getPost('kategori');
 
         $data = [

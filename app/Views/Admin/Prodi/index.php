@@ -25,6 +25,10 @@
             <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body py-4">
+                <div class="mb-5">
+                    <input type="text" data-kt-filter="search" class="form-control form-control-solid w-250px"
+                        placeholder="Search..." />
+                </div>
                 <?php if (session()->getFlashdata('success')): ?>
                     <script>
                         Swal.fire({
@@ -46,7 +50,7 @@
                 <?php endif; ?>
                 <!--begin::Table-->
                 <div class="table-responsive">
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_prodi">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="tblProdi">
                         <thead>
                             <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th class="min-w-15px">No</th>
@@ -56,45 +60,7 @@
                                 <th class="min-w-100px">Action</th>
                             </tr>
                         </thead>
-                        <?php if ($prodi): ?>
-                            <tbody class="text-gray-600 fw-semibold">
-                                <?php $no = 1; ?>
-                                <?php foreach ($prodi as $row): ?>
-                                    <tr>
-                                        <td class="text-center">
-                                            <?= $no++ ?>
-                                        </td>
-                                        <td>
-                                            <?= $row['nama_prodi'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $row['jenjang_pendidikan'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $row['kategori'] ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="d-flex align-items-center justify-content-center gap-2">
-                                                <button type="button"
-                                                    class="btn btn-light btn-sm btn-icon btn-active-light-primary"
-                                                    onClick="btnEditProdi(<?= $row['id'] ?>)"><i
-                                                        class="fa-solid fa-pen-to-square"></i></button>
-                                                <button type="button"
-                                                    class="btn btn-light btn-sm btn-icon btn-active-light-danger"
-                                                    onClick="btnDeleteProdi(<?= $row['id'] ?>)"><i
-                                                        class="fa-solid fa-trash"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        <?php else: ?>
-                            <tbody>
-                                <tr>
-                                    <td colspan="4" class="text-center">Tidak Ada Data</td>
-                                </tr>
-                            </tbody>
-                        <?php endif; ?>
+                        <tbody></tbody>
                     </table>
                 </div>
                 <!--end::Table-->
@@ -113,6 +79,43 @@
             $('#modalbody').load("<?= base_url('admin/prodi/create') ?>");
             $('#modal').data('rowid', 0);
             $('#modal').modal('show');
+        });
+
+        $('#tblProdi').DataTable({
+            serverSide: true,
+            processing: true,
+            ajax: "<?= base_url('admin/prodi/table') ?>",
+            columns: [
+                {
+                    data: null,
+                    className: 'text-center',
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                { data: 'nama_prodi', className: 'text-center' },
+                { data: 'jenjang_pendidikan', className: 'text-center' },
+                { data: 'kategori', className: 'text-center' },
+                {
+                    data: 'id',
+                    className: 'text-center',
+                    orderable: false,
+                    searchable: false,
+                    render: function (data) {
+                        return `
+                    <button onclick="btnEditProdi(${data})" 
+                       class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></button>
+                    <button onclick="btnDeleteProdi(${data})" 
+                            class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                `;
+                    }
+                }
+            ]
+        });
+
+
+        document.querySelector('[data-kt-filter="search"]').addEventListener('keyup', function () {
+            $('#tblProdi').DataTable().search(this.value).draw();
         });
     });
 

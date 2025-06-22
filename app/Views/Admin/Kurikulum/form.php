@@ -30,7 +30,7 @@
                                     <div class="col-md-7">
                                         <select class="form-control form-control-solid form-control-lg" data-control="select2"
                                             id="prodi_id" name="prodi_id" data-placeholder="Pilih Program Studi" required>
-                                            <!-- <option value="" disabled selected>Pilih Program Studi</option> -->
+                                            <option value="" disabled selected>Pilih Program Studi</option>
                                             <?php foreach ($prodi as $prow): ?>
                                                 <option value="<?= $prow['id'] ?>" <?= (isset($dtkurikulum) && $dtkurikulum['prodi_id'] == $prow['id']) ? 'selected' : '' ?>><?= $prow['nama_prodi'] ?>
                                                 </option>

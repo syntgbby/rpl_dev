@@ -85,6 +85,50 @@
     </div>
 </div>
 
+<!-- Informasi Pelatihan -->
+<div class="bg-light p-3 rounded mb-4">
+    <h5 class="text-dark mb-3 border-bottom pb-2">Informasi Riwayat Kerja</h5>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th class="text-center" style="width: 50px">No</th>
+                    <th>Nama Perusahaan</th>
+                    <th>Deskripsi Pekerjaan</th>
+                    <th class="text-center">Posisi</th>
+                    <th class="text-center">Bukti</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($dtpekerjaan): ?>
+                    <?php $no = 1;
+                    foreach ($dtpekerjaan as $row): ?>
+                        <tr>
+                            <td class="text-center"><?= $no++ ?></td>
+                            <td><?= $row['nama_perusahaan'] ?></td>
+                            <td><?= $row['deskripsi_pekerjaan'] ?></td>
+                            <td class="text-center"><?= $row['posisi'] ?></td>
+                            <td class="text-center">
+                                <?php if ($row['file_bukti']): ?>
+                                    <a href="<?= $row['file_bukti'] ?>" target="_blank" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-file-pdf me-1"></i> Lihat Bukti
+                                    </a>
+                                <?php else: ?>
+                                    <span class="text-muted">-</span>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5" class="text-center">Aplikan tidak mengisi riwayat kerja</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <!-- File Bukti -->
 <div class="bg-light p-3 rounded mb-4">
     <h5 class="text-dark mb-3 border-bottom pb-2">File Bukti</h5>
@@ -104,14 +148,13 @@
             </div>
         </div>
 
-        <!-- Bukti Kerja -->
+        <!-- Kartu Keluarga -->
         <div class="col-md-6">
             <div class="border rounded p-2">
-                <label class="text-muted d-block small mb-2">Bukti Kerja</label>
-                <?php if (!empty($dtpendaftaran['bukti_kerja'])): ?>
-                    <a href="<?= $dtpendaftaran['bukti_kerja'] ?>" class="btn btn-sm btn-outline-primary w-100"
-                        target="_blank">
-                        <i class="fas fa-file-pdf me-1"></i> Lihat Bukti Kerja
+                <label class="text-muted d-block small mb-2">Kartu Keluarga</label>
+                <?php if (!empty($dtpendaftaran['file_kk'])): ?>
+                    <a href="<?= $dtpendaftaran['file_kk'] ?>" class="btn btn-sm btn-outline-primary w-100" target="_blank">
+                        <i class="fas fa-file-pdf me-1"></i> Lihat Kartu Keluarga
                     </a>
                 <?php else: ?>
                     <span class="text-muted small">File tidak tersedia</span>

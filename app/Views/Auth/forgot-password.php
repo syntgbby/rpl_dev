@@ -64,7 +64,7 @@
                                     autocomplete="on" class="form-control bg-transparent" required />
                             </div>
 
-                            <div class="fv-row mb-8">
+                            <!-- <div class="fv-row mb-8">
                                 <select name="question" id="question" class="form-select form-control bg-transparent"
                                     data-control="select2" data-placeholder="Pilih Pertanyaan" required>
                                     <option value="" disabled selected>Pilih Pertanyaan</option>
@@ -77,7 +77,7 @@
                             <div class="fv-row mb-8">
                                 <input type="text" placeholder="Masukkan Jawaban" name="answer" id="answer"
                                     autocomplete="on" class="form-control bg-transparent" required />
-                            </div>
+                            </div> -->
 
                             <div class="d-grid mb-10">
                                 <button type="submit" id="kt_sign_in_submit" class="btn btn-primary" name="login">
@@ -140,10 +140,24 @@
 
 </html>
 
-<?php if (session()->getFlashdata('show_reset_modal')): ?>
-    <script>
-        $(document).ready(function () {
-            $('#resetPasswordModal').modal('show');
-        });
-    </script>
-<?php endif; ?>
+<script>
+    $('#email').on('blur', function () {
+        let email = $(this).val();
+        if (email !== '') {
+            $.ajax({
+                url: '<?= base_url('cek-role-by-email') ?>',
+                method: 'POST',
+                data: { email: email },
+                success: function (res) {
+                    if (res.role === 'aplikan') {
+                        $('#question').closest('.mb-8').show();
+                        $('#answer').closest('.mb-8').show();
+                    } else {
+                        $('#question').closest('.mb-8').hide();
+                        $('#answer').closest('.mb-8').hide();
+                    }
+                }
+            });
+        }
+    });
+</script>

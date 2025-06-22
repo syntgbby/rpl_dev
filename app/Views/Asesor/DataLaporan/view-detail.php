@@ -171,14 +171,14 @@
                             <div class="card card-custom h-100">
                                 <div class="card-header">
                                     <div class="card-title">
-                                        <h3 class="fw-bold fs-6 m-0">Bukti Kerja</h3>
+                                        <h3 class="fw-bold fs-6 m-0">Kartu Keluarga</h3>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <?php if (!empty($dtpendaftaran['bukti_kerja'])): ?>
-                                        <a href="<?= $dtpendaftaran['bukti_kerja'] ?>"
+                                    <?php if (!empty($dtpendaftaran['file_kk'])): ?>
+                                        <a href="<?= $dtpendaftaran['file_kk'] ?>"
                                             class="btn btn-primary btn-sm btn-active-light-primary w-100" target="_blank">
-                                            <i class="fas fa-file-pdf me-1"></i> Lihat Bukti Kerja
+                                            <i class="fas fa-file-pdf me-1"></i> Lihat Kartu Keluarga
                                         </a>
                                     <?php else: ?>
                                         <span class="text-muted small">File tidak tersedia</span>
@@ -212,14 +212,14 @@
                             <div class="card card-custom h-100">
                                 <div class="card-header">
                                     <div class="card-title">
-                                        <h3 class="fw-bold fs-6 m-0">Bukti Pelatihan</h3>
+                                        <h3 class="fw-bold fs-6 m-0">Pas Foto</h3>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <?php if (!empty($dtpendaftaran['bukti_pelatihan'])): ?>
-                                        <a href="<?= $dtpendaftaran['bukti_pelatihan'] ?>"
+                                    <?php if (!empty($dtpendaftaran['file_foto'])): ?>
+                                        <a href="<?= $dtpendaftaran['file_foto'] ?>"
                                             class="btn btn-primary btn-sm btn-active-light-primary w-100" target="_blank">
-                                            <i class="fas fa-file-pdf me-1"></i> Lihat Bukti Pelatihan
+                                            <i class="fas fa-file-pdf me-1"></i> Lihat Pas Foto
                                         </a>
                                     <?php else: ?>
                                         <span class="text-muted small">File tidak tersedia</span>

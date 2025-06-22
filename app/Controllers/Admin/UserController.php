@@ -2,19 +2,57 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\{UserModel, DetailAplikanModel, PendaftaranModel, BuktiPendukungModel, KonfirmasiStepModel, PelatihanModel, PengalamanKerjaModel, TimelineModel, ApprovalRplModel, CapaianDtl};
+use App\Models\{UserModel, DetailAsesorModel, DetailAplikanModel, PendaftaranModel, BuktiPendukungModel, KonfirmasiStepModel, PelatihanModel, PengalamanKerjaModel, TimelineModel, ApprovalRplModel, CapaianDtl};
 use App\Controllers\BaseController;
 
 class UserController extends BaseController
 {
     public function index()
     {
-        $model = new UserModel();
-        $data['users'] = $model
-            ->whereIn('role', ['kaprodi', 'asesor'])
-            ->findAll();
+        return $this->render('Admin/Users/index');
+    }
 
-        return $this->render('Admin/Users/index', $data);
+    public function getTable()
+    {
+        $request = service('request');
+        $db = \Config\Database::connect();
+        $builder = $db->table('users')->whereIn('role', ['kaprodi', 'asesor']); // view dari ViewCapaian.php
+
+        // Total data sebelum filter
+        $total = $builder->countAllResults(false);
+
+        // Search
+        $search = $request->getGet('search')['value'];
+        if (!empty($search)) {
+            $builder->groupStart()
+                ->like('nama_lengkap', $search)
+                ->orLike('email', $search)
+                ->orLike('role', $search)
+                ->groupEnd();
+        }
+
+        $filtered = $builder->countAllResults(false);
+
+        // Pagination & ordering
+        $start = $request->getGet('start');
+        $length = $request->getGet('length');
+        $builder->limit($length, $start);
+
+        $orderColumnIndex = $request->getGet('order')[0]['column'];
+        $orderDirection = $request->getGet('order')[0]['dir'];
+        $columns = ['id', 'nama_lengkap', 'email', 'role', 'status'];
+        $builder->orderBy($columns[$orderColumnIndex] ?? 'id', $orderDirection);
+
+        // Get data
+        $data = $builder->get()->getResultArray();
+
+        // Response sesuai format DataTables
+        return $this->response->setJSON([
+            'draw' => intval($request->getGet('draw')),
+            'recordsTotal' => $total,
+            'recordsFiltered' => $filtered,
+            'data' => $data
+        ]);
     }
 
     public function create()
@@ -28,7 +66,7 @@ class UserController extends BaseController
 
         $datas = $this->request->getPost();
 
-        $email = strtolower($datas['email']);
+        $email = trim(strtolower($this->request->getPost('email')));
         $nama_lengkap = strtolower($datas['nama_lengkap']);
         $passHash = strtoupper(md5(strtoupper(md5($email)) . 'P@ssw0rd' . $datas['password']));
         $role = $datas['role'];
@@ -38,22 +76,22 @@ class UserController extends BaseController
 
         if ($checkEmail) {
             return redirect()->to('/admin/users/create')->with('error', 'Email sudah terdaftar!');
+        }
+
+        $data = [
+            'email' => $email,
+            'nama_lengkap' => $nama_lengkap,
+            'password' => $passHash,
+            'role' => $role,
+            'status' => $status,
+        ];
+
+        $insert = $model->save($data);
+
+        if ($insert) {
+            return redirect()->to('/admin/users')->with('success', 'User berhasil ditambahkan!');
         } else {
-            $data = [
-                'email' => $email,
-                'nama_lengkap' => $nama_lengkap,
-                'password' => $passHash,
-                'role' => $role,
-                'status' => $status,
-            ];
-
-            $insert = $model->save($data);
-
-            if ($insert) {
-                return redirect()->to('/admin/users')->with('success', 'User berhasil ditambahkan!');
-            } else {
-                return redirect()->to('/admin/users/create')->with('error', 'User gagal ditambahkan!');
-            }
+            return redirect()->to('/admin/users/create')->with('error', 'User gagal ditambahkan!');
         }
     }
 
@@ -72,9 +110,15 @@ class UserController extends BaseController
         $datas = $this->request->getPost();
 
         $nama_lengkap = $datas['nama_lengkap'];
-        $email = strtolower($datas['email']);
+        $email = trim(strtolower($this->request->getPost('email')));
         $role = $datas['role'];
         $status = $datas['status'];
+
+        $checkEmail = $model->where('email', $email)->first();
+
+        if ($checkEmail) {
+            return redirect()->to('/admin/users/create')->with('error', 'Email sudah terdaftar!');
+        }
 
         $data = [
             'email' => $email,
@@ -96,6 +140,7 @@ class UserController extends BaseController
     {
         $model = new UserModel();
         $modelApproval = new ApprovalRplModel();
+        $modelDetailAsesor = new DetailAsesorModel();
         $modelCapaianDtl = new CapaianDtl();
         $modelDetailAplikan = new DetailAplikanModel();
         $modelPendaftaran = new PendaftaranModel();
@@ -121,10 +166,13 @@ class UserController extends BaseController
             $modelPelatihan->where('pendaftaran_id', $idPendaftaran)->delete();
             $modelPengalamanKerja->where('pendaftaran_id', $idPendaftaran)->delete();
             $modelTimeline->where('pendaftaran_id', $idPendaftaran)->delete();
-            $modelPendaftaran->where('email', $nama_lengkap)->delete();
-            $modelDetailAplikan->where('email', $nama_lengkap)->delete();
+            $modelPendaftaran->where('email', $email)->delete();
+            $modelDetailAplikan->where('email', $email)->delete();
+
             $delete = $model->delete($id);
         } else {
+            $modelDetailAsesor->where('email', $email)->delete();
+
             $delete = $model->delete($id);
         }
 

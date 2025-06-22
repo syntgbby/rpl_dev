@@ -69,10 +69,10 @@
                                     autocomplete="off" class="form-control bg-transparent" required />
                             </div>
 
-                            <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
+                            <!-- <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
                                 <div></div>
                                 <a href="<?= base_url('forgot-password') ?>" class="link-primary">Lupa Password?</a>
-                            </div>
+                            </div> -->
 
                             <div class="d-grid mb-10">
                                 <button type="submit" id="kt_sign_in_submit" class="btn btn-primary" name="login">
@@ -116,6 +116,7 @@
                 $submitBtn.removeClass('loading');
                 $submitBtn.find('.indicator-label').show();
                 $submitBtn.find('.indicator-progress').hide();
+                $submitBtn.prop('disabled', false); // Pastikan tombol aktif kembali
 
                 Swal.fire({
                     icon: 'error',
@@ -131,6 +132,7 @@
             $submitBtn.addClass('loading');
             $submitBtn.find('.indicator-label').hide();
             $submitBtn.find('.indicator-progress').show();
+            $submitBtn.prop('disabled', true); // ✅ Disable tombol di sini$submitBtn.prop('disabled', true); // ✅ Disable tombol di sini
         });
     </script>
 </body>

@@ -18,6 +18,7 @@ class KurikulumModel extends Model
             ->where('kurikulum.status', 'Y')
             ->where('tahun_ajar.id', $tahun)
             ->where('kurikulum.prodi_id', $prodi)
+            ->orderBy('mata_kuliah.nama_matkul', 'ASC')
             ->findAll();
     }
 }

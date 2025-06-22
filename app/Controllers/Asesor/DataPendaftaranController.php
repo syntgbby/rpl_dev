@@ -36,8 +36,12 @@ class DataPendaftaranController extends BaseController
     {
         $model = new ViewDataPendaftaran();
         $modelPelatihan = new PelatihanModel();
+        $modelPekerjaan = new PengalamanKerjaModel();
+
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
         $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $id)->findAll();
+        $data['dtpekerjaan'] = $modelPekerjaan->where('pendaftaran_id', $id)->findAll();
+
         return $this->render('Asesor/DataPendaftaran/view-detail', $data);
     }
 
@@ -46,13 +50,13 @@ class DataPendaftaranController extends BaseController
         $model = new ViewDataPendaftaran();
         $model_pelatihan = new PelatihanModel();
         $model_kurikulum = new TahunAjarModel();
-        $model = new ViewDataPendaftaran();
         $modelPekerjaan = new PengalamanKerjaModel();
 
-        $data['dtpekerjaan'] = $modelPekerjaan->getPengalamanKerja($id);
+        $data['dtpekerjaan'] = $modelPekerjaan->where('pendaftaran_id', $id)->findAll();
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
         $data['dtpelatihan'] = $model_pelatihan->where('pendaftaran_id', $id)->findAll();
         $data['dtkurikulum'] = $model_kurikulum->getTahunAjar();
+
         return $this->render('Asesor/validasi', $data);
     }
 

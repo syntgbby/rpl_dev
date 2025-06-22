@@ -102,7 +102,7 @@
                     data: 'status',
                     className: 'text-center',
                     render: function (data) {
-                        if (data === 'y') {
+                        if (data === 'Y') {
                             return `<span class="badge badge-success">Aktif</span>`;
                         } else {
                             return `<span class="badge badge-danger">Tidak Aktif</span>`;
@@ -118,7 +118,7 @@
                         return `
                     <a href="<?= base_url('admin/kurikulum/edit/') ?>${data}" 
                        class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                    <button onclick="btnDeleteCapaian(${data})" 
+                    <button onclick="btnDeleteKurikulum(${data})" 
                             class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                 `;
                     }
@@ -128,7 +128,7 @@
 
 
         document.querySelector('[data-kt-filter="search"]').addEventListener('keyup', function () {
-            $('#tblCapaian').DataTable().search(this.value).draw();
+            $('#tblKurikulum').DataTable().search(this.value).draw();
         });
     });
 

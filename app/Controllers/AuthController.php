@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\{UserModel, DetailAplikanModel, PertanyaanModel, ProdiModel, AsesorModel};
+use App\Models\{UserModel, DetailAplikanModel, DetailAsesorModel, PertanyaanModel, ProdiModel, AsesorModel};
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Controller;
 
@@ -22,7 +22,7 @@ class AuthController extends Controller
         $users = new UserModel();
         $detailAplikan = new DetailAplikanModel();
 
-        $email = strtolower($this->request->getPost('email'));
+        $email = trim(strtolower($this->request->getPost('email')));
 
         //proses cek email (1 akun hanya bisa 1 email)
         $checkEmail = $users->where('email', $email)->first();
@@ -33,9 +33,7 @@ class AuthController extends Controller
         $password = $this->request->getPost('password');
         $passHash = strtoupper(md5(strtoupper(md5($email)) . 'P@ssw0rd' . $password));
 
-        if (isset($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $email = $email;
-        } else {
+        if (!isset($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return redirect()->to('/register')->with('error', 'Email tidak valid');
         }
 
@@ -98,7 +96,7 @@ class AuthController extends Controller
     public function loginProcess()
     {
         $users = new UserModel();
-        $email = strtolower($this->request->getPost('email'));
+        $email = trim(strtolower($this->request->getPost('email')));
         $password = $this->request->getPost('password');
 
         $user = $users->where('email', $email)->first();
@@ -137,25 +135,40 @@ class AuthController extends Controller
     public function forgotPassword()
     {
         $users = new UserModel();
-        $dtl = new DetailAplikanModel();
+        $aplikan = new DetailAplikanModel();
+        $asesor = new DetailAsesorModel();
+
         $email = $this->request->getPost('email');
         $pertanyaan = $this->request->getPost('question');
         $jawaban = $this->request->getPost('answer');
 
         $user = $users->where('email', $email)->first();
-        $dtl_data = $dtl->where('email', $email)->first();
-
-        if (!$user || !$dtl_data) {
+        if (!$user) {
             return redirect()->to('/forgot-password')->with('error', 'Email tidak terdaftar!');
         }
 
-        // Cek pertanyaan dan jawaban keamanan
-        if ($dtl_data['pertanyaan_id'] != $pertanyaan || strtolower($dtl_data['jawaban']) != strtolower($jawaban)) {
-            return redirect()->to('/forgot-password')->with('error', 'Pertanyaan atau jawaban salah!');
+        if ($user['role'] == 'aplikan') {
+            $dtl = $aplikan->where('email', $email)->first();
+            if (!$dtl) {
+                return redirect()->to('/forgot-password')->with('error', 'Data aplikan tidak ditemukan!');
+            }
+
+            if ($dtl['pertanyaan_id'] != $pertanyaan || strtolower($dtl['jawaban']) != strtolower($jawaban)) {
+                return redirect()->to('/forgot-password')->with('error', 'Pertanyaan atau jawaban salah!');
+            }
         }
 
-        // Kalau valid, arahkan ke halaman untuk reset password atau lakukan reset langsung di sini
+        // Untuk role asesor, langsung lanjut tanpa cek pertanyaan
         return redirect()->to('/forgot-password')->with('show_reset_modal', true)->with('success', 'Verifikasi berhasil, silakan buat password baru.');
+    }
+
+    public function cekRoleByEmail()
+    {
+        $email = $this->request->getPost('email');
+        $user = (new UserModel())->where('email', $email)->first();
+        return $this->response->setJSON([
+            'role' => $user['role'] ?? null
+        ]);
     }
 
     public function resetPassword()
