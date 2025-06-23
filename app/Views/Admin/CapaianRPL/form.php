@@ -60,7 +60,7 @@
                     </div>
                     <!--begin::Actions-->
                     <div class="card-footer d-flex justify-content-end py-6 px-9">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-light" onclick="window.history.back()">Batal</button>
                         <button type="submit" class="btn btn-primary" id="btnSave">Simpan
                             <span class="spinner-border spinner-border-sm align-middle ms-2" role="status"
                                 aria-hidden="true" style="display: none;"></span>

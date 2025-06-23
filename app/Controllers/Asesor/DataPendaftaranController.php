@@ -55,7 +55,7 @@ class DataPendaftaranController extends BaseController
         $data['dtpekerjaan'] = $modelPekerjaan->where('pendaftaran_id', $id)->findAll();
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
         $data['dtpelatihan'] = $model_pelatihan->where('pendaftaran_id', $id)->findAll();
-        $data['dtkurikulum'] = $model_kurikulum->getTahunAjar();
+        $data['dtkurikulum'] = $model_kurikulum->where('status', 'Y')->findAll();
 
         return $this->render('Asesor/validasi', $data);
     }

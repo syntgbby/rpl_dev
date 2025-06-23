@@ -155,7 +155,8 @@
                 </div>
                 <!--begin::Actions-->
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <button type="reset" class="btn btn-light btn-active-light-primary me-2">Batal</button>
+                    <button type="button" class="btn btn-light btn-active-light-primary me-2"
+                        onclick="window.history.back()">Batal</button>
                     <button type="submit" class="btn btn-primary" id="btnSave">Simpan Perubahan
                         <span class="spinner-border spinner-border-sm align-middle ms-2" role="status"
                             aria-hidden="true" style="display: none;"></span>

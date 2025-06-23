@@ -50,10 +50,12 @@
                 <div class="card-body border-top p-9">
                     <?php if ($konfirmasi_step['status'] == 'N'): ?>
                         <div class="alert alert-info d-flex align-items-center p-5 mb-10">
-                            <i class="ki-duotone ki-information fs-2hx text-info me-4"><span class="path1"></span><span class="path2"></span></i>
+                            <i class="ki-duotone ki-information fs-2hx text-info me-4"><span class="path1"></span><span
+                                    class="path2"></span></i>
                             <div class="d-flex flex-column">
                                 <h4 class="mb-1 text-info">Informasi</h4>
-                                <span>Anda memilih untuk tidak mengisi data pelatihan. Jika ingin mengisi, silahkan hubungi admin untuk mengubah konfirmasi.</span>
+                                <span>Anda memilih untuk tidak mengisi data pelatihan. Jika ingin mengisi, silahkan hubungi
+                                    admin untuk mengubah konfirmasi.</span>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -63,8 +65,7 @@
                         <div class="col-lg-8">
                             <input type="text" name="nama_pelatihan" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Nama Pelatihan" 
-                                <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
+                                placeholder="Nama Pelatihan" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -74,8 +75,7 @@
                         <div class="col-lg-8">
                             <input type="text" name="tahun" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Tahun Pelatihan" 
-                                <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
+                                placeholder="Tahun Pelatihan" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -85,8 +85,7 @@
                         <div class="col-lg-8">
                             <input type="text" name="penyelenggara" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Penyelenggara" 
-                                <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
+                                placeholder="Penyelenggara" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -96,8 +95,7 @@
                         <div class="col-lg-8">
                             <input type="file" name="file_bukti" accept=".pdf, .jpg, .png" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Upload Bukti" 
-                                <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
+                                placeholder="Upload Bukti" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
                             <span class="text-danger">*Format file: .pdf, .jpg, .png</span>
                         </div>
                     </div>
@@ -105,8 +103,8 @@
                 </div>
                 <!--begin::Actions-->
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <button type="cancel" class="btn btn-light btn-active-light-primary me-2"
-                        onclick="window.location.href='<?= base_url('dashboard') ?>'">Close</button>
+                    <!-- <button type="cancel" class="btn btn-light btn-active-light-primary me-2"
+                        onclick="window.location.href='<?= base_url('dashboard') ?>'">Batal</button> -->
                     <button type="submit" class="btn btn-primary" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?>>
                         <i class="fa-solid fa-save text-white text-center"></i>
                     </button>

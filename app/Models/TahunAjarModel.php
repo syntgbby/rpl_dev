@@ -13,7 +13,7 @@ class TahunAjarModel extends Model
     {
         return $this->findAll();
     }
-// public function getDistinctTahun()
+    // public function getDistinctTahun()
 // {
 //     return $this->select('tahun', 'id')
 //                 ->distinct()

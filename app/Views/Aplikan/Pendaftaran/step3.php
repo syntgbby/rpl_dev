@@ -17,11 +17,12 @@
         <!--end::Card header-->
         <!--begin::Content-->
         <div id="kt_account_settings_profile_details" class="collapse show">
-        <?php if ($konfirmasi_step['status'] == null): ?>
+            <?php if ($konfirmasi_step['status'] == null): ?>
                 <!--begin::Alert-->
                 <div class="alert alert-warning d-flex align-items-center p-5 mb-10">
                     <!--begin::Icon-->
-                    <i class="ki-duotone ki-question fs-2hx text-warning me-4"><span class="path1"></span><span class="path2"></span></i>
+                    <i class="ki-duotone ki-question fs-2hx text-warning me-4"><span class="path1"></span><span
+                            class="path2"></span></i>
                     <!--end::Icon-->
 
                     <!--begin::Wrapper-->
@@ -49,10 +50,12 @@
                 <div class="card-body border-top p-9">
                     <?php if ($konfirmasi_step['status'] == 'N'): ?>
                         <div class="alert alert-info d-flex align-items-center p-5 mb-10">
-                            <i class="ki-duotone ki-information fs-2hx text-info me-4"><span class="path1"></span><span class="path2"></span></i>
+                            <i class="ki-duotone ki-information fs-2hx text-info me-4"><span class="path1"></span><span
+                                    class="path2"></span></i>
                             <div class="d-flex flex-column">
                                 <h4 class="mb-1 text-info">Informasi</h4>
-                                <span>Anda memilih untuk tidak mengisi data riwayat kerja. Jika ingin mengisi, silahkan hubungi admin untuk mengubah konfirmasi.</span>
+                                <span>Anda memilih untuk tidak mengisi data riwayat kerja. Jika ingin mengisi, silahkan
+                                    hubungi admin untuk mengubah konfirmasi.</span>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -62,8 +65,7 @@
                         <div class="col-lg-8">
                             <input type="text" name="nama_perusahaan" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Nama Perusahaan" 
-                                <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
+                                placeholder="Nama Perusahaan" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -73,8 +75,7 @@
                         <div class="col-lg-8">
                             <input type="text" name="deskripsi_pekerjaan" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Deskripsi Pekerjaan" 
-                                <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
+                                placeholder="Deskripsi Pekerjaan" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -84,20 +85,18 @@
                         <div class="col-lg-8">
                             <input type="text" name="posisi" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Jabatan / Posisi" 
-                                <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
+                                placeholder="Jabatan / Posisi" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
-                    
+
                     <!--begin::Input group for Full Name-->
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">Upload Bukti</label>
                         <div class="col-lg-8">
                             <input type="file" name="file_bukti" accept=".pdf" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Upload Bukti" 
-                                <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
+                                placeholder="Upload Bukti" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
                             <span class="text-danger">*Format file: .pdf</span>
                         </div>
                     </div>
@@ -107,16 +106,13 @@
                         <div class="col-md-6">
                             <label class="col-lg-4 col-form-label required fw-semibold fs-6">Tahun Mulai</label>
                             <div class="col-lg-8">
-                                <select name="tahun_mulai" required 
-                                    class="form-select form-select-lg form-select-solid" 
-                                    data-control="select2" 
-                                    data-placeholder="Pilih Tahun Mulai"
-                                    style="width: 100%; height: 48px;"
-                                    <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?>>
+                                <select name="tahun_mulai" required class="form-select form-select-lg form-select-solid"
+                                    data-control="select2" data-placeholder="Pilih Tahun Mulai"
+                                    style="width: 100%; height: 48px;" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?>>
                                     <option></option>
-                                    <?php 
+                                    <?php
                                     $currentYear = date('Y');
-                                    for($i = $currentYear; $i >= 1990; $i--) {
+                                    for ($i = $currentYear; $i >= 1990; $i--) {
                                         echo "<option value='$i'>$i</option>";
                                     }
                                     ?>
@@ -126,16 +122,13 @@
                         <div class="col-md-6">
                             <label class="col-lg-4 col-form-label required fw-semibold fs-6">Tahun Selesai</label>
                             <div class="col-lg-8">
-                                <select name="tahun_selesai" 
-                                    class="form-select form-select-lg form-select-solid" 
-                                    data-control="select2" 
-                                    data-placeholder="Pilih Tahun Selesai"
-                                    style="width: 100%; height: 48px;"
-                                    <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?>>
+                                <select name="tahun_selesai" class="form-select form-select-lg form-select-solid"
+                                    data-control="select2" data-placeholder="Pilih Tahun Selesai"
+                                    style="width: 100%; height: 48px;" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?>>
                                     <option></option>
-                                    <?php 
+                                    <?php
                                     $currentYear = date('Y');
-                                    for($i = $currentYear; $i >= 1990; $i--) {
+                                    for ($i = $currentYear; $i >= 1990; $i--) {
                                         echo "<option value='$i'>$i</option>";
                                     }
                                     ?>
@@ -147,7 +140,7 @@
                 </div>
                 <!--begin::Actions-->
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <button type="cancel" class="btn btn-light btn-active-light-primary me-2" onclick="window.location.href='<?= base_url('dashboard') ?>'">Batal</button>
+                    <!-- <button type="cancel" class="btn btn-light btn-active-light-primary me-2" onclick="window.location.href='<?= base_url('dashboard') ?>'">Batal</button> -->
                     <button type="submit" class="btn btn-primary" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?>>
                         Simpan
                     </button>
@@ -166,7 +159,7 @@
 
 <!-- Tambahkan script untuk inisialisasi Select2 -->
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Inisialisasi Select2 untuk semua select
         $('[data-control="select2"]').select2({
             minimumResultsForSearch: -1,
