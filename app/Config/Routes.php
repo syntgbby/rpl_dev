@@ -110,6 +110,7 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan', 'filter' =>
     //step 3
     $routes->get('pendaftaran/step3', 'PendaftaranController::step3');
     $routes->post('pendaftaran/saveStep3', 'PendaftaranController::saveStep3');
+    $routes->get('pendaftaran/deleteRiwayatKerja/(:num)', 'PendaftaranController::deleteRiwayatKerja/$1');
 
     //step 4
     $routes->get('pendaftaran/step4', 'PendaftaranController::step4');
@@ -158,6 +159,9 @@ $routes->group('asesor', ['namespace' => 'App\Controllers\Asesor', 'filter' => '
     $routes->get('get-matkul', 'DataPendaftaranController::getMatkulByTahun');
     $routes->post('approve-rpl', 'AsesorController::approveRpl');
     $routes->get('approve-nilai', 'AsesorController::viewApprove');
+
+    // Asesmen Per Matakuliah
+    $routes->get('get-asesmen-mata-kuliah/(:any)', 'DataPendaftaranController::getAsesmen/$1');
 
     // Laporan
     $routes->get('laporan-rpl', 'DataLaporanRplController::index');

@@ -45,73 +45,6 @@
                 </div>
                 <!--end::Alert-->
             <?php endif; ?>
-            <!--begin::Form-->
-            <form action="<?= base_url('aplikan/pendaftaran/saveStep2') ?>" method="post" enctype="multipart/form-data">
-                <div class="card-body border-top p-9">
-                    <?php if ($konfirmasi_step['status'] == 'N'): ?>
-                        <div class="alert alert-info d-flex align-items-center p-5 mb-10">
-                            <i class="ki-duotone ki-information fs-2hx text-info me-4"><span class="path1"></span><span
-                                    class="path2"></span></i>
-                            <div class="d-flex flex-column">
-                                <h4 class="mb-1 text-info">Informasi</h4>
-                                <span>Anda memilih untuk tidak mengisi data pelatihan. Jika ingin mengisi, silahkan hubungi
-                                    admin untuk mengubah konfirmasi.</span>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <!--begin::Input group for Full Name-->
-                    <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Nama Pelatihan</label>
-                        <div class="col-lg-8">
-                            <input type="text" name="nama_pelatihan" required
-                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Nama Pelatihan" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
-                        </div>
-                    </div>
-                    <!--end::Input group for Full Name-->
-                    <!--begin::Input group for Full Name-->
-                    <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Tahun Pelatihan</label>
-                        <div class="col-lg-8">
-                            <input type="text" name="tahun" required
-                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Tahun Pelatihan" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
-                        </div>
-                    </div>
-                    <!--end::Input group for Full Name-->
-                    <!--begin::Input group for Full Name-->
-                    <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Penyelenggara</label>
-                        <div class="col-lg-8">
-                            <input type="text" name="penyelenggara" required
-                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Penyelenggara" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
-                        </div>
-                    </div>
-                    <!--end::Input group for Full Name-->
-                    <!--begin::Input group for Full Name-->
-                    <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Upload Bukti</label>
-                        <div class="col-lg-8">
-                            <input type="file" name="file_bukti" accept=".pdf, .jpg, .png" required
-                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Upload Bukti" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
-                            <span class="text-danger">*Format file: .pdf, .jpg, .png</span>
-                        </div>
-                    </div>
-                    <!--end::Input group for Full Name-->
-                </div>
-                <!--begin::Actions-->
-                <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <!-- <button type="cancel" class="btn btn-light btn-active-light-primary me-2"
-                        onclick="window.location.href='<?= base_url('dashboard') ?>'">Batal</button> -->
-                    <button type="submit" class="btn btn-primary" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?>>
-                        <i class="fa-solid fa-save text-white text-center"></i>
-                    </button>
-                </div>
-                <!--end::Actions-->
-            </form>
-            <!--end::Form-->
         </div>
         <!--end::Content-->
 
@@ -137,6 +70,14 @@
             <?php endif; ?>
             <!--begin::Table-->
             <div class="table-responsive">
+                <div class="mb-5 text-end">
+                    <?php if ($konfirmasi_step['status'] == 'Y'): ?>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#modalPelatihan">
+                            <i class="fa fa-plus"></i> Tambah Pelatihan
+                        </button>
+                    <?php endif; ?>
+                </div>
                 <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
                     <thead>
                         <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
@@ -203,5 +144,45 @@
 <!--end::Basic info-->
 </div>
 <!--end::Content-->
+
+<!--begin::Modal Tambah Pelatihan-->
+<div class="modal fade" id="modalPelatihan" tabindex="-1" aria-labelledby="modalPelatihanLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form action="<?= base_url('aplikan/pendaftaran/saveStep2') ?>" method="post" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header mr-2">
+                    <h5 class="modal-title" id="modalPelatihanLabel">Tambah Data Pelatihan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label required">Nama Pelatihan</label>
+                        <input type="text" name="nama_pelatihan" required class="form-control"
+                            placeholder="Nama Pelatihan">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label required">Tahun Pelatihan</label>
+                        <input type="text" name="tahun" required class="form-control" placeholder="Tahun Pelatihan">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label required">Penyelenggara</label>
+                        <input type="text" name="penyelenggara" required class="form-control"
+                            placeholder="Penyelenggara">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label required">Upload Bukti</label>
+                        <input type="file" name="file_bukti" accept=".pdf,.jpg,.png" required class="form-control">
+                        <small class="text-danger d-block mt-1">*Format file: .pdf, .jpg, .png</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--end::Modal Tambah Pelatihan-->
 
 <?= $this->endSection() ?>

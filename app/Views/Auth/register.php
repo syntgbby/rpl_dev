@@ -142,7 +142,8 @@
                                         required>
                                         <option value="" disabled selected>Pilih Program Studi</option>
                                         <?php foreach ($prodi as $p): ?>
-                                            <option value="<?= $p['id'] ?>"><?= $p['nama_prodi'] ?></option>
+                                            <option value="<?= $p['id'] ?>"><?= $p['nama_prodi'] ?> -
+                                                <?= $p['jenjang_pendidikan'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -358,6 +359,7 @@
                 $submitBtn.removeClass('loading');
                 $submitBtn.find('.indicator-label').show();
                 $submitBtn.find('.indicator-progress').hide();
+                $submitBtn.prop('disabled', false); // Pastikan tombol aktif kembali
 
                 // Tampilkan alert
                 Swal.fire({
@@ -374,6 +376,7 @@
             $submitBtn.addClass('loading');
             $submitBtn.find('.indicator-label').hide();
             $submitBtn.find('.indicator-progress').show();
+            $submitBtn.prop('disabled', true); // ✅ Disable tombol di sini$submitBtn.prop('disabled', true); // ✅ Disable tombol di sini
         });
 
         // Password toggle functionality

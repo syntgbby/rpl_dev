@@ -63,6 +63,7 @@ class UserController extends BaseController
     public function store()
     {
         $model = new UserModel();
+        $modelAsesorDtl = new DetailAsesorModel();
 
         $datas = $this->request->getPost();
 
@@ -86,9 +87,16 @@ class UserController extends BaseController
             'status' => $status,
         ];
 
+        $data_detail = [
+            'email' => $email,
+            'nama_lengkap' => $nama_lengkap,
+        ];
+
         $insert = $model->save($data);
 
         if ($insert) {
+            $modelAsesorDtl->save($data_detail);
+
             return redirect()->to('/admin/users')->with('success', 'User berhasil ditambahkan!');
         } else {
             return redirect()->to('/admin/users/create')->with('error', 'User gagal ditambahkan!');
@@ -107,6 +115,7 @@ class UserController extends BaseController
     public function update($id)
     {
         $model = new UserModel();
+
         $datas = $this->request->getPost();
 
         $nama_lengkap = $datas['nama_lengkap'];

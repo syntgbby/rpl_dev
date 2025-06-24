@@ -272,11 +272,14 @@ class PendaftaranController extends BaseController
         if ($pendaftaran) {
             $pendaftaranId = $pendaftaran['pendaftaran_id'];
             $konfirmasi_step = $this->konfirmasiStepModel->where('pendaftaran_id =', $pendaftaranId)->where('step =', 'step3')->first();
+            $riwayat_kerja = $this->pengalamanKerjaModel->where('pendaftaran_id =', $pendaftaranId)->get()->getResultArray();
+
         } else {
             $konfirmasi_step = [];
+            $riwayat_kerja = [];
         }
 
-        return $this->render('aplikan/pendaftaran/step3', ['konfirmasi_step' => $konfirmasi_step]);
+        return $this->render('aplikan/pendaftaran/step3', ['riwayat_kerja' => $riwayat_kerja, 'konfirmasi_step' => $konfirmasi_step]);
     }
 
     public function saveStep3()
@@ -331,21 +334,24 @@ class PendaftaranController extends BaseController
                     'file_bukti' => $fileUrl, // Simpan URL file
                 ]);
 
-                $data_timeline = [
-                    'pendaftaran_id' => $getPendaftaran['pendaftaran_id'],
-                    'icon' => 'ki-outline ki-briefcase fs-2 text-dark',
-                    'status' => 'Upload Pengalaman Kerja',
-                    'keterangan' => 'Pengalaman kerja berhasil diupload',
-                ];
+                $checkTimeline = $this->timelineModel->where('pendaftaran_id', $getPendaftaran['pendaftaran_id'])
+                    ->where('status', 'Upload Pengalaman Kerja')
+                    ->first();
+
+                if (!$checkTimeline) {
+                    $data_timeline = [
+                        'pendaftaran_id' => $getPendaftaran['pendaftaran_id'],
+                        'icon' => 'ki-outline ki-briefcase fs-2 text-dark',
+                        'status' => 'Upload Pengalaman Kerja',
+                        'keterangan' => 'Pengalaman kerja berhasil diupload',
+                    ];
+
+                    $this->timelineModel->insert($data_timeline);
+                }
 
                 $this->pendaftaranModel->updateStatusPendaftaran($getPendaftaran['pendaftaran_id'], 'draft');
-                $insert = $this->timelineModel->insert($data_timeline);
                 // Redirect ke halaman step 2 dengan pesan sukses
-                if ($insert) {
-                    return redirect()->to('/aplikan/pendaftaran/step4')->with('success', 'Data pengalaman kerja berhasil disimpan');
-                } else {
-                    return redirect()->to('/aplikan/pendaftaran/step4')->with('error', 'Data pengalaman kerja gagal disimpan');
-                }
+                return redirect()->to('/aplikan/pendaftaran/step3')->with('success', 'Data pengalaman kerja berhasil disimpan');
             } catch (\Exception $e) {
                 // Tangani error jika gagal mengupload file
                 return redirect()->back()->withInput()->with('error', 'Gagal mengupload file: ' . $e->getMessage());

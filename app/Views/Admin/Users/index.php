@@ -123,6 +123,8 @@
                     searchable: false,
                     render: function (data) {
                         return `
+                        <a href="<?= base_url('admin/users/edit/') ?>${data}" 
+                       class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
                     <button onclick="confirmDelete(${data})" 
                             class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                 `;

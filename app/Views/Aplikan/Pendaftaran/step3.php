@@ -45,113 +45,110 @@
                 </div>
                 <!--end::Alert-->
             <?php endif; ?>
-            <!--begin::Form-->
-            <form action="<?= base_url('aplikan/pendaftaran/saveStep3') ?>" method="post" enctype="multipart/form-data">
-                <div class="card-body border-top p-9">
-                    <?php if ($konfirmasi_step['status'] == 'N'): ?>
-                        <div class="alert alert-info d-flex align-items-center p-5 mb-10">
-                            <i class="ki-duotone ki-information fs-2hx text-info me-4"><span class="path1"></span><span
-                                    class="path2"></span></i>
-                            <div class="d-flex flex-column">
-                                <h4 class="mb-1 text-info">Informasi</h4>
-                                <span>Anda memilih untuk tidak mengisi data riwayat kerja. Jika ingin mengisi, silahkan
-                                    hubungi admin untuk mengubah konfirmasi.</span>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <!--begin::Input group for Full Name-->
-                    <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Nama Perusahaan</label>
-                        <div class="col-lg-8">
-                            <input type="text" name="nama_perusahaan" required
-                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Nama Perusahaan" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
-                        </div>
-                    </div>
-                    <!--end::Input group for Full Name-->
-                    <!--begin::Input group for Full Name-->
-                    <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Deskripsi Pekerjaan</label>
-                        <div class="col-lg-8">
-                            <input type="text" name="deskripsi_pekerjaan" required
-                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Deskripsi Pekerjaan" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
-                        </div>
-                    </div>
-                    <!--end::Input group for Full Name-->
-                    <!--begin::Input group for Full Name-->
-                    <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Jabatan / Posisi</label>
-                        <div class="col-lg-8">
-                            <input type="text" name="posisi" required
-                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Jabatan / Posisi" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
-                        </div>
-                    </div>
-                    <!--end::Input group for Full Name-->
-
-                    <!--begin::Input group for Full Name-->
-                    <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Upload Bukti</label>
-                        <div class="col-lg-8">
-                            <input type="file" name="file_bukti" accept=".pdf" required
-                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Upload Bukti" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?> />
-                            <span class="text-danger">*Format file: .pdf</span>
-                        </div>
-                    </div>
-                    <!--end::Input group for Full Name-->
-                    <!--begin::Input group for Full Name-->
-                    <div class="row mb-6">
-                        <div class="col-md-6">
-                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Tahun Mulai</label>
-                            <div class="col-lg-8">
-                                <select name="tahun_mulai" required class="form-select form-select-lg form-select-solid"
-                                    data-control="select2" data-placeholder="Pilih Tahun Mulai"
-                                    style="width: 100%; height: 48px;" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?>>
-                                    <option></option>
-                                    <?php
-                                    $currentYear = date('Y');
-                                    for ($i = $currentYear; $i >= 1990; $i--) {
-                                        echo "<option value='$i'>$i</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Tahun Selesai</label>
-                            <div class="col-lg-8">
-                                <select name="tahun_selesai" class="form-select form-select-lg form-select-solid"
-                                    data-control="select2" data-placeholder="Pilih Tahun Selesai"
-                                    style="width: 100%; height: 48px;" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?>>
-                                    <option></option>
-                                    <?php
-                                    $currentYear = date('Y');
-                                    for ($i = $currentYear; $i >= 1990; $i--) {
-                                        echo "<option value='$i'>$i</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <!--end::Input group for Full Name-->
-                </div>
-                <!--begin::Actions-->
-                <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <!-- <button type="cancel" class="btn btn-light btn-active-light-primary me-2" onclick="window.location.href='<?= base_url('dashboard') ?>'">Batal</button> -->
-                    <button type="submit" class="btn btn-primary" <?= ($konfirmasi_step['status'] != 'Y') ? 'disabled' : '' ?>>
-                        Simpan
-                    </button>
-                </div>
-                <!--end::Actions-->
-            </form>
-            <!--end::Form-->
         </div>
-        <!--end::Content-->
-    </div>
 
+        <div class="card-body border-top p-9">
+
+            <?php if (session()->getFlashdata('success')): ?>
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: '<?= session()->getFlashdata('success') ?>',
+                        confirmButtonColor: '#3085d6',
+                    });
+                </script>
+            <?php elseif (session()->getFlashdata('error')): ?>
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '<?= session()->getFlashdata('error') ?>',
+                        confirmButtonColor: '#d33',
+                    });
+                </script>
+            <?php endif; ?>
+            <!--begin::Table-->
+            <div class="table-responsive">
+                <div class="mb-5 text-end">
+                    <?php if ($konfirmasi_step['status'] == 'Y'): ?>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#modalRiwayatKerja">
+                            <i class="fa fa-plus"></i> Tambah Data
+                        </button>
+                    <?php endif; ?>
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                        <thead>
+                            <tr class="text-center text-muted fw-bold fs-7 text-uppercase gs-0">
+                                <th class="min-w-15px">No</th>
+                                <th class="min-w-25px">Nama Perusahaan</th>
+                                <th class="min-w-85px">Posisi</th>
+                                <th class="min-w-85px">Deskripsi Pekerjaan</th>
+                                <th class="min-w-85px">Tahun Mulai</th>
+                                <th class="min-w-85px">Tahun Selesai</th>
+                                <th class="min-w-85px">Bukti</th>
+                                <th class="min-w-75px">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 fw-semibold">
+                            <?php $no = 1; ?>
+                            <?php if ($riwayat_kerja): ?>
+                                <?php foreach ($riwayat_kerja as $row): ?>
+                                    <tr>
+                                        <td class="text-center">
+                                            <?= $no++ ?>
+                                        </td>
+                                        <td>
+                                            <?= $row['nama_perusahaan'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $row['posisi'] ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?= $row['deskripsi_pekerjaan'] ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?= $row['tahun_mulai'] ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?= $row['tahun_selesai'] ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?php if ($row['file_bukti']): ?>
+                                                <a href="<?= $row['file_bukti'] ?>" target="_blank"><i class="fa-solid fa-eye"></i>
+                                                    Lihat Bukti</a>
+                                            <?php else: ?>
+                                                -
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                                <button type="button"
+                                                    class="btn btn-light btn-sm btn-icon btn-active-light-danger"
+                                                    onClick="window.location.href='<?= base_url('aplikan/pendaftaran/deleteRiwayatKerja/') . $row['id'] ?>'"><i
+                                                        class="fa-solid fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="6" class="text-center">Tidak ada data</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <!--end::Table-->
+                <?php if ($riwayat_kerja): ?>
+                    <button type="submit" class="btn btn-primary text-white"><a
+                            href="<?= base_url('aplikan/pendaftaran/step4') ?>" class="text-white">Lanjutkan ke Step
+                            4</a></button>
+                <?php endif; ?>
+            </div>
+            <!--end::Content-->
+        </div>
+    </div>
 </div>
 <!--end::Basic info-->
 </div>
@@ -179,4 +176,67 @@
     });
 </script>
 
+<!--begin::Modal Tambah RiwayatKerja-->
+<div class="modal fade" id="modalRiwayatKerja" tabindex="-1" aria-labelledby="modalRiwayatKerjaLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form action="<?= base_url('aplikan/pendaftaran/saveStep3') ?>" method="post" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalRiwayatKerjaLabel">Tambah Data Riwayat Kerja</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label required">Nama Perusahaan</label>
+                        <input type="text" name="nama_perusahaan" required class="form-control"
+                            placeholder="Nama Perusahaan">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label required">Posisi/Jabatan</label>
+                        <input type="text" name="posisi" required class="form-control" placeholder="Posisi/Jabatan">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label required">Deskripsi Pekerjaan</label>
+                        <textarea name="deskripsi_pekerjaan" required class="form-control"
+                            placeholder="Deskripsi Pekerjaan"></textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label required">Tahun Mulai</label>
+                            <select name="tahun_mulai" class="form-select form-select-lg form-select-solid"
+                                data-control="select2" data-placeholder="Pilih Tahun Mulai" required>
+                                <option></option>
+                                <?php for ($i = date('Y'); $i >= 1990; $i--): ?>
+                                    <option value="<?= $i ?>"><?= $i ?></option>
+                                <?php endfor; ?>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label required">Tahun Selesai</label>
+                            <select name="tahun_selesai" class="form-select form-select-lg form-select-solid"
+                                data-control="select2" data-placeholder="Pilih Tahun Selesai" required>
+                                <option></option>
+                                <?php for ($i = date('Y'); $i >= 1990; $i--): ?>
+                                    <option value="<?= $i ?>"><?= $i ?></option>
+                                <?php endfor; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label required">Upload Bukti</label>
+                        <input type="file" name="file_bukti" accept=".pdf,.jpg,.png" required class="form-control">
+                        <small class="text-danger d-block mt-1">*Format file: .pdf, .jpg, .png</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--end::Modal Tambah RiwayatKerja-->
 <?= $this->endSection() ?>

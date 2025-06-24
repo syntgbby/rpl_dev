@@ -46,7 +46,8 @@
                         <div class="col-lg-8">
                             <textarea name="alamat" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="Alamat Rumah" value="<?= $data['alamat'] ?>"><?= $data['alamat'] ?></textarea>
+                                placeholder="Alamat Rumah"
+                                value="<?= $data['alamat'] ?>"><?= $data['alamat'] ?></textarea>
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -55,8 +56,8 @@
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">No HP</label>
                         <div class="col-lg-8">
                             <input type="text" name="no_hp" required
-                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                placeholder="No HP" value="<?= $data['telepon'] ?>" />
+                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" placeholder="No HP"
+                                value="<?= $data['telepon'] ?>" />
                         </div>
                     </div>
                     <!--end::Input group for Full Name-->
@@ -81,24 +82,14 @@
                     </div>
                     <!--end::Input group for Tanggal Lahir-->
                     <!--begin::Input group for Tanggal Lahir-->
-                    <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Program Studi</label>
-                        <div class="col-lg-8">
-                            <select name="program_studi" required
-                                class="form-control form-control-lg form-control-solid" data-control="select2" data-placeholder="Pilih Program Studi"
-                                >
-                                <option value="">Pilih Program Studi</option>
-                                <?php foreach ($prodi as $p): ?>
-                                    <option value="<?= $data['prodi_id'] ?>" <?= ($data['prodi_id'] == $p['id']) ? 'selected' : '' ?>><?= $p['nama_prodi'] ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div>
+                    <!-- Hidden input that holds the selected program_studi value -->
+                    <input type="hidden" name="program_studi" value="<?= $data['prodi_id'] ?>">
                     <!--end::Input group for Tanggal Lahir-->
                 </div>
                 <!--begin::Actions-->
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <button type="cancel" class="btn btn-light btn-active-light-primary me-2" onclick="window.location.href='<?= base_url('dashboard') ?>'">Batal</button>
+                    <button type="cancel" class="btn btn-light btn-active-light-primary me-2"
+                        onclick="window.location.href='<?= base_url('dashboard') ?>'">Batal</button>
                     <button type="submit" class="btn btn-primary" id="btnSave">Simpan Biodata Diri
                         <span class="spinner-border spinner-border-sm align-middle ms-2" role="status"
                             aria-hidden="true" style="display: none;"></span>

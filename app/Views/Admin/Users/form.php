@@ -9,7 +9,7 @@
         <div class="card-header border-0 pt-6">
             <div class="card-title">
                 <h1 class="fw-bold m-0">
-                    <?= (!empty($dtuser) && isset($dtuser['id'])) ? 'Edit User' : 'Add User' ?>
+                    <?= (!empty($dtuser) && isset($dtuser['id'])) ? 'Edit User' : 'Tambah User' ?>
                 </h1>
             </div>
         </div>
@@ -34,7 +34,8 @@
                                     </div>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap"
-                                            placeholder="Enter Name" value="<?= $dtuser['nama_lengkap'] ?? '' ?>">
+                                            placeholder="Enter Name" value="<?= $dtuser['nama_lengkap'] ?? '' ?>"
+                                            readonly>
                                     </div>
                                 </div>
                             </div>
@@ -45,22 +46,16 @@
                                     <div class="col-md-5">
                                         <label for="email" class="form-label">Email</label>
                                     </div>
-                                    <?php if (isset($dtuser['email'])) {
-                                        $col = 'col-md-5';
-                                    } else {
-                                        $col = 'col-md-7';
-                                    } ?>
-                                    <div class="<?= $col ?>">
+                                    <div class="col-md-7">
                                         <input type="text" class="form-control" id="email" name="email"
-                                            placeholder="Enter Email" value="<?= $dtuser['email'] ?? '' ?>"
-                                            <?= (!empty($dtuser['email'])) ? 'readonly' : '' ?>>
+                                            placeholder="Enter Email" value="<?= $dtuser['email'] ?? '' ?>" readonly>
                                     </div>
                                     <?php if (isset($dtuser['email'])): ?>
-                                        <div class="col-md-2">
+                                        <!-- <div class="col-md-2">
                                             <button type="button" class="btn btn-primary" id="btnEmail">
                                                 <i class="fa-solid fa-edit text-white text-center"></i>
                                             </button>
-                                        </div>
+                                        </div> -->
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -71,22 +66,17 @@
                                     <div class="col-md-5">
                                         <label for="password" class="form-label">Password</label>
                                     </div>
-                                    <?php if (isset($dtuser['password'])) {
-                                        $col = 'col-md-5';
-                                    } else {
-                                        $col = 'col-md-7';
-                                    } ?>
-                                    <div class="<?= $col ?>">
+                                    <div class="col-md-7">
                                         <input type="password" class="form-control" id="password" name="password"
                                             placeholder="Enter Password" value="<?= $dtuser['password'] ?? '' ?>"
-                                            <?= (!empty($dtuser['password'])) ? 'readonly' : '' ?>>
+                                            readonly>
                                     </div>
                                     <?php if (isset($dtuser['password'])): ?>
-                                        <div class="col-md-2">
+                                        <!-- <div class="col-md-2">
                                             <button type="button" class="btn btn-primary" id="btnPassword">
                                                 <i class="fa-solid fa-edit text-white text-center"></i>
                                             </button>
-                                        </div>
+                                        </div> -->
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -101,7 +91,7 @@
                                         <!--begin::Input-->
                                         <select name="role" id="role"
                                             class="form-select form-select-md form-select-solid text-sm h-40px"
-                                            data-control="select2" <?= (isset($dtuser['role']) && $dtuser['role'] == 'aplikan') ? 'disabled' : '' ?>>
+                                            data-control="select2" <?= (isset($dtuser['role']) ? 'disabled' : '') ?>>
                                             <option value="admin" <?= (isset($dtuser) && $dtuser['role'] == 'admin') ? 'selected' : '' ?>>
                                                 Admin
                                             </option>
@@ -111,11 +101,6 @@
                                             <option value="asesor" <?= (isset($dtuser) && $dtuser['role'] == 'asesor') ? 'selected' : '' ?>>
                                                 Asesor
                                             </option>
-                                            <?php if (isset($dtuser['role']) && $dtuser['role'] == 'aplikan'): ?>
-                                                <option value="aplikan" <?= (isset($dtuser) && $dtuser['role'] == 'aplikan') ? 'selected' : '' ?>>
-                                                    Aplikan
-                                                </option>
-                                            <?php endif; ?>
                                         </select>
                                         <!--end::Input-->
                                     </div>
