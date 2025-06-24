@@ -114,12 +114,6 @@ class UserController extends BaseController
         $role = $datas['role'];
         $status = $datas['status'];
 
-        $checkEmail = $model->where('email', $email)->first();
-
-        if ($checkEmail) {
-            return redirect()->to('/admin/users/create')->with('error', 'Email sudah terdaftar!');
-        }
-
         $data = [
             'email' => $email,
             'nama_lengkap' => $nama_lengkap,

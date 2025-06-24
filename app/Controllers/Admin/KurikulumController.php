@@ -129,15 +129,6 @@ class KurikulumController extends BaseController
     {
         $model = new KurikulumModel();
 
-        $checkKurikulum = $model->where('tahun_ajar_id', $this->request->getPost('tahun_ajar_id'))
-            ->where('prodi_id', $this->request->getPost('prodi_id'))
-            ->where('kode_matkul', $this->request->getPost('kode_matkul'))
-            ->findAll();
-
-        if ($checkKurikulum) {
-            return redirect()->to('/admin/kurikulum')->with('error', 'Kurikulum sudah ada!');
-        }
-
         $data = [
             'prodi_id' => $this->request->getPost('prodi_id'),
             'tahun_ajar_id' => $this->request->getPost('tahun_ajar_id'),

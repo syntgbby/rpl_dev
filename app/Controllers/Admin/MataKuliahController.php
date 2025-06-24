@@ -101,12 +101,6 @@ class MataKuliahController extends BaseController
     {
         $model = new MataKuliahModel();
 
-        $checkMataKuliah = $model->where('kode_matkul', $this->request->getPost('kode_matkul'))->findAll();
-
-        if ($checkMataKuliah) {
-            return redirect()->to('/admin/mata-kuliah')->with('error', 'Mata Kuliah sudah ada!');
-        }
-
         $data = [
             'kode_matkul' => $this->request->getPost('kode_matkul'),
             'nama_matkul' => $this->request->getPost('nama_matkul'),

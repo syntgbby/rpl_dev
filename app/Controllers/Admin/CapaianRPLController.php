@@ -115,15 +115,6 @@ class CapaianRPLController extends BaseController
     {
         $model = new CapaianRPL();
 
-        $checkCapaian = $model
-            ->where('deskripsi', $this->request->getPost('deskripsi'))
-            ->where('kurikulum_id', $this->request->getPost('kurikulum_id'))
-            ->findAll();
-
-        if ($checkCapaian) {
-            return redirect()->to('/admin/capaian-rpl')->with('error', 'Asesmen sudah ada');
-        }
-
         $data = [
             'deskripsi' => $this->request->getPost('deskripsi'),
             'kurikulum_id' => $this->request->getPost('kurikulum_id'),

@@ -116,12 +116,6 @@ class ProdiController extends BaseController
     {
         $model = new ProdiModel();
 
-        $checkProdi = $model->where('nama_prodi', $this->request->getPost('nama_prodi'))->findAll();
-
-        if ($checkProdi) {
-            return redirect()->to('/admin/prodi')->with('error', 'Program Studi sudah ada!');
-        }
-
         $kategori = $this->request->getPost('kategori');
 
         $data = [
