@@ -51,15 +51,15 @@ class AuthController extends Controller
         //save ke tabel detail_aplikan
         $insertDetailAplikan = $detailAplikan->save([
             'email' => $email,
-            'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
-            'tempat_lahir' => $this->request->getPost('tempat_lahir'),
-            'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
-            'alamat' => $this->request->getPost('alamat'),
+            // 'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
+            // 'tempat_lahir' => $this->request->getPost('tempat_lahir'),
+            // 'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
+            // 'alamat' => $this->request->getPost('alamat'),
             'telepon' => '+62' . $this->request->getPost('telepon'),
             'prodi_id' => $this->request->getPost('prodi_id'),
-            'pendidikan_terakhir' => $this->request->getPost('pendidikan_terakhir'),
-            'nama_asal_sekolah' => $this->request->getPost('nama_asal_sekolah'),
-            'tahun_lulus' => $this->request->getPost('tahun_lulus'),
+            // 'pendidikan_terakhir' => $this->request->getPost('pendidikan_terakhir'),
+            // 'nama_asal_sekolah' => $this->request->getPost('nama_asal_sekolah'),
+            // 'tahun_lulus' => $this->request->getPost('tahun_lulus'),
             'asal_informasi' => $this->request->getPost('asal_informasi'),
             'asal_informasi_lainnya' => $this->request->getPost('asal_informasi_lainnya'),
             'pertanyaan_id' => $this->request->getPost('pertanyaan_id'),
@@ -111,7 +111,7 @@ class AuthController extends Controller
                     'email' => $user['email'],
                     'nama_lengkap' => $user['nama_lengkap'],
                     'role' => $user['role'],
-                    'pict' => $user['pict'],
+                    // 'pict' => $user['pict'],
                     'isLoggedIn' => true
                 ]);
                 return redirect()->to('/dashboard');
