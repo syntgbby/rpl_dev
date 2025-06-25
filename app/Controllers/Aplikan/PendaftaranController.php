@@ -356,6 +356,7 @@ class PendaftaranController extends BaseController
         return redirect()->back()->withInput()->with('error', 'File tidak valid atau gagal diupload');
     }
 
+
     public function step4()
     {
         return $this->render('aplikan/pendaftaran/step4');
@@ -471,7 +472,6 @@ class PendaftaranController extends BaseController
         return redirect()->back()->withInput()->with('error', 'File tidak valid atau gagal diupload');
     }
 
-
     public function cekStep()
     {
         $email = session()->get('email');
@@ -503,4 +503,6 @@ class PendaftaranController extends BaseController
         // Bisa juga tampilkan error atau diamkan
         return redirect()->back()->with('message', 'Semua step telah diselesaikan.');
     }
+
+   
 }
