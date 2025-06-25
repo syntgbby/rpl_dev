@@ -58,6 +58,24 @@
                     <?php if ($user['role'] == 'admin'): ?>
                         <!--begin:Menu item-->
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
+                            data-kt-menu-offset="-50,0"
+                            class="menu-item <?= (current_url() == base_url('admin/validasi-aplikan') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion me-0 me-lg-2"
+                            onclick="window.location.href='<?= base_url('admin/validasi-aplikan') ?>'">
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+                                <span class="menu-icon">
+                                    <i class="ki-duotone ki-verify fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                </span>
+                                <span class="menu-title">Validasi Aplikan</span>
+                            </span>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
                             class="menu-item <?= (current_url() == base_url('master-group-user') || current_url() == base_url('master-menu') || current_url() == base_url('users') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
                             <!--begin:Menu link-->
                             <span class="menu-link">
@@ -253,23 +271,23 @@
                     <!-- menu aplikan -->
                     <?php if ($user['role'] == 'aplikan'): ?>
                         <?php if ($user['pendaftaran_id']): ?>
-                        <!--begin:Menu item-->
-                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-                            class="menu-item <?= (current_url() == base_url('aplikan/detail-pendaftaran') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2"
-                            onclick="window.location.href='<?= base_url('aplikan/detail-pendaftaran') ?>'">
-                            <!--begin:Menu link-->
-                            <span class="menu-link">
-                                <span class="menu-icon">
-                                    <i class="ki-duotone ki-save-2 fs-2">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
+                            <!--begin:Menu item-->
+                            <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
+                                class="menu-item <?= (current_url() == base_url('aplikan/detail-pendaftaran') ? 'here show menu-here-bg' : '') ?> menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2"
+                                onclick="window.location.href='<?= base_url('aplikan/detail-pendaftaran') ?>'">
+                                <!--begin:Menu link-->
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <i class="ki-duotone ki-save-2 fs-2">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                    </span>
+                                    <span class="menu-title">Detail Pendaftaran</span>
                                 </span>
-                                <span class="menu-title">Detail Pendaftaran</span>
-                            </span>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
+                                <!--end:Menu link-->
+                            </div>
+                            <!--end:Menu item-->
                         <?php endif; ?>
                         <!--begin:Menu item-->
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
@@ -398,13 +416,13 @@
                                 src="<?= base_url('assets/media/avatars/300-2.jpg') ?>" alt="user"
                                 style="object-fit: cover;" />
                         <?php } else if ($user['role'] == 'asesor') { ?>
-                            <img class="symbol symbol-circle symbol-35px symbol-md-45px"
-                                src="<?= base_url('assets/media/avatars/300-1.jpg') ?>" alt="user"
-                                style="object-fit: cover;" />
+                                <img class="symbol symbol-circle symbol-35px symbol-md-45px"
+                                    src="<?= base_url('assets/media/avatars/300-1.jpg') ?>" alt="user"
+                                    style="object-fit: cover;" />
                         <?php } else { ?>
-                            <img class="symbol symbol-circle symbol-35px symbol-md-45px"
-                                src="<?= base_url('assets/media/avatars/300-3.jpg') ?>" alt="user"
-                                style="object-fit: cover;" />
+                                <img class="symbol symbol-circle symbol-35px symbol-md-45px"
+                                    src="<?= base_url('assets/media/avatars/300-3.jpg') ?>" alt="user"
+                                    style="object-fit: cover;" />
                         <?php } ?>
                     </div>
                     <!--begin::User account menu-->
@@ -414,7 +432,7 @@
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
                                 <a href="<?= base_url('editprofile') ?>" class="menu-link px-5">My
-                                Profile</a>
+                                    Profile</a>
                             </div>
                             <!--end::Menu item-->
                         <?php } ?>

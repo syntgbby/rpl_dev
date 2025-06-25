@@ -50,6 +50,15 @@
                                     confirmButtonColor: '#d33',
                                 });
                             </script>
+                        <?php elseif (session()->getFlashdata('info')): ?>
+                            <script>
+                                Swal.fire({
+                                    icon: 'info',
+                                    title: 'Informasi',
+                                    text: '<?= session()->getFlashdata('info') ?>',
+                                    confirmButtonColor: '#d33',
+                                });
+                            </script>
                         <?php endif; ?>
 
                         <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="/login"

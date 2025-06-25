@@ -124,7 +124,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="fv-row mb-5">
+                                <!-- <div class="fv-row mb-5">
                                     <div class="row align-items-center">
                                         <div class="col-md-6 mb-3">
                                             <input type="text" name="tempat_lahir" id="tempat_lahir"
@@ -135,23 +135,25 @@
                                                 class="form-control" placeholder="Tanggal Lahir" required />
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="fv-row mb-5">
                                     <select name="prodi_id" id="prodi_id" data-control="select2"
-                                        class="form-control form-control-lg" data-placeholder="Pilih Program Studi"
-                                        required>
-                                        <option value="" disabled selected>Pilih Program Studi</option>
+                                        class="form-control form-control-lg"
+                                        data-placeholder="Pilih Program Studi yang anda minati" required>
+                                        <option value="" disabled selected>Pilih Program Studi yang anda minati</option>
                                         <?php foreach ($prodi as $p): ?>
                                             <option value="<?= $p['id'] ?>"><?= $p['nama_prodi'] ?> -
-                                                <?= $p['jenjang_pendidikan'] ?></option>
+                                                <?= $p['jenjang_pendidikan'] ?>
+                                            </option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-                                <div class="fv-row mb-5">
+
+                                <!-- <div class="fv-row mb-5">
                                     <textarea placeholder="Alamat Domisili" name="alamat" id="alamat"
                                         class="form-control form-control-lg" placeholder="Alamat" required></textarea>
-                                </div>
-                                <div class="fv-row mb-5">
+                                </div> -->
+                                <!-- <div class="fv-row mb-5">
                                     <div class="row align-items-center">
                                         <div class="col-md-6 mb-3">
                                             <input type="number" name="tahun_lulus" id="tahun_lulus" min="1900"
@@ -168,7 +170,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="fv-row mb-3">
                                     <div class="row g-3">
                                         <div class="col-md-6 mb-3">
@@ -200,25 +202,6 @@
                                 <div class="fv-row mb-5">
                                     <div class="row align-items-center">
                                         <div class="col-md-6 mb-3">
-                                            <select name="pendidikan_terakhir" id="pendidikan_terakhir"
-                                                data-control="select2" class="form-control form-control-lg"
-                                                data-placeholder="Pilih Pendidikan Terakhir" required>
-                                                <option value="" disabled selected>Pilih Pendidikan Terakhir</option>
-                                                <option value="SMA">SMA</option>
-                                                <option value="SMK">SMK</option>
-                                                <option value="D3">D3</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input type="text" name="nama_asal_sekolah" id="nama_asal_sekolah"
-                                                class="form-control" placeholder="Nama Institusi/Sekolah Terakhir"
-                                                required />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="fv-row mb-5">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-6 mb-3">
                                             <select name="pertanyaan_id" id="pertanyaan_id"
                                                 class="form-control form-control-lg" data-control="select2"
                                                 data-placeholder="Pilih Pertanyaan Keamanan" required>
@@ -234,6 +217,27 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- <div class="fv-row mb-5">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-6 mb-3">
+                                            <select name="pendidikan_terakhir" id="pendidikan_terakhir"
+                                                data-control="select2" class="form-control form-control-lg"
+                                                data-placeholder="Pilih Pendidikan Terakhir" required>
+                                                <option value="" disabled selected>Pilih Pendidikan Terakhir</option>
+                                                <option value="SMA">SMA</option>
+                                                <option value="SMK">SMK</option>
+                                                <option value="D3">D3</option>
+                                                  <option value="D3">DLL</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" name="nama_asal_sekolah" id="nama_asal_sekolah"
+                                                class="form-control" placeholder="Nama Institusi/Sekolah Terakhir"
+                                                required />
+                                        </div>
+                                    </div>
+                                </div> -->
+
                                 <div class="fv-row mb-5">
                                     <select name="asal_informasi" id="asal_informasi"
                                         class="form-control form-control-lg mb-5" data-control="select2"
@@ -359,7 +363,6 @@
                 $submitBtn.removeClass('loading');
                 $submitBtn.find('.indicator-label').show();
                 $submitBtn.find('.indicator-progress').hide();
-                $submitBtn.prop('disabled', false); // Pastikan tombol aktif kembali
 
                 // Tampilkan alert
                 Swal.fire({
@@ -376,7 +379,6 @@
             $submitBtn.addClass('loading');
             $submitBtn.find('.indicator-label').hide();
             $submitBtn.find('.indicator-progress').show();
-            $submitBtn.prop('disabled', true); // ✅ Disable tombol di sini$submitBtn.prop('disabled', true); // ✅ Disable tombol di sini
         });
 
         // Password toggle functionality

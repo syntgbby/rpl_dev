@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Aplikan;
 
-use App\Models\{UserModel, PendaftaranModel, PelatihanModel, PengalamanKerjaModel, BuktiPendukungModel, TimelineModel, ProdiModel, DetailAplikanModel, TahunAjarModel, KonfirmasiStepModel};
+use App\Models\{UserModel, PendaftaranModel, PelatihanModel, PengalamanKerjaModel, BuktiPendukungModel, TimelineModel, ProdiModel, DetailAplikanModel, TahunAjarModel, KonfirmasiStepModel, SeminarModel, PiagamModel};
 use App\Controllers\BaseController;
 
 helper('text');
@@ -19,6 +19,8 @@ class PendaftaranController extends BaseController
     protected $tahunAjarModel;
     protected $konfirmasiStepModel;
     protected $userModel;
+    protected $seminarModel;
+    protected $piagamModel;
 
     public function __construct()
     {
@@ -32,6 +34,8 @@ class PendaftaranController extends BaseController
         $this->prodiModel = new ProdiModel();
         $this->tahunAjarModel = new TahunAjarModel();
         $this->konfirmasiStepModel = new KonfirmasiStepModel();
+        $this->seminarModel = new SeminarModel();
+        $this->piagamModel = new PiagamModel();
     }
 
     public function statusPendaftaran()
@@ -114,7 +118,22 @@ class PendaftaranController extends BaseController
                 'pendaftaran_id' => $pendaftaranId,
                 'step' => 'step3',
                 'status' => null,
-            ]
+            ],
+            [
+                'pendaftaran_id' => $pendaftaranId,
+                'step' => 'stepPiagam',
+                'status' => null,
+            ],
+            [
+                'pendaftaran_id' => $pendaftaranId,
+                'step' => 'stepSeminar',
+                'status' => null,
+            ],
+            [
+                'pendaftaran_id' => $pendaftaranId,
+                'step' => 'stepOrganisasi',
+                'status' => null,
+            ],
         ];
 
         $this->konfirmasiStepModel->insertBatch($data_konfirmasi_step);
@@ -131,14 +150,27 @@ class PendaftaranController extends BaseController
         if ($pendaftaran) {
             $pendaftaranId = $pendaftaran['pendaftaran_id'];
 
-            $konfirmasi_step = $this->konfirmasiStepModel->where('pendaftaran_id =', $pendaftaranId)->where('step =', 'step2')->first();
+            $konfirmasi_steps = $this->konfirmasiStepModel
+                ->where('pendaftaran_id', $pendaftaranId)
+                ->get()
+                ->getResultArray();
+
+            $konfirmasi_step = [];
+            foreach ($konfirmasi_steps as $step) {
+                $konfirmasi_step[$step['step']] = $step['status'];
+            }
+
             $pelatihans = $this->pelatihanModel->where('pendaftaran_id =', $pendaftaranId)->get()->getResultArray();
+            $piagams = $this->piagamModel->where('pendaftaran_id =', $pendaftaranId)->get()->getResultArray();
+            $seminars = $this->seminarModel->where('pendaftaran_id =', $pendaftaranId)->get()->getResultArray();
         } else {
             $konfirmasi_step = [];
             $pelatihans = [];
+            $piagams = [];
+            $seminars = [];
         }
 
-        return $this->render('aplikan/pendaftaran/step2', ['pelatihan' => $pelatihans, 'konfirmasi_step' => $konfirmasi_step]);
+        return $this->render('aplikan/pendaftaran/step2', ['pelatihan' => $pelatihans, 'piagam' => $piagams, 'seminar' => $seminars, 'konfirmasi_step' => $konfirmasi_step]);
     }
 
     public function updateKonfirmasiStep($step, $status)
@@ -153,25 +185,35 @@ class PendaftaranController extends BaseController
 
         if ($step == 'step2') {
             $langkah = 'Pelatihan';
-        } else {
+        } else if ($step == 'step3') {
             $langkah = 'Pengalaman Kerja';
+        } else if ($step == 'stepPiagam') {
+            $langkah = 'Penghargaan/Piagam';
+        } else if ($step == 'stepSeminar') {
+            $langkah = 'Seminar';
+        } else {
+            $langkah = 'Organisasi Profesi/Ilmiah';
+        }
+
+        if ($status == 'Y') {
+            $keterangan = 'Konfirmasi pengisian data ' . $langkah . ' akan diisi';
+        } else {
+            $keterangan = 'Konfirmasi pengisian data ' . $langkah . ' tidak akan diisi';
         }
 
         $data_timeline = [
             'pendaftaran_id' => $pendaftaranId,
             'icon' => 'ki-outline ki-minus-folder fs-2 text-warning',
             'status' => 'Konfirmasi ' . $langkah,
-            'keterangan' => 'Konfirmasi pengisian data ' . $langkah,
+            'keterangan' => $keterangan
         ];
 
         $this->konfirmasiStepModel->updateKonfirmasiStep($pendaftaranId, $step, $data_konfirmasi_step);
         $this->timelineModel->insert($data_timeline);
 
-        if ($step == 'step2' && $status == 'Y') {
+        if ($step == 'step2' || $step == 'stepPiagam' || $step == 'stepSeminar' || $step == 'stepOrganisasi') {
             return redirect()->to('/aplikan/pendaftaran/step2');
         } else if ($step == 'step3' && $status == 'Y') {
-            return redirect()->to('/aplikan/pendaftaran/step3');
-        } else if ($step == 'step2' && $status == 'N') {
             return redirect()->to('/aplikan/pendaftaran/step3');
         } else {
             return redirect()->to('/aplikan/pendaftaran/step4');
@@ -258,10 +300,182 @@ class PendaftaranController extends BaseController
         return redirect()->back()->withInput()->with('error', 'File tidak valid atau gagal diupload');
     }
 
+    public function saveStepPiagam()
+    {
+        $email = session()->get('email');
+        $user = $this->userModel->where('email', $email)->first();
+        $nama = $user['nama_lengkap'];
+
+        $formatNama = str_replace(' ', '-', $nama);
+
+        // Update validasi untuk hanya menerima PDF, JPG, JPEG, PNG
+        $validationRule = [
+            'file_bukti' => [
+                'label' => 'File Bukti',
+                'rules' => 'uploaded[file_bukti]|ext_in[file_bukti,pdf,jpg,jpeg,png]|max_size[file_bukti,2048]',
+            ],
+        ];
+
+        // Validasi input
+        if (!$this->validate($validationRule)) {
+            return redirect()->back()->withInput()->with('error', $this->validator->getErrors());
+        }
+
+        // Ambil file yang diupload
+        $file = $this->request->getFile('file_bukti');
+
+        if ($file->isValid() && !$file->hasMoved()) {
+            $getPendaftaran = $this->pendaftaranModel->where('email', $email)->first();
+            // Generate nama acak untuk file
+            $fileName = $file->getRandomName();
+            $path = FCPATH . 'uploads/bukti-piagam/' . $formatNama;
+
+            // Pastikan direktori sudah ada
+            if (!is_dir($path)) {
+                mkdir($path, 0777, true);
+            }
+
+            try {
+                // Pindahkan file ke folder tujuan
+                $file->move($path, $fileName);
+
+                // Buat URL file
+                $fileUrl = base_url('uploads/bukti-piagam/' . $formatNama . '/' . $fileName);
+
+                // Insert data piagam ke database
+                $this->piagamModel->insert([
+                    'pendaftaran_id' => $getPendaftaran['pendaftaran_id'],
+                    'bentuk_penghargaan' => $this->request->getPost('bentuk_penghargaan'),
+                    'pemberi' => $this->request->getPost('pemberi'),
+                    'tahun' => $this->request->getPost('tahun'),
+                    'file_bukti' => $fileUrl, // Simpan URL file
+                ]);
+
+                $checkTimeline = $this->timelineModel->where('pendaftaran_id', $getPendaftaran['pendaftaran_id'])
+                    ->where('status', 'Upload Penghargaan/Piagam')
+                    ->first();
+
+                if (!$checkTimeline) {
+                    $data_timeline = [
+                        'pendaftaran_id' => $getPendaftaran['pendaftaran_id'],
+                        'icon' => 'ki-outline ki-book-open fs-2 text-primary',
+                        'status' => 'Upload Penghargaan/Piagam',
+                        'keterangan' => 'Penghargaan/Piagam berhasil diupload',
+                    ];
+
+                    $this->timelineModel->insert($data_timeline);
+                }
+
+                $this->pendaftaranModel->updateStatusPendaftaran($getPendaftaran['pendaftaran_id'], 'draft');
+
+                // Redirect ke halaman step 2 dengan pesan sukses
+                return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Data Penghargaan/Piagam berhasil disimpan');
+            } catch (\Exception $e) {
+                // Tangani error jika gagal mengupload file
+                return redirect()->back()->withInput()->with('error', 'Gagal mengupload file: ' . $e->getMessage());
+            }
+        }
+
+        // Jika file tidak valid atau gagal diupload
+        return redirect()->back()->withInput()->with('error', 'File tidak valid atau gagal diupload');
+    }
+    public function saveStepSeminar()
+    {
+        $email = session()->get('email');
+        $user = $this->userModel->where('email', $email)->first();
+        $nama = $user['nama_lengkap'];
+
+        $formatNama = str_replace(' ', '-', $nama);
+
+        // Update validasi untuk hanya menerima PDF, JPG, JPEG, PNG
+        $validationRule = [
+            'file_bukti' => [
+                'label' => 'File Bukti',
+                'rules' => 'uploaded[file_bukti]|ext_in[file_bukti,pdf,jpg,jpeg,png]|max_size[file_bukti,2048]',
+            ],
+        ];
+
+        // Validasi input
+        if (!$this->validate($validationRule)) {
+            return redirect()->back()->withInput()->with('error', $this->validator->getErrors());
+        }
+
+        // Ambil file yang diupload
+        $file = $this->request->getFile('file_bukti');
+
+        if ($file->isValid() && !$file->hasMoved()) {
+            $getPendaftaran = $this->pendaftaranModel->where('email', $email)->first();
+            // Generate nama acak untuk file
+            $fileName = $file->getRandomName();
+            $path = FCPATH . 'uploads/bukti-seminar/' . $formatNama;
+
+            // Pastikan direktori sudah ada
+            if (!is_dir($path)) {
+                mkdir($path, 0777, true);
+            }
+
+            try {
+                // Pindahkan file ke folder tujuan
+                $file->move($path, $fileName);
+
+                // Buat URL file
+                $fileUrl = base_url('uploads/bukti-seminar/' . $formatNama . '/' . $fileName);
+
+                // Insert data seminar ke database
+                $this->seminarModel->insert([
+                    'pendaftaran_id' => $getPendaftaran['pendaftaran_id'],
+                    'judul_kegiatan' => $this->request->getPost('judul_kegiatan'),
+                    'penyelenggara' => $this->request->getPost('penyelenggara'),
+                    'tahun' => $this->request->getPost('tahun'),
+                    'peran' => $this->request->getPost('peran'),
+                    'file_bukti' => $fileUrl, // Simpan URL file
+                ]);
+
+                $checkTimeline = $this->timelineModel->where('pendaftaran_id', $getPendaftaran['pendaftaran_id'])
+                    ->where('status', 'Upload Seminar')
+                    ->first();
+
+                if (!$checkTimeline) {
+                    $data_timeline = [
+                        'pendaftaran_id' => $getPendaftaran['pendaftaran_id'],
+                        'icon' => 'ki-outline ki-book-open fs-2 text-primary',
+                        'status' => 'Upload Seminar',
+                        'keterangan' => 'Seminar berhasil diupload',
+                    ];
+
+                    $this->timelineModel->insert($data_timeline);
+                }
+
+                $this->pendaftaranModel->updateStatusPendaftaran($getPendaftaran['pendaftaran_id'], 'draft');
+
+                // Redirect ke halaman step 2 dengan pesan sukses
+                return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Data Seminar berhasil disimpan');
+            } catch (\Exception $e) {
+                // Tangani error jika gagal mengupload file
+                return redirect()->back()->withInput()->with('error', 'Gagal mengupload file: ' . $e->getMessage());
+            }
+        }
+
+        // Jika file tidak valid atau gagal diupload
+        return redirect()->back()->withInput()->with('error', 'File tidak valid atau gagal diupload');
+    }
+
     public function deletePelatihan($id)
     {
         $this->pelatihanModel->delete($id);
         return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Data pelatihan berhasil dihapus');
+    }
+
+    public function deletePiagam($id)
+    {
+        $this->piagamModel->delete($id);
+        return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Data Penghargaan/Piagam berhasil dihapus');
+    }
+
+    public function deleteSeminar($id)
+    {
+        $this->seminarModel->delete($id);
+        return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Data Seminar berhasil dihapus');
     }
 
     public function step3()
@@ -351,7 +565,7 @@ class PendaftaranController extends BaseController
 
                 $this->pendaftaranModel->updateStatusPendaftaran($getPendaftaran['pendaftaran_id'], 'draft');
                 // Redirect ke halaman step 2 dengan pesan sukses
-                return redirect()->to('/aplikan/pendaftaran/step3')->with('success', 'Data pengalaman kerja berhasil disimpan');
+                return redirect()->to('/aplikan/pendaftaran/step3')->with('success', 'Data Pengalaman Kerja berhasil disimpan!');
             } catch (\Exception $e) {
                 // Tangani error jika gagal mengupload file
                 return redirect()->back()->withInput()->with('error', 'Gagal mengupload file: ' . $e->getMessage());

@@ -35,7 +35,7 @@
                                     <div class="col-md-7">
                                         <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap"
                                             placeholder="Enter Name" value="<?= $dtuser['nama_lengkap'] ?? '' ?>"
-                                            readonly>
+                                            <?= isset($dtuser['nama_lengkap']) ? 'readonly' : '' ?>>
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +48,8 @@
                                     </div>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control" id="email" name="email"
-                                            placeholder="Enter Email" value="<?= $dtuser['email'] ?? '' ?>" readonly>
+                                            placeholder="Enter Email" value="<?= $dtuser['email'] ?? '' ?>"
+                                            <?= isset($dtuser['email']) ? 'readonly' : '' ?>>
                                     </div>
                                     <?php if (isset($dtuser['email'])): ?>
                                         <!-- <div class="col-md-2">
@@ -69,7 +70,7 @@
                                     <div class="col-md-7">
                                         <input type="password" class="form-control" id="password" name="password"
                                             placeholder="Enter Password" value="<?= $dtuser['password'] ?? '' ?>"
-                                            readonly>
+                                            <?= isset($dtuser['password']) ? 'readonly' : '' ?>>
                                     </div>
                                     <?php if (isset($dtuser['password'])): ?>
                                         <!-- <div class="col-md-2">

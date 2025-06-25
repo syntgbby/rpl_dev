@@ -38,6 +38,9 @@ $routes->post('/edit-password', 'Profile::updatePassword');
 
 // Bagian Admin
 $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'auth:admin'], function ($routes) {
+    //Validasi Aplikan
+    $routes->get('validasi-aplikan', 'ValidasiAplikanController::index');
+
     // Users
     $routes->get('users', 'UserController::index');
     $routes->get('users/table', 'UserController::getTable');
@@ -106,6 +109,12 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan', 'filter' =>
     $routes->get('pendaftaran/step2', 'PendaftaranController::step2');
     $routes->post('pendaftaran/saveStep2', 'PendaftaranController::saveStep2');
     $routes->get('pendaftaran/deletePelatihan/(:num)', 'PendaftaranController::deletePelatihan/$1');
+
+    $routes->post('pendaftaran/saveStepPiagam', 'PendaftaranController::saveStepPiagam');
+    $routes->get('pendaftaran/deletePiagam/(:num)', 'PendaftaranController::deletePiagam/$1');
+
+    $routes->post('pendaftaran/saveStepSeminar', 'PendaftaranController::saveStepSeminar');
+    $routes->get('pendaftaran/deleteSeminar/(:num)', 'PendaftaranController::deleteSeminar/$1');
 
     //step 3
     $routes->get('pendaftaran/step3', 'PendaftaranController::step3');
