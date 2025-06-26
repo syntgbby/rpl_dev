@@ -49,7 +49,22 @@ $form_disabled = ($konfirmasi_step['status'] == null) ? 'disabled' : '';
                                 placeholder="Tahun Pelatihan" <?= $form_disabled ?> />
                         </div>
                     </div>
-
+                    <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">lamanya jam Pelatihan</label>
+                        <div class="col-lg-8">
+                            <input type="text" name="jam_pelatihan" required
+                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                placeholder="lamanya jam pelatihan" <?= $form_disabled ?> />
+                        </div>
+                    </div>
+                      <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6"> lamanya hari pelatihan </label>
+                        <div class="col-lg-8">
+                            <input type="text" name="hari_pealtihan" required
+                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                placeholder="hari pelatihan" <?= $form_disabled ?> />
+                        </div>
+                    </div>
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">Penyelenggara</label>
                         <div class="col-lg-8">

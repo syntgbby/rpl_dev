@@ -124,6 +124,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <!-- <div class="fv-row mb-5">
                                     <div class="row align-items-center">
                                         <div class="col-md-6 mb-3">
@@ -255,6 +256,15 @@
                                         placeholder="Sebutkan dari mana anda mengetahui tentang RPL LP3I"
                                         style="display: none;" />
                                 </div>
+                                 <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Upload Struck Pemabayaran</label>
+                        <div class="col-lg-8">
+                            <input type="file" name="struck_pembayaran" accept=".pdf" required
+                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                placeholder="Upload Bukti" />
+                            <span class="text-danger">*Format file: .pdf</span>
+                        </div>
+                    </div>
                                 <div class="d-grid mb-5">
                                     <button type="submit" id="kt_sign_up_submit" class="btn btn-primary">
                                         <span class="indicator-label">Daftar Sekarang</span>
