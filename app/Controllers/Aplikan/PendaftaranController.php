@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Aplikan;
 
-use App\Models\{UserModel, PendaftaranModel, PelatihanModel, PengalamanKerjaModel, BuktiPendukungModel, TimelineModel, ProdiModel, DetailAplikanModel, TahunAjarModel, KonfirmasiStepModel};
+use App\Models\{UserModel, PendaftaranModel, PelatihanModel,OrganisasiModel ,PengalamanKerjaModel, BuktiPendukungModel, TimelineModel, ProdiModel, DetailAplikanModel, TahunAjarModel, KonfirmasiStepModel};
 use App\Controllers\BaseController;
 
 helper('text');
@@ -14,6 +14,7 @@ class PendaftaranController extends BaseController
     protected $detailAplikanModel;
     protected $pengalamanKerjaModel;
     protected $buktiPendukungModel;
+    protected $organisasiModel;
     protected $timelineModel;
     protected $prodiModel;
     protected $tahunAjarModel;
@@ -28,6 +29,7 @@ class PendaftaranController extends BaseController
         $this->detailAplikanModel = new DetailAplikanModel();
         $this->pengalamanKerjaModel = new PengalamanKerjaModel();
         $this->buktiPendukungModel = new BuktiPendukungModel();
+        $this->organisasiModel = new OrganisasiModel();
         $this->timelineModel = new TimelineModel();
         $this->prodiModel = new ProdiModel();
         $this->tahunAjarModel = new TahunAjarModel();
@@ -122,6 +124,23 @@ class PendaftaranController extends BaseController
 
         return redirect()->to('/aplikan/pendaftaran/step2')->with('success', 'Submit Biodata Diri berhasil!');
     }
+ public function stepOrganisasi()
+    {
+        $email = session()->get('email');
+        $pendaftaran = $this->pendaftaranModel->where('email', $email)->first();
+
+        if ($pendaftaran) {
+            $pendaftaranId = $pendaftaran['pendaftaran_id'];
+
+            $konfirmasi_step = $this->konfirmasiStepModel->where('pendaftaran_id =', $pendaftaranId)->where('step =', 'steporganisasi')->first();
+            $organisasis = $this->pelatihanModel->where('pendaftaran_id =', $pendaftaranId)->get()->getResultArray();
+        } else {
+            $konfirmasi_step = [];
+            $organisasis = [];
+        }
+
+        return $this->render('aplikan/pendaftaran/steporganisasi', ['organisasi' => $organisasis, 'konfirmasi_step' => $konfirmasi_step]);
+    }
 
     public function step2()
     {
@@ -151,11 +170,14 @@ class PendaftaranController extends BaseController
             'status' => $status,
         ];
 
-        if ($step == 'step2') {
-            $langkah = 'Pelatihan';
+       if ($step == 'step2') {
+        $langkah = 'Pelatihan';
+        } elseif ($step == 'steporganisasi') {
+         $langkah = 'Organisasi';
         } else {
             $langkah = 'Pengalaman Kerja';
-        }
+            }
+
 
         $data_timeline = [
             'pendaftaran_id' => $pendaftaranId,
@@ -170,14 +192,78 @@ class PendaftaranController extends BaseController
         if ($step == 'step2' && $status == 'Y') {
             return redirect()->to('/aplikan/pendaftaran/step2');
         } else if ($step == 'step3' && $status == 'Y') {
+            return redirect()->to('/aplikan/pendaftaran/steporganisasi');
+             } else if ($step == 'steporganisasi' && $status == 'Y') {
             return redirect()->to('/aplikan/pendaftaran/step3');
         } else if ($step == 'step2' && $status == 'N') {
-            return redirect()->to('/aplikan/pendaftaran/step3');
+            return redirect()->to('/aplikan/pendaftaran/steporganisasi');
         } else {
             return redirect()->to('/aplikan/pendaftaran/step4');
         }
     }
+public function saveOrganisasi()
+    {
+        $email = session()->get('email');
+        $user = $this->userModel->where('email', $email)->first();
+        $nama = $user['nama_lengkap'];
 
+        $formatNama = str_replace(' ', '-', $nama);
+
+
+        if ($file->isValid() && !$file->hasMoved()) {
+            $getPendaftaran = $this->pendaftaranModel->where('email', $email)->first();
+            // Generate nama acak untuk file
+            $fileName = $file->getRandomName();
+            $path = FCPATH . 'uploads/bukti-pelatihan/' . $formatNama;
+
+            // Pastikan direktori sudah ada
+            if (!is_dir($path)) {
+                mkdir($path, 0777, true);
+            }
+
+            try {
+                // Pindahkan file ke folder tujuan
+                $file->move($path, $fileName);
+
+                // Buat URL file
+                $fileUrl = base_url('uploads/bukti-pelatihan/' . $formatNama . '/' . $fileName);
+
+                // Insert data pelatihan ke database
+                $this->pelatihanModel->insert([
+                    'pendaftaran_id' => $getPendaftaran['pendaftaran_id'],
+                    'jenis_organisasi' => $this->request->getPost('jenis_organisasi'),
+                    'jenjang_anggota' => $this->request->getPost('jenjang_anggota'),
+                    'tahun' => $this->request->getPost('tahun'),
+                ]);
+
+                $checkTimeline = $this->timelineModel->where('pendaftaran_id', $getPendaftaran['pendaftaran_id'])
+                    ->where('status', 'Jenis Organisasi')
+                    ->first();
+
+                if (!$checkTimeline) {
+                    $data_timeline = [
+                        'pendaftaran_id' => $getPendaftaran['pendaftaran_id'],
+                        'icon' => 'ki-outline ki-book-open fs-2 text-primary',
+                        'status' => 'Jenis Organisasi',
+                        'keterangan' => 'Organisasi berhasil diupload',
+                    ];
+
+                    $this->timelineModel->insert($data_timeline);
+                }
+
+                $this->pendaftaranModel->updateStatusPendaftaran($getPendaftaran['pendaftaran_id'], 'draft');
+
+                // Redirect ke halaman step 2 dengan pesan sukses
+                return redirect()->to('/aplikan/pendaftaran/steporganisasi')->with('success', 'Data Organisasi berhasil disimpan');
+            } catch (\Exception $e) {
+                // Tangani error jika gagal mengupload file
+                return redirect()->back()->withInput()->with('error', 'Gagal mengupload file: ' . $e->getMessage());
+            }
+        }
+
+        // Jika file tidak valid atau gagal diupload
+        return redirect()->back()->withInput()->with('error', 'File tidak valid atau gagal diupload');
+    }
     public function saveStep2()
     {
         $email = session()->get('email');
@@ -227,6 +313,8 @@ class PendaftaranController extends BaseController
                     'penyelenggara' => $this->request->getPost('penyelenggara'),
                     'tahun' => $this->request->getPost('tahun'),
                     'file_bukti' => $fileUrl, // Simpan URL file
+                    'lama_hari' => $this->request->getPost('lama_hari'),
+                     'lama_jam' => $this->request->getPost('lama_jam'),
                 ]);
 
                 $checkTimeline = $this->timelineModel->where('pendaftaran_id', $getPendaftaran['pendaftaran_id'])
@@ -257,7 +345,11 @@ class PendaftaranController extends BaseController
         // Jika file tidak valid atau gagal diupload
         return redirect()->back()->withInput()->with('error', 'File tidak valid atau gagal diupload');
     }
-
+ public function deleteOrganisasi($id)
+    {
+        $this->organisasiModel->delete($id);
+        return redirect()->to('/aplikan/pendaftaran/steporganisasi')->with('success', 'Data organisasi berhasil dihapus');
+    }
     public function deletePelatihan($id)
     {
         $this->pelatihanModel->delete($id);

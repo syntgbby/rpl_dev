@@ -99,6 +99,11 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan', 'filter' =>
     $routes->post('pendaftaran/saveStep2', 'PendaftaranController::saveStep2');
     $routes->get('pendaftaran/deletePelatihan/(:num)', 'PendaftaranController::deletePelatihan/$1');
 
+    //step organisasi
+    $routes->get('pendaftaran/steporganisasi', 'PendaftaranController::steporganisasi');
+    $routes->post('pendaftaran/saveStepOrganisasi', 'PendaftaranController::saveStepOrganisasi');
+    $routes->get('pendaftaran/deleteOrganisasi/(:num)', 'PendaftaranController::deleteOrganisasi/$1');
+
     //step 3
     $routes->get('pendaftaran/step3', 'PendaftaranController::step3');
     $routes->post('pendaftaran/saveStep3', 'PendaftaranController::saveStep3');

@@ -52,7 +52,7 @@ $form_disabled = ($konfirmasi_step['status'] == null) ? 'disabled' : '';
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">lamanya jam Pelatihan</label>
                         <div class="col-lg-8">
-                            <input type="text" name="jam_pelatihan" required
+                            <input type="text" name="lama_jam" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                 placeholder="lamanya jam pelatihan" <?= $form_disabled ?> />
                         </div>
@@ -60,7 +60,7 @@ $form_disabled = ($konfirmasi_step['status'] == null) ? 'disabled' : '';
                       <div class="row mb-6">
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6"> lamanya hari pelatihan </label>
                         <div class="col-lg-8">
-                            <input type="text" name="hari_pealtihan" required
+                            <input type="text" name="lama_hari" required
                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                 placeholder="hari pelatihan" <?= $form_disabled ?> />
                         </div>
@@ -104,6 +104,8 @@ $form_disabled = ($konfirmasi_step['status'] == null) ? 'disabled' : '';
                                 <th>Penyelenggara</th>
                                 <th>Tahun</th>
                                 <th>Bukti</th>
+                                <th>Lama Jam Pelatihan</th>
+                                <th>Lama Hari Pelatihan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -119,6 +121,8 @@ $form_disabled = ($konfirmasi_step['status'] == null) ? 'disabled' : '';
                                             <a href="<?= base_url('uploads/bukti_pelatihan/' . $row['file_bukti']) ?>" target="_blank">
                                                 <i class="fa-solid fa-eye"></i> Lihat
                                             </a>
+                                             <td><?= esc($row['lama_jam']) ?></td>
+                                              <td><?= esc($row['lama_hari']) ?></td>
                                         <?php else: ?>
                                             -
                                         <?php endif; ?>
@@ -135,8 +139,8 @@ $form_disabled = ($konfirmasi_step['status'] == null) ? 'disabled' : '';
                     </table>
 
                     <div class="mt-3">
-                        <a href="<?= base_url('aplikan/pendaftaran/step3') ?>" class="btn btn-primary">
-                            Lanjut ke Step 3
+                        <a href="<?= base_url('aplikan/pendaftaran/steporganisasi') ?>" class="btn btn-primary">
+                            Lanjut ke Step Organisasi
                         </a>
                     </div>
                 <?php else: ?>
