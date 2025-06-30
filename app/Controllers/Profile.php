@@ -104,8 +104,36 @@ class Profile extends BaseController
             } else if ($role == 'asesor') {
                 $cekDetail = $detailAsesor->where('email', $email)->first();
 
+                // Handle file upload
+                $fileBukti = $this->request->getFile('file_sk');
+                $filePath = null;
+
+                if ($fileBukti->isValid() && !$fileBukti->hasMoved()) {
+                    // Generate nama unik untuk file
+                    $fileName = $fileBukti->getRandomName();
+                    $uploadPath = FCPATH . 'uploads/bukti_sk/';
+
+                    // Buat direktori jika belum ada
+                    if (!is_dir($uploadPath)) {
+                        mkdir($uploadPath, 0777, true);
+                    }
+
+                    // Pindahkan file ke direktori
+                    $fileBukti->move($uploadPath, $fileName);
+                    $filePath = 'uploads/bukti_sk/' . $fileName;
+
+                    // Hapus file lama jika ada
+                    if ($cekDetail && !empty($cekDetail['file_bukti'])) {
+                        $oldFilePath = WRITEPATH . $cekDetail['file_bukti'];
+                        if (file_exists($oldFilePath)) {
+                            unlink($oldFilePath);
+                        }
+                    }
+                } else if ($fileBukti->getError() != 4) { // Error 4 = No file uploaded
+                    return redirect()->back()->with('error', 'Gagal mengupload file: ' . $fileBukti->getErrorString());
+                }
+
                 if ($cekDetail) {
-                    // Data untuk update
                     $updateDataDetailAsesor = [
                         'nip_nidn' => $this->request->getPost('nip_nidn'),
                         'tempat_lahir' => $this->request->getPost('tempat_lahir'),
@@ -118,21 +146,21 @@ class Profile extends BaseController
                         'alamat' => $this->request->getPost('alamat'),
                     ];
 
+                    // Tambahkan path file jika ada upload baru
+                    if ($filePath) {
+                        $updateDataDetailAsesor['file_bukti'] = $filePath;
+                    }
+
                     $update = $detailAsesor->where('email', $email)->set($updateDataDetailAsesor)->update();
 
                     if ($update) {
-                        $updateUser = [
-                            'nama_lengkap' => $this->request->getPost('nama_lengkap'),
-                        ];
-
+                        $updateUser = ['nama_lengkap' => $this->request->getPost('nama_lengkap')];
                         $userModel->where('email', $email)->set($updateUser)->update();
-
                         return redirect()->to('/dashboard')->with('success', 'Profile berhasil diupdate');
                     } else {
                         return redirect()->back()->with('error', 'Profile gagal diupdate');
                     }
                 } else {
-                    // Data untuk update
                     $insertDataDetailAsesor = [
                         'email' => $email,
                         'nip_nidn' => $this->request->getPost('nip_nidn'),
@@ -144,17 +172,14 @@ class Profile extends BaseController
                         'pendidikan_terakhir' => $this->request->getPost('pendidikan_terakhir'),
                         'telepon' => $this->request->getPost('telepon'),
                         'alamat' => $this->request->getPost('alamat'),
+                        'file_bukti' => $filePath // Wajib ada untuk insert baru
                     ];
 
                     $insert = $detailAsesor->save($insertDataDetailAsesor);
 
                     if ($insert) {
-                        $updateUser = [
-                            'nama_lengkap' => $this->request->getPost('nama_lengkap'),
-                        ];
-
+                        $updateUser = ['nama_lengkap' => $this->request->getPost('nama_lengkap')];
                         $userModel->where('email', $email)->update($updateUser);
-
                         return redirect()->to('/dashboard')->with('success', 'Profile berhasil diupdate');
                     } else {
                         return redirect()->back()->with('error', 'Profile gagal diupdate');

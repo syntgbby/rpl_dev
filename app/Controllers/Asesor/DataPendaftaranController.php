@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Asesor;
 
-use App\Models\View\{ViewDataPendaftaran, ViewKurikulum};
+use App\Models\View\{ViewDataPendaftaran, ViewKurikulum, ViewCapaian};
 use App\Models\{UserModel, KurikulumModel, PelatihanModel, PendaftaranModel, TahunAjarModel, PengalamanKerjaModel};
 use App\Controllers\BaseController;
 
@@ -94,5 +94,12 @@ class DataPendaftaranController extends BaseController
                 'data' => []
             ]);
         }
+    }
+    // Asesmen
+    public function getAsesmen($kode_matkul)
+    {
+        $asesmenModel = new ViewCapaian();
+        $asesmen = $asesmenModel->where('kode_matkul', $kode_matkul)->findAll();
+        return $this->render('Asesor/DataCapaian/asesmen', ['asesmen' => $asesmen]);
     }
 }

@@ -170,7 +170,7 @@ $routes->group('asesor', ['namespace' => 'App\Controllers\Asesor', 'filter' => '
     $routes->get('approve-nilai', 'AsesorController::viewApprove');
 
     // Asesmen Per Matakuliah
-    $routes->get('get-asesmen-mata-kuliah/(:any)', 'DataPendaftaranController::getAsesmen/$1');
+    $routes->get('get-asesmen-matakuliah/(:any)', 'DataPendaftaranController::getAsesmen/$1');
 
     // Laporan
     $routes->get('laporan-rpl', 'DataLaporanRplController::index');

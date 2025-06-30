@@ -346,9 +346,11 @@
                                 '<td>' + (index + 1) + '</td>' +
                                 '<td>' + matkul.kode_matkul + '</td>' +
                                 '<td>' + matkul.nama_matkul + '</td>' +
-                                '<td><input type="checkbox" class="yes-check" name="rpl[' + matkul.id + ']" value="Y" checked></td>' +
-                                '<td><input type="checkbox" class="no-check" name="rpl[' + matkul.id + ']" value="N"></td>' +
-                                '<td><select class="form-select form-select-lg h-100 w-100" data-control="select2" data-placeholder="Pilih Nilai Asesmen" name="asesmen[' + matkul.id + ']"><option value="" selected disabled>Pilih Nilai Asesmen</option><option value="Baik">Baik</option><option value="Cukup">Cukup</option><option value="Sangat Baik">Sangat Baik</option></select></td>' +
+                                '<td><input type="checkbox" class="yes-check" style="width:20px; height:20px;" name="rpl[' + matkul.id + ']" value="Y" checked></td>' +
+                                '<td><input type="checkbox" class="no-check" style="width:20px; height:20px;" name="rpl[' + matkul.id + ']" value="N"></td>' +
+                                '<td class="text-center">' +
+                                    '<button type="button" class="btn btn-primary" onclick="lihatAsesmen(\'' + matkul.kode_matkul + '\')">Nilai CPL</button>' +
+                                '</td>' +
                                 '</tr>';
                             tbody.append(row);
                         });
@@ -433,6 +435,14 @@
             }
         });
     });
+</script>
+<!-- Asesmen -->
+<script>
+    function lihatAsesmen(kode_matkul) {
+    $('#modaltitle').html('Detail Asesmen');
+    $('#modalbody').load("<?= base_url('asesor/get-asesmen-matakuliah/') ?>" + kode_matkul);
+    $('#modal').modal('show');
+    }
 </script>
 
 <?= $this->endSection(); ?>
