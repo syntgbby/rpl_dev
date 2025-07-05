@@ -76,7 +76,7 @@
                                             <?php endforeach; ?>
                                         <?php else: ?>
                                             <tr>
-                                                <td colspan="5" class="text-center">Tidak ada data pelatihan</td>
+                                                <td colspan="5" class="text-center">Aplikan tidak mengisi pelatihan</td>
                                             </tr>
                                         <?php endif; ?>
                                     </tbody>
@@ -87,6 +87,167 @@
                     <!--end::Details content-->
                 </div>
                 <!-- End Informasi Pelatihan -->
+
+                <!-- Start Informasi Piagam -->
+                <div class="card mb-5">
+                    <!--begin::Details content-->
+                    <div class="card-body">
+                        <div class="pb-5 fs-6">
+                            <!--begin::Details item-->
+                            <h3 class="text-dark mb-3 border-bottom pb-2">Informasi Piagam/Penghargaan</h3>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="text-center" style="width: 50px">No</th>
+                                            <th>Bentuk Penghargaan</th>
+                                            <th>Pemberi</th>
+                                            <th class="text-center">Tahun</th>
+                                            <th class="text-center">Bukti</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php if ($dtpiagam): ?>
+                                            <?php $no = 1;
+                                            foreach ($dtpiagam as $row): ?>
+                                                <tr>
+                                                    <td class="text-center"><?= $no++ ?></td>
+                                                    <td><?= $row['bentuk_penghargaan'] ?></td>
+                                                    <td><?= $row['pemberi'] ?></td>
+                                                    <td class="text-center"><?= $row['tahun'] ?></td>
+                                                    <td class="text-center">
+                                                        <?php if ($row['file_bukti']): ?>
+                                                            <a href="<?= $row['file_bukti'] ?>" target="_blank"
+                                                                class="btn btn-sm btn-primary">
+                                                                <i class="fas fa-file-pdf me-1"></i> Lihat Bukti
+                                                            </a>
+                                                        <?php else: ?>
+                                                            <span class="text-muted">-</span>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="5" class="text-center">Aplikan tidak mengisi piagam/penghargaan
+                                                </td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Details content-->
+                </div>
+                <!-- End Informasi Piagam -->
+                <!-- Start Informasi Seminar -->
+                <div class="card mb-5">
+                    <!--begin::Details content-->
+                    <div class="card-body">
+                        <div class="pb-5 fs-6">
+                            <!--begin::Details item-->
+                            <h3 class="text-dark mb-3 border-bottom pb-2">Informasi Seminar</h3>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="text-center" style="width: 50px">No</th>
+                                            <th>Judul Kegiatan</th>
+                                            <th>Penyelenggara</th>
+                                            <th>Peran</th>
+                                            <th class="text-center">Tahun</th>
+                                            <th class="text-center">Bukti</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php if ($dtseminar): ?>
+                                            <?php $no = 1;
+                                            foreach ($dtseminar as $row): ?>
+                                                <tr>
+                                                    <td class="text-center"><?= $no++ ?></td>
+                                                    <td><?= $row['judul_kegiatan'] ?></td>
+                                                    <td><?= $row['penyelenggara'] ?></td>
+                                                    <td><?= $row['peran'] ?></td>
+                                                    <td class="text-center"><?= $row['tahun'] ?></td>
+                                                    <td class="text-center">
+                                                        <?php if ($row['file_bukti']): ?>
+                                                            <a href="<?= $row['file_bukti'] ?>" target="_blank"
+                                                                class="btn btn-sm btn-primary">
+                                                                <i class="fas fa-file-pdf me-1"></i> Lihat Bukti
+                                                            </a>
+                                                        <?php else: ?>
+                                                            <span class="text-muted">-</span>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="5" class="text-center">Aplikan tidak mengisi seminar</td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Details content-->
+                </div>
+                <!-- End Informasi Seminar -->
+                <!-- Start Informasi Organisasi -->
+                <div class="card mb-5">
+                    <!--begin::Details content-->
+                    <div class="card-body">
+                        <div class="pb-5 fs-6">
+                            <!--begin::Details item-->
+                            <h3 class="text-dark mb-3 border-bottom pb-2">Informasi Organisasi</h3>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="text-center" style="width: 50px">No</th>
+                                            <th>Nama Organisasi</th>
+                                            <th>Jabatan</th>
+                                            <th class="text-center">Tahun</th>
+                                            <th class="text-center">Bukti</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php if ($dtorganisasi): ?>
+                                            <?php $no = 1;
+                                            foreach ($dtorganisasi as $row): ?>
+                                                <tr>
+                                                    <td class="text-center"><?= $no++ ?></td>
+                                                    <td><?= $row['nama_organisasi'] ?></td>
+                                                    <td><?= $row['jabatan_anggota'] ?></td>
+                                                    <td class="text-center"><?= $row['tahun'] ?></td>
+                                                    <td class="text-center">
+                                                        <?php if ($row['file_bukti']): ?>
+                                                            <a href="<?= $row['file_bukti'] ?>" target="_blank"
+                                                                class="btn btn-sm btn-primary">
+                                                                <i class="fas fa-file-pdf me-1"></i> Lihat Bukti
+                                                            </a>
+                                                        <?php else: ?>
+                                                            <span class="text-muted">-</span>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="5" class="text-center">Aplikan tidak mengisi organisasi</td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Details content-->
+                </div>
+                <!-- End Informasi Organisasi -->
+
                 <!-- Start Informasi Pengalaman Kerja -->
                 <div class="card mb-5">
                     <!--begin::Details content-->
@@ -322,6 +483,9 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
+    // Hapus data asesmen dari localStorage setiap kali halaman dimuat ulang
+    localStorage.removeItem('nilaiAsesmen');
+
     // Load data mata kuliah
     $('#cariBtn').click(function () {
         var tahun = $('#tahunSelect').val();
@@ -349,8 +513,8 @@
                                 '<td><input type="checkbox" class="yes-check" style="width:20px; height:20px;" name="rpl[' + matkul.id + ']" value="Y" checked></td>' +
                                 '<td><input type="checkbox" class="no-check" style="width:20px; height:20px;" name="rpl[' + matkul.id + ']" value="N"></td>' +
                                 '<td class="text-center">' +
-                                    '<button type="button" class="btn btn-primary" onclick="lihatAsesmen(\'' + matkul.kode_matkul + '\')">Nilai CPL</button>' +
-                                '</td>' +
+                                '<button type="button" class="btn btn-primary btn-cpl" onclick="lihatAsesmen(\'' + matkul.kode_matkul + '\')">Nilai CPL</button>'
+                            '</td>' +
                                 '</tr>';
                             tbody.append(row);
                         });
@@ -364,24 +528,24 @@
                     $('.yes-check').on('change', function () {
                         var tr = $(this).closest('tr');
                         var noCheck = tr.find('.no-check');
-                        var asesmenSelect = tr.find('select');
+                        var btnCpl = tr.find('.btn-cpl');
 
                         if ($(this).is(':checked')) {
                             noCheck.prop('checked', false);
-                            asesmenSelect.prop('disabled', false);
+                            btnCpl.prop('disabled', false); // Enable tombol
                         }
                     });
 
                     $('.no-check').on('change', function () {
                         var tr = $(this).closest('tr');
                         var yesCheck = tr.find('.yes-check');
-                        var asesmenSelect = tr.find('select');
+                        var btnCpl = tr.find('.btn-cpl');
 
                         if ($(this).is(':checked')) {
                             yesCheck.prop('checked', false);
-                            asesmenSelect.val('').prop('disabled', true); // reset + disable
+                            btnCpl.prop('disabled', true); // Disable tombol
                         } else {
-                            asesmenSelect.prop('disabled', false);
+                            btnCpl.prop('disabled', false); // Enable tombol kalau "Tidak" tidak dicentang
                         }
                     });
 
@@ -399,6 +563,9 @@
     });
 
     $(document).ready(function () {
+        // Hapus data asesmen dari localStorage setiap kali halaman dimuat ulang
+        localStorage.removeItem('nilaiAsesmen');
+
         $('#status').change(function () {
             const status = $(this).val();
             if (status === 'approved') {
@@ -418,30 +585,68 @@
     });
 
     $('#approveRplForm').submit(function (e) {
-        e.preventDefault(); // Stop form dari auto-submit
+        e.preventDefault();
 
         Swal.fire({
             title: 'Apakah Anda yakin?',
             text: "Data pendaftaran ini akan di-approved dan dicetak!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#198754', // warna btn-success
+            confirmButtonColor: '#198754',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ya, Lanjutkan!',
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                this.submit(); // submit form jika user yakin
+                // Clear asesmen[] sebelumnya
+                $('#approveRplForm').find('input[name^="asesmen["]').remove();
+
+                const asesmenData = JSON.parse(localStorage.getItem('asesmen') || '{}');
+                for (const [id, nilai] of Object.entries(asesmenData)) {
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: `asesmen[${id}]`,
+                        value: nilai
+                    }).appendTo('#approveRplForm');
+                }
+
+                // ✅ Setelah input ditambahkan, baru submit
+                $('#approveRplForm')[0].submit();
             }
         });
     });
-</script>
-<!-- Asesmen -->
-<script>
+
+
+    let nilaiAsesmenStorage = JSON.parse(localStorage.getItem('nilaiAsesmen')) || {};
+
     function lihatAsesmen(kode_matkul) {
-    $('#modaltitle').html('Detail Asesmen');
-    $('#modalbody').load("<?= base_url('asesor/get-asesmen-matakuliah/') ?>" + kode_matkul);
-    $('#modal').modal('show');
+        $.get("<?= base_url('asesor/get-asesmen-matakuliah/') ?>" + kode_matkul, function (html) {
+            $('#modaltitle').html('Detail Asesmen');
+            $('#modalbody').html(html);
+            $('#modal').modal('show');
+
+            // Tunggu elemen ter-load dulu
+            setTimeout(() => {
+                const stored = nilaiAsesmenStorage[kode_matkul] || {};
+                Object.keys(stored).forEach(cplId => {
+                    const nilai = stored[cplId];
+                    $(`select[name='asesmen[${cplId}]']`).val(nilai);
+                });
+
+                // Simpan saat select berubah
+                $("select[name^='asesmen']").on('change', function () {
+                    const cplId = $(this).attr('name').match(/\d+/)[0];
+                    const val = $(this).val();
+
+                    if (!nilaiAsesmenStorage[kode_matkul]) {
+                        nilaiAsesmenStorage[kode_matkul] = {};
+                    }
+
+                    nilaiAsesmenStorage[kode_matkul][cplId] = val;
+                    localStorage.setItem('nilaiAsesmen', JSON.stringify(nilaiAsesmenStorage));
+                });
+            }, 100);
+        });
     }
 </script>
 

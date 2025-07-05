@@ -20,7 +20,7 @@
             <!--begin::Form-->
             <form action="<?= base_url('aplikan/pendaftaran/saveStep4') ?>" method="post" enctype="multipart/form-data">
                 <div class="card-body border-top p-9">
-                    <!--begin::Input group for Full Name-->
+                    <!--begin::Input group for Bukti KTP-->
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">Upload Bukti KTP (Kartu Tanda
                             Penduduk)</label>
@@ -31,8 +31,8 @@
                             <span class="text-danger">*Format file: .pdf</span>
                         </div>
                     </div>
-                    <!--end::Input group for Full Name-->
-                    <!--begin::Input group for Full Name-->
+                    <!--end::Input group for Bukti KTP-->
+                    <!--begin::Input group for Bukti KK-->
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">Upload Bukti KK (Kartu
                             Keluarga)</label>
@@ -43,8 +43,8 @@
                             <span class="text-danger">*Format file: .pdf</span>
                         </div>
                     </div>
-                    <!--end::Input group for Full Name-->
-                    <!--begin::Input group for Full Name-->
+                    <!--end::Input group for Bukti KK-->
+                    <!--begin::Input group for Bukti Ijazah-->
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">Upload Bukti Ijazah (Surat
                             Keterangan Lulus)</label>
@@ -55,8 +55,8 @@
                             <span class="text-danger">*Format file: .pdf</span>
                         </div>
                     </div>
-                    <!--end::Input group for Full Name-->
-                    <!--begin::Input group for Full Name-->
+                    <!--end::Input group for Bukti Ijazah-->
+                    <!--begin::Input group for Foto Diri-->
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">Upload Foto Diri</label>
                         <div class="col-lg-8">
@@ -66,12 +66,22 @@
                             <span class="text-danger">*Format file: .jpg, .jpeg, .png</span>
                         </div>
                     </div>
-                    <!--end::Input group for Full Name-->
+                    <!--end::Input group for Foto Diri-->
+                    <!--begin::Input group for Foto TTD-->
+                    <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Upload Tanda Tangan</label>
+                        <div class="col-lg-8">
+                            <input type="file" name="file_ttd" accept=".jpg, .jpeg, .png" required
+                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                placeholder="Upload Bukti" />
+                            <span class="text-danger">*Format file: .jpg, .jpeg, .png</span>
+                        </div>
+                    </div>
+                    <!--end::Input group for Foto TTD-->
                 </div>
                 <!--begin::Actions-->
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <!-- <button type="cancel" class="btn btn-light btn-active-light-primary me-2" onclick="window.location.href='<?= base_url('dashboard') ?>'">Batal</button> -->
-                    <button type="submit" class="btn btn-primary">Simpan Keseluruhan Data
+                    <button type="submit" class="btn btn-primary">Lanjut Asesmen Mandiri
                     </button>
                 </div>
                 <!--end::Actions-->

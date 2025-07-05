@@ -37,81 +37,115 @@ class AuthController extends Controller
             return redirect()->to('/register')->with('error', 'Email tidak valid');
         }
 
-        //save ke tabel users
-        $users->save([
-            'email' => $email,
-            'nama_lengkap' => $this->request->getPost('nama_lengkap'),
-            'password' => $passHash,
-            'role' => 'aplikan',
-            'status' => 'N',
-        ]);
+        $validationRule = [
+            'bukti_pembayaran' => [
+                'label' => 'Bukti Pembayaran',
+                'rules' => 'uploaded[bukti_pembayaran]|ext_in[bukti_pembayaran,pdf,jpg,jpeg,png]|max_size[bukti_pembayaran,2048]',
+            ]
+        ];
 
-        //save ke tabel detail_aplikan
-        $insertDetailAplikan = $detailAplikan->save([
-            'email' => $email,
-            // 'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
-            // 'tempat_lahir' => $this->request->getPost('tempat_lahir'),
-            // 'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
-            // 'alamat' => $this->request->getPost('alamat'),
-            'telepon' => '+62' . $this->request->getPost('telepon'),
-            'prodi_id' => $this->request->getPost('prodi_id'),
-            // 'pendidikan_terakhir' => $this->request->getPost('pendidikan_terakhir'),
-            // 'nama_asal_sekolah' => $this->request->getPost('nama_asal_sekolah'),
-            // 'tahun_lulus' => $this->request->getPost('tahun_lulus'),
-            'asal_informasi' => $this->request->getPost('asal_informasi'),
-            'asal_informasi_lainnya' => $this->request->getPost('asal_informasi_lainnya'),
-            'pertanyaan_id' => $this->request->getPost('pertanyaan_id'),
-            'jawaban' => $this->request->getPost('jawaban')
-        ]);
+        // Validasi input
+        if (!$this->validate($validationRule)) {
+            return redirect()->back()->withInput()->with('error', $this->validator->getErrors());
+        }
 
-        //proses kirim email
-        if ($insertDetailAplikan) {
-            $dataEmail = [
-                'email' => $email,
-                'nama' => $this->request->getPost('nama_lengkap')
-            ];
+        $fileBukti = $this->request->getFile('bukti_pembayaran');
+        $formatNama = str_replace(' ', '-', $this->request->getPost('nama_lengkap'));
 
-            helper('url');
-            $htmlEmail = view('ContentEmail/registrasi_aplikan', $dataEmail);
+        if ($fileBukti->isValid() && !$fileBukti->hasMoved()) {
+            $fileNameBukti = $fileBukti->getRandomName();
+            $path = FCPATH . 'uploads/bukti-pembayaran/' . $formatNama;
 
-            $attributes = [
-                'to' => $email,
-                'subject' => 'Registrasi Berhasil!',
-                'message' => $htmlEmail
-            ];
+            // Pastikan direktori sudah ada
+            if (!is_dir($path)) {
+                mkdir($path, 0777, true);
+            }
 
             try {
-                $sendEmail = kirimEmail($attributes);
+                $fileBukti->move($path, $fileNameBukti);
+                $fileUrlBukti = base_url('uploads/bukti-pembayaran/' . $formatNama . '/' . $fileNameBukti);
 
-                if ($sendEmail) {
-                    $checkEmailAdmin = $users->where('role', 'admin')->first();
-                    $emailAdmin = $checkEmailAdmin['email'];
+                //save ke tabel users
+                $users->save([
+                    'email' => $email,
+                    'nama_lengkap' => $this->request->getPost('nama_lengkap'),
+                    'password' => $passHash,
+                    'role' => 'aplikan',
+                    'status' => 'N',
+                ]);
 
-                    $dataEmailAdmin = [
+                //save ke tabel detail_aplikan
+                $insertDetailAplikan = $detailAplikan->save([
+                    'email' => $email,
+                    // 'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
+                    // 'tempat_lahir' => $this->request->getPost('tempat_lahir'),
+                    // 'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
+                    // 'alamat' => $this->request->getPost('alamat'),
+                    'telepon' => '+62' . $this->request->getPost('telepon'),
+                    'prodi_id' => $this->request->getPost('prodi_id'),
+                    // 'pendidikan_terakhir' => $this->request->getPost('pendidikan_terakhir'),
+                    // 'nama_asal_sekolah' => $this->request->getPost('nama_asal_sekolah'),
+                    // 'tahun_lulus' => $this->request->getPost('tahun_lulus'),
+                    'asal_informasi' => $this->request->getPost('asal_informasi'),
+                    'asal_informasi_lainnya' => $this->request->getPost('asal_informasi_lainnya'),
+                    'bukti_pembayaran' => $fileUrlBukti,
+                    'pertanyaan_id' => $this->request->getPost('pertanyaan_id'),
+                    'jawaban' => $this->request->getPost('jawaban')
+                ]);
+
+                //proses kirim email
+                if ($insertDetailAplikan) {
+                    $dataEmail = [
                         'email' => $email,
                         'nama' => $this->request->getPost('nama_lengkap')
                     ];
 
                     helper('url');
-                    $htmlEmailAdmin = view('ContentEmail/notif_admin', $dataEmailAdmin);
+                    $htmlEmail = view('ContentEmail/registrasi_aplikan', $dataEmail);
 
-                    $attributesAdmin = [
-                        'to' => $emailAdmin,
-                        'subject' => 'Pendaftaran Akun Baru!',
-                        'message' => $htmlEmailAdmin
+                    $attributes = [
+                        'to' => $email,
+                        'subject' => 'Registrasi Berhasil!',
+                        'message' => $htmlEmail
                     ];
 
-                    kirimEmail($attributesAdmin);
+                    try {
+                        $sendEmail = kirimEmail($attributes);
 
-                    return redirect()->to('/login')->with('success', 'Registrasi berhasil');
+                        if ($sendEmail) {
+                            $checkEmailAdmin = $users->where('role', 'admin')->first();
+                            $emailAdmin = $checkEmailAdmin['email'];
+
+                            $dataEmailAdmin = [
+                                'email' => $email,
+                                'nama' => $this->request->getPost('nama_lengkap')
+                            ];
+
+                            helper('url');
+                            $htmlEmailAdmin = view('ContentEmail/notif_admin', $dataEmailAdmin);
+
+                            $attributesAdmin = [
+                                'to' => $emailAdmin,
+                                'subject' => 'Pendaftaran Akun Baru!',
+                                'message' => $htmlEmailAdmin
+                            ];
+
+                            kirimEmail($attributesAdmin);
+
+                            return redirect()->to('/login')->with('success', 'Registrasi berhasil');
+                        } else {
+                            return redirect()->to('/register')->with('error', 'Registrasi gagal!');
+                        }
+                    } catch (\Exception $e) {
+                        return redirect()->to('/register')->with('error', 'Error: ' . $e->getMessage());
+                    }
                 } else {
-                    return redirect()->to('/register')->with('error', 'Registrasi gagal!');
+                    return redirect()->to('/register')->with('error', 'Registrasi gagal dikirim!');
                 }
             } catch (\Exception $e) {
-                return redirect()->to('/register')->with('error', 'Error: ' . $e->getMessage());
+                // Tangani error jika gagal mengupload file
+                return redirect()->back()->withInput()->with('error', 'Gagal mengupload file: ' . $e->getMessage());
             }
-        } else {
-            return redirect()->to('/register')->with('error', 'Registrasi gagal dikirim!');
         }
     }
 

@@ -54,21 +54,17 @@ class AsesorController extends Controller
 
             // save approval asesmen
             $dataToInsertAsesmen = [];
-            foreach ($asesmenArray as $kurikulumIdA => $value) {
-                $capaianList = $capaianModel->where('kurikulum_id', $kurikulumIdA)->findAll();
-                if (!empty($capaianList)) {
-                    foreach ($capaianList as $capaian) {
-                        $capaianId = $capaian['id'];
-                        $dataToInsertAsesmen[] = [
-                            'pendaftaran_id' => $pendaftaranId,
-                            'capaian_id' => $capaianId,
-                            'status' => $value
-                        ];
-                    }
-                }
+            foreach ($asesmenArray as $capaianId => $nilai) {
+                $dataToInsertAsesmen[] = [
+                    'pendaftaran_id' => $pendaftaranId,
+                    'capaian_id' => $capaianId,
+                    'status' => $nilai
+                ];
             }
 
-            $capaianDtlModel->insertBatch($dataToInsertAsesmen);
+            if (!empty($dataToInsertAsesmen)) {
+                $capaianDtlModel->insertBatch($dataToInsertAsesmen);
+            }
 
             $dtemail = $viewPendaftaranModel->where('pendaftaran_id', $pendaftaranId)->first();
             $email = $dtemail['email'];
@@ -132,10 +128,20 @@ class AsesorController extends Controller
             } else {
                 $pendaftaranModel->updateAlasanPernyataan($pendaftaranId, $alasan);
 
+                $dataEmail = [
+                    'pendaftaran_id' => $pendaftaranId,
+                    'nama' => $dtemail['nama_lengkap'],
+                    'status' => $status,
+                    'alasan' => $alasan
+                ];
+
+                helper('url');
+                $htmlEmail = view('ContentEmail/status_rpl', $dataEmail);
+
                 $attributes = [
                     'to' => $email,
                     'subject' => 'Status Pendaftaran RPL ' . $dtemail['nama_lengkap'],
-                    'message' => 'Maaf, RPL anda telah di ' . $status . '!' . ' Alasan: ' . $alasan
+                    'message' => $htmlEmail
                 ];
             }
 
@@ -146,7 +152,6 @@ class AsesorController extends Controller
             return redirect()->to('/asesor/data-pendaftaran')->with('error', 'Data RPL gagal di-approve.');
         }
     }
-
     private function generateSuratKeputusan($data, $filename)
     {
         set_time_limit(0); // supaya script ini nggak dibatasi waktunya

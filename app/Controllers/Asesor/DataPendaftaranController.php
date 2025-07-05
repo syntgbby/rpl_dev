@@ -3,7 +3,7 @@
 namespace App\Controllers\Asesor;
 
 use App\Models\View\{ViewDataPendaftaran, ViewKurikulum, ViewCapaian};
-use App\Models\{UserModel, KurikulumModel, PelatihanModel, PendaftaranModel, TahunAjarModel, PengalamanKerjaModel};
+use App\Models\{UserModel, KurikulumModel, PelatihanModel, PendaftaranModel, TahunAjarModel, PengalamanKerjaModel, PiagamModel, SeminarModel, OrganisasiModel};
 use App\Controllers\BaseController;
 
 class DataPendaftaranController extends BaseController
@@ -36,10 +36,16 @@ class DataPendaftaranController extends BaseController
     {
         $model = new ViewDataPendaftaran();
         $modelPelatihan = new PelatihanModel();
+        $modelPiagam = new PiagamModel();
+        $modelSeminar = new SeminarModel();
+        $modelOrganisasi = new OrganisasiModel();
         $modelPekerjaan = new PengalamanKerjaModel();
 
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
         $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $id)->findAll();
+        $data['dtpiagam'] = $modelPiagam->where('pendaftaran_id', $id)->findAll();
+        $data['dtseminar'] = $modelSeminar->where('pendaftaran_id', $id)->findAll();
+        $data['dtorganisasi'] = $modelOrganisasi->where('pendaftaran_id', $id)->findAll();
         $data['dtpekerjaan'] = $modelPekerjaan->where('pendaftaran_id', $id)->findAll();
 
         return $this->render('Asesor/DataPendaftaran/view-detail', $data);
@@ -49,12 +55,18 @@ class DataPendaftaranController extends BaseController
     {
         $model = new ViewDataPendaftaran();
         $model_pelatihan = new PelatihanModel();
+        $modelPiagam = new PiagamModel();
+        $modelSeminar = new SeminarModel();
+        $modelOrganisasi = new OrganisasiModel();
         $model_kurikulum = new TahunAjarModel();
         $modelPekerjaan = new PengalamanKerjaModel();
 
         $data['dtpekerjaan'] = $modelPekerjaan->where('pendaftaran_id', $id)->findAll();
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
         $data['dtpelatihan'] = $model_pelatihan->where('pendaftaran_id', $id)->findAll();
+        $data['dtpiagam'] = $modelPiagam->where('pendaftaran_id', $id)->findAll();
+        $data['dtseminar'] = $modelSeminar->where('pendaftaran_id', $id)->findAll();
+        $data['dtorganisasi'] = $modelOrganisasi->where('pendaftaran_id', $id)->findAll();
         $data['dtkurikulum'] = $model_kurikulum->where('status', 'Y')->findAll();
 
         return $this->render('Asesor/validasi', $data);
@@ -102,4 +114,5 @@ class DataPendaftaranController extends BaseController
         $asesmen = $asesmenModel->where('kode_matkul', $kode_matkul)->findAll();
         return $this->render('Asesor/DataCapaian/asesmen', ['asesmen' => $asesmen]);
     }
+
 }

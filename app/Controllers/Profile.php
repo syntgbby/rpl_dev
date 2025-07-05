@@ -76,42 +76,32 @@ class Profile extends BaseController
                     } else {
                         return redirect()->back()->with('error', 'Profile gagal diupdate');
                     }
-                } else {
-                    // Data untuk update
-                    $insertDataDetailAplikan = [
-                        'email' => $email,
-                        'tempat_lahir' => $this->request->getPost('tempat_lahir'),
-                        'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
-                        'telepon' => $this->request->getPost('telepon'),
-                        'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
-                        'agama' => $this->request->getPost('agama'),
-                    ];
-
-                    $insert = $detailAplikan->save($insertDataDetailAplikan);
-
-                    if ($insert) {
-                        $updateUser = [
-                            'nama_lengkap' => $this->request->getPost('nama_lengkap'),
-                        ];
-
-                        $userModel->where('email', $email)->update($updateUser);
-
-                        return redirect()->to('/dashboard')->with('success', 'Profile berhasil diupdate');
-                    } else {
-                        return redirect()->back()->with('error', 'Profile gagal diupdate');
-                    }
                 }
             } else if ($role == 'asesor') {
                 $cekDetail = $detailAsesor->where('email', $email)->first();
+                $nama = $cekDetail['nama_lengkap'];
+                $formatNama = str_replace(' ', '-', $nama);
+
+                // Update validasi untuk hanya menerima PDF, JPG, JPEG, PNG
+                $validationRule = [
+                    'file_sk' => [
+                        'label' => 'File Bukti',
+                        'rules' => 'uploaded[file_sk]|ext_in[file_sk,pdf,jpg,jpeg,png]|max_size[file_sk,2048]',
+                    ],
+                ];
+
+                // Validasi input
+                if (!$this->validate($validationRule)) {
+                    return redirect()->back()->withInput()->with('error', $this->validator->getErrors());
+                }
 
                 // Handle file upload
                 $fileBukti = $this->request->getFile('file_sk');
-                $filePath = null;
 
                 if ($fileBukti->isValid() && !$fileBukti->hasMoved()) {
                     // Generate nama unik untuk file
                     $fileName = $fileBukti->getRandomName();
-                    $uploadPath = FCPATH . 'uploads/bukti_sk/';
+                    $uploadPath = FCPATH . 'uploads/bukti_sk/' . $formatNama;
 
                     // Buat direktori jika belum ada
                     if (!is_dir($uploadPath)) {
@@ -120,17 +110,15 @@ class Profile extends BaseController
 
                     // Pindahkan file ke direktori
                     $fileBukti->move($uploadPath, $fileName);
-                    $filePath = 'uploads/bukti_sk/' . $fileName;
+                    $filePath = base_url('uploads/bukti_sk/' . $formatNama . '/' . $fileName);
 
                     // Hapus file lama jika ada
                     if ($cekDetail && !empty($cekDetail['file_bukti'])) {
-                        $oldFilePath = WRITEPATH . $cekDetail['file_bukti'];
+                        $oldFilePath = FCPATH . 'uploads/bukti_sk/' . $formatNama . '/' . basename($cekDetail['file_bukti']);
                         if (file_exists($oldFilePath)) {
                             unlink($oldFilePath);
                         }
                     }
-                } else if ($fileBukti->getError() != 4) { // Error 4 = No file uploaded
-                    return redirect()->back()->with('error', 'Gagal mengupload file: ' . $fileBukti->getErrorString());
                 }
 
                 if ($cekDetail) {
@@ -160,38 +148,12 @@ class Profile extends BaseController
                     } else {
                         return redirect()->back()->with('error', 'Profile gagal diupdate');
                     }
-                } else {
-                    $insertDataDetailAsesor = [
-                        'email' => $email,
-                        'nip_nidn' => $this->request->getPost('nip_nidn'),
-                        'tempat_lahir' => $this->request->getPost('tempat_lahir'),
-                        'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
-                        'pangkat_golongan' => $this->request->getPost('pangkat_golongan'),
-                        'jabatan' => $this->request->getPost('jabatan'),
-                        'bidang_ilmu_keahlian' => $this->request->getPost('bidang_ilmu_keahlian'),
-                        'pendidikan_terakhir' => $this->request->getPost('pendidikan_terakhir'),
-                        'telepon' => $this->request->getPost('telepon'),
-                        'alamat' => $this->request->getPost('alamat'),
-                        'file_bukti' => $filePath // Wajib ada untuk insert baru
-                    ];
-
-                    $insert = $detailAsesor->save($insertDataDetailAsesor);
-
-                    if ($insert) {
-                        $updateUser = ['nama_lengkap' => $this->request->getPost('nama_lengkap')];
-                        $userModel->where('email', $email)->update($updateUser);
-                        return redirect()->to('/dashboard')->with('success', 'Profile berhasil diupdate');
-                    } else {
-                        return redirect()->back()->with('error', 'Profile gagal diupdate');
-                    }
                 }
             }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
-
-
     public function updateEmail()
     {
         try {

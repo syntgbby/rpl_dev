@@ -56,7 +56,7 @@
                                     icon: 'info',
                                     title: 'Informasi',
                                     text: '<?= session()->getFlashdata('info') ?>',
-                                    confirmButtonColor: '#d33',
+                                    confirmButtonColor: '#3085d6',
                                 });
                             </script>
                         <?php endif; ?>

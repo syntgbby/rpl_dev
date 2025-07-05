@@ -4,7 +4,7 @@ namespace App\Controllers\Asesor;
 
 use App\Controllers\BaseController;
 use App\Models\View\{ViewDataPendaftaran, ViewAsesmenKurikulum};
-use App\Models\{ApprovalRplModel, CapaianDtl, UserModel, KurikulumModel, PelatihanModel, PendaftaranModel, PengalamanKerjaModel, TahunAjarModel};
+use App\Models\{ApprovalRplModel, UserModel, PelatihanModel, AsesmenMandiriModel, PengalamanKerjaModel, PiagamModel, SeminarModel, OrganisasiModel};
 use Dompdf\Dompdf;
 helper('url');
 
@@ -61,11 +61,17 @@ class DataLaporanRplController extends BaseController
     {
         $model = new ViewDataPendaftaran();
         $modelPelatihan = new PelatihanModel();
+        $modelPiagam = new PiagamModel();
+        $modelSeminar = new SeminarModel();
+        $modelOrganisasi = new OrganisasiModel();
         $modelPekerjaan = new PengalamanKerjaModel();
         $approvalModel = new ApprovalRplModel();
 
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
         $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $id)->findAll();
+        $data['dtpiagam'] = $modelPiagam->where('pendaftaran_id', $id)->findAll();
+        $data['dtseminar'] = $modelSeminar->where('pendaftaran_id', $id)->findAll();
+        $data['dtorganisasi'] = $modelOrganisasi->where('pendaftaran_id', $id)->findAll();
         $data['dtpekerjaan'] = $modelPekerjaan->where('pendaftaran_id', $id)->findAll();
         $data['approvalWithKurikulum'] = $approvalModel->getApprovalWithKurikulum($id);
 
@@ -84,13 +90,22 @@ class DataLaporanRplController extends BaseController
         // Load model dan data
         $model = new ViewDataPendaftaran();
         $modelPelatihan = new PelatihanModel();
+        $modelPiagam = new PiagamModel();
+        $modelSeminar = new SeminarModel();
+        $modelOrganisasi = new OrganisasiModel();
         $modelPekerjaan = new PengalamanKerjaModel();
         $approvalModel = new ApprovalRplModel();
         $asesmenModel = new ViewAsesmenKurikulum();
+        $asesmenMandiriModal = new AsesmenMandiriModel();
 
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
         $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $id)->findAll();
+        $data['dtpiagam'] = $modelPiagam->where('pendaftaran_id', $id)->findAll();
+        $data['dtseminar'] = $modelSeminar->where('pendaftaran_id', $id)->findAll();
+        $data['dtorganisasi'] = $modelOrganisasi->where('pendaftaran_id', $id)->findAll();
         $data['dtpekerjaan'] = $modelPekerjaan->where('pendaftaran_id', $id)->findAll();
+        $data['asesmenMandiri'] = $asesmenMandiriModal->getAsesmenMandiri($id);
+
         // Hitung total lama bekerja
         $totalLamaBekerja = 0;
         if (!empty($data['dtpekerjaan'])) {

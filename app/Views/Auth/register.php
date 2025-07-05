@@ -85,13 +85,14 @@
                                     Swal.fire({
                                         icon: 'error',
                                         title: 'Oops...',
-                                        text: '<?= session()->getFlashdata('error') ?>',
+                                        text: '<?= is_array(session()->getFlashdata('error')) ? implode("\\n", session()->getFlashdata('error')) : session()->getFlashdata('error') ?>',
                                         confirmButtonColor: '#d33',
                                     });
                                 </script>
                             <?php endif; ?>
 
-                            <form action="/register" method="POST" class="form w-100" id="kt_sign_up_form">
+                            <form action="/register" method="POST" class="form w-100" id="kt_sign_up_form"
+                                enctype="multipart/form-data">
                                 <div class="text-center mb-15">
                                     <h1 class="text-gray-900 fw-bolder mt-28">Pendaftaran Akun Baru</h1>
                                 </div>
@@ -227,7 +228,7 @@
                                                 <option value="SMA">SMA</option>
                                                 <option value="SMK">SMK</option>
                                                 <option value="D3">D3</option>
-                                                  <option value="D3">DLL</option>
+                                                  <option value="lainnya">Lainnya/option>
                                             </select>
                                         </div>
                                         <div class="col-md-6">
@@ -256,6 +257,19 @@
                                         class="form-control form-control-lg"
                                         placeholder="Sebutkan dari mana anda mengetahui tentang RPL LP3I"
                                         style="display: none;" />
+                                </div>
+
+                                <div class="fv-row mb-5">
+                                    <label class="col-form-label required fw-semibold fs-6">Upload Bukti
+                                        Pembayaran</label>
+                                    <div class="col-lg-8">
+                                        <input type="file" name="bukti_pembayaran" accept=".pdf, .png, .jpg, .jpeg"
+                                            required
+                                            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                            placeholder="Upload Bukti Pembayaran" />
+                                        <span class="text-danger">*Format file: .pdf, .jpeg, .png, .jpg (max.
+                                            2MB)</span>
+                                    </div>
                                 </div>
                                 <div class="d-grid mb-5">
                                     <button type="submit" id="kt_sign_up_submit" class="btn btn-primary">

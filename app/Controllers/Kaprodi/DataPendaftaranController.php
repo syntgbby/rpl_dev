@@ -3,7 +3,7 @@
 namespace App\Controllers\Kaprodi;
 
 use App\Models\View\ViewDataPendaftaran;
-use App\Models\{UserModel, PelatihanModel, PengalamanKerjaModel};
+use App\Models\{UserModel, PelatihanModel, PengalamanKerjaModel, PiagamModel, SeminarModel, OrganisasiModel};
 use App\Models\PendaftaranModel;
 use App\Controllers\BaseController;
 
@@ -61,11 +61,17 @@ class DataPendaftaranController extends BaseController
     {
         $model = new ViewDataPendaftaran();
         $modelPelatihan = new PelatihanModel();
+        $modelPiagam = new PiagamModel();
+        $modelSeminar = new SeminarModel();
+        $modelOrganisasi = new OrganisasiModel();
         $modelPekerjaan = new PengalamanKerjaModel();
         $asesor = new UserModel();
 
         $data['dtpendaftaran'] = $model->getDataPendaftaranById($id);
         $data['dtpelatihan'] = $modelPelatihan->where('pendaftaran_id', $id)->findAll();
+        $data['dtpiagam'] = $modelPiagam->where('pendaftaran_id', $id)->findAll();
+        $data['dtseminar'] = $modelSeminar->where('pendaftaran_id', $id)->findAll();
+        $data['dtorganisasi'] = $modelOrganisasi->where('pendaftaran_id', $id)->findAll();
         $data['dtpekerjaan'] = $modelPekerjaan->where('pendaftaran_id', $id)->findAll();
         $data['asesor'] = $asesor->select('users.id, detail_asesor.nama_lengkap')->join('detail_asesor', 'detail_asesor.email = users.email')->where('role', 'asesor')->where('status', 'Y')->findAll();
 

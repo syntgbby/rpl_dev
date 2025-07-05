@@ -155,14 +155,23 @@
                     <!--begin::Input group for Upload Bukti SK-->
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">Upload Bukti SK</label>
-                        <div class="col-lg-8">
+                        <div class="col-lg-6">
                             <input type="file" name="file_sk" accept=".pdf" required
-                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                class="form-control form-control-lg form-control-solid mb-3"
                                 placeholder="Upload Bukti SK" />
-                            <span class="text-danger">*Format file: .pdf</span>
+                            <span class="text-danger d-block mb-3">*Format file: .pdf</span>
                         </div>
+                        <?php if ($get['file_sk']): ?>
+                            <div class="col-lg-6">
+                                <div class="text-end">
+                                    <a href="<?= $get['file_sk'] ?>" class="btn btn-primary" target="_blank">
+                                        <i class="fas fa-file-pdf me-2"></i> Lihat SK Terakhir
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                     </div>
-                    <!--end::Input group for Upload Bukti SK-->
+                    <!--end::Input group-->
 
                 </div>
                 <!--begin::Actions-->

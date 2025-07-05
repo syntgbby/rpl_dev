@@ -203,6 +203,114 @@ if (file_exists($logoPath)) {
         <?php endif; ?>
     </div>
 
+    <!-- Data Piagam -->
+    <div class="card">
+        <h3>Data Piagam/Penghargaan</h3>
+        <table>
+            <thead class="table-light">
+                <tr>
+                    <th class="text-center" style="width: 50px">No</th>
+                    <th>Bentuk Penghargaan</th>
+                    <th>Pemberi</th>
+                    <th class="text-center">Tahun</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($dtpiagam): ?>
+                    <?php $no = 1;
+                    foreach ($dtpiagam as $row): ?>
+                        <tr>
+                            <td class="text-center"><?= $no++ ?></td>
+                            <td><?= $row['bentuk_penghargaan'] ?></td>
+                            <td><?= $row['pemberi'] ?></td>
+                            <td class="text-center"><?= $row['tahun'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5" class="text-center">Aplikan tidak mengisi piagam/penghargaan</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Data Seminar -->
+    <div class="card">
+        <h3>Data Seminar</h3>
+        <table>
+            <thead class="table-light">
+                <tr>
+                    <th class="text-center" style="width: 50px">No</th>
+                    <th>Judul Kegiatan</th>
+                    <th>Penyelenggara</th>
+                    <th>Peran</th>
+                    <th class="text-center">Tahun</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($dtseminar): ?>
+                    <?php $no = 1;
+                    foreach ($dtseminar as $row): ?>
+                        <tr>
+                            <td class="text-center"><?= $no++ ?></td>
+                            <td><?= $row['judul_kegiatan'] ?></td>
+                            <td><?= $row['penyelenggara'] ?></td>
+                            <td><?= $row['peran'] ?></td>
+                            <td class="text-center"><?= $row['tahun'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5" class="text-center">Aplikan tidak mengisi seminar</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Data Organisasi -->
+    <div class="card">
+        <h3>Data Organisasi</h3>
+        <table>
+            <thead class="table-light">
+                <tr>
+                    <th class="text-center" style="width: 50px">No</th>
+                    <th>Nama Organisasi</th>
+                    <th>Jabatan</th>
+                    <th class="text-center">Tahun</th>
+                    <th class="text-center">Bukti</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($dtorganisasi): ?>
+                    <?php $no = 1;
+                    foreach ($dtorganisasi as $row): ?>
+                        <tr>
+                            <td class="text-center"><?= $no++ ?></td>
+                            <td><?= $row['nama_organisasi'] ?></td>
+                            <td><?= $row['jabatan_anggota'] ?></td>
+                            <td class="text-center"><?= $row['tahun'] ?></td>
+                            <td class="text-center">
+                                <?php if ($row['file_bukti']): ?>
+                                    <a href="<?= $row['file_bukti'] ?>" target="_blank" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-file-pdf me-1"></i> Lihat Bukti
+                                    </a>
+                                <?php else: ?>
+                                    <span class="text-muted">-</span>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5" class="text-center">Aplikan tidak mengisi organisasi</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
     <!-- Data Riwayat Pekerjaan -->
     <div class="card">
         <h3>Data Riwayat Pekerjaan</h3>
@@ -230,6 +338,48 @@ if (file_exists($logoPath)) {
         <?php else: ?>
             <div>Tidak ada data pekerjaan.</div>
         <?php endif; ?>
+    </div>
+
+    <!-- Data Kurikulum Asesmen Mandiri -->
+    <div class="card">
+        <h3>Data Kurikulum Asesmen Mandiri</h3>
+        <table>
+            <thead class="table-light">
+                <tr>
+                    <th class="text-center">No</th>
+                    <th class="text-center">Kode Mata Kuliah</th>
+                    <th class="text-center">Mata Kuliah</th>
+                    <th class="text-center">Tahun Ajaran</th>
+                    <th class="text-center">SKS</th>
+                    <th class="text-center">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($asesmenMandiri): ?>
+                    <?php $no = 1;
+                    foreach ($asesmenMandiri as $row): ?>
+                        <tr>
+                            <td class="text-center"><?= $no++ ?></td>
+                            <td><?= $row['kode_matkul'] ?></td>
+                            <td><?= $row['nama_matkul'] ?></td>
+                            <td><?= $row['tahun'] ?></td>
+                            <td><?= $row['sks'] ?></td>
+                            <td class="text-center">
+                                <?php if ($row['status'] == 'Y'): ?>
+                                    <span class="badge bg-warning text-white">Mengajukan</span>
+                                <?php else: ?>
+                                    <span class="badge bg-info text-white">Tidak Mengajukan</span>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="7" class="text-center">Anda belum melakukan asesmen mandiri</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
     </div>
 
     <!-- Data Kurikulum yang Diapprove -->

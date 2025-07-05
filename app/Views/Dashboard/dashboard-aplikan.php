@@ -85,54 +85,19 @@
 
 		<!-- Program Studi Section -->
 		<?php if (!$pendaftaran): ?>
-			<div class="row mt-5">
-				<div class="col-md-12">
-					<div class="card card-flush">
-						<div class="card-header text-center">
-							<h3 class="card-title text-bold">Program Studi</h3>
-						</div>
-						<div class="card-body">
-							<div class="row">
-								<?php foreach ($prodi as $item): ?>
-									<div class="col-md-3 mb-5 mb-lg-6 p-10">
-										<!--begin::Card Widget-->
-										<div class="card card-flush h-xl-200">
-											<!--begin::Header-->
-											<div class="card-header">
-												<div class="d-flex justify-content-center align-items-center">
-													<h4 class="card-title text-center">
-														<?= $item['nama_prodi'] ?>
-													</h4>
-												</div>
-											</div>
-											<!--end::Header-->
-
-											<!--begin::Body-->
-											<div class="card-body d-flex flex-column ps-4 pe-4 pb-4">
-												<!--begin::Content-->
-												<div class="d-flex justify-content-center align-items-center mb-4">
-													<?php if ($item['pict'] != null): ?>
-														<img src="<?= $item['pict'] ?>" alt="<?= $item['nama_prodi'] ?>"
-															class="w-50 h-50 rounded">
-													<?php endif; ?>
-												</div>
-
-												<div class="d-flex justify-content-center align-items-center">
-													<a href="/aplikan/pendaftaran/step1"
-														class="btn btn-primary justify-content-end text-end">Daftar Sekarang</a>
-												</div>
-											</div>
-											<!--end::Body-->
-										</div>
-										<!--end::Card Widget-->
-									</div>
-								<?php endforeach; ?>
-							</div>
-						</div>
-					</div>
+			<div class="alert alert-info d-flex flex-column flex-sm-row p-5 mb-10">
+				<i class="ki-duotone ki-information fs-2hx text-info me-4 mb-5 mb-sm-0"></i>
+				<div class="d-flex flex-column">
+					<h4 class="mb-1 text-info">Pendaftaran Belum Dimulai</h4>
+					<span>Anda telah memilih program studi saat registrasi. Silakan klik tombol di bawah ini untuk
+						melanjutkan proses pendaftaran Anda.</span>
+				</div>
+				<div class="ms-sm-auto">
+					<a href="/aplikan/pendaftaran/step1" class="btn btn-primary mt-3 mt-sm-0">Mulai Pendaftaran</a>
 				</div>
 			</div>
 		<?php endif; ?>
+
 	</div>
 	<!--end::Content-->
 </div>

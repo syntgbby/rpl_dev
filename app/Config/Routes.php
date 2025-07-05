@@ -40,6 +40,8 @@ $routes->post('/edit-password', 'Profile::updatePassword');
 $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'auth:admin'], function ($routes) {
     //Validasi Aplikan
     $routes->get('validasi-aplikan', 'ValidasiAplikanController::index');
+    $routes->get('validasi-aplikan/table', 'ValidasiAplikanController::getTable');
+    $routes->get('validasi-aplikan/approve/(:num)', 'ValidasiAplikanController::approveAplikan/$1');
 
     // Users
     $routes->get('users', 'UserController::index');
@@ -110,11 +112,17 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan', 'filter' =>
     $routes->post('pendaftaran/saveStep2', 'PendaftaranController::saveStep2');
     $routes->get('pendaftaran/deletePelatihan/(:num)', 'PendaftaranController::deletePelatihan/$1');
 
+    //step Piagam
     $routes->post('pendaftaran/saveStepPiagam', 'PendaftaranController::saveStepPiagam');
     $routes->get('pendaftaran/deletePiagam/(:num)', 'PendaftaranController::deletePiagam/$1');
 
+    //step Seminar
     $routes->post('pendaftaran/saveStepSeminar', 'PendaftaranController::saveStepSeminar');
     $routes->get('pendaftaran/deleteSeminar/(:num)', 'PendaftaranController::deleteSeminar/$1');
+
+    //step Organisasi
+    $routes->post('pendaftaran/saveStepOrganisasi', 'PendaftaranController::saveStepOrganisasi');
+    $routes->get('pendaftaran/deleteOrganisasi/(:num)', 'PendaftaranController::deleteOrganisasi/$1');
 
     //step 3
     $routes->get('pendaftaran/step3', 'PendaftaranController::step3');
@@ -124,6 +132,11 @@ $routes->group('aplikan', ['namespace' => 'App\Controllers\Aplikan', 'filter' =>
     //step 4
     $routes->get('pendaftaran/step4', 'PendaftaranController::step4');
     $routes->post('pendaftaran/saveStep4', 'PendaftaranController::saveStep4');
+
+    //asesmen mandiri
+    $routes->get('pendaftaran/asesmen-mandiri', 'PendaftaranController::asesmenMandiri');
+    $routes->post('pendaftaran/store-asesmen-mandiri', 'PendaftaranController::storeAsesmenMandiri');
+
 
     //update konfirmasi step
     $routes->get('update-konfirmasi-step/(:segment)/(:any)', 'PendaftaranController::updateKonfirmasiStep/$1/$2');
